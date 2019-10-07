@@ -1,1 +1,1 @@
-hello
+to deploy npm run reploy

@@ -1,10 +1,10 @@
 ---
 title: Managing your developer knowledge
-date: 2019-07-03
+date: 2019-08-10
 ---
 
 ## Managing your knowldege of developer
-Here it goes. You are working in the digital industry qnd you miss a stack to post and update your knowledge management ? This article is for you !
+Here it goes. You are working in the digital industry and you miss a stack to post and update your knowledge management ? This article is for you !
 
 ## Why
 to keep trace of your research and solution prodided by those- its usefull to use a curation tool connected to your blog or social network. For both assume your skills on your field of work and keep your founds into a safe and easy place to come back to it.
