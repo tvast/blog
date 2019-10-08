@@ -7,9 +7,9 @@ import defaultThemeColors from "gatsby-theme-blog/src/gatsby-plugin-theme-ui/col
  * to go from default purple to a blue theme
  */
 
-const darkBlue = `#007acc`
-const lightBlue = `#66E0FF`
-const blueGray = `#282c35`
+const darkBlue = `#00b894`
+const lightBlue = `#ff7675`
+const blueGray = `#6c5ce7`
 
 export default merge(defaultThemeColors, {
   text: blueGray,
