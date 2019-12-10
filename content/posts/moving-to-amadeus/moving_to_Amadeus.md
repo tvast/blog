@@ -1,4 +1,4 @@
-##A new challenge
+title: A new challenge
 date: 2019-12-12
 ---
 
