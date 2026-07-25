@@ -1,0 +1,4 @@
+- [UI Cleanup & Menu Refactor](ui_cleanup.md) — Removed unused dependencies, replaced Quasar tab panels with CSS
+- [Damsterdam Theme](design_system.md) — Custom fonts, color palette, and spacing system for the app
+- [Firebase Components](firebase_components.md) — API service + 5 dashboard subcomponents (Dashboard, Messages, Profile, Earnings, Settings)
+- [Animated Logo v2](animated_logo_v2.md) — ASCII art logo with 6 animation layers, Porkys font effect, 99% smaller than GIF

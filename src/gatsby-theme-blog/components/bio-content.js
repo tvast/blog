@@ -1,5 +1,5 @@
 import React, { Fragment } from "react"
-import { Styled } from "theme-ui"
+import { Box } from "theme-ui"
 
 /**
  * Change the content to add your own bio
@@ -7,8 +7,10 @@ import { Styled } from "theme-ui"
 
 export default () => (
   <Fragment>
-    Passionate about Javasript and UX UI <Styled.a href="https://tvast.github.io/portfolio/">give a hint at my portfolio</Styled.a>
+    Passionate about Javasript and UX UI{" "}
+    <Box as="a" href="https://tvast.github.io/portfolio/" sx={{ color: "primary", textDecoration: "underline" }}>
+      give a hint at my portfolio
+    </Box>
     {` `}
-    
   </Fragment>
 )
