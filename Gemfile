@@ -7,4 +7,6 @@ source "https://rubygems.org"
 gemspec
 
 gem "jekyll", "~> 4.4"
+gem "jekyll-feed", "~> 0.17"
+gem "jekyll-sitemap", "~> 1.4"
 gem "webrick"
