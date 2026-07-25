@@ -83,6 +83,7 @@ module DraculaKnowledge
     # layout, exactly as it would for a file that did carry front matter.
     def promote_static_markdown(site, collection)
       promoted = []
+      retired = []
 
       collection.files.reject! do |static_file|
         next false unless MARKDOWN_EXT.include?(static_file.extname.downcase)
@@ -92,10 +93,17 @@ module DraculaKnowledge
         )
         doc.read
         promoted << doc
+        retired << static_file
         true
       end
 
       return if promoted.empty?
+
+      # Collection#read has already pushed these onto site.static_files, which
+      # is what actually gets written out. Dropping them only from
+      # collection.files would publish every note twice: once as a page and
+      # once as a raw .md download.
+      site.static_files -= retired
 
       collection.docs.concat(promoted)
       collection.docs.sort!
