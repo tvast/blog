@@ -65,6 +65,8 @@ module DraculaKnowledge
       entries = docs.map { |doc| entry_for(doc, prefix, cfg) }
       entries.sort_by! { |e| [e["s"].downcase, e["p"].downcase] }
 
+      docs.each { |doc| doc.content = TableSpacing.apply(doc.content) }
+
       site.data["dk_sections"] = sections_from(entries, site, cfg)
       site.data["dk_total"] = entries.length
 
@@ -110,6 +112,16 @@ module DraculaKnowledge
       Jekyll.logger.info "Dracula:", "indexed #{promoted.length} front-matter-less notes"
     end
 
+    # True when the title came from Jekyll's filename fallback rather than the
+    # document's own front matter, so overwriting it loses nothing.
+    def derived_title?(doc)
+      title = doc.data["title"]
+      return true if title.nil? || title.to_s.empty?
+
+      slug = doc.data["slug"]
+      !slug.nil? && title == Jekyll::Utils.titleize_slug(slug)
+    end
+
     def entry_for(doc, prefix, cfg)
       rel = doc.relative_path.sub(/\A#{Regexp.escape(prefix)}/, "")
       segments = rel.split("/")
@@ -117,10 +129,11 @@ module DraculaKnowledge
       section = segments.length > 1 ? segments.first : ""
       subpath = segments.length > 1 ? segments[1..].join("/") : rel
 
-      # Imported notes frequently have no front matter at all, so derive the
-      # title from the filename and hand the section back to the templates
-      # (the sidebar and breadcrumb both read page.dk_section).
-      doc.data["title"] ||= DraculaKnowledge.humanize(File.basename(rel))
+      # Imported notes frequently have no front matter, and Jekyll fills the
+      # gap with Utils.titleize_slug, which only splits on hyphens -- so
+      # "AUDIO_SYSTEM.md" surfaces as "Audio_system". Replace that derived
+      # value (never an author's real title) with something readable.
+      doc.data["title"] = DraculaKnowledge.humanize(File.basename(rel)) if derived_title?(doc)
       doc.data["dk_section"] = section
 
       entry = {
@@ -153,6 +166,48 @@ module DraculaKnowledge
           "url"   => slug.empty? ? base : "#{base}##{Jekyll::Utils.slugify(slug)}",
         }
       end
+    end
+  end
+
+  # GitHub renders a table that butts directly against the preceding line;
+  # kramdown requires a blank line first and silently degrades the whole block
+  # into a paragraph of literal pipes. Notes written for GitHub hit this
+  # constantly, so restore the blank line before the converter runs.
+  module TableSpacing
+    TABLE_ROW = %r{\A\s*\|.*\|\s*\z}
+    # A delimiter row: | --- | :--: | ---: |
+    DELIMITER = %r{\A\s*\|[\s:|-]+\|\s*\z}
+    FENCE = %r{\A\s*(```|~~~)}
+
+    def self.apply(content)
+      return content unless content.include?("|")
+
+      lines = content.split("\n", -1)
+      out = []
+      in_fence = false
+
+      lines.each_with_index do |line, i|
+        if line.match?(FENCE)
+          in_fence = !in_fence
+          out << line
+          next
+        end
+
+        if !in_fence && starts_table?(lines, i) && !out.last.to_s.strip.empty?
+          out << ""
+        end
+
+        out << line
+      end
+
+      out.join("\n")
+    end
+
+    # A table starts where a row is followed by a delimiter row.
+    def self.starts_table?(lines, i)
+      lines[i].match?(TABLE_ROW) &&
+        !lines[i].match?(DELIMITER) &&
+        lines[i + 1].to_s.match?(DELIMITER)
     end
   end
 
