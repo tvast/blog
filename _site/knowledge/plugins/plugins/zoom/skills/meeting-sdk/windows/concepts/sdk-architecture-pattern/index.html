@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Sdk Architecture Pattern · Knowledge Base</title>
+<meta name="description" content="SDK Architecture Pattern: The Universal Implementation Formula">
+<link rel="canonical" href="http://localhost:4000/knowledge/plugins/plugins/zoom/skills/meeting-sdk/windows/concepts/sdk-architecture-pattern/">
+
+<meta property="og:title" content="Sdk Architecture Pattern · Knowledge Base">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/knowledge/plugins/plugins/zoom/skills/meeting-sdk/windows/concepts/sdk-architecture-pattern/">
+<meta property="og:description" content="SDK Architecture Pattern: The Universal Implementation Formula">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/assets/search-index.json",
+    baseUrl: "",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/">
+    Knowledge Base
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/"
+         >Home</a>
+      <a href="/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Sdk Architecture Pattern</h1>
+
+      <div class="dk-meta"><span>Jul 25, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="sdk-architecture-pattern-the-universal-implementation-formula">SDK Architecture Pattern: The Universal Implementation Formula</h1>
+
+<h2 id="core-concept">Core Concept</h2>
+
+<p>The Zoom Windows Meeting SDK follows a <strong>consistent architectural pattern</strong> that applies to EVERY feature. Once you understand this pattern, you can implement ANY feature just by reading the <code class="language-plaintext highlighter-rouge">.h</code> header files.</p>
+
+<hr />
+
+<h2 id="the-universal-pattern">The Universal Pattern</h2>
+
+<p>Every SDK feature follows this 3-step pattern:</p>
+
+<h3 id="1-get-the-controllerhelper-singleton-pattern">1. Get the Controller/Helper (Singleton Pattern)</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Pattern: meetingService-&gt;Get[Feature]Controller()</span>
+<span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">audioCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAudioController</span><span class="p">();</span>
+<span class="n">IMeetingChatController</span><span class="o">*</span> <span class="n">chatCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingChatController</span><span class="p">();</span>
+<span class="n">IMeetingVideoController</span><span class="o">*</span> <span class="n">videoCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingVideoController</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="2-implement-the-event-listener-interface-observer-pattern">2. Implement the Event Listener Interface (Observer Pattern)</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Pattern: I[Feature]Event or I[Feature]CtrlEvent</span>
+<span class="k">class</span> <span class="nc">MyAudioListener</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IMeetingAudioCtrlEvent</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">onUserAudioStatusChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="n">IUserAudioStatus</span><span class="o">*&gt;*</span> <span class="n">lstAudioStatusChange</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// React to audio events</span>
+    <span class="p">}</span>
+    <span class="c1">// ... implement all pure virtual methods</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="3-register-listener-and-use-controller-methods">3. Register Listener and Use Controller Methods</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Pattern: controller-&gt;SetEvent(listener), then call methods</span>
+<span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="nf">MyAudioListener</span><span class="p">());</span>
+<span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">MuteAudio</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>  <span class="c1">// Use feature</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="complete-architecture-overview">Complete Architecture Overview</h2>
+
+<h3 id="the-singleton-services">The Singleton Services</h3>
+
+<p><strong>Top-level services</strong> (created via global functions):</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Authentication Service (JWT, user login)</span>
+<span class="n">IAuthService</span><span class="o">*</span> <span class="n">authService</span><span class="p">;</span>
+<span class="n">CreateAuthService</span><span class="p">(</span><span class="o">&amp;</span><span class="n">authService</span><span class="p">);</span>
+
+<span class="c1">// Meeting Service (join, leave, access features)</span>
+<span class="n">IMeetingService</span><span class="o">*</span> <span class="n">meetingService</span><span class="p">;</span>
+<span class="n">CreateMeetingService</span><span class="p">(</span><span class="o">&amp;</span><span class="n">meetingService</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="feature-controllers-35-available">Feature Controllers (35+ Available)</h3>
+
+<p><strong>All controllers</strong> are accessed through <code class="language-plaintext highlighter-rouge">IMeetingService-&gt;Get[Feature]Controller()</code>:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Audio features</span>
+<span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">audioCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAudioController</span><span class="p">();</span>
+
+<span class="c1">// Video features</span>
+<span class="n">IMeetingVideoController</span><span class="o">*</span> <span class="n">videoCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingVideoController</span><span class="p">();</span>
+
+<span class="c1">// Chat features</span>
+<span class="n">IMeetingChatController</span><span class="o">*</span> <span class="n">chatCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingChatController</span><span class="p">();</span>
+
+<span class="c1">// Participants management</span>
+<span class="n">IMeetingParticipantsController</span><span class="o">*</span> <span class="n">participantsCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingParticipantsController</span><span class="p">();</span>
+
+<span class="c1">// Recording features</span>
+<span class="n">IMeetingRecordingController</span><span class="o">*</span> <span class="n">recordingCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRecordingController</span><span class="p">();</span>
+
+<span class="c1">// Screen sharing</span>
+<span class="n">IMeetingShareController</span><span class="o">*</span> <span class="n">shareCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingShareController</span><span class="p">();</span>
+
+<span class="c1">// Waiting room</span>
+<span class="n">IMeetingWaitingRoomController</span><span class="o">*</span> <span class="n">waitingRoomCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingWaitingRoomController</span><span class="p">();</span>
+
+<span class="c1">// Webinar features</span>
+<span class="n">IMeetingWebinarController</span><span class="o">*</span> <span class="n">webinarCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingWebinarController</span><span class="p">();</span>
+
+<span class="c1">// Breakout rooms</span>
+<span class="n">IMeetingBOController</span><span class="o">*</span> <span class="n">boCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingBOController</span><span class="p">();</span>
+
+<span class="c1">// AI Companion</span>
+<span class="n">IMeetingAICompanionController</span><span class="o">*</span> <span class="n">aiCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAICompanionController</span><span class="p">();</span>
+
+<span class="c1">// Q&amp;A</span>
+<span class="n">IMeetingQAController</span><span class="o">*</span> <span class="n">qaCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingQAController</span><span class="p">();</span>
+
+<span class="c1">// Polling</span>
+<span class="n">IMeetingPollingController</span><span class="o">*</span> <span class="n">pollingCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingPollingController</span><span class="p">();</span>
+
+<span class="c1">// Whiteboard</span>
+<span class="n">IMeetingWhiteboardController</span><span class="o">*</span> <span class="n">whiteboardCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingWhiteboardController</span><span class="p">();</span>
+
+<span class="c1">// Closed captions</span>
+<span class="n">IClosedCaptionController</span><span class="o">*</span> <span class="n">captionCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingClosedCaptionController</span><span class="p">();</span>
+
+<span class="c1">// Live streaming</span>
+<span class="n">IMeetingLiveStreamController</span><span class="o">*</span> <span class="n">liveStreamCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingLiveStreamController</span><span class="p">();</span>
+
+<span class="c1">// Emoji reactions</span>
+<span class="n">IEmojiReactionController</span><span class="o">*</span> <span class="n">emojiCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingEmojiReactionController</span><span class="p">();</span>
+
+<span class="c1">// Interpretation</span>
+<span class="n">IMeetingInterpretationController</span><span class="o">*</span> <span class="n">interpretCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingInterpretationController</span><span class="p">();</span>
+
+<span class="c1">// Remote support</span>
+<span class="n">IMeetingRemoteSupportController</span><span class="o">*</span> <span class="n">remoteSupportCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRemoteSupportController</span><span class="p">();</span>
+
+<span class="c1">// Encryption</span>
+<span class="n">IMeetingEncryptionController</span><span class="o">*</span> <span class="n">encryptionCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetInMeetingEncryptionController</span><span class="p">();</span>
+
+<span class="c1">// ... and 15+ more controllers!</span>
+</code></pre></div></div>
+
+<p><strong>Complete list</strong> (35 controllers as of SDK v6.7.2):</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingAudioController()</code> - Audio mute/unmute</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingVideoController()</code> - Video start/stop</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingShareController()</code> - Screen sharing</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingChatController()</code> - Meeting chat</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingParticipantsController()</code> - Participant management</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingRecordingController()</code> - Recording/raw data</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingWaitingRoomController()</code> - Waiting room management</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingWebinarController()</code> - Webinar features</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingBOController()</code> - Breakout rooms</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingAICompanionController()</code> - AI features</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingQAController()</code> - Q&amp;A management</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingPollingController()</code> - Polls/surveys</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingWhiteboardController()</code> - Whiteboard</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingClosedCaptionController()</code> - Captions</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingLiveStreamController()</code> - Live streaming</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingEmojiReactionController()</code> - Emoji reactions</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingInterpretationController()</code> - Language interpretation</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingSignInterpretationController()</code> - Sign language</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingRemoteSupportController()</code> - Remote support</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingEncryptionController()</code> - E2E encryption</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingRawArchivingController()</code> - Raw archiving</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingReminderController()</code> - Meeting reminders</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingSmartSummaryController()</code> - Smart summary (deprecated)</li>
+  <li><code class="language-plaintext highlighter-rouge">GetUIController()</code> - UI controls</li>
+  <li><code class="language-plaintext highlighter-rouge">GetAnnotationController()</code> - Annotations</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingRemoteController()</code> - Remote control</li>
+  <li><code class="language-plaintext highlighter-rouge">GetH323Helper()</code> - H.323 support</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingPhoneHelper()</code> - Phone dial-in</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingRealNameAuthController()</code> - Real name auth</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingAANController()</code> - Auto Accept Notification</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingImmersiveController()</code> - Immersive view</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingDocsController()</code> - Documents</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingIndicatorController()</code> - Meeting indicators</li>
+  <li><code class="language-plaintext highlighter-rouge">GetMeetingProductionStudioController()</code> - Production studio</li>
+  <li>And more in future versions…</li>
+</ol>
+
+<hr />
+
+<h2 id="deep-dive-audio-feature-example">Deep Dive: Audio Feature Example</h2>
+
+<p>Let’s implement audio mute/unmute to demonstrate the pattern:</p>
+
+<h3 id="step-1-read-the-header-file">Step 1: Read the Header File</h3>
+
+<p>Open <code class="language-plaintext highlighter-rouge">SDK/x64/h/meeting_service_components/meeting_audio_interface.h</code>:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// The event listener interface</span>
+<span class="k">class</span> <span class="nc">IMeetingAudioCtrlEvent</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onUserAudioStatusChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="n">IUserAudioStatus</span><span class="o">*&gt;*</span> <span class="n">lstAudioStatusChange</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onUserActiveAudioChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;*</span> <span class="n">plstActiveAudioUser</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// ... more callback methods</span>
+<span class="p">};</span>
+
+<span class="c1">// The controller interface</span>
+<span class="k">class</span> <span class="nc">IMeetingAudioController</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="k">virtual</span> <span class="n">SDKError</span> <span class="n">SetEvent</span><span class="p">(</span><span class="n">IMeetingAudioCtrlEvent</span><span class="o">*</span> <span class="n">pEvent</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="n">SDKError</span> <span class="n">JoinVoip</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="n">SDKError</span> <span class="n">MuteAudio</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">userid</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">allowUnmuteBySelf</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="n">SDKError</span> <span class="n">UnMuteAudio</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">userid</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// ... more control methods</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="step-2-implement-the-event-listener">Step 2: Implement the Event Listener</h3>
+
+<p><strong>AudioEventListener.h</strong>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#pragma once
+#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cstdint&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;meeting_service_components/meeting_audio_interface.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">ZOOM_SDK_NAMESPACE</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AudioEventListener</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IMeetingAudioCtrlEvent</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="c1">// Implement ALL pure virtual methods from IMeetingAudioCtrlEvent</span>
+    <span class="kt">void</span> <span class="n">onUserAudioStatusChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="n">IUserAudioStatus</span><span class="o">*&gt;*</span> <span class="n">lstAudioStatusChange</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">onUserActiveAudioChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;*</span> <span class="n">plstActiveAudioUser</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">onHostRequestStartAudio</span><span class="p">(</span><span class="n">IRequestStartAudioHandler</span><span class="o">*</span> <span class="n">handler</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+    <span class="kt">void</span> <span class="n">onMuteOnEntryStatusChange</span><span class="p">(</span><span class="kt">bool</span> <span class="n">bEnabled</span><span class="p">)</span> <span class="k">override</span><span class="p">;</span>
+    <span class="c1">// ... implement all other required methods</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>AudioEventListener.cpp</strong>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"AudioEventListener.h"</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="n">AudioEventListener</span><span class="o">::</span><span class="n">onUserAudioStatusChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="n">IUserAudioStatus</span><span class="o">*&gt;*</span> <span class="n">lstAudioStatusChange</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">lstAudioStatusChange</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">lstAudioStatusChange</span><span class="o">-&gt;</span><span class="n">GetCount</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">IUserAudioStatus</span><span class="o">*</span> <span class="n">audioStatus</span> <span class="o">=</span> <span class="n">lstAudioStatusChange</span><span class="o">-&gt;</span><span class="n">GetItem</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">userId</span> <span class="o">=</span> <span class="n">audioStatus</span><span class="o">-&gt;</span><span class="n">GetUserId</span><span class="p">();</span>
+        <span class="n">AudioStatus</span> <span class="n">status</span> <span class="o">=</span> <span class="n">audioStatus</span><span class="o">-&gt;</span><span class="n">GetStatus</span><span class="p">();</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] User "</span> <span class="o">&lt;&lt;</span> <span class="n">userId</span> <span class="o">&lt;&lt;</span> <span class="s">" status changed: "</span> <span class="o">&lt;&lt;</span> <span class="n">status</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AudioEventListener</span><span class="o">::</span><span class="n">onUserActiveAudioChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;*</span> <span class="n">plstActiveAudioUser</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">plstActiveAudioUser</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">plstActiveAudioUser</span><span class="o">-&gt;</span><span class="n">GetCount</span><span class="p">();</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Active speakers: "</span> <span class="o">&lt;&lt;</span> <span class="n">count</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AudioEventListener</span><span class="o">::</span><span class="n">onHostRequestStartAudio</span><span class="p">(</span><span class="n">IRequestStartAudioHandler</span><span class="o">*</span> <span class="n">handler</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Host requests unmute"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="c1">// Auto-accept or ignore based on your logic</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">handler</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">handler</span><span class="o">-&gt;</span><span class="n">Accept</span><span class="p">();</span>  <span class="c1">// or handler-&gt;Ignore()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">AudioEventListener</span><span class="o">::</span><span class="n">onMuteOnEntryStatusChange</span><span class="p">(</span><span class="kt">bool</span> <span class="n">bEnabled</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Mute on entry: "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">bEnabled</span> <span class="o">?</span> <span class="s">"enabled"</span> <span class="o">:</span> <span class="s">"disabled"</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="step-3-use-the-feature">Step 3: Use the Feature</h3>
+
+<p><strong>main.cpp</strong>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">SetupAudioFeatures</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 1. Get the controller (singleton)</span>
+    <span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">audioCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAudioController</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">audioCtrl</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"Failed to get audio controller"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 2. Set event listener</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="nf">AudioEventListener</span><span class="p">());</span>
+
+    <span class="c1">// 3. Use controller methods</span>
+
+    <span class="c1">// Join audio (connect to VoIP)</span>
+    <span class="n">SDKError</span> <span class="n">err</span> <span class="o">=</span> <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">JoinVoip</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Joined VoIP successfully"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Mute yourself (userId = 0 or your own user ID)</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">MuteAudio</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Muted self"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// Unmute yourself</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">UnMuteAudio</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Unmuted self"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// Mute all participants (host only, userId = 0 for all)</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">MuteAudio</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>  <span class="c1">// false = don't allow self-unmute</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Muted all participants"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="the-pattern-applied-to-any-feature">The Pattern Applied to ANY Feature</h2>
+
+<h3 id="example-implementing-chat">Example: Implementing Chat</h3>
+
+<p><strong>Step 1: Read header</strong> (<code class="language-plaintext highlighter-rouge">meeting_chat_interface.h</code>)</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">IMeetingChatCtrlEvent</span> <span class="p">{</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onChatMsgNotification</span><span class="p">(</span><span class="n">IChatMsgInfo</span><span class="o">*</span> <span class="n">chatMsg</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// ... more methods</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">IMeetingChatController</span> <span class="p">{</span>
+    <span class="k">virtual</span> <span class="n">SDKError</span> <span class="n">SetEvent</span><span class="p">(</span><span class="n">IMeetingChatCtrlEvent</span><span class="o">*</span> <span class="n">pEvent</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">virtual</span> <span class="n">SDKError</span> <span class="n">SendChatTo</span><span class="p">(</span><span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">receiver</span><span class="p">,</span> <span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">content</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1">// ... more methods</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>Step 2: Implement listener</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ChatEventListener</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IMeetingChatCtrlEvent</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">onChatMsgNotification</span><span class="p">(</span><span class="n">IChatMsgInfo</span><span class="o">*</span> <span class="n">chatMsg</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">wcout</span> <span class="o">&lt;&lt;</span> <span class="s">L"[CHAT] From: "</span> <span class="o">&lt;&lt;</span> <span class="n">chatMsg</span><span class="o">-&gt;</span><span class="n">GetSenderDisplayName</span><span class="p">()</span>
+                   <span class="o">&lt;&lt;</span> <span class="s">L", Message: "</span> <span class="o">&lt;&lt;</span> <span class="n">chatMsg</span><span class="o">-&gt;</span><span class="n">GetContent</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Use it</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IMeetingChatController</span><span class="o">*</span> <span class="n">chatCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingChatController</span><span class="p">();</span>
+<span class="n">chatCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="nf">ChatEventListener</span><span class="p">());</span>
+<span class="n">chatCtrl</span><span class="o">-&gt;</span><span class="n">SendChatTo</span><span class="p">(</span><span class="s">L"everyone"</span><span class="p">,</span> <span class="s">L"Hello from bot!"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="example-implementing-screen-share-detection">Example: Implementing Screen Share Detection</h3>
+
+<p><strong>Step 1: Read header</strong> (<code class="language-plaintext highlighter-rouge">meeting_sharing_interface.h</code>)</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">IMeetingShareCtrlEvent</span> <span class="p">{</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onSharingStatus</span><span class="p">(</span><span class="n">SharingStatus</span> <span class="n">status</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">userId</span><span class="p">)</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>Step 2: Implement listener</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ShareEventListener</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IMeetingShareCtrlEvent</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">onSharingStatus</span><span class="p">(</span><span class="n">SharingStatus</span> <span class="n">status</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">userId</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">Sharing_Self_Send_Begin</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[SHARE] User "</span> <span class="o">&lt;&lt;</span> <span class="n">userId</span> <span class="o">&lt;&lt;</span> <span class="s">" started sharing"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">Sharing_Self_Send_End</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[SHARE] User "</span> <span class="o">&lt;&lt;</span> <span class="n">userId</span> <span class="o">&lt;&lt;</span> <span class="s">" stopped sharing"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p><strong>Step 3: Use it</strong></p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IMeetingShareController</span><span class="o">*</span> <span class="n">shareCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingShareController</span><span class="p">();</span>
+<span class="n">shareCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="nf">ShareEventListener</span><span class="p">());</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="key-architectural-insights">Key Architectural Insights</h2>
+
+<h3 id="1-controllers-are-singletons">1. Controllers are Singletons</h3>
+
+<p>Each controller is a singleton accessed through <code class="language-plaintext highlighter-rouge">meetingService</code>:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Always returns the SAME instance</span>
+<span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">ctrl1</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAudioController</span><span class="p">();</span>
+<span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">ctrl2</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAudioController</span><span class="p">();</span>
+<span class="c1">// ctrl1 == ctrl2 (same pointer)</span>
+</code></pre></div></div>
+
+<p><strong>Why this matters</strong>: You can get the controller anywhere in your code without passing pointers around.</p>
+
+<h3 id="2-event-listeners-use-observer-pattern">2. Event Listeners Use Observer Pattern</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SDK maintains the listener internally</span>
+<span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="nf">AudioEventListener</span><span class="p">());</span>
+
+<span class="c1">// SDK calls listener methods when events occur</span>
+<span class="c1">// You don't call these methods yourself!</span>
+</code></pre></div></div>
+
+<p><strong>Why this matters</strong>: The SDK manages listener lifecycle. Use <code class="language-plaintext highlighter-rouge">new</code> and let SDK handle cleanup.</p>
+
+<h3 id="3-controllers-have-both-actions-and-queries">3. Controllers Have Both Actions and Queries</h3>
+
+<p><strong>Actions</strong> (change state):</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">MuteAudio</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>        <span class="c1">// DO something</span>
+<span class="n">chatCtrl</span><span class="o">-&gt;</span><span class="n">SendChatTo</span><span class="p">(</span><span class="s">L"user"</span><span class="p">,</span> <span class="s">L"hello"</span><span class="p">);</span>   <span class="c1">// DO something</span>
+</code></pre></div></div>
+
+<p><strong>Queries</strong> (get information):</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">bool</span> <span class="n">isMuted</span> <span class="o">=</span> <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">IsAudioMuted</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span>    <span class="c1">// GET information</span>
+<span class="kt">bool</span> <span class="n">isHost</span> <span class="o">=</span> <span class="n">participantsCtrl</span><span class="o">-&gt;</span><span class="n">IsHost</span><span class="p">(</span><span class="n">userId</span><span class="p">);</span>     <span class="c1">// GET information</span>
+</code></pre></div></div>
+
+<h3 id="4-feature-availability-varies-by-sdk-app-type">4. Feature Availability Varies by SDK App Type</h3>
+
+<p>Some features require specific permissions:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Recording requires special SDK app type</span>
+<span class="n">IMeetingRecordingController</span><span class="o">*</span> <span class="n">recordingCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRecordingController</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">recordingCtrl</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">SDKError</span> <span class="n">canRecord</span> <span class="o">=</span> <span class="n">recordingCtrl</span><span class="o">-&gt;</span><span class="n">CanStartRawRecording</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">canRecord</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">recordingCtrl</span><span class="o">-&gt;</span><span class="n">StartRawRecording</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Not available (wrong app type, insufficient permissions)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="how-to-implement-any-feature-universal-recipe">How to Implement Any Feature (Universal Recipe)</h2>
+
+<h3 id="recipe-for-success">Recipe for Success:</h3>
+
+<ol>
+  <li><strong>Find the header file</strong>:
+    <ul>
+      <li>Look in <code class="language-plaintext highlighter-rouge">SDK/x64/h/meeting_service_components/</code></li>
+      <li>File naming: <code class="language-plaintext highlighter-rouge">meeting_[feature]_interface.h</code></li>
+      <li>Examples: <code class="language-plaintext highlighter-rouge">meeting_audio_interface.h</code>, <code class="language-plaintext highlighter-rouge">meeting_chat_interface.h</code></li>
+    </ul>
+  </li>
+  <li><strong>Identify the interfaces</strong>:
+    <ul>
+      <li>Find <code class="language-plaintext highlighter-rouge">I[Feature]Event</code> or <code class="language-plaintext highlighter-rouge">I[Feature]CtrlEvent</code> (for callbacks)</li>
+      <li>Find <code class="language-plaintext highlighter-rouge">I[Feature]Controller</code> (for actions/queries)</li>
+    </ul>
+  </li>
+  <li><strong>Implement the event listener</strong>:
+    <ul>
+      <li>Create class inheriting from <code class="language-plaintext highlighter-rouge">I[Feature]Event</code></li>
+      <li>Implement ALL pure virtual methods (use <a href="../references/interface-methods.md">Interface Methods Guide</a>)</li>
+      <li>Add logging to see when events fire</li>
+    </ul>
+  </li>
+  <li><strong>Get the controller</strong>:
+    <ul>
+      <li>Call <code class="language-plaintext highlighter-rouge">meetingService-&gt;Get[Feature]Controller()</code></li>
+      <li>Check for <code class="language-plaintext highlighter-rouge">nullptr</code> (might not be available)</li>
+    </ul>
+  </li>
+  <li><strong>Register listener and use</strong>:
+    <ul>
+      <li>Call <code class="language-plaintext highlighter-rouge">controller-&gt;SetEvent(new YourListener())</code></li>
+      <li>Call controller methods to use features</li>
+    </ul>
+  </li>
+  <li><strong>Test incrementally</strong>:
+    <ul>
+      <li>Start with event logging only</li>
+      <li>Verify events fire correctly</li>
+      <li>Add action methods one at a time</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="complete-working-example-mute-bot">Complete Working Example: Mute Bot</h2>
+
+<p>This bot auto-mutes when joining and responds to host unmute requests:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;windows.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;cstdint&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;meeting_service_components/meeting_audio_interface.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">ZOOM_SDK_NAMESPACE</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">MuteBotAudioListener</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IMeetingAudioCtrlEvent</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">audioCtrl</span><span class="p">;</span>
+
+<span class="nl">public:</span>
+    <span class="n">MuteBotAudioListener</span><span class="p">(</span><span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">ctrl</span><span class="p">)</span> <span class="o">:</span> <span class="n">audioCtrl</span><span class="p">(</span><span class="n">ctrl</span><span class="p">)</span> <span class="p">{}</span>
+
+    <span class="kt">void</span> <span class="n">onUserAudioStatusChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="n">IUserAudioStatus</span><span class="o">*&gt;*</span> <span class="n">lstAudioStatusChange</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Just log for debugging</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Audio status changed"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">onUserActiveAudioChange</span><span class="p">(</span><span class="n">IList</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;*</span> <span class="n">plstActiveAudioUser</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Not needed for this bot</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">onHostRequestStartAudio</span><span class="p">(</span><span class="n">IRequestStartAudioHandler</span><span class="o">*</span> <span class="n">handler</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Host requested unmute - auto accepting"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">handler</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">handler</span><span class="o">-&gt;</span><span class="n">Accept</span><span class="p">();</span>  <span class="c1">// Automatically accept host request</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">onMuteOnEntryStatusChange</span><span class="p">(</span><span class="kt">bool</span> <span class="n">bEnabled</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Mute on entry: "</span> <span class="o">&lt;&lt;</span> <span class="n">bEnabled</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">void</span> <span class="nf">SetupMuteBot</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Get audio controller</span>
+    <span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">audioCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAudioController</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">audioCtrl</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="c1">// Register event listener</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="n">MuteBotAudioListener</span><span class="p">(</span><span class="n">audioCtrl</span><span class="p">));</span>
+
+    <span class="c1">// Join VoIP</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">JoinVoip</span><span class="p">();</span>
+
+    <span class="c1">// Mute self immediately</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">MuteAudio</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] Mute bot active - will auto-accept host unmute requests"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="advanced-pattern-multiple-feature-integration">Advanced Pattern: Multiple Feature Integration</h2>
+
+<p>Real bots typically use multiple controllers:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">SetupAdvancedBot</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Audio: Auto-mute on join</span>
+    <span class="n">IMeetingAudioController</span><span class="o">*</span> <span class="n">audioCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAudioController</span><span class="p">();</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="n">AudioEventListener</span><span class="p">());</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">JoinVoip</span><span class="p">();</span>
+    <span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">MuteAudio</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+
+    <span class="c1">// Video: Keep video off</span>
+    <span class="n">IMeetingVideoController</span><span class="o">*</span> <span class="n">videoCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingVideoController</span><span class="p">();</span>
+    <span class="n">videoCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="n">VideoEventListener</span><span class="p">());</span>
+    <span class="c1">// Video off by default when joining with isVideoOff = true</span>
+
+    <span class="c1">// Chat: Respond to commands</span>
+    <span class="n">IMeetingChatController</span><span class="o">*</span> <span class="n">chatCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingChatController</span><span class="p">();</span>
+    <span class="n">chatCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="n">ChatCommandListener</span><span class="p">());</span>
+    <span class="n">chatCtrl</span><span class="o">-&gt;</span><span class="n">SendChatTo</span><span class="p">(</span><span class="s">L"everyone"</span><span class="p">,</span> <span class="s">L"Bot is ready!"</span><span class="p">);</span>
+
+    <span class="c1">// Participants: Track who joins/leaves</span>
+    <span class="n">IMeetingParticipantsController</span><span class="o">*</span> <span class="n">participantsCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingParticipantsController</span><span class="p">();</span>
+    <span class="n">participantsCtrl</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="n">ParticipantsEventListener</span><span class="p">());</span>
+
+    <span class="c1">// Recording: Capture meeting</span>
+    <span class="n">IMeetingRecordingController</span><span class="o">*</span> <span class="n">recordingCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRecordingController</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">recordingCtrl</span><span class="o">-&gt;</span><span class="n">CanStartRawRecording</span><span class="p">()</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">recordingCtrl</span><span class="o">-&gt;</span><span class="n">StartRawRecording</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="common-patterns-across-all-controllers">Common Patterns Across All Controllers</h2>
+
+<h3 id="pattern-1-check-availability-before-use">Pattern 1: Check Availability Before Use</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IMeetingRecordingController</span><span class="o">*</span> <span class="n">ctrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRecordingController</span><span class="p">();</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">ctrl</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// Controller exists</span>
+    <span class="n">SDKError</span> <span class="n">canUse</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">-&gt;</span><span class="n">CanStartRawRecording</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">canUse</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// Feature available</span>
+        <span class="n">ctrl</span><span class="o">-&gt;</span><span class="n">StartRawRecording</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="pattern-2-user-id--0-often-means-self">Pattern 2: User ID = 0 Often Means “Self”</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">MuteAudio</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>      <span class="c1">// Mute self</span>
+<span class="n">audioCtrl</span><span class="o">-&gt;</span><span class="n">MuteAudio</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span> <span class="c1">// Mute specific user</span>
+</code></pre></div></div>
+
+<h3 id="pattern-3-event-listeners-are-optional">Pattern 3: Event Listeners Are Optional</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Some features work without event listener</span>
+<span class="n">IMeetingChatController</span><span class="o">*</span> <span class="n">chatCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingChatController</span><span class="p">();</span>
+<span class="c1">// Don't need SetEvent() if you only send messages, don't receive</span>
+<span class="n">chatCtrl</span><span class="o">-&gt;</span><span class="n">SendChatTo</span><span class="p">(</span><span class="s">L"everyone"</span><span class="p">,</span> <span class="s">L"Hello"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="pattern-4-ilist-collections">Pattern 4: IList<T> Collections</T></h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">IList</span><span class="o">&lt;</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">&gt;*</span> <span class="n">participantList</span> <span class="o">=</span> <span class="n">participantsCtrl</span><span class="o">-&gt;</span><span class="n">GetParticipantsList</span><span class="p">();</span>
+<span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="n">participantList</span><span class="o">-&gt;</span><span class="n">GetCount</span><span class="p">();</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">userId</span> <span class="o">=</span> <span class="n">participantList</span><span class="o">-&gt;</span><span class="n">GetItem</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="c1">// Use userId...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="controller-is-nullptr">Controller is nullptr</h3>
+
+<p><strong>Cause</strong>: Feature not available in this SDK app type or meeting state</p>
+
+<p><strong>Solution</strong>:</p>
+<ul>
+  <li>Check if you’re in a meeting (<code class="language-plaintext highlighter-rouge">MEETING_STATUS_INMEETING</code>)</li>
+  <li>Verify SDK app permissions in Zoom Marketplace</li>
+  <li>Some controllers only available to hosts/co-hosts</li>
+</ul>
+
+<h3 id="setevent-does-nothing">SetEvent() Does Nothing</h3>
+
+<p><strong>Cause</strong>: Forgot Windows message loop</p>
+
+<p><strong>Solution</strong>: See <a href="../troubleshooting/windows-message-loop.md">Windows Message Loop Guide</a></p>
+
+<h3 id="methods-return-sdkerr_wrong_usage">Methods Return SDKERR_WRONG_USAGE</h3>
+
+<p><strong>Cause</strong>: Called at wrong time or insufficient permissions</p>
+
+<p><strong>Solution</strong>:</p>
+<ul>
+  <li>Check method documentation for prerequisites</li>
+  <li>Verify you’re in correct meeting state</li>
+  <li>Check if you’re host/co-host (if required)</li>
+</ul>
+
+<hr />
+
+<h2 id="summary-the-universal-formula">Summary: The Universal Formula</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Read header file → Find I[Feature]Controller and I[Feature]Event
+2. Implement event listener → Inherit I[Feature]Event, implement all methods
+3. Get controller → meetingService-&gt;Get[Feature]Controller()
+4. Register listener → controller-&gt;SetEvent(new YourListener())
+5. Use features → Call controller methods
+</code></pre></div></div>
+
+<p><strong>This pattern works for ALL 35+ controllers!</strong></p>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<ul>
+  <li>Browse all available controllers: <code class="language-plaintext highlighter-rouge">SDK/x64/h/meeting_service_interface.h</code> (lines 1103-1314)</li>
+  <li>Pick a feature you want to implement</li>
+  <li>Find its header in <code class="language-plaintext highlighter-rouge">SDK/x64/h/meeting_service_components/</code></li>
+  <li>Follow the universal pattern above</li>
+</ul>
+
+<hr />
+
+<h2 id="related-documentation">Related Documentation</h2>
+
+<ul>
+  <li><a href="../references/interface-methods.md">Interface Methods Guide</a> - How to implement event listeners</li>
+  <li><a href="../examples/authentication-pattern.md">Authentication Pattern</a> - How to get meetingService</li>
+  <li><a href="../examples/raw-video-capture.md">Raw Video Capture</a> - Example using recording controller</li>
+  <li><a href="../troubleshooting/windows-message-loop.md">Windows Message Loop</a> - Required for callbacks</li>
+</ul>
+
+<hr />
+
+<p><strong>Last Updated</strong>: Based on Zoom Windows Meeting SDK v6.7.2.26830</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+  <p>
+    © 2026 Knowledge Base
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/knowledge.js" defer></script>
+</body>
+</html>

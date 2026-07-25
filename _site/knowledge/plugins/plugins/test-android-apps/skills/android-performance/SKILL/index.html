@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Skill · Knowledge Base</title>
+<meta name="description" content="Gather and interpret Android performance evidence on an adb target using Simpleperf CPU profiles, Perfetto or Compose traces, gfxinfo frame data, dumpsys mem...">
+<link rel="canonical" href="http://localhost:4000/knowledge/plugins/plugins/test-android-apps/skills/android-performance/SKILL/">
+
+<meta property="og:title" content="Skill · Knowledge Base">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/knowledge/plugins/plugins/test-android-apps/skills/android-performance/SKILL/">
+<meta property="og:description" content="Gather and interpret Android performance evidence on an adb target using Simpleperf CPU profiles, Perfetto or Compose traces, gfxinfo frame data, dumpsys mem...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/assets/search-index.json",
+    baseUrl: "",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/">
+    Knowledge Base
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/"
+         >Home</a>
+      <a href="/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Skill</h1>
+
+      <div class="dk-meta"><span>Jul 25, 2026</span><span>Gather and interpret Android performance evidence on an adb target using Simpleperf CPU profiles, Perfetto or Compose traces, gfxinfo frame data, dumpsys meminfo snapshots, Java heap dumps, and native allocation traces. Use when asked to profile an Android app flow, find CPU-heavy functions, diagnose jank, capture startup or frame timing evidence, compare before/after performance, explain what code is taking time, or gather memory/leak profiling artifacts.</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="android-performance">Android Performance</h1>
+
+<p>Use this skill to capture Android performance evidence for adb-installable apps. CPU sampling usually requires a debuggable or profileable build; frame stats, Perfetto, and logcat can still help when an app cannot be sampled. Compose with <code class="language-plaintext highlighter-rouge">../android-emulator-qa/SKILL.md</code> for device selection, build/install/launch, UI driving, screenshots, UI trees, and logcat capture.</p>
+
+<h2 id="core-workflow">Core Workflow</h2>
+
+<ol>
+  <li>Pick one focused user-visible flow.</li>
+  <li>Choose the trace type that matches the question.</li>
+  <li>Record the flow with clear start and stop boundaries.</li>
+  <li>Pull or copy the trace produced by that run, then generate reports from that file.</li>
+  <li>Interpret reports with caveats about device, build type, sample count, and profiler limits.</li>
+</ol>
+
+<p>Avoid broad “use the app for a while” captures. They make traces hard to attribute and usually hide the functions that matter.</p>
+
+<p>Use a local adb target for meaningful timing. Store outputs in a run-specific artifact folder outside the skill directory:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">[</span> <span class="nt">-z</span> <span class="s2">"</span><span class="k">${</span><span class="nv">ARTIFACT_DIR</span><span class="k">:-}</span><span class="s2">"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+  </span><span class="nv">ARTIFACT_DIR</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">mktemp</span> <span class="nt">-d</span> <span class="s2">"</span><span class="k">${</span><span class="nv">TMPDIR</span><span class="k">:-</span><span class="p">/tmp</span><span class="k">}</span><span class="s2">/codex-android-perf.XXXXXX"</span><span class="si">)</span><span class="s2">"</span>
+<span class="k">fi
+</span><span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Do not put <code class="language-plaintext highlighter-rouge">ARTIFACT_DIR</code> under <code class="language-plaintext highlighter-rouge">SKILL_DIR</code>; the skill folder is for bundled instructions and scripts, not run artifacts.</p>
+
+<h2 id="choosing-a-trace">Choosing A Trace</h2>
+
+<ul>
+  <li>Use <strong>Simpleperf</strong> when the question is “what functions are taking CPU time?” or when you need a sampled profile of Kotlin, Java, native, or framework execution.</li>
+  <li>Use <strong>Perfetto</strong> when the question is frame timing, startup timeline, scheduler gaps, binder work, lock contention, main-thread stalls, Compose recomposition, or why a flow felt janky.</li>
+  <li>Use <strong>gfxinfo framestats</strong> for a quick manual frame/jank snapshot. Pair it with Perfetto when you need root cause.</li>
+  <li>Use <strong>meminfo / heap dumps</strong> when the question is retained Java/Kotlin objects, PSS, native heap, or object counts after a focused flow.</li>
+</ul>
+
+<h2 id="simpleperf-cpu-profiles">Simpleperf CPU Profiles</h2>
+
+<p>Simpleperf <code class="language-plaintext highlighter-rouge">--app</code> works best when the installed package is debuggable or profileable from shell. Preflight before recording:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SERIAL</span><span class="o">=</span><span class="s2">"&lt;adb-serial&gt;"</span>
+<span class="nv">PACKAGE</span><span class="o">=</span><span class="s2">"&lt;app package&gt;"</span>
+
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell dumpsys package <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> | <span class="nb">grep</span> <span class="nt">-Ei</span> <span class="s1">'DEBUGGABLE|profileable|isProfileable'</span> <span class="o">||</span> <span class="nb">true</span>
+</code></pre></div></div>
+
+<p>If the package is not debuggable/profileable and <code class="language-plaintext highlighter-rouge">simpleperf record --app</code> fails, install a debug/profileable build when possible. If that is not possible, use Perfetto or <code class="language-plaintext highlighter-rouge">gfxinfo</code> instead of treating missing CPU samples as evidence.</p>
+
+<p>Start recording in one terminal or as a long-running Codex command session:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SERIAL</span><span class="o">=</span><span class="s2">"&lt;adb-serial&gt;"</span>
+<span class="nv">PACKAGE</span><span class="o">=</span><span class="s2">"&lt;app package&gt;"</span>
+<span class="nv">MAX_DURATION_SECONDS</span><span class="o">=</span>60
+
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell <span class="nb">rm</span> <span class="nt">-f</span> /data/local/tmp/perf.data
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> logcat <span class="nt">-c</span>
+
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell simpleperf record <span class="se">\</span>
+  <span class="nt">--app</span> <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">-o</span> /data/local/tmp/perf.data <span class="se">\</span>
+  <span class="nt">-e</span> cpu-clock <span class="nt">-f</span> 4000 <span class="nt">-g</span> <span class="se">\</span>
+  <span class="nt">--duration</span> <span class="s2">"</span><span class="nv">$MAX_DURATION_SECONDS</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>While that command is running, perform exactly one focused flow with adb input, UI automation, or <code class="language-plaintext highlighter-rouge">android-emulator-qa</code>.</p>
+
+<p>Stop Simpleperf from another command and wait for the recording command to exit:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell <span class="s1">'pid="$(pidof simpleperf 2&gt;/dev/null || true)"; [ -n "$pid" ] &amp;&amp; kill -INT $pid'</span>
+</code></pre></div></div>
+
+<p>If that returns <code class="language-plaintext highlighter-rouge">Operation not permitted</code>, send Ctrl-C to the original <code class="language-plaintext highlighter-rouge">adb shell simpleperf record</code> command session and wait for it to exit.</p>
+
+<p>Pull and report the capture:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> pull /data/local/tmp/perf.data <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/perf.data"</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> logcat <span class="nt">-d</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/logcat.txt"</span>
+
+<span class="nv">SKILL_DIR</span><span class="o">=</span><span class="s2">"&lt;absolute path to this loaded skill folder&gt;"</span>
+<span class="nv">FIRST_PARTY_REGEX</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nb">printf</span> <span class="s1">'%s'</span> <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> | <span class="nb">sed</span> <span class="s1">'s/\./\\./g'</span><span class="si">)</span><span class="s2">"</span>
+<span class="s2">"</span><span class="nv">$SKILL_DIR</span><span class="s2">/scripts/simpleperf_hotspots.sh"</span> <span class="se">\</span>
+  <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/perf.data"</span> <span class="se">\</span>
+  <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">--serial</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">--first-party-regex</span> <span class="s2">"</span><span class="nv">$FIRST_PARTY_REGEX</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Do not derive <code class="language-plaintext highlighter-rouge">SKILL_DIR</code> from the target app repo’s <code class="language-plaintext highlighter-rouge">pwd</code>; installed plugins usually live outside the app being profiled. Keep <code class="language-plaintext highlighter-rouge">FIRST_PARTY_REGEX</code> scoped to the app’s package or app-owned module prefixes; avoid broad framework patterns such as <code class="language-plaintext highlighter-rouge">kotlin</code>, <code class="language-plaintext highlighter-rouge">Compose</code>, or <code class="language-plaintext highlighter-rouge">androidx.compose</code> when reporting app-owned rows.</p>
+
+<p>The helper writes:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$ARTIFACT_DIR/simpleperf-self.txt</code></li>
+  <li><code class="language-plaintext highlighter-rouge">$ARTIFACT_DIR/simpleperf-children.txt</code></li>
+  <li><code class="language-plaintext highlighter-rouge">$ARTIFACT_DIR/simpleperf.csv</code> when supported by the installed Simpleperf</li>
+</ul>
+
+<p>If host Simpleperf is not installed, the helper searches Android Studio and Android SDK/NDK locations. If unavailable, it falls back to device-side <code class="language-plaintext highlighter-rouge">adb shell simpleperf report</code> when the device still has <code class="language-plaintext highlighter-rouge">/data/local/tmp/perf.data</code>.</p>
+
+<h2 id="reading-simpleperf">Reading Simpleperf</h2>
+
+<p>Simpleperf reports sampled CPU execution. It does not directly measure suspended coroutines, network latency, lock wait time, or other wall-clock waits. If a flow feels slow but Simpleperf shows little app CPU, capture Perfetto to inspect scheduler gaps, binder work, locks, frame timing, and app trace sections.</p>
+
+<p>Read reports this way:</p>
+
+<ul>
+  <li><strong>Self/Overhead</strong>: samples where the function itself was executing. Use this for hot leaf work such as parsing, formatting, diffing, sorting, allocation-heavy iteration, or JSON/protobuf processing.</li>
+  <li><strong>Children/inclusive</strong>: samples in the function and its callees. Use this for expensive entry points such as repositories, use cases, view models, Composables, startup initializers, or feature coordinators.</li>
+  <li><strong>Shared Object / Symbol</strong>: prefer app-owned package frames, feature modules, domain/data/UI modules, and generated app code. Treat Android framework, Kotlin runtime, Compose, and native/runtime frames as context unless the app-owned caller is visible.</li>
+  <li><strong>Percentages</strong>: useful for ranking functions inside one capture. For user-facing timing claims, pair with Perfetto, <code class="language-plaintext highlighter-rouge">gfxinfo</code>, or repeated wall-clock measurements.</li>
+</ul>
+
+<p>When interpreting a hotspot, note symbol/function name, self or inclusive percentage, approximate sampled CPU time when available, caller stack or owning source file, flow steps, artifact paths, and whether the capture is single-run or repeated.</p>
+
+<h2 id="perfetto--compose-trace">Perfetto / Compose Trace</h2>
+
+<p>If the app repo already documents a Perfetto/System Trace command for that project, use it. Otherwise use Perfetto directly. The light command below captures scheduler/frequency/Android atrace categories and app <code class="language-plaintext highlighter-rouge">Trace</code> sections for <code class="language-plaintext highlighter-rouge">PACKAGE</code>; it is not a substitute for a full project-specific Perfetto config when you need detailed frame timeline or Compose runtime internals.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SERIAL</span><span class="o">=</span><span class="s2">"&lt;adb-serial&gt;"</span>
+<span class="nv">PACKAGE</span><span class="o">=</span><span class="s2">"&lt;app package&gt;"</span>
+<span class="nv">TRACE_DURATION_SECONDS</span><span class="o">=</span>30
+<span class="nv">TRACE_BASENAME</span><span class="o">=</span><span class="s2">"app-flow-</span><span class="si">$(</span><span class="nb">date</span> +%Y%m%d-%H%M%S<span class="si">)</span><span class="s2">.pftrace"</span>
+<span class="nv">TRACE_DEVICE</span><span class="o">=</span><span class="s2">"/data/misc/perfetto-traces/</span><span class="nv">$TRACE_BASENAME</span><span class="s2">"</span>
+
+<span class="nv">PERFETTO_PID</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell perfetto <span class="se">\</span>
+  <span class="nt">--background-wait</span> <span class="se">\</span>
+  <span class="nt">-o</span> <span class="s2">"</span><span class="nv">$TRACE_DEVICE</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">-t</span> <span class="s2">"</span><span class="k">${</span><span class="nv">TRACE_DURATION_SECONDS</span><span class="k">}</span><span class="s2">s"</span> <span class="se">\</span>
+  <span class="nt">--app</span> <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> <span class="se">\</span>
+  sched freq idle am wm gfx view binder_driver hal dalvik | <span class="nb">tr</span> <span class="nt">-d</span> <span class="s1">'\r'</span> | <span class="nb">tail</span> <span class="nt">-n</span> 1<span class="si">)</span><span class="s2">"</span>
+<span class="nb">printf</span> <span class="s1">'Perfetto PID: %s\n'</span> <span class="s2">"</span><span class="nv">$PERFETTO_PID</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Run exactly one focused flow before <code class="language-plaintext highlighter-rouge">TRACE_DURATION_SECONDS</code> expires. To stop early, gracefully terminate the background Perfetto process and give it a moment to flush:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell <span class="nb">kill</span> <span class="nt">-TERM</span> <span class="s2">"</span><span class="nv">$PERFETTO_PID</span><span class="s2">"</span> 2&gt;/dev/null <span class="o">||</span> <span class="nb">true
+</span>adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell <span class="s2">"
+  last_size=-1
+  stable_count=0
+  i=0
+  while [ </span><span class="se">\$</span><span class="s2">i -lt 30 ]; do
+    size=</span><span class="se">\$</span><span class="s2">(ls -l '</span><span class="nv">$TRACE_DEVICE</span><span class="s2">' 2&gt;/dev/null | awk '{ print </span><span class="se">\$</span><span class="s2">5 }')
+    if [ -n </span><span class="se">\"\$</span><span class="s2">size</span><span class="se">\"</span><span class="s2"> ] &amp;&amp; [ </span><span class="se">\"\$</span><span class="s2">size</span><span class="se">\"</span><span class="s2"> -gt 0 ] &amp;&amp; [ </span><span class="se">\"\$</span><span class="s2">size</span><span class="se">\"</span><span class="s2"> = </span><span class="se">\"\$</span><span class="s2">last_size</span><span class="se">\"</span><span class="s2"> ]; then
+      stable_count=</span><span class="se">\$</span><span class="s2">((stable_count + 1))
+      [ </span><span class="se">\$</span><span class="s2">stable_count -ge 2 ] &amp;&amp; exit 0
+    else
+      stable_count=0
+    fi
+    last_size=</span><span class="se">\"\$</span><span class="s2">{size:-0}</span><span class="se">\"</span><span class="s2">
+    i=</span><span class="se">\$</span><span class="s2">((i + 1))
+    sleep 1
+  done
+  exit 1
+"</span>
+</code></pre></div></div>
+
+<p>Prefer letting <code class="language-plaintext highlighter-rouge">TRACE_DURATION_SECONDS</code> expire instead of stopping early. If the stop command fails because the trace already ended, still wait until the output file exists and its size is stable before pulling. If the direct command is too coarse, use Android Studio System Trace or a project-specific Perfetto config. Only report frame timeline or Compose recomposition details when those tracks/events are actually present in the captured trace; the light command above does not guarantee them.</p>
+
+<p>Pull the exact on-device trace from this run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> pull <span class="s2">"</span><span class="nv">$TRACE_DEVICE</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/</span><span class="nv">$TRACE_BASENAME</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>In Perfetto, inspect:</p>
+
+<ul>
+  <li>main-thread slices around missed frames or long startup sections</li>
+  <li>frame scheduling, frame timeline, and render thread lanes</li>
+  <li>Compose runtime tracing sections for recomposition work when enabled</li>
+  <li>binder transactions, monitor contention, scheduler gaps, and app log markers</li>
+</ul>
+
+<h2 id="gfxinfo-framestats">gfxinfo Framestats</h2>
+
+<p>Use this for a quick manual frame snapshot:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SERIAL</span><span class="o">=</span><span class="s2">"&lt;adb-serial&gt;"</span>
+<span class="nv">PACKAGE</span><span class="o">=</span><span class="s2">"&lt;app package&gt;"</span>
+
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell pidof <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell dumpsys window | <span class="nb">grep</span> <span class="nt">-F</span> <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell dumpsys gfxinfo <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> reset
+<span class="c"># Perform the focused flow.</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell dumpsys gfxinfo <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/gfxinfo.txt"</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell dumpsys gfxinfo <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> framestats <span class="o">&gt;</span> <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/gfxinfo-framestats.txt"</span>
+</code></pre></div></div>
+
+<p>Capture from a stable, responsive screen. If <code class="language-plaintext highlighter-rouge">dumpsys gfxinfo</code> fails to dump the process, or the device shows an ANR/dialog/splash screen instead of the flow, discard that capture and use Perfetto for root cause.</p>
+
+<p>Read the headline summary first: total frames, janky frames, frame percentiles, slow UI thread, slow draw commands, and frame deadline misses. On emulators, absolute smoothness numbers are noisy; percentile spikes and slow draw/UI counters are still useful for deciding whether to take a Perfetto trace.</p>
+
+<h2 id="memory--leak-artifacts">Memory / Leak Artifacts</h2>
+
+<p>Use this on an adb target after narrowing the investigation to one flow. Exercise the flow, return to a stable screen, then capture memory artifacts from that state.</p>
+
+<p>For quick Java/native/PSS/object-count snapshots:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SERIAL</span><span class="o">=</span><span class="s2">"&lt;adb-serial&gt;"</span>
+<span class="nv">PACKAGE</span><span class="o">=</span><span class="s2">"&lt;app package&gt;"</span>
+
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell am force-stop <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell monkey <span class="nt">-p</span> <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> 1
+<span class="c"># Exercise the focused flow, then navigate back to a stable idle screen.</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell dumpsys meminfo <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> <span class="o">&gt;</span> <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/meminfo-flow.txt"</span>
+</code></pre></div></div>
+
+<p>Read <code class="language-plaintext highlighter-rouge">TOTAL PSS</code>, Java heap, native heap, graphics, <code class="language-plaintext highlighter-rouge">Views</code>, <code class="language-plaintext highlighter-rouge">Activities</code>, binder counts, and object counts. Treat one noisy sample as a lead, not a conclusion.</p>
+
+<p>For retained Kotlin/Java objects, prefer Shark CLI when it is available. It works with Android heap dumps and produces text output the agent can inspect and cite.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">HEAP</span><span class="o">=</span><span class="s2">"/data/local/tmp/app-flow.hprof"</span>
+<span class="nv">HPROF</span><span class="o">=</span><span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/app-flow.hprof"</span>
+
+<span class="k">if</span> <span class="o">!</span> <span class="nb">command</span> <span class="nt">-v</span> shark-cli <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+  </span><span class="nb">echo</span> <span class="s2">"Install Shark CLI, or analyze the HPROF with Android Studio Profiler / MAT."</span> <span class="o">&gt;</span>&amp;2
+<span class="k">fi
+
+</span>adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell am dumpheap <span class="nt">-g</span> <span class="s2">"</span><span class="nv">$PACKAGE</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$HEAP</span><span class="s2">"</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> pull <span class="s2">"</span><span class="nv">$HEAP</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$HPROF</span><span class="s2">"</span>
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell <span class="nb">rm</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$HEAP</span><span class="s2">"</span>
+
+<span class="k">if </span><span class="nb">command</span> <span class="nt">-v</span> shark-cli <span class="o">&gt;</span>/dev/null<span class="p">;</span> <span class="k">then
+  </span>shark-cli <span class="nt">--hprof</span> <span class="s2">"</span><span class="nv">$HPROF</span><span class="s2">"</span> analyze | <span class="nb">tee</span> <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/shark-analysis.txt"</span>
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p>Read <code class="language-plaintext highlighter-rouge">shark-analysis.txt</code> first when it exists. Report suspected leaking objects, retained sizes, and reference chains. Look for retained feature objects, activities, fragments, view models, Compose state holders, repositories, listeners, callbacks, and caches that should have been released after leaving the flow. If Shark CLI is unavailable, still preserve the HPROF path and inspect it with the best available heap analyzer; do not claim leak roots from <code class="language-plaintext highlighter-rouge">meminfo</code> alone.</p>
+
+<p>For native allocation growth, capture a Perfetto trace with heapprofd enabled. Keep the duration in the config; current Android <code class="language-plaintext highlighter-rouge">perfetto</code> rejects <code class="language-plaintext highlighter-rouge">-t</code> together with <code class="language-plaintext highlighter-rouge">--config</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">TRACE_DEVICE</span><span class="o">=</span><span class="s2">"/data/misc/perfetto-traces/native-alloc.pftrace"</span>
+
+adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> shell perfetto <span class="nt">-o</span> <span class="s2">"</span><span class="nv">$TRACE_DEVICE</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">--txt</span> <span class="nt">-c</span> - <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh">
+duration_ms: 60000
+buffers { size_kb: 262144 fill_policy: RING_BUFFER }
+data_sources {
+  config {
+    name: "android.heapprofd"
+    heapprofd_config {
+      sampling_interval_bytes: 65536
+      shmem_size_bytes: 8388608
+      block_client: true
+      process_cmdline: "</span><span class="nv">$PACKAGE</span><span class="sh">"
+    }
+  }
+}
+</span><span class="no">EOF
+
+</span>adb <span class="nt">-s</span> <span class="s2">"</span><span class="nv">$SERIAL</span><span class="s2">"</span> pull <span class="s2">"</span><span class="nv">$TRACE_DEVICE</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/native-alloc.pftrace"</span>
+</code></pre></div></div>
+
+<p>Analyze the trace with <code class="language-plaintext highlighter-rouge">trace_processor_shell</code> and save the outputs:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">SKILL_DIR</span><span class="o">=</span><span class="s2">"&lt;absolute path to this loaded skill folder&gt;"</span>
+<span class="s2">"</span><span class="nv">$SKILL_DIR</span><span class="s2">/scripts/heapprofd_reports.sh"</span> <span class="se">\</span>
+  <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">/native-alloc.pftrace"</span> <span class="se">\</span>
+  <span class="s2">"</span><span class="nv">$ARTIFACT_DIR</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Read <code class="language-plaintext highlighter-rouge">heapprofd-summary.txt</code>, <code class="language-plaintext highlighter-rouge">heapprofd-top-allocations.txt</code>, <code class="language-plaintext highlighter-rouge">heapprofd-top-stack.txt</code>, <code class="language-plaintext highlighter-rouge">heapprofd-health.txt</code>, and <code class="language-plaintext highlighter-rouge">meminfo</code> together. Report net native allocation size, top allocating frames/mappings, the expanded stack for the largest callsite, and whether trace stats show heapprofd health issues such as client errors, packet loss, or buffer overruns. Prefer Java heap dumps for retained app objects; heapprofd is for native allocation behavior.</p>
+
+<h2 id="report">Report</h2>
+
+<p>Report:</p>
+
+<ul>
+  <li>exact flow, device/emulator, Android version, build variant, and run count</li>
+  <li>artifact paths for every trace/report used</li>
+  <li>top hotspots or frame/jank evidence with percentages, durations, or counts</li>
+  <li>whether evidence is CPU samples, frame timeline, frame stats, or memory artifacts</li>
+  <li>caveats such as emulator noise, low sample count, cold-start compilation, or missing symbols</li>
+  <li>next smallest trace or code change when current evidence is insufficient</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+  <p>
+    © 2026 Knowledge Base
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/knowledge.js" defer></script>
+</body>
+</html>

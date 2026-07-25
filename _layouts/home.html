@@ -1,0 +1,31 @@
+---
+layout: default
+---
+<div class="dk-content">
+  <header class="dk-pagehead">
+    <h1>{{ page.title | default: site.title }}</h1>
+    {%- if site.description %}<p class="dk-meta">{{ site.description }}</p>{% endif %}
+  </header>
+
+  <div class="dk-prose">
+    {{ content }}
+  </div>
+
+  {%- assign posts = site.posts -%}
+  {%- if posts.size > 0 %}
+    <h2>Latest posts</h2>
+    <ul class="dk-cards">
+      {%- for post in posts limit: 6 %}
+        <li>
+          <a class="dk-card" href="{{ post.url | relative_url }}">
+            <span class="dk-card__title">{{ post.title }}</span>
+            <span class="dk-card__desc">
+              {{ post.date | date: "%b %-d, %Y" }}
+              {%- if post.description %} · {{ post.description | truncate: 80 }}{% endif %}
+            </span>
+          </a>
+        </li>
+      {%- endfor %}
+    </ul>
+  {%- endif %}
+</div>

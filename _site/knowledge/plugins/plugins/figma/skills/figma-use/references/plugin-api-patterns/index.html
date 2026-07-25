@@ -1,0 +1,1799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Plugin Api Patterns · Knowledge Base</title>
+<meta name="description" content="Plugin API Patterns">
+<link rel="canonical" href="http://localhost:4000/knowledge/plugins/plugins/figma/skills/figma-use/references/plugin-api-patterns/">
+
+<meta property="og:title" content="Plugin Api Patterns · Knowledge Base">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/knowledge/plugins/plugins/figma/skills/figma-use/references/plugin-api-patterns/">
+<meta property="og:description" content="Plugin API Patterns">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/assets/search-index.json",
+    baseUrl: "",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/">
+    Knowledge Base
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/"
+         >Home</a>
+      <a href="/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Plugin Api Patterns</h1>
+
+      <div class="dk-meta"><span>Jul 25, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="plugin-api-patterns">Plugin API Patterns</h1>
+
+<blockquote>
+  <p>Part of the <a href="../SKILL.md">use_figma skill</a>. Quick reference for common Figma Plugin API operations.</p>
+</blockquote>
+
+<h2 id="contents">Contents</h2>
+
+<ul>
+  <li>Execution Basics</li>
+  <li>Creating Nodes (Frames, Text, Rectangles, Ellipses, Lines, Vectors, SVG Import)</li>
+  <li>Fills and Strokes (Solid, Linear Gradient, Radial Gradient, Multiple Fills)</li>
+  <li>Auto Layout</li>
+  <li>Effects</li>
+  <li>Opacity and Blend Modes</li>
+  <li>Corner Radius and Clipping</li>
+  <li>Grouping and Organization</li>
+  <li>Components and Variants</li>
+  <li>Styles</li>
+  <li>Cloning, Finding Nodes, and Grids</li>
+  <li>Constraints and Viewport</li>
+</ul>
+
+<h2 id="execution-basics">Execution Basics</h2>
+
+<h3 id="page-context">Page Context</h3>
+
+<p>Page context resets between <code class="language-plaintext highlighter-rouge">use_figma</code> calls — <code class="language-plaintext highlighter-rouge">figma.currentPage</code> always starts on the first page. Use <code class="language-plaintext highlighter-rouge">await figma.setCurrentPageAsync(page)</code> at the start of each invocation to switch to the correct page. The sync setter <code class="language-plaintext highlighter-rouge">figma.currentPage = page</code> does <strong>NOT work</strong> and will throw — always use the async method.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">targetPage</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">root</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">My Page</span><span class="dl">"</span><span class="p">);</span>
+<span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">setCurrentPageAsync</span><span class="p">(</span><span class="nx">targetPage</span><span class="p">);</span>
+<span class="c1">// targetPage.children is now populated</span>
+</code></pre></div></div>
+
+<h3 id="returning-results">Returning Results</h3>
+
+<p>Scripts are automatically wrapped in an async IIFE with error handling. Just write plain JS and use <code class="language-plaintext highlighter-rouge">return</code> to send data back to the agent:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Return an object — auto-serialized to JSON</span>
+<span class="k">return</span> <span class="p">{</span> <span class="na">nodeId</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">count</span><span class="p">:</span> <span class="mi">5</span> <span class="p">}</span>
+
+<span class="c1">// Return a string</span>
+<span class="k">return</span> <span class="dl">"</span><span class="s2">Created 3 components</span><span class="dl">"</span>
+</code></pre></div></div>
+
+<p>Errors are automatically captured — no try/catch needed. <code class="language-plaintext highlighter-rouge">figma.notify()</code> does <strong>not</strong> exist. Return all information via the <code class="language-plaintext highlighter-rouge">return</code> value.</p>
+
+<h3 id="working-incrementally">Working Incrementally</h3>
+
+<p>Don’t build an entire screen in one call. Break work into small steps:</p>
+<ol>
+  <li>Create tokens/variables</li>
+  <li>Create text styles</li>
+  <li>Build individual components</li>
+  <li>Compose sections</li>
+  <li>Assemble screens</li>
+</ol>
+
+<p>Verify structure with <code class="language-plaintext highlighter-rouge">get_metadata</code> between steps. Use <code class="language-plaintext highlighter-rouge">get_screenshot</code> after each major creation milestone to catch visual problems early.</p>
+
+<h2 id="creating-nodes">Creating Nodes</h2>
+
+<h3 id="frames">Frames</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">frame</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createFrame</span><span class="p">();</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Container</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nf">resize</span><span class="p">(</span><span class="mi">1440</span><span class="p">,</span> <span class="mi">900</span><span class="p">);</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.98</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.98</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.99</span> <span class="p">}</span> <span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="text">Text</h3>
+
+<p>Canonical recipe: load font → <code class="language-plaintext highlighter-rouge">await</code> → mutate → return affected IDs. This pattern is the same for every font — <code class="language-plaintext highlighter-rouge">Inter</code> happens to be preloaded so the missing-<code class="language-plaintext highlighter-rouge">loadFontAsync</code> bug usually only surfaces with other families. See <a href="gotchas.md#canonical-text-edit-recipe-font-load--await--mutate--return-ids">gotchas.md → Canonical text-edit recipe</a>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load font BEFORE any text mutation — required for every font, not just Inter</span>
+<span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">loadFontAsync</span><span class="p">({</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Inter</span><span class="dl">"</span><span class="p">,</span> <span class="na">style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Regular</span><span class="dl">"</span> <span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createText</span><span class="p">();</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">fontName</span> <span class="o">=</span> <span class="p">{</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Inter</span><span class="dl">"</span><span class="p">,</span> <span class="na">style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Regular</span><span class="dl">"</span> <span class="p">};</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">fontSize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">lineHeight</span> <span class="o">=</span> <span class="p">{</span> <span class="na">value</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="na">unit</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PIXELS</span><span class="dl">"</span> <span class="p">};</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">letterSpacing</span> <span class="o">=</span> <span class="p">{</span> <span class="na">value</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">unit</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PERCENT</span><span class="dl">"</span> <span class="p">};</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">characters</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Hello World</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">text</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.12</span> <span class="p">}</span> <span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="rectangles">Rectangles</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">rect</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createRectangle</span><span class="p">();</span>
+<span class="nx">rect</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Background</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">rect</span><span class="p">.</span><span class="nf">resize</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">);</span>
+<span class="nx">rect</span><span class="p">.</span><span class="nx">cornerRadius</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+<span class="nx">rect</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.96</span> <span class="p">}</span> <span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="ellipses">Ellipses</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">circle</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createEllipse</span><span class="p">();</span>
+<span class="nx">circle</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Avatar Circle</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">circle</span><span class="p">.</span><span class="nf">resize</span><span class="p">(</span><span class="mi">48</span><span class="p">,</span> <span class="mi">48</span><span class="p">);</span>
+<span class="nx">circle</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.87</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.90</span> <span class="p">}</span> <span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="lines">Lines</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">line</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createLine</span><span class="p">();</span>
+<span class="nx">line</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Divider</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">line</span><span class="p">.</span><span class="nf">resize</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="nx">line</span><span class="p">.</span><span class="nx">strokes</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span> <span class="na">opacity</span><span class="p">:</span> <span class="mf">0.08</span> <span class="p">}];</span>
+<span class="nx">line</span><span class="p">.</span><span class="nx">strokeWeight</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="vectors-custom-paths">Vectors (Custom Paths)</h3>
+
+<p>Use <code class="language-plaintext highlighter-rouge">figma.createVector()</code> for any shape that can’t be built from primitives — organic curves, flowing contours, custom silhouettes. The <code class="language-plaintext highlighter-rouge">vectorPaths</code> property accepts SVG path data.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">vector</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createVector</span><span class="p">();</span>
+<span class="nx">vector</span><span class="p">.</span><span class="nx">vectorPaths</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">windingRule</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NONZERO</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">data</span><span class="p">:</span> <span class="dl">"</span><span class="s2">M 0 60 C 30 10 70 10 100 50 C 130 90 170 20 200 40 L 200 100 L 0 100 Z</span><span class="dl">"</span>
+<span class="p">}];</span>
+<span class="nx">vector</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">SOLID</span><span class="dl">'</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.15</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.55</span> <span class="p">}</span> <span class="p">}];</span>
+<span class="nx">vector</span><span class="p">.</span><span class="nx">strokes</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">SOLID</span><span class="dl">'</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.4</span> <span class="p">}</span> <span class="p">}];</span>
+<span class="nx">vector</span><span class="p">.</span><span class="nx">strokeWeight</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>SVG path commands: <code class="language-plaintext highlighter-rouge">M</code> (move to), <code class="language-plaintext highlighter-rouge">L</code> (line to), <code class="language-plaintext highlighter-rouge">C x1 y1 x2 y2 x y</code> (cubic bezier), <code class="language-plaintext highlighter-rouge">Q x1 y1 x y</code> (quadratic bezier), <code class="language-plaintext highlighter-rouge">A rx ry rot large sweep x y</code> (arc), <code class="language-plaintext highlighter-rouge">Z</code> (close). Uppercase = absolute, lowercase = relative.</p>
+
+<p>Vectors support all the same properties as other shapes — fills, strokes, effects, brushes, dynamic strokes, variable-width strokes, and texture effects.</p>
+
+<h3 id="svg-import">SVG Import</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">svgString</span> <span class="o">=</span> <span class="s2">`&lt;svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"&gt;
+  &lt;path d="M5 12h14M12 5l7 7-7 7" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/&gt;
+&lt;/svg&gt;`</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createNodeFromSvg</span><span class="p">(</span><span class="nx">svgString</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Icon/Arrow Right</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">resize</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">24</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="fills--strokes">Fills &amp; Strokes</h2>
+
+<h3 id="solid-fill">Solid Fill</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.25</span> <span class="p">}</span> <span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="fill-with-opacity">Fill with Opacity</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.25</span> <span class="p">},</span> <span class="na">opacity</span><span class="p">:</span> <span class="mf">0.5</span> <span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="no-fill-transparent">No Fill (Transparent)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[];</span>
+</code></pre></div></div>
+
+<h3 id="linear-gradient">Linear Gradient</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GRADIENT_LINEAR</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">gradientStops</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.36</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.96</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="na">position</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.56</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.24</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.88</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="na">position</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="na">gradientTransform</span><span class="p">:</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>  <span class="c1">// left-to-right (default)</span>
+<span class="p">}];</span>
+
+<span class="c1">// Top-to-bottom:</span>
+<span class="c1">// gradientTransform: [[0, 1, 0], [-1, 0, 1]]</span>
+</code></pre></div></div>
+
+<h3 id="radial-gradient">Radial Gradient</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GRADIENT_RADIAL</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">gradientStops</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="na">position</span><span class="p">:</span> <span class="mi">0</span> <span class="p">},</span>   <span class="c1">// bright center</span>
+    <span class="p">{</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.82</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.38</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.14</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="na">position</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span>   <span class="c1">// deeper edge</span>
+  <span class="p">],</span>
+  <span class="c1">// 2x3 affine matrix [[scaleX, shearX, tx], [shearY, scaleY, ty]]</span>
+  <span class="c1">// Scale &lt;1 = gradient LARGER than shape (freeform color — use for illustration)</span>
+  <span class="c1">// Scale &gt;1 = gradient SMALLER than shape (obvious oval — avoid for illustration)</span>
+  <span class="na">gradientTransform</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.71</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.19</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.57</span><span class="p">,</span> <span class="mf">0.21</span><span class="p">]]</span>  <span class="c1">// large, offset</span>
+<span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="strokes">Strokes</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">strokes</span> <span class="o">=</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.85</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.87</span> <span class="p">}</span> <span class="p">}];</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">strokeWeight</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">strokeAlign</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">INSIDE</span><span class="dl">"</span><span class="p">;</span>  <span class="c1">// "CENTER", "OUTSIDE"</span>
+</code></pre></div></div>
+
+<h3 id="multiple-fills-layered">Multiple Fills (Layered)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.95</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.96</span> <span class="p">}</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SOLID</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.36</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.96</span> <span class="p">},</span> <span class="na">opacity</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre></div></div>
+
+<h2 id="auto-layout">Auto Layout</h2>
+
+<h3 id="setting-up-auto-layout">Setting Up Auto Layout</h3>
+
+<p><strong>Prefer <code class="language-plaintext highlighter-rouge">figma.createAutoLayout()</code></strong> — it returns a frame with <code class="language-plaintext highlighter-rouge">layoutMode</code> already set and both axes hugging content, so children can immediately use <code class="language-plaintext highlighter-rouge">layoutSizingHorizontal/Vertical = "FILL"</code>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">frame</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createAutoLayout</span><span class="p">();</span> <span class="c1">// HORIZONTAL by default</span>
+<span class="kd">const</span> <span class="nx">column</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createAutoLayout</span><span class="p">(</span><span class="dl">"</span><span class="s2">VERTICAL</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// Customize from there as usual:</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">itemSpacing</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">paddingTop</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">paddingBottom</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">paddingLeft</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">paddingRight</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>If you need a non-auto-layout frame, use <code class="language-plaintext highlighter-rouge">figma.createFrame()</code> and set the properties manually:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">frame</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createFrame</span><span class="p">();</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">layoutMode</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">VERTICAL</span><span class="dl">"</span><span class="p">;</span>              <span class="c1">// or "HORIZONTAL"</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nf">resize</span><span class="p">(</span><span class="mi">360</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>                        <span class="c1">// Width fixed, height auto</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">primaryAxisSizingMode</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">AUTO</span><span class="dl">"</span><span class="p">;</span>       <span class="c1">// Hug main axis</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">counterAxisSizingMode</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">FIXED</span><span class="dl">"</span><span class="p">;</span>      <span class="c1">// Fixed cross axis</span>
+</code></pre></div></div>
+
+<p><strong>CRITICAL ORDERING:</strong> Always call <code class="language-plaintext highlighter-rouge">resize()</code> BEFORE setting sizing modes. The <code class="language-plaintext highlighter-rouge">resize()</code> method silently resets both sizing modes to FIXED, so calling it after setting <code class="language-plaintext highlighter-rouge">primaryAxisSizingMode = "AUTO"</code> will override your HUG settings and lock the frame to the exact pixel dimensions you passed (even throwaway values like <code class="language-plaintext highlighter-rouge">1</code>). This causes the common “1px dimension” bug.</p>
+
+<h3 id="alignment">Alignment</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Main axis (direction of layout)</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">primaryAxisAlignItems</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">MIN</span><span class="dl">"</span><span class="p">;</span>            <span class="c1">// Start</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">primaryAxisAlignItems</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">CENTER</span><span class="dl">"</span><span class="p">;</span>         <span class="c1">// Center</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">primaryAxisAlignItems</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">MAX</span><span class="dl">"</span><span class="p">;</span>            <span class="c1">// End</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">primaryAxisAlignItems</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">SPACE_BETWEEN</span><span class="dl">"</span><span class="p">;</span>  <span class="c1">// Distribute</span>
+
+<span class="c1">// Cross axis</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">counterAxisAlignItems</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">MIN</span><span class="dl">"</span><span class="p">;</span>     <span class="c1">// Start</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">counterAxisAlignItems</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">CENTER</span><span class="dl">"</span><span class="p">;</span>  <span class="c1">// Center</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">counterAxisAlignItems</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">MAX</span><span class="dl">"</span><span class="p">;</span>     <span class="c1">// End</span>
+<span class="c1">// NOTE: 'STRETCH' is NOT valid — use 'MIN' + child.layoutSizingX = 'FILL'</span>
+</code></pre></div></div>
+
+<h3 id="child-sizing">Child Sizing</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// IMPORTANT: FILL can only be set AFTER the child is appended to an auto-layout parent</span>
+<span class="nx">parent</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">child</span><span class="p">)</span>
+<span class="nx">child</span><span class="p">.</span><span class="nx">layoutSizingHorizontal</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">FILL</span><span class="dl">"</span><span class="p">;</span>   <span class="c1">// Stretch to parent</span>
+<span class="nx">child</span><span class="p">.</span><span class="nx">layoutSizingHorizontal</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">HUG</span><span class="dl">"</span><span class="p">;</span>    <span class="c1">// Shrink to content</span>
+<span class="nx">child</span><span class="p">.</span><span class="nx">layoutSizingHorizontal</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">FIXED</span><span class="dl">"</span><span class="p">;</span>  <span class="c1">// Manual width</span>
+
+<span class="nx">child</span><span class="p">.</span><span class="nx">layoutSizingVertical</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">FILL</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">child</span><span class="p">.</span><span class="nx">layoutSizingVertical</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">HUG</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">child</span><span class="p">.</span><span class="nx">layoutSizingVertical</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">FIXED</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="wrapping-grid-like-layout">Wrapping (Grid-like Layout)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">frame</span><span class="p">.</span><span class="nx">layoutMode</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">HORIZONTAL</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">layoutWrap</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">WRAP</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">itemSpacing</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>          <span class="c1">// Horizontal gap</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">counterAxisSpacing</span> <span class="o">=</span> <span class="mi">24</span><span class="p">;</span>   <span class="c1">// Vertical gap (between rows)</span>
+</code></pre></div></div>
+
+<h3 id="absolute-positioning-within-auto-layout">Absolute Positioning Within Auto Layout</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">child</span><span class="p">.</span><span class="nx">layoutPositioning</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">ABSOLUTE</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">child</span><span class="p">.</span><span class="nx">constraints</span> <span class="o">=</span> <span class="p">{</span> <span class="na">horizontal</span><span class="p">:</span> <span class="dl">"</span><span class="s2">MAX</span><span class="dl">"</span><span class="p">,</span> <span class="na">vertical</span><span class="p">:</span> <span class="dl">"</span><span class="s2">MIN</span><span class="dl">"</span> <span class="p">};</span>  <span class="c1">// Top-right</span>
+<span class="nx">child</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">parentWidth</span> <span class="o">-</span> <span class="nx">childWidth</span> <span class="o">-</span> <span class="mi">8</span><span class="p">;</span>
+<span class="nx">child</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="effects">Effects</h2>
+
+<h3 id="drop-shadow">Drop Shadow</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">effects</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DROP_SHADOW</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mf">0.08</span> <span class="p">},</span>
+  <span class="na">offset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">4</span> <span class="p">},</span>
+  <span class="na">radius</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+  <span class="na">spread</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span>
+  <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">blendMode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NORMAL</span><span class="dl">"</span>
+<span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="inner-shadow">Inner Shadow</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">effects</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">INNER_SHADOW</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mf">0.05</span> <span class="p">},</span>
+  <span class="na">offset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span>
+  <span class="na">radius</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="na">spread</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">blendMode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NORMAL</span><span class="dl">"</span>
+<span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="background-blur">Background Blur</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">effects</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">BACKGROUND_BLUR</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">radius</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+  <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="layer-blur">Layer Blur</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">effects</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">LAYER_BLUR</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">radius</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+  <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="multiple-effects">Multiple Effects</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">effects</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DROP_SHADOW</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mf">0.04</span> <span class="p">},</span> <span class="na">offset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">1</span> <span class="p">},</span> <span class="na">radius</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="na">spread</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">blendMode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NORMAL</span><span class="dl">"</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DROP_SHADOW</span><span class="dl">"</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mf">0.06</span> <span class="p">},</span> <span class="na">offset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">8</span> <span class="p">},</span> <span class="na">radius</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="na">spread</span><span class="p">:</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">blendMode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NORMAL</span><span class="dl">"</span> <span class="p">}</span>
+<span class="p">];</span>
+</code></pre></div></div>
+
+<h2 id="opacity--blend-modes">Opacity &amp; Blend Modes</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nx">opacity</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">blendMode</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">NORMAL</span><span class="dl">"</span><span class="p">;</span>    <span class="c1">// "MULTIPLY", "SCREEN", "OVERLAY", "DARKEN", "LIGHTEN", etc.</span>
+</code></pre></div></div>
+
+<h2 id="corner-radius">Corner Radius</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Uniform</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">cornerRadius</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+
+<span class="c1">// Per-corner</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">topLeftRadius</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">topRightRadius</span> <span class="o">=</span> <span class="mi">12</span><span class="p">;</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">bottomLeftRadius</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">bottomRightRadius</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="clipping">Clipping</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">frame</span><span class="p">.</span><span class="nx">clipsContent</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>   <span class="c1">// Children clipped to frame bounds</span>
+</code></pre></div></div>
+
+<h2 id="grouping--organization">Grouping &amp; Organization</h2>
+
+<h3 id="groups">Groups</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">group</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">group</span><span class="p">([</span><span class="nx">node1</span><span class="p">,</span> <span class="nx">node2</span><span class="p">,</span> <span class="nx">node3</span><span class="p">],</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">currentPage</span><span class="p">);</span>
+<span class="nx">group</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Grouped Elements</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="sections">Sections</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">section</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createSection</span><span class="p">();</span>
+<span class="nx">section</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">My Section</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">section</span><span class="p">.</span><span class="nf">resize</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">);</span> <span class="c1">// `resize` and `resizeWithoutConstraints` are equivalent on sections</span>
+<span class="nx">section</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">section</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="c1">// IMPORTANT: Sections don't auto-resize — always resize after adding content</span>
+</code></pre></div></div>
+
+<h3 id="appending-children">Appending Children</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">parentFrame</span><span class="p">.</span><span class="nf">appendChild</span><span class="p">(</span><span class="nx">childNode</span><span class="p">);</span>
+
+<span class="c1">// Insert at a specific index</span>
+<span class="nx">parentFrame</span><span class="p">.</span><span class="nf">insertChild</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">childNode</span><span class="p">);</span>  <span class="c1">// Insert at beginning</span>
+</code></pre></div></div>
+
+<h2 id="components--variants">Components &amp; Variants</h2>
+
+<h3 id="create-component">Create Component</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">component</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createComponent</span><span class="p">();</span>
+<span class="nx">component</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Button/Primary</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">component</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Primary action button.</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="create-instance">Create Instance</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nf">createInstance</span><span class="p">();</span>
+<span class="nx">instance</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="mi">200</span><span class="p">;</span>
+<span class="nx">instance</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="import-components-by-key-team-libraries">Import Components by Key (Team Libraries)</h3>
+
+<p>These methods import components from <strong>team libraries</strong> (not the same file). For components in the current file, use <code class="language-plaintext highlighter-rouge">figma.getNodeByIdAsync()</code> or <code class="language-plaintext highlighter-rouge">findOne()</code>/<code class="language-plaintext highlighter-rouge">findAll()</code>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Batch independent imports with Promise.all — sequential awaits multiply</span>
+<span class="c1">// IPC latency by the number of imports for no benefit.</span>
+<span class="kd">const</span> <span class="p">[</span><span class="nx">comp</span><span class="p">,</span> <span class="kd">set</span><span class="p">]</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nf">all</span><span class="p">([</span>
+  <span class="nx">figma</span><span class="p">.</span><span class="nf">importComponentByKeyAsync</span><span class="p">(</span><span class="nx">componentKey</span><span class="p">),</span>
+  <span class="nx">figma</span><span class="p">.</span><span class="nf">importComponentSetByKeyAsync</span><span class="p">(</span><span class="nx">componentSetKey</span><span class="p">),</span>
+<span class="p">])</span>
+
+<span class="kd">const</span> <span class="nx">instance</span> <span class="o">=</span> <span class="nx">comp</span><span class="p">.</span><span class="nf">createInstance</span><span class="p">()</span>
+<span class="kd">const</span> <span class="nx">variant</span> <span class="o">=</span> <span class="kd">set</span><span class="p">.</span><span class="nx">defaultVariant</span>
+<span class="kd">const</span> <span class="nx">variantInstance</span> <span class="o">=</span> <span class="nx">variant</span><span class="p">.</span><span class="nf">createInstance</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="combine-as-variants">Combine as Variants</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// IMPORTANT: Pass ComponentNodes (not frames)</span>
+<span class="kd">const</span> <span class="nx">componentSet</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">combineAsVariants</span><span class="p">(</span>
+  <span class="p">[</span><span class="nx">variantA</span><span class="p">,</span> <span class="nx">variantB</span><span class="p">,</span> <span class="nx">variantC</span><span class="p">],</span>
+  <span class="nx">figma</span><span class="p">.</span><span class="nx">currentPage</span>
+<span class="p">);</span>
+<span class="nx">componentSet</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Button</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">componentSet</span><span class="p">.</span><span class="nx">description</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Button component with multiple variants.</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// CRITICAL: Layout variants in a grid after combining (they stack at 0,0)</span>
+<span class="kd">let</span> <span class="nx">maxX</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">maxY</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="nx">componentSet</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nf">forEach</span><span class="p">((</span><span class="nx">child</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">child</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="p">(</span><span class="nx">i</span> <span class="o">%</span> <span class="nx">numCols</span><span class="p">)</span> <span class="o">*</span> <span class="nx">colWidth</span><span class="p">;</span>
+  <span class="nx">child</span><span class="p">.</span><span class="nx">y</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">floor</span><span class="p">(</span><span class="nx">i</span> <span class="o">/</span> <span class="nx">numCols</span><span class="p">)</span> <span class="o">*</span> <span class="nx">rowHeight</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">child</span> <span class="k">of</span> <span class="nx">componentSet</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">maxX</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="nx">maxX</span><span class="p">,</span> <span class="nx">child</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">child</span><span class="p">.</span><span class="nx">width</span><span class="p">);</span>
+  <span class="nx">maxY</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="nx">maxY</span><span class="p">,</span> <span class="nx">child</span><span class="p">.</span><span class="nx">y</span> <span class="o">+</span> <span class="nx">child</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">componentSet</span><span class="p">.</span><span class="nf">resizeWithoutConstraints</span><span class="p">(</span><span class="nx">maxX</span> <span class="o">+</span> <span class="mi">40</span><span class="p">,</span> <span class="nx">maxY</span> <span class="o">+</span> <span class="mi">40</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="component-properties">Component Properties</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// addComponentProperty returns a STRING key — capture it!</span>
+<span class="kd">const</span> <span class="nx">labelKey</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nf">addComponentProperty</span><span class="p">(</span><span class="dl">"</span><span class="s2">label</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">TEXT</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Button</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">showIconKey</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nf">addComponentProperty</span><span class="p">(</span><span class="dl">"</span><span class="s2">showIcon</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">BOOLEAN</span><span class="dl">"</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">iconSlotKey</span> <span class="o">=</span> <span class="nx">component</span><span class="p">.</span><span class="nf">addComponentProperty</span><span class="p">(</span><span class="dl">"</span><span class="s2">iconSlot</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">INSTANCE_SWAP</span><span class="dl">"</span><span class="p">,</span> <span class="nx">defaultIconId</span><span class="p">);</span>
+
+<span class="c1">// MUST link properties to child nodes via componentPropertyReferences</span>
+<span class="nx">labelNode</span><span class="p">.</span><span class="nx">componentPropertyReferences</span> <span class="o">=</span> <span class="p">{</span> <span class="na">characters</span><span class="p">:</span> <span class="nx">labelKey</span> <span class="p">};</span>
+<span class="nx">iconInstance</span><span class="p">.</span><span class="nx">componentPropertyReferences</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">visible</span><span class="p">:</span> <span class="nx">showIconKey</span><span class="p">,</span>
+  <span class="na">mainComponent</span><span class="p">:</span> <span class="nx">iconSlotKey</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="styles">Styles</h2>
+
+<h3 id="text-style">Text Style</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Load font BEFORE setting style.fontName — required for every font, not just Inter</span>
+<span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">loadFontAsync</span><span class="p">({</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Inter</span><span class="dl">"</span><span class="p">,</span> <span class="na">style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Regular</span><span class="dl">"</span> <span class="p">});</span>
+
+<span class="kd">const</span> <span class="nx">style</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createTextStyle</span><span class="p">();</span>
+<span class="nx">style</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Body/Default</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">style</span><span class="p">.</span><span class="nx">fontName</span> <span class="o">=</span> <span class="p">{</span> <span class="na">family</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Inter</span><span class="dl">"</span><span class="p">,</span> <span class="na">style</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Regular</span><span class="dl">"</span> <span class="p">};</span>
+<span class="nx">style</span><span class="p">.</span><span class="nx">fontSize</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span>
+<span class="nx">style</span><span class="p">.</span><span class="nx">lineHeight</span> <span class="o">=</span> <span class="p">{</span> <span class="na">value</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span> <span class="na">unit</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PIXELS</span><span class="dl">"</span> <span class="p">};</span>
+<span class="nx">style</span><span class="p">.</span><span class="nx">letterSpacing</span> <span class="o">=</span> <span class="p">{</span> <span class="na">value</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">unit</span><span class="p">:</span> <span class="dl">"</span><span class="s2">PERCENT</span><span class="dl">"</span> <span class="p">};</span>
+
+<span class="c1">// Apply to a text node</span>
+<span class="nx">textNode</span><span class="p">.</span><span class="nx">textStyleId</span> <span class="o">=</span> <span class="nx">style</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="effect-style">Effect Style</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">shadowStyle</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createEffectStyle</span><span class="p">();</span>
+<span class="nx">shadowStyle</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Shadow/Subtle</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">shadowStyle</span><span class="p">.</span><span class="nx">effects</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DROP_SHADOW</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mf">0.06</span> <span class="p">},</span>
+  <span class="na">offset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+  <span class="na">radius</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+  <span class="na">spread</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">blendMode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NORMAL</span><span class="dl">"</span>
+<span class="p">}];</span>
+
+<span class="c1">// Apply to a node</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">effectStyleId</span> <span class="o">=</span> <span class="nx">shadowStyle</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="cloning--duplication">Cloning &amp; Duplication</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">clone</span> <span class="o">=</span> <span class="nx">originalNode</span><span class="p">.</span><span class="nf">clone</span><span class="p">();</span>
+<span class="nx">clone</span><span class="p">.</span><span class="nx">x</span> <span class="o">=</span> <span class="nx">originalNode</span><span class="p">.</span><span class="nx">x</span> <span class="o">+</span> <span class="nx">originalNode</span><span class="p">.</span><span class="nx">width</span> <span class="o">+</span> <span class="mi">40</span><span class="p">;</span>
+<span class="nx">clone</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Copy of </span><span class="dl">"</span> <span class="o">+</span> <span class="nx">originalNode</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="finding-nodes">Finding Nodes</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// If you already have the node's ID, NEVER scan — use the indexed lookup.</span>
+<span class="kd">const</span> <span class="nx">known</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">getNodeByIdAsync</span><span class="p">(</span><span class="dl">"</span><span class="s2">123:456</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// Find by name on current page (no ID available)</span>
+<span class="kd">const</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">currentPage</span><span class="p">.</span><span class="nf">findOne</span><span class="p">(</span><span class="nx">n</span> <span class="o">=&gt;</span> <span class="nx">n</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">My Frame</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// Find all by type — use findAllWithCriteria, hundreds of times faster than</span>
+<span class="c1">// findAll(n =&gt; n.type === '…') because the engine uses an internal type index.</span>
+<span class="kd">const</span> <span class="nx">allTexts</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">currentPage</span><span class="p">.</span><span class="nf">findAllWithCriteria</span><span class="p">({</span> <span class="na">types</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">TEXT</span><span class="dl">"</span><span class="p">]</span> <span class="p">});</span>
+
+<span class="c1">// Find all by name pattern (predicate is fine — criteria doesn't index name)</span>
+<span class="kd">const</span> <span class="nx">allButtons</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">currentPage</span><span class="p">.</span><span class="nf">findAll</span><span class="p">(</span><span class="nx">n</span> <span class="o">=&gt;</span> <span class="nx">n</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nf">startsWith</span><span class="p">(</span><span class="dl">"</span><span class="s2">Button/</span><span class="dl">"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="layout-grids">Layout Grids</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">frame</span><span class="p">.</span><span class="nx">layoutGrids</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="na">pattern</span><span class="p">:</span> <span class="dl">"</span><span class="s2">COLUMNS</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">alignment</span><span class="p">:</span> <span class="dl">"</span><span class="s2">STRETCH</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">count</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="na">gutterSize</span><span class="p">:</span> <span class="mi">24</span><span class="p">,</span>
+    <span class="na">offset</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span>
+    <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span>
+  <span class="p">}</span>
+<span class="p">];</span>
+</code></pre></div></div>
+
+<h2 id="constraints-non-auto-layout-frames">Constraints (Non-Auto-Layout Frames)</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">child</span><span class="p">.</span><span class="nx">constraints</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">horizontal</span><span class="p">:</span> <span class="dl">"</span><span class="s2">LEFT_RIGHT</span><span class="dl">"</span><span class="p">,</span>  <span class="c1">// LEFT, RIGHT, CENTER, LEFT_RIGHT, SCALE</span>
+  <span class="na">vertical</span><span class="p">:</span> <span class="dl">"</span><span class="s2">TOP</span><span class="dl">"</span>            <span class="c1">// TOP, BOTTOM, CENTER, TOP_BOTTOM, SCALE</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="viewport--zoom">Viewport &amp; Zoom</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Zoom to fit specific nodes</span>
+<span class="nx">figma</span><span class="p">.</span><span class="nx">viewport</span><span class="p">.</span><span class="nf">scrollAndZoomIntoView</span><span class="p">([</span><span class="nx">frame1</span><span class="p">,</span> <span class="nx">frame2</span><span class="p">]);</span>
+</code></pre></div></div>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+  <p>
+    © 2026 Knowledge Base
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/knowledge.js" defer></script>
+</body>
+</html>

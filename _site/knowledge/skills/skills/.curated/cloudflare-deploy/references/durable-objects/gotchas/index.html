@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Gotchas · Knowledge Base</title>
+<meta name="description" content="Durable Objects Gotchas">
+<link rel="canonical" href="http://localhost:4000/knowledge/skills/skills/.curated/cloudflare-deploy/references/durable-objects/gotchas/">
+
+<meta property="og:title" content="Gotchas · Knowledge Base">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/knowledge/skills/skills/.curated/cloudflare-deploy/references/durable-objects/gotchas/">
+<meta property="og:description" content="Durable Objects Gotchas">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/assets/search-index.json",
+    baseUrl: "",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/">
+    Knowledge Base
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/"
+         >Home</a>
+      <a href="/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>skills</span>
+      </nav>
+
+      <h1>Gotchas</h1>
+
+      <div class="dk-meta"><span>Jul 25, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="durable-objects-gotchas">Durable Objects Gotchas</h1>
+
+<h2 id="common-errors">Common Errors</h2>
+
+<h3 id="hibernation-cleared-my-in-memory-state">“Hibernation Cleared My In-Memory State”</h3>
+
+<p><strong>Problem:</strong> Variables lost after hibernation<br />
+<strong>Cause:</strong> DO auto-hibernates when idle; in-memory state not persisted<br />
+<strong>Solution:</strong> Use <code class="language-plaintext highlighter-rouge">ctx.storage</code> for critical data, <code class="language-plaintext highlighter-rouge">ws.serializeAttachment()</code> for per-connection metadata</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ❌ Wrong - lost on hibernation</span>
+<span class="k">private</span> <span class="nx">userCount</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">async</span> <span class="nf">webSocketMessage</span><span class="p">(</span><span class="nx">ws</span><span class="p">:</span> <span class="nx">WebSocket</span><span class="p">,</span> <span class="nx">msg</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">userCount</span><span class="o">++</span><span class="p">;</span>  <span class="c1">// Lost!</span>
+<span class="p">}</span>
+
+<span class="c1">// ✅ Right - persisted</span>
+<span class="k">async</span> <span class="nf">webSocketMessage</span><span class="p">(</span><span class="nx">ws</span><span class="p">:</span> <span class="nx">WebSocket</span><span class="p">,</span> <span class="nx">msg</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">storage</span><span class="p">.</span><span class="nx">kv</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">userCount</span><span class="dl">"</span><span class="p">)</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">storage</span><span class="p">.</span><span class="nx">kv</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="dl">"</span><span class="s2">userCount</span><span class="dl">"</span><span class="p">,</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="settimeout-didnt-fire-after-restart">“setTimeout Didn’t Fire After Restart”</h3>
+
+<p><strong>Problem:</strong> Scheduled work lost on eviction<br />
+<strong>Cause:</strong> <code class="language-plaintext highlighter-rouge">setTimeout</code> in-memory only; eviction clears timers<br />
+<strong>Solution:</strong> Use <code class="language-plaintext highlighter-rouge">ctx.storage.setAlarm()</code> for reliable scheduling</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ❌ Wrong - lost on eviction</span>
+<span class="nf">setTimeout</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nf">cleanup</span><span class="p">(),</span> <span class="mi">3600000</span><span class="p">);</span>
+
+<span class="c1">// ✅ Right - survives eviction</span>
+<span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">storage</span><span class="p">.</span><span class="nf">setAlarm</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="mi">3600000</span><span class="p">);</span>
+<span class="k">async</span> <span class="nf">alarm</span><span class="p">()</span> <span class="p">{</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nf">cleanup</span><span class="p">();</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="constructor-runs-on-every-wake">“Constructor Runs on Every Wake”</h3>
+
+<p><strong>Problem:</strong> Expensive init logic slows all requests<br />
+<strong>Cause:</strong> Constructor runs on every wake (first request after eviction OR after hibernation)<br />
+<strong>Solution:</strong> Lazy initialization or cache in storage</p>
+
+<p><strong>Critical understanding:</strong> Constructor runs in two scenarios:</p>
+<ol>
+  <li><strong>Cold start</strong> - DO evicted from memory, first request creates new instance</li>
+  <li><strong>Wake from hibernation</strong> - DO with WebSockets hibernated, message/alarm wakes it</li>
+</ol>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ❌ Wrong - expensive on every wake</span>
+<span class="nf">constructor</span><span class="p">(</span><span class="nx">ctx</span><span class="p">:</span> <span class="nx">DurableObjectState</span><span class="p">,</span> <span class="nx">env</span><span class="p">:</span> <span class="nx">Env</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">super</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">env</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">heavyData</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nf">loadExpensiveData</span><span class="p">();</span>  <span class="c1">// Slow!</span>
+<span class="p">}</span>
+
+<span class="c1">// ✅ Right - lazy load</span>
+<span class="k">private</span> <span class="nx">heavyData</span><span class="p">?:</span> <span class="nx">HeavyData</span><span class="p">;</span>
+<span class="k">private</span> <span class="nf">getHeavyData</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">heavyData</span><span class="p">)</span> <span class="k">this</span><span class="p">.</span><span class="nx">heavyData</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nf">loadExpensiveData</span><span class="p">();</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">heavyData</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="durable-object-overloaded-503-errors">“Durable Object Overloaded (503 errors)”</h3>
+
+<p><strong>Problem:</strong> 503 errors under load<br />
+<strong>Cause:</strong> Single DO exceeding ~1K req/s throughput limit<br />
+<strong>Solution:</strong> Shard across multiple DOs (see <a href="./patterns.md">Patterns: Sharding</a>)</p>
+
+<h3 id="storage-quota-exceeded-write-failures">“Storage Quota Exceeded (Write failures)”</h3>
+
+<p><strong>Problem:</strong> Write operations failing<br />
+<strong>Cause:</strong> DO storage exceeding 10GB limit or account quota<br />
+<strong>Solution:</strong> Cleanup with alarms, use <code class="language-plaintext highlighter-rouge">deleteAll()</code> for old data, upgrade plan</p>
+
+<h3 id="cpu-time-exceeded-terminated">“CPU Time Exceeded (Terminated)”</h3>
+
+<p><strong>Problem:</strong> Request terminated mid-execution<br />
+<strong>Cause:</strong> Processing exceeding 30s CPU time default limit<br />
+<strong>Solution:</strong> Increase <code class="language-plaintext highlighter-rouge">limits.cpu_ms</code> in wrangler.jsonc (max 300s) or chunk work</p>
+
+<h3 id="websockets-disconnect-on-eviction">“WebSockets Disconnect on Eviction”</h3>
+
+<p><strong>Problem:</strong> Connections drop unexpectedly<br />
+<strong>Cause:</strong> DO evicted from memory without hibernation API<br />
+<strong>Solution:</strong> Use WebSocket hibernation handlers + client reconnection logic</p>
+
+<h3 id="migration-failed-deploy-error">“Migration Failed (Deploy error)”</h3>
+
+<p><strong>Cause:</strong> Non-unique tags, non-sequential tags, or invalid class names in migration<br />
+<strong>Solution:</strong> Check tag uniqueness/sequential ordering and verify class names are correct</p>
+
+<h3 id="rpc-method-not-found">“RPC Method Not Found”</h3>
+
+<p><strong>Cause:</strong> compatibility_date &lt; 2024-04-03 preventing RPC usage<br />
+<strong>Solution:</strong> Update compatibility_date to &gt;= 2024-04-03 or use fetch() instead of RPC</p>
+
+<h3 id="only-one-alarm-allowed">“Only One Alarm Allowed”</h3>
+
+<p><strong>Cause:</strong> Need multiple scheduled tasks but only one alarm supported per DO<br />
+<strong>Solution:</strong> Use event queue pattern to schedule multiple tasks with single alarm</p>
+
+<h3 id="race-condition-despite-single-threading">“Race Condition Despite Single-Threading”</h3>
+
+<p><strong>Problem:</strong> Concurrent requests see inconsistent state<br />
+<strong>Cause:</strong> Async operations allow request interleaving (await = yield point)<br />
+<strong>Solution:</strong> Use <code class="language-plaintext highlighter-rouge">blockConcurrencyWhile()</code> for critical sections or atomic storage ops</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// ❌ Wrong - race condition</span>
+<span class="k">async</span> <span class="nf">incrementCounter</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">storage</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">count</span><span class="dl">"</span><span class="p">)</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="c1">// ⚠️ Another request could execute here during await</span>
+  <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">storage</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="dl">"</span><span class="s2">count</span><span class="dl">"</span><span class="p">,</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// ✅ Right - atomic operation</span>
+<span class="k">async</span> <span class="nf">incrementCounter</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">storage</span><span class="p">.</span><span class="nx">sql</span><span class="p">.</span><span class="nf">exec</span><span class="p">(</span>
+    <span class="dl">"</span><span class="s2">INSERT INTO counters (id, value) VALUES (1, 1) ON CONFLICT(id) DO UPDATE SET value = value + 1 RETURNING value</span><span class="dl">"</span>
+  <span class="p">).</span><span class="nf">one</span><span class="p">().</span><span class="nx">value</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// ✅ Right - explicit locking</span>
+<span class="k">async</span> <span class="nf">criticalOperation</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">blockConcurrencyWhile</span><span class="p">(</span><span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">storage</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">"</span><span class="s2">count</span><span class="dl">"</span><span class="p">)</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">storage</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="dl">"</span><span class="s2">count</span><span class="dl">"</span><span class="p">,</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="migration-rollback-not-supported">“Migration Rollback Not Supported”</h3>
+
+<p><strong>Cause:</strong> Attempting to rollback a migration after deployment<br />
+<strong>Solution:</strong> Test with <code class="language-plaintext highlighter-rouge">--dry-run</code> before deploying; migrations cannot be rolled back</p>
+
+<h3 id="deleted_classes-destroys-data">“deleted_classes Destroys Data”</h3>
+
+<p><strong>Problem:</strong> Migration deleted all data<br />
+<strong>Cause:</strong> <code class="language-plaintext highlighter-rouge">deleted_classes</code> migration immediately destroys all DO instances and data<br />
+<strong>Solution:</strong> Test with <code class="language-plaintext highlighter-rouge">--dry-run</code>; use <code class="language-plaintext highlighter-rouge">transferred_classes</code> to preserve data during moves</p>
+
+<h3 id="cold-starts-are-slow">“Cold Starts Are Slow”</h3>
+
+<p><strong>Problem:</strong> First request after eviction takes longer<br />
+<strong>Cause:</strong> DO constructor + initial storage access on cold start<br />
+<strong>Solution:</strong> Expected behavior; optimize constructor, use connection pooling in clients, consider warming strategy for critical DOs</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Warming strategy (periodically ping critical DOs)</span>
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nf">scheduled</span><span class="p">(</span><span class="na">event</span><span class="p">:</span> <span class="nx">ScheduledEvent</span><span class="p">,</span> <span class="na">env</span><span class="p">:</span> <span class="nx">Env</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">criticalIds</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">auth</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">sessions</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">locks</span><span class="dl">"</span><span class="p">];</span>
+    <span class="k">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nf">all</span><span class="p">(</span><span class="nx">criticalIds</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">name</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">env</span><span class="p">.</span><span class="nx">MY_DO</span><span class="p">.</span><span class="nf">idFromName</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+      <span class="kd">const</span> <span class="nx">stub</span> <span class="o">=</span> <span class="nx">env</span><span class="p">.</span><span class="nx">MY_DO</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+      <span class="k">return</span> <span class="nx">stub</span><span class="p">.</span><span class="nf">ping</span><span class="p">();</span>  <span class="c1">// Keep warm</span>
+    <span class="p">}));</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="limits">Limits</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Limit</th>
+      <th>Free</th>
+      <th>Paid</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SQLite storage per DO</td>
+      <td>10 GB</td>
+      <td>10 GB</td>
+      <td>Per Durable Object instance</td>
+    </tr>
+    <tr>
+      <td>SQLite total storage</td>
+      <td>5 GB</td>
+      <td>Unlimited</td>
+      <td>Account-wide quota</td>
+    </tr>
+    <tr>
+      <td>Key+value size</td>
+      <td>2 MB</td>
+      <td>2 MB</td>
+      <td>Single KV pair (SQLite/async)</td>
+    </tr>
+    <tr>
+      <td>CPU time default</td>
+      <td>30s</td>
+      <td>30s</td>
+      <td>Per request; configurable</td>
+    </tr>
+    <tr>
+      <td>CPU time max</td>
+      <td>300s</td>
+      <td>300s</td>
+      <td>Set via <code class="language-plaintext highlighter-rouge">limits.cpu_ms</code></td>
+    </tr>
+    <tr>
+      <td>DO classes</td>
+      <td>100</td>
+      <td>500</td>
+      <td>Distinct DO class definitions</td>
+    </tr>
+    <tr>
+      <td>SQL columns</td>
+      <td>100</td>
+      <td>100</td>
+      <td>Per table</td>
+    </tr>
+    <tr>
+      <td>SQL statement size</td>
+      <td>100 KB</td>
+      <td>100 KB</td>
+      <td>Max SQL query size</td>
+    </tr>
+    <tr>
+      <td>WebSocket message size</td>
+      <td>32 MiB</td>
+      <td>32 MiB</td>
+      <td>Per message</td>
+    </tr>
+    <tr>
+      <td>Request throughput</td>
+      <td>~1K req/s</td>
+      <td>~1K req/s</td>
+      <td>Per DO (soft limit - shard for more)</td>
+    </tr>
+    <tr>
+      <td>Alarms per DO</td>
+      <td>1</td>
+      <td>1</td>
+      <td>Use queue pattern for multiple events</td>
+    </tr>
+    <tr>
+      <td>Total DOs</td>
+      <td>Unlimited</td>
+      <td>Unlimited</td>
+      <td>Create as many instances as needed</td>
+    </tr>
+    <tr>
+      <td>WebSockets</td>
+      <td>Unlimited</td>
+      <td>Unlimited</td>
+      <td>Within 128MB memory limit per DO</td>
+    </tr>
+    <tr>
+      <td>Memory per DO</td>
+      <td>128 MB</td>
+      <td>128 MB</td>
+      <td>In-memory state + WebSocket buffers</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="hibernation-caveats">Hibernation Caveats</h2>
+
+<ol>
+  <li><strong>Memory cleared</strong> - All in-memory variables lost; reconstruct from storage or <code class="language-plaintext highlighter-rouge">deserializeAttachment()</code></li>
+  <li><strong>Constructor reruns</strong> - Runs on wake; avoid expensive operations, use lazy initialization</li>
+  <li><strong>No guarantees</strong> - DO may evict instead of hibernate; design for both</li>
+  <li><strong>Attachment limit</strong> - <code class="language-plaintext highlighter-rouge">serializeAttachment()</code> data must be JSON-serializable, keep small</li>
+  <li><strong>Alarm wakes DO</strong> - Alarm prevents hibernation until handler completes</li>
+  <li><strong>WebSocket state not automatic</strong> - Must explicitly persist with <code class="language-plaintext highlighter-rouge">serializeAttachment()</code> or storage</li>
+</ol>
+
+<h2 id="see-also">See Also</h2>
+
+<ul>
+  <li><strong><a href="./patterns.md">Patterns</a></strong> - Workarounds for common limitations</li>
+  <li><strong><a href="./api.md">API</a></strong> - Storage limits and quotas</li>
+  <li><strong><a href="./configuration.md">Configuration</a></strong> - Setting CPU limits</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+  <p>
+    © 2026 Knowledge Base
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/knowledge.js" defer></script>
+</body>
+</html>

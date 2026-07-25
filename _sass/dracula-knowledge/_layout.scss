@@ -1,0 +1,137 @@
+.dk-shell {
+  display: grid;
+  grid-template-columns: var(--dk-sidebar-w) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+// Single column once the sidebar becomes a drawer.
+.dk-shell--full,
+.dk-shell.is-collapsed {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.dk-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--dk-space-3);
+  height: var(--dk-header-h);
+  padding: 0 var(--dk-space-4);
+  background: var(--dk-header-bg);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--dk-border);
+}
+
+.dk-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--dk-space-2);
+  font-weight: 700;
+  color: var(--dk-fg);
+
+  &:hover {
+    color: var(--dk-purple);
+    text-decoration: none;
+  }
+}
+
+.dk-header__spacer {
+  flex: 1;
+}
+
+.dk-header__nav {
+  display: flex;
+  gap: var(--dk-space-4);
+
+  a {
+    color: var(--dk-comment);
+    font-size: var(--dk-text-sm);
+    font-weight: 600;
+
+    &:hover,
+    &[aria-current="page"] {
+      color: var(--dk-cyan);
+      text-decoration: none;
+    }
+  }
+}
+
+.dk-main {
+  min-width: 0; // lets long <pre> scroll instead of stretching the grid track
+  padding: var(--dk-space-8) var(--dk-space-6) 6rem;
+}
+
+.dk-content {
+  max-width: var(--dk-content-max);
+  margin: 0 auto;
+}
+
+// Content + right-hand table of contents.
+.dk-with-toc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15rem;
+  gap: var(--dk-space-8);
+  align-items: start;
+  max-width: 68rem;
+  margin: 0 auto;
+}
+
+.dk-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--dk-border);
+  border-radius: var(--dk-radius-sm);
+  color: var(--dk-comment);
+  cursor: pointer;
+  transition: color var(--dk-ease), border-color var(--dk-ease),
+    background var(--dk-ease);
+
+  &:hover {
+    color: var(--dk-cyan);
+    border-color: var(--dk-cyan);
+    background: var(--dk-cyan-wash);
+  }
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+}
+
+.dk-sidebar-toggle {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .dk-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dk-sidebar-toggle {
+    display: inline-flex;
+  }
+
+  .dk-header__nav {
+    display: none;
+  }
+
+  .dk-main {
+    padding: var(--dk-space-6) var(--dk-space-4) 4rem;
+  }
+
+  .dk-with-toc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

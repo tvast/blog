@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Sdk Architecture Pattern · Knowledge Base</title>
+<meta name="description" content="SDK Architecture Pattern - Universal Formula">
+<link rel="canonical" href="http://localhost:4000/knowledge/plugins/plugins/zoom/skills/video-sdk/linux/concepts/sdk-architecture-pattern/">
+
+<meta property="og:title" content="Sdk Architecture Pattern · Knowledge Base">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/knowledge/plugins/plugins/zoom/skills/video-sdk/linux/concepts/sdk-architecture-pattern/">
+<meta property="og:description" content="SDK Architecture Pattern - Universal Formula">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/assets/search-index.json",
+    baseUrl: "",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/">
+    Knowledge Base
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/"
+         >Home</a>
+      <a href="/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Sdk Architecture Pattern</h1>
+
+      <div class="dk-meta"><span>Jul 25, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="sdk-architecture-pattern---universal-formula">SDK Architecture Pattern - Universal Formula</h1>
+
+<h2 id="the-3-step-pattern-for-any-feature">The 3-Step Pattern for ANY Feature</h2>
+
+<p><strong>Once you understand this pattern, you can implement ANY Zoom Video SDK feature</strong>. The SDK follows a consistent architectural pattern across all features.</p>
+
+<h3 id="pattern-overview">Pattern Overview</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Get Singleton/Helper → 2. Implement Delegate → 3. Subscribe &amp; Use
+</code></pre></div></div>
+
+<p>This pattern applies to:</p>
+<ul>
+  <li>Video subscription</li>
+  <li>Audio processing</li>
+  <li>Screen sharing</li>
+  <li>Raw data capture</li>
+  <li>Raw data injection (virtual devices)</li>
+  <li>Recording</li>
+  <li>Live streaming</li>
+  <li>Transcription</li>
+  <li>Commands</li>
+  <li>Chat</li>
+</ul>
+
+<hr />
+
+<h2 id="step-1-get-singletonhelper">Step 1: Get Singleton/Helper</h2>
+
+<p>The SDK uses a singleton hierarchy to access features:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Main SDK singleton</span>
+<span class="n">IZoomVideoSDK</span><span class="o">*</span> <span class="n">video_sdk_obj</span> <span class="o">=</span> <span class="n">CreateZoomVideoSDKObj</span><span class="p">();</span>
+
+<span class="c1">// Get helpers for specific features</span>
+<span class="n">IZoomVideoSDKAudioHelper</span><span class="o">*</span> <span class="n">audio</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getAudioHelper</span><span class="p">();</span>
+<span class="n">IZoomVideoSDKVideoHelper</span><span class="o">*</span> <span class="n">video</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getVideoHelper</span><span class="p">();</span>
+<span class="n">IZoomVideoSDKShareHelper</span><span class="o">*</span> <span class="n">share</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getShareHelper</span><span class="p">();</span>
+<span class="n">IZoomVideoSDKChatHelper</span><span class="o">*</span> <span class="n">chat</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getChatHelper</span><span class="p">();</span>
+<span class="n">IZoomVideoSDKRecordingHelper</span><span class="o">*</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getRecordingHelper</span><span class="p">();</span>
+<span class="n">IZoomVideoSDKLiveStreamHelper</span><span class="o">*</span> <span class="n">stream</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getLiveStreamHelper</span><span class="p">();</span>
+<span class="n">IZoomVideoSDKLiveTranscriptionHelper</span><span class="o">*</span> <span class="n">transcription</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getLiveTranscriptionHelper</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><strong>Key Insight</strong>: Helpers control YOUR streams/actions. To receive others’ data, you subscribe to their pipes/canvas.</p>
+
+<hr />
+
+<h2 id="step-2-implement-delegate">Step 2: Implement Delegate</h2>
+
+<p>The SDK communicates via callbacks. You implement delegate interfaces to receive events.</p>
+
+<h3 id="main-event-delegate">Main Event Delegate</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MyDelegate</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKDelegate</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="c1">// Session events</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onSessionJoin</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Session joined */</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onSessionLeave</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Session left */</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onError</span><span class="p">(</span><span class="n">ZoomVideoSDKErrors</span> <span class="n">errorCode</span><span class="p">,</span> <span class="kt">int</span> <span class="n">detailErrorCode</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Error occurred */</span> <span class="p">}</span>
+
+    <span class="c1">// User events</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onUserJoin</span><span class="p">(</span><span class="n">IZoomVideoSDKUserHelper</span><span class="o">*</span><span class="p">,</span> <span class="n">IVideoSDKVector</span><span class="o">&lt;</span><span class="n">IZoomVideoSDKUser</span><span class="o">*&gt;*</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Users joined */</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onUserLeave</span><span class="p">(</span><span class="n">IZoomVideoSDKUserHelper</span><span class="o">*</span><span class="p">,</span> <span class="n">IVideoSDKVector</span><span class="o">&lt;</span><span class="n">IZoomVideoSDKUser</span><span class="o">*&gt;*</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Users left */</span> <span class="p">}</span>
+
+    <span class="c1">// Video events</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onUserVideoStatusChanged</span><span class="p">(</span><span class="n">IZoomVideoSDKVideoHelper</span><span class="o">*</span><span class="p">,</span> <span class="n">IVideoSDKVector</span><span class="o">&lt;</span><span class="n">IZoomVideoSDKUser</span><span class="o">*&gt;*</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Video status changed */</span> <span class="p">}</span>
+
+    <span class="c1">// Audio events</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onUserAudioStatusChanged</span><span class="p">(</span><span class="n">IZoomVideoSDKAudioHelper</span><span class="o">*</span><span class="p">,</span> <span class="n">IVideoSDKVector</span><span class="o">&lt;</span><span class="n">IZoomVideoSDKUser</span><span class="o">*&gt;*</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Audio status changed */</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onMixedAudioRawDataReceived</span><span class="p">(</span><span class="n">AudioRawData</span><span class="o">*</span> <span class="n">data_</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Mixed audio data */</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onOneWayAudioRawDataReceived</span><span class="p">(</span><span class="n">AudioRawData</span><span class="o">*</span> <span class="n">data_</span><span class="p">,</span> <span class="n">IZoomVideoSDKUser</span><span class="o">*</span> <span class="n">pUser</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Per-user audio */</span> <span class="p">}</span>
+
+    <span class="c1">// Share events</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onUserShareStatusChanged</span><span class="p">(</span><span class="n">IZoomVideoSDKShareHelper</span><span class="o">*</span><span class="p">,</span> <span class="n">IZoomVideoSDKUser</span><span class="o">*</span><span class="p">,</span> <span class="n">IZoomVideoSDKShareAction</span><span class="o">*</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Share status changed */</span> <span class="p">}</span>
+
+    <span class="c1">// ... many more callbacks (see linux-reference.md for complete list)</span>
+<span class="p">};</span>
+
+<span class="c1">// Register delegate</span>
+<span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">addListener</span><span class="p">(</span><span class="k">new</span> <span class="nf">MyDelegate</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h3 id="raw-data-delegates">Raw Data Delegates</h3>
+
+<p>For raw video/share data:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">VideoDelegate</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKRawDataPipeDelegate</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onRawDataFrameReceived</span><span class="p">(</span><span class="n">YUVRawDataI420</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Process YUV420 frame</span>
+        <span class="kt">int</span> <span class="n">width</span> <span class="o">=</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">GetStreamWidth</span><span class="p">();</span>
+        <span class="kt">int</span> <span class="n">height</span> <span class="o">=</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">GetStreamHeight</span><span class="p">();</span>
+        <span class="kt">char</span><span class="o">*</span> <span class="n">yBuffer</span> <span class="o">=</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">GetYBuffer</span><span class="p">();</span>
+        <span class="kt">char</span><span class="o">*</span> <span class="n">uBuffer</span> <span class="o">=</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">GetUBuffer</span><span class="p">();</span>
+        <span class="kt">char</span><span class="o">*</span> <span class="n">vBuffer</span> <span class="o">=</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">GetVBuffer</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onRawDataStatusChanged</span><span class="p">(</span><span class="n">RawDataStatus</span> <span class="n">status</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Video on/off</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>For virtual audio mic:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">VirtualMic</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKVirtualAudioMic</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onMicInitialize</span><span class="p">(</span><span class="n">IZoomVideoSDKAudioSender</span><span class="o">*</span> <span class="n">sender</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">audio_sender_</span> <span class="o">=</span> <span class="n">sender</span><span class="p">;</span>  <span class="c1">// Store for sending</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onMicStartSend</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Start sending audio frames</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onMicStopSend</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Stop sending */</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onMicUninitialized</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="n">audio_sender_</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">IZoomVideoSDKAudioSender</span><span class="o">*</span> <span class="n">audio_sender_</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>For virtual video source:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">VirtualVideo</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKVideoSource</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onInitialize</span><span class="p">(</span><span class="n">IZoomVideoSDKVideoSender</span><span class="o">*</span> <span class="n">sender</span><span class="p">,</span>
+                             <span class="n">IVideoSDKVector</span><span class="o">&lt;</span><span class="n">VideoSourceCapability</span><span class="o">&gt;*</span> <span class="n">caps</span><span class="p">,</span>
+                             <span class="n">VideoSourceCapability</span><span class="o">&amp;</span> <span class="n">suggest</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">video_sender_</span> <span class="o">=</span> <span class="n">sender</span><span class="p">;</span>  <span class="c1">// Store for sending</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onStartSend</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Start sending video frames</span>
+    <span class="p">}</span>
+
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onStopSend</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Stop sending */</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onPropertyChange</span><span class="p">(...)</span> <span class="k">override</span> <span class="p">{</span> <span class="cm">/* Resolution changed */</span> <span class="p">}</span>
+    <span class="k">virtual</span> <span class="kt">void</span> <span class="n">onUninitialized</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="n">video_sender_</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">IZoomVideoSDKVideoSender</span><span class="o">*</span> <span class="n">video_sender_</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="step-3-subscribe--use">Step 3: Subscribe &amp; Use</h2>
+
+<h3 id="pattern-a-control-your-streams-via-helpers">Pattern A: Control YOUR streams (via Helpers)</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Start YOUR audio</span>
+<span class="n">IZoomVideoSDKAudioHelper</span><span class="o">*</span> <span class="n">audio</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getAudioHelper</span><span class="p">();</span>
+<span class="n">audio</span><span class="o">-&gt;</span><span class="n">startAudio</span><span class="p">();</span>
+<span class="n">audio</span><span class="o">-&gt;</span><span class="n">muteAudio</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+<span class="c1">// Start YOUR video</span>
+<span class="n">IZoomVideoSDKVideoHelper</span><span class="o">*</span> <span class="n">video</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getVideoHelper</span><span class="p">();</span>
+<span class="n">video</span><span class="o">-&gt;</span><span class="n">startVideo</span><span class="p">();</span>
+<span class="n">video</span><span class="o">-&gt;</span><span class="n">stopVideo</span><span class="p">();</span>
+
+<span class="c1">// Start YOUR screen share</span>
+<span class="n">IZoomVideoSDKShareHelper</span><span class="o">*</span> <span class="n">share</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getShareHelper</span><span class="p">();</span>
+<span class="n">share</span><span class="o">-&gt;</span><span class="n">startShare</span><span class="p">();</span>
+<span class="n">share</span><span class="o">-&gt;</span><span class="n">stopShare</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="pattern-b-receive-data-from-others-via-pipes">Pattern B: Receive data from OTHERS (via Pipes)</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Subscribe to remote user's video</span>
+<span class="n">IZoomVideoSDKUser</span><span class="o">*</span> <span class="n">user</span> <span class="o">=</span> <span class="cm">/* get from onUserJoin */</span><span class="p">;</span>
+<span class="n">IZoomVideoSDKRawDataPipe</span><span class="o">*</span> <span class="n">pipe</span> <span class="o">=</span> <span class="n">user</span><span class="o">-&gt;</span><span class="n">GetVideoPipe</span><span class="p">();</span>
+<span class="n">pipe</span><span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">(</span><span class="n">ZoomVideoSDKResolution_720P</span><span class="p">,</span> <span class="n">videoDelegate</span><span class="p">);</span>
+
+<span class="c1">// Subscribe to remote user's share</span>
+<span class="n">IZoomVideoSDKRawDataPipe</span><span class="o">*</span> <span class="n">sharePipe</span> <span class="o">=</span> <span class="n">user</span><span class="o">-&gt;</span><span class="n">GetSharePipe</span><span class="p">();</span>
+<span class="n">sharePipe</span><span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">(</span><span class="n">ZoomVideoSDKResolution_720P</span><span class="p">,</span> <span class="n">shareDelegate</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="pattern-c-inject-custom-data-via-virtual-devices">Pattern C: Inject custom data (via Virtual Devices)</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Set virtual mic BEFORE joining</span>
+<span class="n">session_context</span><span class="p">.</span><span class="n">virtualAudioMic</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">VirtualMic</span><span class="p">();</span>
+<span class="n">session_context</span><span class="p">.</span><span class="n">audioOption</span><span class="p">.</span><span class="n">connect</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="n">session_context</span><span class="p">.</span><span class="n">audioOption</span><span class="p">.</span><span class="n">mute</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+<span class="c1">// Set virtual video source BEFORE joining</span>
+<span class="n">session_context</span><span class="p">.</span><span class="n">externalVideoSource</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">VirtualVideo</span><span class="p">();</span>
+
+<span class="c1">// Join session</span>
+<span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">joinSession</span><span class="p">(</span><span class="n">session_context</span><span class="p">);</span>
+
+<span class="c1">// Send data in onStartSend callbacks</span>
+<span class="c1">// For audio: audio_sender_-&gt;Send(data, len, sampleRate);</span>
+<span class="c1">// For video: video_sender_-&gt;sendVideoFrame(y, u, v, w, h, 0, rotation);</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="common-patterns">Common Patterns</h2>
+
+<h3 id="pattern-session-join">Pattern: Session Join</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. Get SDK singleton</span>
+<span class="n">IZoomVideoSDK</span><span class="o">*</span> <span class="n">sdk</span> <span class="o">=</span> <span class="n">CreateZoomVideoSDKObj</span><span class="p">();</span>
+
+<span class="c1">// 2. Implement delegate</span>
+<span class="n">sdk</span><span class="o">-&gt;</span><span class="n">addListener</span><span class="p">(</span><span class="k">new</span> <span class="nf">MyDelegate</span><span class="p">());</span>
+
+<span class="c1">// 3. Configure and join</span>
+<span class="n">ZoomVideoSDKSessionContext</span> <span class="n">ctx</span><span class="p">;</span>
+<span class="n">ctx</span><span class="p">.</span><span class="n">sessionName</span> <span class="o">=</span> <span class="s">"my-session"</span><span class="p">;</span>
+<span class="n">ctx</span><span class="p">.</span><span class="n">userName</span> <span class="o">=</span> <span class="s">"Linux Bot"</span><span class="p">;</span>
+<span class="n">ctx</span><span class="p">.</span><span class="n">token</span> <span class="o">=</span> <span class="s">"jwt-token"</span><span class="p">;</span>
+<span class="n">ctx</span><span class="p">.</span><span class="n">audioOption</span><span class="p">.</span><span class="n">connect</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="n">ctx</span><span class="p">.</span><span class="n">audioOption</span><span class="p">.</span><span class="n">mute</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<span class="n">ctx</span><span class="p">.</span><span class="n">videoOption</span><span class="p">.</span><span class="n">localVideoOn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+<span class="c1">// For headless: add virtual speaker</span>
+<span class="n">ctx</span><span class="p">.</span><span class="n">virtualAudioSpeaker</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">VirtualSpeaker</span><span class="p">();</span>
+
+<span class="n">IZoomVideoSDKSession</span><span class="o">*</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sdk</span><span class="o">-&gt;</span><span class="n">joinSession</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="pattern-raw-video-capture">Pattern: Raw Video Capture</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. Create delegate</span>
+<span class="k">class</span> <span class="nc">VideoCapture</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKRawDataPipeDelegate</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">onRawDataFrameReceived</span><span class="p">(</span><span class="n">YUVRawDataI420</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Save to file or process</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// 2. In onUserJoin or onUserVideoStatusChanged</span>
+<span class="n">IZoomVideoSDKUser</span><span class="o">*</span> <span class="n">user</span> <span class="o">=</span> <span class="cm">/* from callback */</span><span class="p">;</span>
+<span class="n">IZoomVideoSDKRawDataPipe</span><span class="o">*</span> <span class="n">pipe</span> <span class="o">=</span> <span class="n">user</span><span class="o">-&gt;</span><span class="n">GetVideoPipe</span><span class="p">();</span>
+<span class="n">pipe</span><span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">(</span><span class="n">ZoomVideoSDKResolution_720P</span><span class="p">,</span> <span class="k">new</span> <span class="nf">VideoCapture</span><span class="p">());</span>
+</code></pre></div></div>
+
+<h3 id="pattern-virtual-audio-injection">Pattern: Virtual Audio Injection</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. Implement virtual mic</span>
+<span class="k">class</span> <span class="nc">MyMic</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKVirtualAudioMic</span> <span class="p">{</span>
+    <span class="n">IZoomVideoSDKAudioSender</span><span class="o">*</span> <span class="n">sender_</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">onMicInitialize</span><span class="p">(</span><span class="n">IZoomVideoSDKAudioSender</span><span class="o">*</span> <span class="n">sender</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">sender_</span> <span class="o">=</span> <span class="n">sender</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">onMicStartSend</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Load PCM audio and send</span>
+        <span class="kt">char</span><span class="o">*</span> <span class="n">audioData</span> <span class="o">=</span> <span class="n">LoadPCMAudio</span><span class="p">();</span>
+        <span class="n">sender_</span><span class="o">-&gt;</span><span class="n">Send</span><span class="p">(</span><span class="n">audioData</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="mi">32000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// 2. Set before joining</span>
+<span class="n">session_context</span><span class="p">.</span><span class="n">virtualAudioMic</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MyMic</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="pattern-cloud-recording">Pattern: Cloud Recording</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. Get recording helper</span>
+<span class="n">IZoomVideoSDKRecordingHelper</span><span class="o">*</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">sdk</span><span class="o">-&gt;</span><span class="n">getRecordingHelper</span><span class="p">();</span>
+
+<span class="c1">// 2. Check permissions</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">rec</span><span class="o">-&gt;</span><span class="n">canStartRecording</span><span class="p">()</span> <span class="o">==</span> <span class="n">ZoomVideoSDKErrors_Success</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 3. Start recording</span>
+    <span class="n">rec</span><span class="o">-&gt;</span><span class="n">startCloudRecording</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// Listen in delegate</span>
+<span class="kt">void</span> <span class="nf">onCloudRecordingStatus</span><span class="p">(</span><span class="n">RecordingStatus</span> <span class="n">status</span><span class="p">,</span>
+                            <span class="n">IZoomVideoSDKRecordingConsentHandler</span><span class="o">*</span> <span class="n">handler</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">Recording_Start</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Recording started</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="linux-specific-patterns">Linux-Specific Patterns</h2>
+
+<h3 id="pattern-headless-linux-dockerwsl">Pattern: Headless Linux (Docker/WSL)</h3>
+
+<p><strong>Problem</strong>: No physical audio devices.</p>
+
+<p><strong>Solution</strong>: Use virtual audio speaker and mic.</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Virtual speaker for receiving audio</span>
+<span class="k">class</span> <span class="nc">MySpeaker</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKVirtualAudioSpeaker</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">onVirtualSpeakerMixedAudioReceived</span><span class="p">(</span><span class="n">AudioRawData</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Process or discard audio</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">onVirtualSpeakerOneWayAudioReceived</span><span class="p">(</span><span class="n">AudioRawData</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span> <span class="n">IZoomVideoSDKUser</span><span class="o">*</span> <span class="n">user</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Per-user audio</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">onVirtualSpeakerSharedAudioReceived</span><span class="p">(</span><span class="n">AudioRawData</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Share audio</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Virtual mic for sending audio</span>
+<span class="k">class</span> <span class="nc">MyMic</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKVirtualAudioMic</span> <span class="p">{</span>
+    <span class="n">IZoomVideoSDKAudioSender</span><span class="o">*</span> <span class="n">sender_</span><span class="p">;</span>
+
+    <span class="kt">void</span> <span class="n">onMicInitialize</span><span class="p">(</span><span class="n">IZoomVideoSDKAudioSender</span><span class="o">*</span> <span class="n">sender</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">sender_</span> <span class="o">=</span> <span class="n">sender</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">onMicStartSend</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Send PCM audio</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">onMicStopSend</span><span class="p">()</span> <span class="k">override</span> <span class="p">{}</span>
+    <span class="kt">void</span> <span class="n">onMicUninitialized</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="n">sender_</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Apply before joining</span>
+<span class="n">session_context</span><span class="p">.</span><span class="n">virtualAudioSpeaker</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MySpeaker</span><span class="p">();</span>
+<span class="n">session_context</span><span class="p">.</span><span class="n">virtualAudioMic</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MyMic</span><span class="p">();</span>
+<span class="n">session_context</span><span class="p">.</span><span class="n">audioOption</span><span class="p">.</span><span class="n">connect</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="pattern-qtgtk-ui-integration">Pattern: Qt/GTK UI Integration</h3>
+
+<p><strong>Qt Pattern</strong>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Use Qt signals/slots with SDK callbacks</span>
+<span class="k">class</span> <span class="nc">QtVideoRenderer</span> <span class="o">:</span> <span class="k">public</span> <span class="n">QWidget</span><span class="p">,</span> <span class="k">public</span> <span class="n">IZoomVideoSDKRawDataPipeDelegate</span> <span class="p">{</span>
+    <span class="n">Q_OBJECT</span>
+<span class="nl">signals:</span>
+    <span class="kt">void</span> <span class="n">frameReceived</span><span class="p">(</span><span class="n">QImage</span> <span class="n">frame</span><span class="p">);</span>
+
+<span class="nl">public:</span>
+    <span class="kt">void</span> <span class="n">onRawDataFrameReceived</span><span class="p">(</span><span class="n">YUVRawDataI420</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Convert YUV to RGB</span>
+        <span class="n">QImage</span> <span class="n">img</span> <span class="o">=</span> <span class="n">ConvertYUVToRGB</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+
+        <span class="c1">// Emit signal (thread-safe)</span>
+        <span class="n">emit</span> <span class="n">frameReceived</span><span class="p">(</span><span class="n">img</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// In Qt widget</span>
+<span class="n">connect</span><span class="p">(</span><span class="n">renderer</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">QtVideoRenderer</span><span class="o">::</span><span class="n">frameReceived</span><span class="p">,</span>
+        <span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="n">QImage</span> <span class="n">img</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Update UI on main thread</span>
+    <span class="n">videoLabel</span><span class="o">-&gt;</span><span class="n">setPixmap</span><span class="p">(</span><span class="n">QPixmap</span><span class="o">::</span><span class="n">fromImage</span><span class="p">(</span><span class="n">img</span><span class="p">));</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>GTK Pattern</strong>:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Use Glib main loop for thread safety</span>
+<span class="k">class</span> <span class="nc">GtkVideoRenderer</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKRawDataPipeDelegate</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">onRawDataFrameReceived</span><span class="p">(</span><span class="n">YUVRawDataI420</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Marshal to main thread</span>
+        <span class="n">g_idle_add</span><span class="p">([](</span><span class="n">gpointer</span> <span class="n">user_data</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">YUVRawDataI420</span><span class="o">*</span> <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">YUVRawDataI420</span><span class="o">*</span><span class="p">)</span><span class="n">user_data</span><span class="p">;</span>
+            <span class="c1">// Update GTK UI safely</span>
+            <span class="k">return</span> <span class="n">G_SOURCE_REMOVE</span><span class="p">;</span>
+        <span class="p">},</span> <span class="n">data</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="key-insights">Key Insights</h2>
+
+<h3 id="1-helpers-vs-pipes">1. Helpers vs Pipes</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Purpose</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Helpers</strong></td>
+      <td>Control YOUR streams</td>
+      <td><code class="language-plaintext highlighter-rouge">videoHelper-&gt;startVideo()</code> starts YOUR camera</td>
+    </tr>
+    <tr>
+      <td><strong>Pipes</strong></td>
+      <td>Receive OTHERS’ streams</td>
+      <td><code class="language-plaintext highlighter-rouge">user-&gt;GetVideoPipe()-&gt;subscribe()</code> receives their video</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="2-virtual-devices-for-injection">2. Virtual Devices for Injection</h3>
+
+<p>To send custom audio/video, use virtual devices:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">IZoomVideoSDKVirtualAudioMic</code> - Send custom audio</li>
+  <li><code class="language-plaintext highlighter-rouge">IZoomVideoSDKVirtualAudioSpeaker</code> - Receive audio (headless)</li>
+  <li><code class="language-plaintext highlighter-rouge">IZoomVideoSDKVideoSource</code> - Send custom video</li>
+  <li><code class="language-plaintext highlighter-rouge">IZoomVideoSDKShareSource</code> - Send custom share</li>
+</ul>
+
+<p>Set these <strong>before</strong> joining session.</p>
+
+<h3 id="3-memory-modes">3. Memory Modes</h3>
+
+<p>Always use heap mode for raw data:</p>
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">init_params</span><span class="p">.</span><span class="n">videoRawDataMemoryMode</span> <span class="o">=</span> <span class="n">ZoomVideoSDKRawDataMemoryModeHeap</span><span class="p">;</span>
+<span class="n">init_params</span><span class="p">.</span><span class="n">shareRawDataMemoryMode</span> <span class="o">=</span> <span class="n">ZoomVideoSDKRawDataMemoryModeHeap</span><span class="p">;</span>
+<span class="n">init_params</span><span class="p">.</span><span class="n">audioRawDataMemoryMode</span> <span class="o">=</span> <span class="n">ZoomVideoSDKRawDataMemoryModeHeap</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="4-qt5-dependencies">4. Qt5 Dependencies</h3>
+
+<p>SDK requires Qt5 libraries (bundled in SDK package):</p>
+<ul>
+  <li>Copy from SDK <code class="language-plaintext highlighter-rouge">samples/qt_libs/Qt/lib/</code></li>
+  <li>Create symlinks for versioned libraries</li>
+  <li>See <a href="../troubleshooting/qt-dependencies.md">Qt Dependencies Guide</a></li>
+</ul>
+
+<h3 id="5-pulseaudio-for-audio">5. PulseAudio for Audio</h3>
+
+<p>Linux requires PulseAudio for raw audio features:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt <span class="nb">install</span> <span class="nt">-y</span> pulseaudio
+<span class="nb">mkdir</span> <span class="nt">-p</span> ~/.config
+<span class="nb">echo</span> <span class="s2">"[General]"</span> <span class="o">&gt;</span> ~/.config/zoomus.conf
+<span class="nb">echo</span> <span class="s2">"system.audio.type=default"</span> <span class="o">&gt;&gt;</span> ~/.config/zoomus.conf
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="complete-example">Complete Example</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"zoom_video_sdk_api.h"</span><span class="cp">
+#include</span> <span class="cpf">"zoom_video_sdk_interface.h"</span><span class="cp">
+#include</span> <span class="cpf">"zoom_video_sdk_delegate_interface.h"</span><span class="cp">
+</span>
+<span class="n">USING_ZOOM_VIDEO_SDK_NAMESPACE</span>
+
+<span class="k">class</span> <span class="nc">BotDelegate</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IZoomVideoSDKDelegate</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="n">onSessionJoin</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Joined session!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+
+        <span class="c1">// Start audio</span>
+        <span class="n">IZoomVideoSDKAudioHelper</span><span class="o">*</span> <span class="n">audio</span> <span class="o">=</span> <span class="n">video_sdk_obj</span><span class="o">-&gt;</span><span class="n">getAudioHelper</span><span class="p">();</span>
+        <span class="n">audio</span><span class="o">-&gt;</span><span class="n">startAudio</span><span class="p">();</span>
+        <span class="n">audio</span><span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">();</span>  <span class="c1">// For raw audio callbacks</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">onUserJoin</span><span class="p">(</span><span class="n">IZoomVideoSDKUserHelper</span><span class="o">*</span><span class="p">,</span> <span class="n">IVideoSDKVector</span><span class="o">&lt;</span><span class="n">IZoomVideoSDKUser</span><span class="o">*&gt;*</span> <span class="n">users</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">users</span><span class="o">-&gt;</span><span class="n">GetCount</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">IZoomVideoSDKUser</span><span class="o">*</span> <span class="n">user</span> <span class="o">=</span> <span class="n">users</span><span class="o">-&gt;</span><span class="n">GetItem</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+
+            <span class="c1">// Subscribe to video</span>
+            <span class="n">IZoomVideoSDKRawDataPipe</span><span class="o">*</span> <span class="n">pipe</span> <span class="o">=</span> <span class="n">user</span><span class="o">-&gt;</span><span class="n">GetVideoPipe</span><span class="p">();</span>
+            <span class="n">pipe</span><span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">(</span><span class="n">ZoomVideoSDKResolution_720P</span><span class="p">,</span> <span class="n">videoDelegate</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">onMixedAudioRawDataReceived</span><span class="p">(</span><span class="n">AudioRawData</span><span class="o">*</span> <span class="n">data</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Process audio</span>
+        <span class="kt">char</span><span class="o">*</span> <span class="n">buffer</span> <span class="o">=</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">GetBuffer</span><span class="p">();</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">GetBufferLen</span><span class="p">();</span>
+        <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">sampleRate</span> <span class="o">=</span> <span class="n">data</span><span class="o">-&gt;</span><span class="n">GetSampleRate</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="c1">// ... implement all other required callbacks</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 1. Create SDK</span>
+    <span class="n">IZoomVideoSDK</span><span class="o">*</span> <span class="n">sdk</span> <span class="o">=</span> <span class="n">CreateZoomVideoSDKObj</span><span class="p">();</span>
+
+    <span class="c1">// 2. Initialize</span>
+    <span class="n">ZoomVideoSDKInitParams</span> <span class="n">init_params</span><span class="p">;</span>
+    <span class="n">init_params</span><span class="p">.</span><span class="n">domain</span> <span class="o">=</span> <span class="s">"https://zoom.us"</span><span class="p">;</span>
+    <span class="n">init_params</span><span class="p">.</span><span class="n">enableLog</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">init_params</span><span class="p">.</span><span class="n">logFilePrefix</span> <span class="o">=</span> <span class="s">"bot"</span><span class="p">;</span>
+    <span class="n">init_params</span><span class="p">.</span><span class="n">videoRawDataMemoryMode</span> <span class="o">=</span> <span class="n">ZoomVideoSDKRawDataMemoryModeHeap</span><span class="p">;</span>
+    <span class="n">init_params</span><span class="p">.</span><span class="n">shareRawDataMemoryMode</span> <span class="o">=</span> <span class="n">ZoomVideoSDKRawDataMemoryModeHeap</span><span class="p">;</span>
+    <span class="n">init_params</span><span class="p">.</span><span class="n">audioRawDataMemoryMode</span> <span class="o">=</span> <span class="n">ZoomVideoSDKRawDataMemoryModeHeap</span><span class="p">;</span>
+
+    <span class="n">sdk</span><span class="o">-&gt;</span><span class="n">initialize</span><span class="p">(</span><span class="n">init_params</span><span class="p">);</span>
+
+    <span class="c1">// 3. Add delegate</span>
+    <span class="n">sdk</span><span class="o">-&gt;</span><span class="n">addListener</span><span class="p">(</span><span class="k">new</span> <span class="n">BotDelegate</span><span class="p">());</span>
+
+    <span class="c1">// 4. Join session</span>
+    <span class="n">ZoomVideoSDKSessionContext</span> <span class="n">ctx</span><span class="p">;</span>
+    <span class="n">ctx</span><span class="p">.</span><span class="n">sessionName</span> <span class="o">=</span> <span class="s">"my-session"</span><span class="p">;</span>
+    <span class="n">ctx</span><span class="p">.</span><span class="n">userName</span> <span class="o">=</span> <span class="s">"Linux Bot"</span><span class="p">;</span>
+    <span class="n">ctx</span><span class="p">.</span><span class="n">token</span> <span class="o">=</span> <span class="s">"jwt-token"</span><span class="p">;</span>
+    <span class="n">ctx</span><span class="p">.</span><span class="n">audioOption</span><span class="p">.</span><span class="n">connect</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">ctx</span><span class="p">.</span><span class="n">audioOption</span><span class="p">.</span><span class="n">mute</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">ctx</span><span class="p">.</span><span class="n">videoOption</span><span class="p">.</span><span class="n">localVideoOn</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="c1">// For headless</span>
+    <span class="n">ctx</span><span class="p">.</span><span class="n">virtualAudioSpeaker</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VirtualSpeaker</span><span class="p">();</span>
+
+    <span class="n">IZoomVideoSDKSession</span><span class="o">*</span> <span class="n">session</span> <span class="o">=</span> <span class="n">sdk</span><span class="o">-&gt;</span><span class="n">joinSession</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span>
+
+    <span class="c1">// Keep running</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">running</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="mi">100</span><span class="p">));</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Cleanup</span>
+    <span class="n">sdk</span><span class="o">-&gt;</span><span class="n">leaveSession</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+    <span class="n">sdk</span><span class="o">-&gt;</span><span class="n">cleanup</span><span class="p">();</span>
+    <span class="n">DestroyZoomVideoSDKObj</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<ul>
+  <li><strong><a href="singleton-hierarchy.md">Singleton Hierarchy</a></strong> - Navigate the 5-level SDK structure</li>
+  <li><strong><a href="../examples/session-join-pattern.md">Session Join Pattern</a></strong> - Complete working session join</li>
+  <li><strong><a href="../examples/raw-video-capture.md">Raw Video Capture</a></strong> - Capture YUV420 frames</li>
+  <li><strong><a href="../examples/raw-audio-capture.md">Raw Audio Capture</a></strong> - Capture PCM audio</li>
+  <li><strong><a href="../examples/virtual-audio-video.md">Virtual Audio/Video</a></strong> - Inject custom media</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+  <p>
+    © 2026 Knowledge Base
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/knowledge.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Skill · Knowledge Base</title>
+<meta name="description" content="Record Twilio voice calls correctly. Covers the critical distinction between Record verb (voicemail) and Dial record (call recording), dual-channel for QA, m...">
+<link rel="canonical" href="http://localhost:4000/knowledge/plugins/plugins/twilio-developer-kit/skills/twilio-call-recordings/SKILL/">
+
+<meta property="og:title" content="Skill · Knowledge Base">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/knowledge/plugins/plugins/twilio-developer-kit/skills/twilio-call-recordings/SKILL/">
+<meta property="og:description" content="Record Twilio voice calls correctly. Covers the critical distinction between Record verb (voicemail) and Dial record (call recording), dual-channel for QA, m...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/assets/search-index.json",
+    baseUrl: "",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/">
+    Knowledge Base
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/"
+         >Home</a>
+      <a href="/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Skill</h1>
+
+      <div class="dk-meta"><span>Jul 25, 2026</span><span>Record Twilio voice calls correctly. Covers the critical distinction between Record verb (voicemail) and Dial record (call recording), dual-channel for QA, mid-call pause for PCI, Conference recording, and the ConversationRelay workaround. Use this skill whenever you need to capture call audio for compliance, QA, or analytics.
+</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h2 id="overview">Overview</h2>
+
+<p>Twilio offers multiple recording methods. Choosing the wrong one is the <strong>#1 developer mistake</strong> in voice — using <code class="language-plaintext highlighter-rouge">&lt;Record&gt;</code> when you mean <code class="language-plaintext highlighter-rouge">&lt;Dial record&gt;</code> produces voicemail behavior instead of call recording.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>What it does</th>
+      <th>Use when</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;Record&gt;</code> verb</td>
+      <td>Records the CALLER only (voicemail-style)</td>
+      <td>Leaving a message, capturing input</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;Dial record&gt;</code></td>
+      <td>Records BOTH parties on a call</td>
+      <td>Call recording for two-party calls</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;Start&gt;&lt;Recording&gt;</code></td>
+      <td>Starts a recording alongside other verbs</td>
+      <td>ConversationRelay, multi-verb flows</td>
+    </tr>
+    <tr>
+      <td>Conference <code class="language-plaintext highlighter-rouge">record</code></td>
+      <td>Records the conference mix</td>
+      <td>Multi-party calls</td>
+    </tr>
+    <tr>
+      <td>Recordings REST API</td>
+      <td>Programmatic control mid-call</td>
+      <td>Pause during payment (PCI)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Twilio account with a voice-capable phone number — see <code class="language-plaintext highlighter-rouge">twilio-account-setup</code></li>
+  <li><code class="language-plaintext highlighter-rouge">TWILIO_ACCOUNT_SID</code> and <code class="language-plaintext highlighter-rouge">TWILIO_AUTH_TOKEN</code> — see <code class="language-plaintext highlighter-rouge">twilio-iam-auth-setup</code></li>
+  <li>SDK: <code class="language-plaintext highlighter-rouge">pip install twilio</code> / <code class="language-plaintext highlighter-rouge">npm install twilio</code></li>
+  <li>A webhook endpoint for recording status callbacks</li>
+  <li><strong>Compliance check:</strong> Recording consent requirements vary by jurisdiction — see <code class="language-plaintext highlighter-rouge">twilio-compliance-traffic</code></li>
+</ul>
+
+<hr />
+
+<h2 id="quickstart">Quickstart</h2>
+
+<h3 id="record-a-two-party-call-most-common">Record a Two-Party Call (Most Common)</h3>
+
+<p>Use <code class="language-plaintext highlighter-rouge">&lt;Dial record&gt;</code> — NOT <code class="language-plaintext highlighter-rouge">&lt;Record&gt;</code>.</p>
+
+<p><strong>Python (Flask)</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="n">twilio.twiml.voice_response</span> <span class="kn">import</span> <span class="n">VoiceResponse</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="nc">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="sh">"</span><span class="s">/voice</span><span class="sh">"</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">incoming_call</span><span class="p">():</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="nc">VoiceResponse</span><span class="p">()</span>
+    <span class="n">response</span><span class="p">.</span><span class="nf">say</span><span class="p">(</span><span class="sh">"</span><span class="s">This call may be recorded for quality assurance.</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">dial</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="nf">dial</span><span class="p">(</span>
+        <span class="n">record</span><span class="o">=</span><span class="sh">"</span><span class="s">record-from-answer-dual</span><span class="sh">"</span><span class="p">,</span>  <span class="c1"># dual-channel: agent on one, caller on other
+</span>        <span class="n">recording_status_callback</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/recording-status</span><span class="sh">"</span>
+    <span class="p">)</span>
+    <span class="n">dial</span><span class="p">.</span><span class="nf">number</span><span class="p">(</span><span class="sh">"</span><span class="s">+15558675310</span><span class="sh">"</span><span class="p">)</span>  <span class="c1"># agent's phone
+</span>    <span class="k">return</span> <span class="nf">str</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Node.js (Express)</strong></p>
+<pre><code class="language-node">app.post("/voice", (req, res) =&gt; {
+    const response = new VoiceResponse();
+    response.say("This call may be recorded for quality assurance.");
+    const dial = response.dial({
+        record: "record-from-answer-dual",
+        recordingStatusCallback: "https://yourapp.com/recording-status",
+    });
+    dial.number("+15558675310");
+    res.type("text/xml").send(response.toString());
+});
+</code></pre>
+
+<h3 id="handle-the-recording-status-callback">Handle the Recording Status Callback</h3>
+
+<blockquote>
+  <p><strong>Security:</strong> Validate <code class="language-plaintext highlighter-rouge">X-Twilio-Signature</code> on recording callbacks in production. Without validation, attackers could POST fake recording URLs to your endpoint.</p>
+</blockquote>
+
+<p><strong>Python (Flask)</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="sh">"</span><span class="s">/recording-status</span><span class="sh">"</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">recording_status</span><span class="p">():</span>
+    <span class="n">recording_sid</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">[</span><span class="sh">"</span><span class="s">RecordingSid</span><span class="sh">"</span><span class="p">]</span>
+    <span class="n">recording_url</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">[</span><span class="sh">"</span><span class="s">RecordingUrl</span><span class="sh">"</span><span class="p">]</span>
+    <span class="n">call_sid</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">[</span><span class="sh">"</span><span class="s">CallSid</span><span class="sh">"</span><span class="p">]</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">[</span><span class="sh">"</span><span class="s">RecordingStatus</span><span class="sh">"</span><span class="p">]</span>  <span class="c1"># "completed", "failed"
+</span>    <span class="n">duration</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">RecordingDuration</span><span class="sh">"</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="sh">"</span><span class="s">completed</span><span class="sh">"</span><span class="p">:</span>
+        <span class="c1"># Store recording reference
+</span>        <span class="nf">save_recording</span><span class="p">(</span><span class="n">call_sid</span><span class="p">,</span> <span class="n">recording_sid</span><span class="p">,</span> <span class="n">recording_url</span><span class="p">,</span> <span class="n">duration</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="sh">""</span><span class="p">,</span> <span class="mi">200</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="key-patterns">Key Patterns</h2>
+
+<h3 id="recording-modes-for-dial-record">Recording Modes for <code class="language-plaintext highlighter-rouge">&lt;Dial record&gt;</code></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mode</th>
+      <th>What’s recorded</th>
+      <th>Use case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">record-from-answer</code></td>
+      <td>Single channel, both parties mixed</td>
+      <td>Simple recording</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">record-from-answer-dual</code></td>
+      <td>Dual channel — caller on left, agent on right</td>
+      <td>QA (separate agent/caller audio)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">record-from-ringing</code></td>
+      <td>Records from ring, not answer</td>
+      <td>Capture ring time + full call</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">record-from-ringing-dual</code></td>
+      <td>Dual channel from ring</td>
+      <td>QA with ring time</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Always use <code class="language-plaintext highlighter-rouge">dual</code> for QA and analytics.</strong> Dual-channel lets speech analytics tools (like Conversation Intelligence) distinguish agent from caller.</p>
+
+<h3 id="conference-recording">Conference Recording</h3>
+
+<p>Record multi-party calls via the Conference:</p>
+
+<p><strong>Python</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">response</span> <span class="o">=</span> <span class="nc">VoiceResponse</span><span class="p">()</span>
+<span class="n">dial</span> <span class="o">=</span> <span class="n">response</span><span class="p">.</span><span class="nf">dial</span><span class="p">()</span>
+<span class="n">dial</span><span class="p">.</span><span class="nf">conference</span><span class="p">(</span>
+    <span class="sh">"</span><span class="s">support-room-123</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">record</span><span class="o">=</span><span class="sh">"</span><span class="s">record-from-start</span><span class="sh">"</span><span class="p">,</span>  <span class="c1"># Records from when conference starts
+</span>    <span class="n">recording_status_callback</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/conf-recording-status</span><span class="sh">"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Note:</strong> Conference recording captures the main audio mix. Coach/whisper audio is NOT included. See <code class="language-plaintext highlighter-rouge">twilio-conference-calls</code>.</p>
+
+<h3 id="conversationrelay-recording">ConversationRelay Recording</h3>
+
+<p><strong>Critical:</strong> <code class="language-plaintext highlighter-rouge">record:true</code> on the REST API call is <strong>silently ignored</strong> with ConversationRelay. No error. No recording.</p>
+
+<p><strong>Correct approach:</strong> Use <code class="language-plaintext highlighter-rouge">&lt;Start&gt;&lt;Recording&gt;</code> in TwiML before <code class="language-plaintext highlighter-rouge">&lt;Connect&gt;</code>:</p>
+
+<p><strong>Python</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="sh">"</span><span class="s">/voice</span><span class="sh">"</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">voice</span><span class="p">():</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="nc">VoiceResponse</span><span class="p">()</span>
+    <span class="n">response</span><span class="p">.</span><span class="nf">say</span><span class="p">(</span><span class="sh">"</span><span class="s">This call may be recorded.</span><span class="sh">"</span><span class="p">)</span>
+    
+    <span class="c1"># Start recording BEFORE connecting ConversationRelay
+</span>    <span class="n">start</span> <span class="o">=</span> <span class="nc">Start</span><span class="p">()</span>
+    <span class="n">start</span><span class="p">.</span><span class="nf">recording</span><span class="p">(</span>
+        <span class="n">recording_status_callback</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/recording-status</span><span class="sh">"</span><span class="p">,</span>
+        <span class="n">recording_status_callback_event</span><span class="o">=</span><span class="sh">"</span><span class="s">completed</span><span class="sh">"</span>
+    <span class="p">)</span>
+    <span class="n">response</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+    
+    <span class="c1"># Now connect ConversationRelay
+</span>    <span class="n">connect</span> <span class="o">=</span> <span class="nc">Connect</span><span class="p">()</span>
+    <span class="n">connect</span><span class="p">.</span><span class="nf">conversation_relay</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="sh">"</span><span class="s">wss://yourapp.com/ws/voice</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">response</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">connect</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="nf">str</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Node.js</strong></p>
+<pre><code class="language-node">app.post("/voice", (req, res) =&gt; {
+    const response = new VoiceResponse();
+    response.say("This call may be recorded.");
+    
+    const start = response.start();
+    start.recording({
+        recordingStatusCallback: "https://yourapp.com/recording-status",
+        recordingStatusCallbackEvent: "completed",
+    });
+    
+    const connect = response.connect();
+    connect.conversationRelay({ url: "wss://yourapp.com/ws/voice" });
+    
+    res.type("text/xml").send(response.toString());
+});
+</code></pre>
+
+<h3 id="mid-call-pause-for-pci-compliance">Mid-Call Pause for PCI Compliance</h3>
+
+<p>Pause recording when a customer provides payment information:</p>
+
+<p><strong>Python</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">pause_recording_for_payment</span><span class="p">(</span><span class="n">call_sid</span><span class="p">,</span> <span class="n">recording_sid</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Pause recording during credit card capture.</span><span class="sh">"""</span>
+    <span class="n">client</span><span class="p">.</span><span class="nf">calls</span><span class="p">(</span><span class="n">call_sid</span><span class="p">).</span><span class="nf">recordings</span><span class="p">(</span><span class="n">recording_sid</span><span class="p">).</span><span class="nf">update</span><span class="p">(</span>
+        <span class="n">status</span><span class="o">=</span><span class="sh">"</span><span class="s">paused</span><span class="sh">"</span>
+    <span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">resume_recording</span><span class="p">(</span><span class="n">call_sid</span><span class="p">,</span> <span class="n">recording_sid</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Resume recording after payment processed.</span><span class="sh">"""</span>
+    <span class="n">client</span><span class="p">.</span><span class="nf">calls</span><span class="p">(</span><span class="n">call_sid</span><span class="p">).</span><span class="nf">recordings</span><span class="p">(</span><span class="n">recording_sid</span><span class="p">).</span><span class="nf">update</span><span class="p">(</span>
+        <span class="n">status</span><span class="o">=</span><span class="sh">"</span><span class="s">in-progress</span><span class="sh">"</span>
+    <span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Node.js</strong></p>
+<pre><code class="language-node">async function pauseForPayment(callSid, recordingSid) {
+    await client.calls(callSid).recordings(recordingSid).update({
+        status: "paused",
+    });
+}
+
+async function resumeRecording(callSid, recordingSid) {
+    await client.calls(callSid).recordings(recordingSid).update({
+        status: "in-progress",
+    });
+}
+</code></pre>
+
+<p><strong>PCI DSS:</strong> Never record card numbers. Use Twilio’s <code class="language-plaintext highlighter-rouge">&lt;Pay&gt;</code> verb when possible. If collecting verbally, pause recording for the duration. PCI Mode is IRREVERSIBLE and account-wide — use a sub-account if only some calls need PCI.</p>
+
+<h3 id="accessing-recordings">Accessing Recordings</h3>
+
+<p><strong>Python</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># List recordings for a specific call
+</span><span class="n">recordings</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">recordings</span><span class="p">.</span><span class="nf">list</span><span class="p">(</span><span class="n">call_sid</span><span class="o">=</span><span class="n">call_sid</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">recording</span> <span class="ow">in</span> <span class="n">recordings</span><span class="p">:</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">SID: </span><span class="si">{</span><span class="n">recording</span><span class="p">.</span><span class="n">sid</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Duration: </span><span class="si">{</span><span class="n">recording</span><span class="p">.</span><span class="n">duration</span><span class="si">}</span><span class="s">s</span><span class="sh">"</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">URL: https://api.twilio.com</span><span class="si">{</span><span class="n">recording</span><span class="p">.</span><span class="n">uri</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sh">'</span><span class="s">.json</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">.mp3</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Download a recording
+</span><span class="kn">import</span> <span class="n">requests</span> <span class="k">as</span> <span class="n">req</span>
+<span class="n">audio</span> <span class="o">=</span> <span class="n">req</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span>
+    <span class="sa">f</span><span class="sh">"</span><span class="s">https://api.twilio.com/2010-04-01/Accounts/</span><span class="si">{</span><span class="n">account_sid</span><span class="si">}</span><span class="s">/Recordings/</span><span class="si">{</span><span class="n">recording_sid</span><span class="si">}</span><span class="s">.mp3</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">account_sid</span><span class="p">,</span> <span class="n">auth_token</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="sh">"</span><span class="s">recording.mp3</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">wb</span><span class="sh">"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">audio</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+
+<span class="c1"># Delete a recording (GDPR right to deletion)
+</span><span class="n">client</span><span class="p">.</span><span class="nf">recordings</span><span class="p">(</span><span class="n">recording_sid</span><span class="p">).</span><span class="nf">delete</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="recording-storage--retention">Recording Storage &amp; Retention</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Default</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Storage location</td>
+      <td>Twilio cloud</td>
+      <td>Can configure external storage (S3, GCS)</td>
+    </tr>
+    <tr>
+      <td>Retention</td>
+      <td>Indefinite</td>
+      <td>Delete manually via API or set auto-delete policy</td>
+    </tr>
+    <tr>
+      <td>Formats</td>
+      <td>WAV (default), MP3</td>
+      <td>Request MP3 by appending <code class="language-plaintext highlighter-rouge">.mp3</code> to URL</td>
+    </tr>
+    <tr>
+      <td>Encryption</td>
+      <td>At rest</td>
+      <td>Additional encryption with PCI Mode</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="common-errors">Common Errors</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Symptom</th>
+      <th>Cause</th>
+      <th>Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Recording captures only caller (no agent)</td>
+      <td>Used <code class="language-plaintext highlighter-rouge">&lt;Record&gt;</code> verb instead of <code class="language-plaintext highlighter-rouge">&lt;Dial record&gt;</code></td>
+      <td>Switch to <code class="language-plaintext highlighter-rouge">&lt;Dial record="record-from-answer"&gt;</code></td>
+    </tr>
+    <tr>
+      <td>No recording at all</td>
+      <td>Used REST API <code class="language-plaintext highlighter-rouge">record:true</code> with ConversationRelay</td>
+      <td>Use <code class="language-plaintext highlighter-rouge">&lt;Start&gt;&lt;Recording&gt;</code> in TwiML</td>
+    </tr>
+    <tr>
+      <td>Recording is empty / silent</td>
+      <td>Webhook endpoint unreachable, recording never started</td>
+      <td>Check StatusCallback URL reachability</td>
+    </tr>
+    <tr>
+      <td>Recording has both parties on same channel</td>
+      <td>Used <code class="language-plaintext highlighter-rouge">record-from-answer</code> (mono)</td>
+      <td>Use <code class="language-plaintext highlighter-rouge">record-from-answer-dual</code> for separate channels</td>
+    </tr>
+    <tr>
+      <td>Coach audio missing from conference recording</td>
+      <td>Expected behavior — coach audio isn’t in the mix</td>
+      <td>Record coach’s call leg separately</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="cannot">CANNOT</h2>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">recordingTrack</code> has no observable effect via TwiML</strong> — The <code class="language-plaintext highlighter-rouge">&lt;Start&gt;&lt;Recording&gt;</code> TwiML parameter <code class="language-plaintext highlighter-rouge">recordingTrack</code> does not isolate tracks. Use the Recordings REST API with <code class="language-plaintext highlighter-rouge">recordingTrack</code> for actual track isolation.</li>
+  <li><strong>Cannot start API recordings on ConversationRelay calls</strong> — REST API <code class="language-plaintext highlighter-rouge">record:true</code> is silently ignored (“not eligible for recording”). Must use <code class="language-plaintext highlighter-rouge">&lt;Start&gt;&lt;Recording&gt;</code> before <code class="language-plaintext highlighter-rouge">&lt;Connect&gt;</code> in TwiML.</li>
+  <li><strong>Cannot pause/resume recordings via TwiML</strong> — Only available via the REST API (<code class="language-plaintext highlighter-rouge">update</code> with <code class="language-plaintext highlighter-rouge">status="paused"</code> or <code class="language-plaintext highlighter-rouge">status="in-progress"</code>).</li>
+  <li><strong>Cannot get dual-channel conference recordings</strong> — Conference recording is always mono (mixed).</li>
+  <li><strong>Cannot get dual-channel from Calls API without explicit param</strong> — <code class="language-plaintext highlighter-rouge">Record=true</code> defaults to mono. Must specify <code class="language-plaintext highlighter-rouge">recordingChannels: 'dual'</code>.</li>
+  <li><strong>Cannot transcribe PCI-mode recordings</strong> — Recordings created while PCI mode was enabled cannot be transcribed, even after PCI is disabled.</li>
+  <li><strong>Cannot use <code class="language-plaintext highlighter-rouge">&lt;Record&gt;</code> verb for call recording</strong> — <code class="language-plaintext highlighter-rouge">&lt;Record&gt;</code> captures the caller only (voicemail-style). Use <code class="language-plaintext highlighter-rouge">&lt;Dial record&gt;</code> or <code class="language-plaintext highlighter-rouge">&lt;Start&gt;&lt;Recording&gt;</code> for call recording.</li>
+  <li><strong>Cannot capture coach/whisper audio in conference recordings</strong> — Supervisor whisper is excluded from the mix</li>
+  <li><strong>Cannot reverse PCI Mode</strong> — PCI Mode is irreversible and account-wide. Once enabled, all recordings are encrypted.</li>
+  <li><strong>Cannot auto-delete recordings without configuration</strong> — Recordings are retained indefinitely unless you configure auto-deletion</li>
+  <li><strong>Cannot avoid larger file sizes with dual-channel</strong> — Dual-channel recordings are ~2x the size of mono. Factor into storage costs.</li>
+</ul>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<ul>
+  <li><strong>Conference calls:</strong> <code class="language-plaintext highlighter-rouge">twilio-conference-calls</code></li>
+  <li><strong>Agent routing:</strong> <code class="language-plaintext highlighter-rouge">twilio-taskrouter-routing</code></li>
+  <li><strong>Compliance:</strong> <code class="language-plaintext highlighter-rouge">twilio-compliance-traffic</code></li>
+  <li><strong>Debug recording issues:</strong> <code class="language-plaintext highlighter-rouge">twilio-debugging-observability</code></li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+  <p>
+    © 2026 Knowledge Base
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/knowledge.js" defer></script>
+</body>
+</html>

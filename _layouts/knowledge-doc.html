@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead">
+      {%- assign coll = site.dracula_knowledge.collection | default: "knowledge" -%}
+      <nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="{{ '/' | append: coll | append: '/' | relative_url }}">{{ coll | capitalize }}</a>
+        {%- if page.dk_section and page.dk_section != "" %}
+          <span aria-hidden="true">/</span>
+          <span>{{ page.dk_section }}</span>
+        {%- endif %}
+      </nav>
+
+      <h1>{{ page.title }}</h1>
+
+      <div class="dk-meta">
+        {%- if page.date %}<span>{{ page.date | date: "%b %-d, %Y" }}</span>{% endif %}
+        {%- if page.description %}<span>{{ page.description }}</span>{% endif %}
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      {{ content }}
+    </div>
+  </article>
+
+  {%- include toc.html -%}
+</div>

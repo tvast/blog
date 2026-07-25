@@ -1,0 +1,62 @@
+title: Knowledge Base
+description: A Dracula-themed Jekyll knowledge base.
+lang: en
+baseurl: ""
+
+# --- Theme -------------------------------------------------------------------
+dracula_knowledge:
+  collection: knowledge
+  index_path: /assets/search-index.json
+  sidebar_title: Knowledge
+  # Indexing excerpts makes search-index.json roughly 4x larger. Off by default.
+  excerpts: false
+  nav:
+    - title: Home
+      url: /
+    - title: Knowledge
+      url: /knowledge/
+
+collections:
+  knowledge:
+    output: true
+    permalink: /knowledge/:path/
+
+defaults:
+  - scope:
+      path: ""
+      type: knowledge
+    values:
+      layout: knowledge-doc
+      # Imported notes are documents, not templates. Many legitimately contain
+      # {{ ... }} and {% ... %} in code samples, which Jekyll would otherwise
+      # try to execute as Liquid and fail on.
+      render_with_liquid: false
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-theme-dracula-knowledge
+
+sass:
+  style: compressed
+
+exclude:
+  # Skill templates whose front matter holds placeholders ("date: {{DATE}}")
+  # rather than values; Jekyll refuses to parse those as documents.
+  - _knowledge/plugins/plugins/hugging-face/skills/paper-publisher/templates
+  - Gemfile
+  - Gemfile.lock
+  - "*.gemspec"
+  - vendor
+  - node_modules
+  - README.md
+  - LICENSE.txt

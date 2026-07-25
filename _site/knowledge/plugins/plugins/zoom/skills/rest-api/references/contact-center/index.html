@@ -1,0 +1,3465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Contact Center · Knowledge Base</title>
+<meta name="description" content="Zoom Contact Center API">
+<link rel="canonical" href="http://localhost:4000/knowledge/plugins/plugins/zoom/skills/rest-api/references/contact-center/">
+
+<meta property="og:title" content="Contact Center · Knowledge Base">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/knowledge/plugins/plugins/zoom/skills/rest-api/references/contact-center/">
+<meta property="og:description" content="Zoom Contact Center API">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/assets/search-index.json",
+    baseUrl: "",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/">
+    Knowledge Base
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/"
+         >Home</a>
+      <a href="/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Contact Center</h1>
+
+      <div class="dk-meta"><span>Jul 25, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="zoom-contact-center-api">Zoom Contact Center API</h1>
+
+<p>Authoritative endpoint inventory for Contact Center. This file mirrors the official Zoom API Hub OpenAPI document for this product area.</p>
+
+<h2 id="canonical-source">Canonical Source</h2>
+
+<ul>
+  <li>OpenAPI JSON: https://developers.zoom.us/api-hub/contact-center/methods/endpoints.json</li>
+  <li>Base URL: <code class="language-plaintext highlighter-rouge">https://api.zoom.us/v2</code></li>
+  <li>Authentication details: <a href="authentication.md">authentication.md</a></li>
+</ul>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+  <li>Endpoint methods and paths below are generated from the official Zoom API Hub <code class="language-plaintext highlighter-rouge">paths</code> object.</li>
+  <li>Scope names are defined per operation and frequently use granular scope names. Check the API Hub operation page for the exact scopes before implementation.</li>
+  <li>Use this file for endpoint discovery and inventory. Use <code class="language-plaintext highlighter-rouge">../examples/</code> for orchestration patterns, not as the canonical source of path names.</li>
+</ul>
+
+<h2 id="coverage">Coverage</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Metric</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Endpoint operations</td>
+      <td>278</td>
+    </tr>
+    <tr>
+      <td>Path templates</td>
+      <td>157</td>
+    </tr>
+    <tr>
+      <td>Tags</td>
+      <td>25</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="tag-index">Tag Index</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>Operations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Address Books</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>Agent Statuses</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Asset Library</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <td>Call Control</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>Campaigns</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <td>Dispositions</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Engagements</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <td>Flows</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>Inboxes</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <td>Logs</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>Messaging</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Notes</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Operating Hours</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <td>Queues</td>
+      <td>35</td>
+    </tr>
+    <tr>
+      <td>Recordings</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>Regions</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>Reports V2(CX Analytics)</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>Reports(Legacy Reports)</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>Roles</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Routing Profiles</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <td>Skills</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <td>SMS</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>Teams</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <td>Users</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <td>Variables</td>
+      <td>13</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="endpoints-by-tag">Endpoints by Tag</h2>
+
+<h3 id="address-books">Address Books</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books</code></td>
+      <td>List address books</td>
+      <td><code class="language-plaintext highlighter-rouge">listAddressBooks</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books</code></td>
+      <td>Create an address book</td>
+      <td><code class="language-plaintext highlighter-rouge">createAddressBook</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/contacts/{contactId}/custom_fields</code></td>
+      <td>List a contact’s custom fields</td>
+      <td><code class="language-plaintext highlighter-rouge">ListContactCustomFields</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/custom_fields</code></td>
+      <td>List an address book’s custom fields</td>
+      <td><code class="language-plaintext highlighter-rouge">Listaddressbookcustomfields</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/custom_fields</code></td>
+      <td>Create an address book custom field</td>
+      <td><code class="language-plaintext highlighter-rouge">Createacustomfield</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/custom_fields/{customFieldId}</code></td>
+      <td>Delete an address book custom field</td>
+      <td><code class="language-plaintext highlighter-rouge">Deleteancustomfield</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/custom_fields/{customFieldId}</code></td>
+      <td>Get an address book’s custom field</td>
+      <td><code class="language-plaintext highlighter-rouge">Getaaddressbookcustomfield</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/custom_fields/{customFieldId}</code></td>
+      <td>Update an address book custom field</td>
+      <td><code class="language-plaintext highlighter-rouge">Updateacustomfield</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/units</code></td>
+      <td>List address book units</td>
+      <td><code class="language-plaintext highlighter-rouge">listUnits</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/units</code></td>
+      <td>Create an address book unit</td>
+      <td><code class="language-plaintext highlighter-rouge">createUnit</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/units/{unitId}</code></td>
+      <td>Delete an address book unit</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteUnit</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/units/{unitId}</code></td>
+      <td>Get an address book unit</td>
+      <td><code class="language-plaintext highlighter-rouge">getUnit</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/units/{unitId}</code></td>
+      <td>Update an address book unit</td>
+      <td><code class="language-plaintext highlighter-rouge">updateUnit</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/{addressBookId}</code></td>
+      <td>Delete an address book</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteAddressBook</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/{addressBookId}</code></td>
+      <td>Get an address book</td>
+      <td><code class="language-plaintext highlighter-rouge">getAddressBook</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/{addressBookId}</code></td>
+      <td>Update an address book</td>
+      <td><code class="language-plaintext highlighter-rouge">updateAddressBook</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/{addressBookId}/contacts</code></td>
+      <td>List address book contacts</td>
+      <td><code class="language-plaintext highlighter-rouge">listContacts</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/{addressBookId}/contacts</code></td>
+      <td>Create an address book contact</td>
+      <td><code class="language-plaintext highlighter-rouge">createContact</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/{addressBookId}/contacts/{contactId}</code></td>
+      <td>Delete an address book contact</td>
+      <td><code class="language-plaintext highlighter-rouge">contactDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/{addressBookId}/contacts/{contactId}</code></td>
+      <td>Get an address book contact</td>
+      <td><code class="language-plaintext highlighter-rouge">getContact</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/address_books/{addressBookId}/contacts/{contactId}</code></td>
+      <td>Update an address book contact</td>
+      <td><code class="language-plaintext highlighter-rouge">updateContact</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="agent-statuses">Agent Statuses</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/system_statuses</code></td>
+      <td>List system statuses</td>
+      <td><code class="language-plaintext highlighter-rouge">listSystemStatus</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/system_statuses</code></td>
+      <td>Create a system status</td>
+      <td><code class="language-plaintext highlighter-rouge">createSystemStatus</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/system_statuses/{statusId}</code></td>
+      <td>Delete a system status</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteSystemStatus</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/system_statuses/{statusId}</code></td>
+      <td>Get a system status</td>
+      <td><code class="language-plaintext highlighter-rouge">getAStatus</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/system_statuses/{statusId}</code></td>
+      <td>Update a system status</td>
+      <td><code class="language-plaintext highlighter-rouge">updateSystemStatus</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="asset-library">Asset Library</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/assets</code></td>
+      <td>List assets</td>
+      <td><code class="language-plaintext highlighter-rouge">listAssets</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/assets</code></td>
+      <td>Create an asset</td>
+      <td><code class="language-plaintext highlighter-rouge">createAnAsset</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/assets/{assetId}</code></td>
+      <td>Delete an asset</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteAnAsset</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/assets/{assetId}</code></td>
+      <td>Get an asset</td>
+      <td><code class="language-plaintext highlighter-rouge">getAnAsset</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/assets/{assetId}</code></td>
+      <td>Update an asset</td>
+      <td><code class="language-plaintext highlighter-rouge">updateAnAsset</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/assets/{assetId}/duplicate</code></td>
+      <td>Duplicate an asset</td>
+      <td><code class="language-plaintext highlighter-rouge">duplicateAnAsset</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/assets/{assetId}/items</code></td>
+      <td>Delete asset items</td>
+      <td><code class="language-plaintext highlighter-rouge">Deleteassetitems</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/categories</code></td>
+      <td>List asset categories</td>
+      <td><code class="language-plaintext highlighter-rouge">listAssetCategories</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/categories</code></td>
+      <td>Create an asset category</td>
+      <td><code class="language-plaintext highlighter-rouge">createAnAssetCategory</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/categories/{categoryId}</code></td>
+      <td>Delete an asset category</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteAnAssetCategory</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/categories/{categoryId}</code></td>
+      <td>Get an asset category</td>
+      <td><code class="language-plaintext highlighter-rouge">getAnAssetCategory</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/asset_library/categories/{categoryId}</code></td>
+      <td>Update an asset category</td>
+      <td><code class="language-plaintext highlighter-rouge">updateAnAssetCategory</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="call-control">Call Control</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PUT</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/recording/{command}</code></td>
+      <td>Control an engagement’s recording</td>
+      <td><code class="language-plaintext highlighter-rouge">engagementRecordingControl</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/commands</code></td>
+      <td>Command control of a user</td>
+      <td><code class="language-plaintext highlighter-rouge">userControl</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/devices</code></td>
+      <td>List user’s devices</td>
+      <td><code class="language-plaintext highlighter-rouge">Listuserdevices</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="campaigns">Campaigns</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/campaigns</code></td>
+      <td>List outbound campaigns</td>
+      <td><code class="language-plaintext highlighter-rouge">listOutboundCampaigns</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/campaigns</code></td>
+      <td>Create an outbound campaign</td>
+      <td><code class="language-plaintext highlighter-rouge">createOutboundCampaign</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/campaigns/{campaignId}</code></td>
+      <td>Delete an outbound campaign</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteOutboundCampaign</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/campaigns/{campaignId}</code></td>
+      <td>Get an outbound campaign</td>
+      <td><code class="language-plaintext highlighter-rouge">getOutboundCampaign</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/campaigns/{campaignId}</code></td>
+      <td>Update an outbound campaign</td>
+      <td><code class="language-plaintext highlighter-rouge">updateOutboundCampaign</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/campaigns/{campaignId}/status</code></td>
+      <td>Update an outbound campaign status</td>
+      <td><code class="language-plaintext highlighter-rouge">Updateanoutboundcampaignstatus</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists</code></td>
+      <td>List campaign contact lists</td>
+      <td><code class="language-plaintext highlighter-rouge">listCampaignContactLists</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists</code></td>
+      <td>Batch update campaign contact lists</td>
+      <td><code class="language-plaintext highlighter-rouge">Batchupdatecampaigncontactlists</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists</code></td>
+      <td>Create a campaign contact list</td>
+      <td><code class="language-plaintext highlighter-rouge">createCampaignContactList</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}</code></td>
+      <td>Remove a campaign contact list</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteCampaignContactList</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}</code></td>
+      <td>Get a campaign contact list</td>
+      <td><code class="language-plaintext highlighter-rouge">getCampaignContactList</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}</code></td>
+      <td>Update a campaign contact list</td>
+      <td><code class="language-plaintext highlighter-rouge">updateCampaignContactList</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}/contacts</code></td>
+      <td>List a campaign contact list’s contacts</td>
+      <td><code class="language-plaintext highlighter-rouge">listCampaignContactListContacts</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}/contacts</code></td>
+      <td>Update a batch of contacts on a campaign contact list</td>
+      <td><code class="language-plaintext highlighter-rouge">Updateabatchofcontactsonacampaigncontactlist</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}/contacts</code></td>
+      <td>Create a campaign contact list’s contact</td>
+      <td><code class="language-plaintext highlighter-rouge">createCampaignContactListContact</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}/contacts/{contactId}</code></td>
+      <td>Remove campaign contact list’s contact</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteCampaigncontactListContact</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}/contacts/{contactId}</code></td>
+      <td>Get a campaign contact list’s contact</td>
+      <td><code class="language-plaintext highlighter-rouge">getCampaignContactListContact</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/contact_lists/{contactListId}/contacts/{contactId}</code></td>
+      <td>Update contact on a campaign contact list</td>
+      <td><code class="language-plaintext highlighter-rouge">updateCampaignContactListContact</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/dnc_lists/{dncListId}/phones</code></td>
+      <td>Batch delete a campaign DNC list’s phones</td>
+      <td><code class="language-plaintext highlighter-rouge">batchDeleteCampaignDncListPhone</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/dnc_lists/{dncListId}/phones</code></td>
+      <td>List campaign DNC phone numbers</td>
+      <td><code class="language-plaintext highlighter-rouge">listCampaignDncListPhones</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/outbound_campaign/dnc_lists/{dncListId}/phones</code></td>
+      <td>Batch create a campaign DNC list’s phones</td>
+      <td><code class="language-plaintext highlighter-rouge">batchCreateCampaignDncListPhones</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="dispositions">Dispositions</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions</code></td>
+      <td>List dispositions</td>
+      <td><code class="language-plaintext highlighter-rouge">listDispositions</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions</code></td>
+      <td>Create a disposition</td>
+      <td><code class="language-plaintext highlighter-rouge">createDisposition</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions/sets</code></td>
+      <td>List disposition sets</td>
+      <td><code class="language-plaintext highlighter-rouge">listSets</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions/sets</code></td>
+      <td>Create a disposition set</td>
+      <td><code class="language-plaintext highlighter-rouge">createSet</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions/sets/{dispositionSetId}</code></td>
+      <td>Delete a disposition set</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteSet</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions/sets/{dispositionSetId}</code></td>
+      <td>Get a disposition set</td>
+      <td><code class="language-plaintext highlighter-rouge">getSet</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions/sets/{dispositionSetId}</code></td>
+      <td>Update a disposition set</td>
+      <td><code class="language-plaintext highlighter-rouge">updateSet</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions/{dispositionId}</code></td>
+      <td>Delete a disposition</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteDisposition</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions/{dispositionId}</code></td>
+      <td>Get a disposition</td>
+      <td><code class="language-plaintext highlighter-rouge">getDisposition</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/dispositions/{dispositionId}</code></td>
+      <td>Update a disposition</td>
+      <td><code class="language-plaintext highlighter-rouge">updateDisposition</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="engagements">Engagements</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagement</code></td>
+      <td>Start an engagement</td>
+      <td><code class="language-plaintext highlighter-rouge">Startworkitemengagement</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements</code></td>
+      <td>List engagements</td>
+      <td><code class="language-plaintext highlighter-rouge">listEngagements</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}</code></td>
+      <td>Get an engagement</td>
+      <td><code class="language-plaintext highlighter-rouge">getEngagement</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}</code></td>
+      <td>Update an engagement</td>
+      <td><code class="language-plaintext highlighter-rouge">updateEngagement</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/attachments</code></td>
+      <td>Get an engagement’s attachments</td>
+      <td><code class="language-plaintext highlighter-rouge">ListAttachments</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/events</code></td>
+      <td>Get an engagement’s events</td>
+      <td><code class="language-plaintext highlighter-rouge">getEngagementEvents</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/recordings/status</code></td>
+      <td>Poll an engagement recording’s status</td>
+      <td><code class="language-plaintext highlighter-rouge">EngagementRecordingStatus</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/survey</code></td>
+      <td>Get an engagement’s survey</td>
+      <td><code class="language-plaintext highlighter-rouge">getEngagementSurvey</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="flows">Flows</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows</code></td>
+      <td>List flows</td>
+      <td><code class="language-plaintext highlighter-rouge">listFlows</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows</code></td>
+      <td>Import a flow</td>
+      <td><code class="language-plaintext highlighter-rouge">ImportFlow</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows/{flowId}</code></td>
+      <td>Delete a flow</td>
+      <td><code class="language-plaintext highlighter-rouge">DeleteFlow</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows/{flowId}</code></td>
+      <td>Get a flow</td>
+      <td><code class="language-plaintext highlighter-rouge">getAFlow</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows/{flowId}</code></td>
+      <td>Edit a flow</td>
+      <td><code class="language-plaintext highlighter-rouge">EditFlow</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows/{flowId}/entry_points</code></td>
+      <td>Remove flow entry points</td>
+      <td><code class="language-plaintext highlighter-rouge">RemoveFlowEntryPoints</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows/{flowId}/entry_points</code></td>
+      <td>List flow’s entry points</td>
+      <td><code class="language-plaintext highlighter-rouge">ListFlowEntryPoints</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows/{flowId}/entry_points</code></td>
+      <td>Add flow entry points</td>
+      <td><code class="language-plaintext highlighter-rouge">AddFlowEntryPoints</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows/{flowId}/export</code></td>
+      <td>Export a flow</td>
+      <td><code class="language-plaintext highlighter-rouge">ExportFlow</code></td>
+    </tr>
+    <tr>
+      <td>PUT</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows/{flowId}/publish</code></td>
+      <td>Publish a flow</td>
+      <td><code class="language-plaintext highlighter-rouge">PublishFlow</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/flows_entry_points</code></td>
+      <td>List entry points</td>
+      <td><code class="language-plaintext highlighter-rouge">ListentryPoints</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="inboxes">Inboxes</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes</code></td>
+      <td>Delete inboxes</td>
+      <td><code class="language-plaintext highlighter-rouge">inboxesDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes</code></td>
+      <td>List inboxes</td>
+      <td><code class="language-plaintext highlighter-rouge">listInbox</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes</code></td>
+      <td>Create an inbox</td>
+      <td><code class="language-plaintext highlighter-rouge">inboxCreate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/messages</code></td>
+      <td>Delete inbox messages</td>
+      <td><code class="language-plaintext highlighter-rouge">inboxesMessagesDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/messages</code></td>
+      <td>List an account’s inbox messages</td>
+      <td><code class="language-plaintext highlighter-rouge">listInboxesMessages</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}</code></td>
+      <td>Get an inbox</td>
+      <td><code class="language-plaintext highlighter-rouge">getInbox</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}</code></td>
+      <td>Update an inbox</td>
+      <td><code class="language-plaintext highlighter-rouge">inboxUpdate</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/email_notification</code></td>
+      <td>Update an inbox email notification</td>
+      <td><code class="language-plaintext highlighter-rouge">Updateaninboxemailnotification</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/email_notifications</code></td>
+      <td>Get inbox email notification list</td>
+      <td><code class="language-plaintext highlighter-rouge">Getinboxemailnotificationlist</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/messages</code></td>
+      <td>Delete an inbox’s messages</td>
+      <td><code class="language-plaintext highlighter-rouge">inboxMessagesDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/messages</code></td>
+      <td>List an inbox’s messages</td>
+      <td><code class="language-plaintext highlighter-rouge">listInboxMessages</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/messages/{messageId}</code></td>
+      <td>Delete an inbox message</td>
+      <td><code class="language-plaintext highlighter-rouge">inboxMessageDelete</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/queues</code></td>
+      <td>Remove inbox access queues</td>
+      <td><code class="language-plaintext highlighter-rouge">unassignInboxQueues</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/queues</code></td>
+      <td>Get inbox access queues</td>
+      <td><code class="language-plaintext highlighter-rouge">listInboxQueues</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/queues</code></td>
+      <td>Assign inbox access queues</td>
+      <td><code class="language-plaintext highlighter-rouge">assignInboxQueues</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/users</code></td>
+      <td>Unassign inbox access users</td>
+      <td><code class="language-plaintext highlighter-rouge">unassignInboxUsers</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/users</code></td>
+      <td>Get an inbox’s users</td>
+      <td><code class="language-plaintext highlighter-rouge">listInboxUsers</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/inboxes/{inboxId}/users</code></td>
+      <td>Assign inbox access users</td>
+      <td><code class="language-plaintext highlighter-rouge">assignInboxUsers</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="logs">Logs</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/email/messages</code></td>
+      <td>List email message history</td>
+      <td><code class="language-plaintext highlighter-rouge">getEmailMessageHistory</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/messaging/messages</code></td>
+      <td>List message history</td>
+      <td><code class="language-plaintext highlighter-rouge">getMessageHistory</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/sms</code></td>
+      <td>List SMS logs</td>
+      <td><code class="language-plaintext highlighter-rouge">listSMS</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/voice_calls</code></td>
+      <td>List voice call logs</td>
+      <td><code class="language-plaintext highlighter-rouge">listVoiceCall</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/work_item/messages</code></td>
+      <td>List work item message history</td>
+      <td><code class="language-plaintext highlighter-rouge">getWorkItemMessageHistory</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="messaging">Messaging</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/messages</code></td>
+      <td>Send a message</td>
+      <td><code class="language-plaintext highlighter-rouge">SendaMessage</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="notes-1">Notes</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/notes</code></td>
+      <td>List notes</td>
+      <td><code class="language-plaintext highlighter-rouge">notes</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/notes</code></td>
+      <td>List engagement notes</td>
+      <td><code class="language-plaintext highlighter-rouge">engagementNotes</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/notes/{noteId}</code></td>
+      <td>Get a note</td>
+      <td><code class="language-plaintext highlighter-rouge">getNote</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/notes/{noteId}</code></td>
+      <td>Update a note</td>
+      <td><code class="language-plaintext highlighter-rouge">noteUpdate</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="operating-hours">Operating Hours</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/business_hours</code></td>
+      <td>List business hours</td>
+      <td><code class="language-plaintext highlighter-rouge">listBusinessHours</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/business_hours</code></td>
+      <td>Create business hours</td>
+      <td><code class="language-plaintext highlighter-rouge">businessHourCreate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/business_hours/{businessHourId}</code></td>
+      <td>Delete business hours</td>
+      <td><code class="language-plaintext highlighter-rouge">businessHourDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/business_hours/{businessHourId}</code></td>
+      <td>Get business hours</td>
+      <td><code class="language-plaintext highlighter-rouge">getABusinessHour</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/business_hours/{businessHourId}</code></td>
+      <td>Update business hours</td>
+      <td><code class="language-plaintext highlighter-rouge">businessHourUpdate</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/business_hours/{businessHourId}/flows</code></td>
+      <td>List the business hours’ flows</td>
+      <td><code class="language-plaintext highlighter-rouge">listBusinessHourFlows</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/business_hours/{businessHourId}/queues</code></td>
+      <td>List the business hours’ queues</td>
+      <td><code class="language-plaintext highlighter-rouge">listBusinessHourQueues</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/closures</code></td>
+      <td>List closures</td>
+      <td><code class="language-plaintext highlighter-rouge">listClosures</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/closures</code></td>
+      <td>Create a closure set</td>
+      <td><code class="language-plaintext highlighter-rouge">closuresSetCreate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/closures/{closureSetId}</code></td>
+      <td>Delete a closure set</td>
+      <td><code class="language-plaintext highlighter-rouge">closureSetDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/closures/{closureSetId}</code></td>
+      <td>Get a closure set</td>
+      <td><code class="language-plaintext highlighter-rouge">getAClosureSet</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/closures/{closureSetId}</code></td>
+      <td>Update a closure set</td>
+      <td><code class="language-plaintext highlighter-rouge">closureSetUpdate</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/closures/{closureSetId}/flows</code></td>
+      <td>List the closures’ flows</td>
+      <td><code class="language-plaintext highlighter-rouge">listClosureSetFlows</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/closures/{closureSetId}/queues</code></td>
+      <td>List the closures’ queues</td>
+      <td><code class="language-plaintext highlighter-rouge">listClosureSetQueues</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="queues">Queues</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queue_templates</code></td>
+      <td>List queue templates</td>
+      <td><code class="language-plaintext highlighter-rouge">Listqueuetemplates</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queue_templates/{queueTemplateId}</code></td>
+      <td>Get a queue template</td>
+      <td><code class="language-plaintext highlighter-rouge">getQueueTemplate</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues</code></td>
+      <td>List queues</td>
+      <td><code class="language-plaintext highlighter-rouge">listQueues</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues</code></td>
+      <td>Create a queue</td>
+      <td><code class="language-plaintext highlighter-rouge">queueCreate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/batch</code></td>
+      <td>Batch delete queues</td>
+      <td><code class="language-plaintext highlighter-rouge">Batchdeletequeues</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/batch</code></td>
+      <td>Batch create queues with a template</td>
+      <td><code class="language-plaintext highlighter-rouge">Batchcreatequeueswithatemplate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}</code></td>
+      <td>Delete a queue</td>
+      <td><code class="language-plaintext highlighter-rouge">queueDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}</code></td>
+      <td>Get a queue</td>
+      <td><code class="language-plaintext highlighter-rouge">getAQueue</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}</code></td>
+      <td>Update a queue</td>
+      <td><code class="language-plaintext highlighter-rouge">queueUpdate</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/agents</code></td>
+      <td>List queue agents</td>
+      <td><code class="language-plaintext highlighter-rouge">getQueueAgents</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/agents</code></td>
+      <td>Assign queue agents</td>
+      <td><code class="language-plaintext highlighter-rouge">assignQueueAgents</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/agents/{userId}</code></td>
+      <td>Unassign a queue agent</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteQueueAgent</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/agents/{userId}</code></td>
+      <td>Update a queue agent</td>
+      <td><code class="language-plaintext highlighter-rouge">updateQueueAgent</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/dispositions</code></td>
+      <td>List queue dispositions</td>
+      <td><code class="language-plaintext highlighter-rouge">getQueueDispositions</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/dispositions</code></td>
+      <td>Assign queue dispositions</td>
+      <td><code class="language-plaintext highlighter-rouge">assignQueueDispositions</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/dispositions/sets</code></td>
+      <td>List queue disposition sets</td>
+      <td><code class="language-plaintext highlighter-rouge">getQueueDispositionSets</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/dispositions/sets</code></td>
+      <td>Assign queue disposition sets</td>
+      <td><code class="language-plaintext highlighter-rouge">assignQueueDispositionSets</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/dispositions/sets/{dispositionSetId}</code></td>
+      <td>Unassign a queue disposition set</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteQueueDispositionSet</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/dispositions/{dispositionId}</code></td>
+      <td>Unassign a queue disposition</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteQueueDisposition</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/interrupt</code></td>
+      <td>Update a queue’s interrupt settings</td>
+      <td><code class="language-plaintext highlighter-rouge">updateQueueInterrupts</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/interrupt_menu</code></td>
+      <td>Delete a queue’s interrupt menu configuration</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteQueueInterruptMenu</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/interrupt_menu</code></td>
+      <td>Assign a queue menu based interrupt</td>
+      <td><code class="language-plaintext highlighter-rouge">assignQueueMenuBasedInterrupt</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/operating_hours</code></td>
+      <td>Get a queue’s operating hours</td>
+      <td><code class="language-plaintext highlighter-rouge">getAQueueOperatingHours</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/operating_hours</code></td>
+      <td>Update a queue’s operating hours</td>
+      <td><code class="language-plaintext highlighter-rouge">QueueOperatingHoursUpdate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/recordings</code></td>
+      <td>Delete queue recordings</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteQueueRecordings</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/recordings</code></td>
+      <td>List queue recordings</td>
+      <td><code class="language-plaintext highlighter-rouge">listQueueRecordings</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/scheduled_callbacks/attendees/{attendeeId}</code></td>
+      <td>Delete an attendee from a scheduled callback event</td>
+      <td><code class="language-plaintext highlighter-rouge">Deleteascheduledcallbackforanattendee</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/scheduled_callbacks/events</code></td>
+      <td>Schedule a callback on a queue</td>
+      <td><code class="language-plaintext highlighter-rouge">Scheduleacallbackonaqueue</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/scheduled_callbacks/supportive_slots</code></td>
+      <td>List a queue’s scheduled callbacks availability</td>
+      <td><code class="language-plaintext highlighter-rouge">Listqueuescheduledcallbacksavailability</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/supervisors</code></td>
+      <td>List queue supervisors</td>
+      <td><code class="language-plaintext highlighter-rouge">getQueueSupervisors</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/supervisors</code></td>
+      <td>Assign queue supervisors</td>
+      <td><code class="language-plaintext highlighter-rouge">assignQueueSupervisors</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/supervisors/{userId}</code></td>
+      <td>Unassign a queue supervisor</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteQueueSupervisor</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/teams</code></td>
+      <td>Unassign multiple teams in a queue</td>
+      <td><code class="language-plaintext highlighter-rouge">batchDeleteQueueTeams</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/teams</code></td>
+      <td>Assign queue teams</td>
+      <td><code class="language-plaintext highlighter-rouge">assignQueueTeams</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/queues/{queueId}/teams/{teamId}</code></td>
+      <td>Unassign a queue team</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteQueueTeam</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="recordings">Recordings</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/recordings</code></td>
+      <td>Delete engagement recordings</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteEngagementRecordings</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/engagements/{engagementId}/recordings</code></td>
+      <td>List engagement recordings</td>
+      <td><code class="language-plaintext highlighter-rouge">listEngagementRecordings</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/recordings</code></td>
+      <td>List recordings</td>
+      <td><code class="language-plaintext highlighter-rouge">listRecordings</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/recordings/{recordingId}</code></td>
+      <td>Delete a recording</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteRecording</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="regions">Regions</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/regions</code></td>
+      <td>List regions</td>
+      <td><code class="language-plaintext highlighter-rouge">ListRegions</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/regions</code></td>
+      <td>Create a region</td>
+      <td><code class="language-plaintext highlighter-rouge">CreateARegion</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/regions/{regionId}</code></td>
+      <td>Delete a region</td>
+      <td><code class="language-plaintext highlighter-rouge">DeleteARegion</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/regions/{regionId}</code></td>
+      <td>Get a region</td>
+      <td><code class="language-plaintext highlighter-rouge">GetARegion</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/regions/{regionId}</code></td>
+      <td>Update a region</td>
+      <td><code class="language-plaintext highlighter-rouge">UpdateARegion</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/regions/{regionId}/users</code></td>
+      <td>List a region’s users</td>
+      <td><code class="language-plaintext highlighter-rouge">ListRegion'sUsers</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/regions/{regionId}/users</code></td>
+      <td>Assign users to a region</td>
+      <td><code class="language-plaintext highlighter-rouge">AssignUsersToARegion</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="reports-v2cx-analytics">Reports V2(CX Analytics)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/dataset/historical/agent_performance</code></td>
+      <td>List historical agent performance dataset data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listhistoricalagentperformancedatasetdata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/dataset/historical/agent_timecard</code></td>
+      <td>List historical agent timecard dataset data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listhistoricalagenttimecarddatasetdata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/dataset/historical/disposition</code></td>
+      <td>List historical disposition dataset data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listhistoricaldispositiondatasetdata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/dataset/historical/engagement</code></td>
+      <td>List historical engagement dataset data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listengagementdatasetdata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/dataset/historical/expert_assist</code></td>
+      <td>List historical expert assist dataset data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listexpertassistdatasetdata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/dataset/historical/flow_performance</code></td>
+      <td>List historical flow performance dataset data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listhistoricalflowperformancedatasetdata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/dataset/historical/outbound_dialer_performance</code></td>
+      <td>List historical outbound dialer performance dataset data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listhistoricaloutbounddialerperformancedatasetdata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/dataset/historical/queue_performance</code></td>
+      <td>List historical queue performance dataset data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listhistoricalqueueperformancedatasetdata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/log/historical/engagement</code></td>
+      <td>List historical engagement log data</td>
+      <td><code class="language-plaintext highlighter-rouge">Listhistoricalengagementlogs</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/log/historical/journey</code></td>
+      <td>List historical Zoom Phone to Contact Center call journey data</td>
+      <td><code class="language-plaintext highlighter-rouge">ListhistoricalZoomphonetozcccalljourneydata</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/reports/operation_logs</code></td>
+      <td>List operation logs</td>
+      <td><code class="language-plaintext highlighter-rouge">listOperationLogs</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="reportslegacy-reports">Reports(Legacy Reports)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/agents/leg_metrics</code></td>
+      <td>List agent leg reports</td>
+      <td><code class="language-plaintext highlighter-rouge">listAgentLegMetric</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/agents/status_history</code></td>
+      <td>List agent’s status history reports</td>
+      <td><code class="language-plaintext highlighter-rouge">listAgentStatusHistory</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/agents/time_sheets</code></td>
+      <td>List agent’s time sheet reports</td>
+      <td><code class="language-plaintext highlighter-rouge">listAgentTimeSheet</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/historical/details/metrics</code></td>
+      <td>List historical detail reports</td>
+      <td><code class="language-plaintext highlighter-rouge">listHistoricalDetailMetric</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/historical/queues/agents/metrics</code></td>
+      <td>List historical agent reports by queue</td>
+      <td><code class="language-plaintext highlighter-rouge">listQueueAgentsMetrics</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/historical/queues/metrics</code></td>
+      <td>List historical queue reports</td>
+      <td><code class="language-plaintext highlighter-rouge">listHistoricalQueueMetric</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/analytics/historical/queues/{queueId}/agents/metrics</code></td>
+      <td>List historical queue’s agents reports</td>
+      <td><code class="language-plaintext highlighter-rouge">listQueueAgentMetric</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="roles">Roles</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles</code></td>
+      <td>List roles</td>
+      <td><code class="language-plaintext highlighter-rouge">listRoles</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles</code></td>
+      <td>Create a role</td>
+      <td><code class="language-plaintext highlighter-rouge">createRole</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles/duplicate</code></td>
+      <td>Duplicate a role</td>
+      <td><code class="language-plaintext highlighter-rouge">Duplicatearole</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles/{roleId}</code></td>
+      <td>Delete a role</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteRole</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles/{roleId}</code></td>
+      <td>Get a role</td>
+      <td><code class="language-plaintext highlighter-rouge">getRole</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles/{roleId}</code></td>
+      <td>Update a role</td>
+      <td><code class="language-plaintext highlighter-rouge">updateRole</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles/{roleId}/privileges</code></td>
+      <td>Delete role privileges</td>
+      <td><code class="language-plaintext highlighter-rouge">Deleteroleprivileges</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles/{roleId}/users</code></td>
+      <td>List users of a role</td>
+      <td><code class="language-plaintext highlighter-rouge">getRoleUsers</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles/{roleId}/users</code></td>
+      <td>Assign a role</td>
+      <td><code class="language-plaintext highlighter-rouge">assignRoleUsers</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/roles/{roleId}/users/{userId}</code></td>
+      <td>Unassign a role</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteRoleUser</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="routing-profiles">Routing Profiles</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/agent_routing_profiles</code></td>
+      <td>List agent routing profiles</td>
+      <td><code class="language-plaintext highlighter-rouge">Listagentroutingprofiles</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/agent_routing_profiles</code></td>
+      <td>Create an agent routing profile</td>
+      <td><code class="language-plaintext highlighter-rouge">Createanagentroutingprofile</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/agent_routing_profiles/{agentRoutingProfileId}</code></td>
+      <td>Delete an agent routing profile</td>
+      <td><code class="language-plaintext highlighter-rouge">Deleteanagentroutingprofile</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/agent_routing_profiles/{agentRoutingProfileId}</code></td>
+      <td>Get an agent routing profile</td>
+      <td><code class="language-plaintext highlighter-rouge">getAgentRoutingProfile</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/agent_routing_profiles/{agentRoutingProfileId}</code></td>
+      <td>Update an agent routing profile’s details</td>
+      <td><code class="language-plaintext highlighter-rouge">Updateanagentroutingprofile'sdetails</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/consumer_routing_profiles</code></td>
+      <td>List consumer routing profiles</td>
+      <td><code class="language-plaintext highlighter-rouge">Listconsumerroutingprofiles</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/consumer_routing_profiles</code></td>
+      <td>Create a consumer routing profile</td>
+      <td><code class="language-plaintext highlighter-rouge">Createaconsumerroutingprofile</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/consumer_routing_profiles/{consumerRoutingProfileId}</code></td>
+      <td>Delete a consumer routing profile</td>
+      <td><code class="language-plaintext highlighter-rouge">Deleteaconsumerroutingprofile</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/consumer_routing_profiles/{consumerRoutingProfileId}</code></td>
+      <td>Get a consumer routing profile</td>
+      <td><code class="language-plaintext highlighter-rouge">Getaconsumerroutingprofile</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/consumer_routing_profiles/{consumerRoutingProfileId}</code></td>
+      <td>Update a consumer routing profile’s details</td>
+      <td><code class="language-plaintext highlighter-rouge">Updateaconsumerroutingprofile'sdetails</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="skills">Skills</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills</code></td>
+      <td>List skills</td>
+      <td><code class="language-plaintext highlighter-rouge">listSkills</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills</code></td>
+      <td>Create a skill</td>
+      <td><code class="language-plaintext highlighter-rouge">skillCreate</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/categories</code></td>
+      <td>List skill categories</td>
+      <td><code class="language-plaintext highlighter-rouge">listSkillCategory</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/categories</code></td>
+      <td>Create a skill category</td>
+      <td><code class="language-plaintext highlighter-rouge">SkillCategoryCreate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/categories/{skillCategoryId}</code></td>
+      <td>Delete a skill category</td>
+      <td><code class="language-plaintext highlighter-rouge">SkillCategoryDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/categories/{skillCategoryId}</code></td>
+      <td>Get a skill category</td>
+      <td><code class="language-plaintext highlighter-rouge">getSkillCategory</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/categories/{skillCategoryId}</code></td>
+      <td>Update a skill category</td>
+      <td><code class="language-plaintext highlighter-rouge">SkillCategoryUpdate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/{skillId}</code></td>
+      <td>Delete a skill</td>
+      <td><code class="language-plaintext highlighter-rouge">skillDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/{skillId}</code></td>
+      <td>Get a skill</td>
+      <td><code class="language-plaintext highlighter-rouge">getSkill</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/{skillId}</code></td>
+      <td>Update a skill</td>
+      <td><code class="language-plaintext highlighter-rouge">skillNameUpdate</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/skills/{skillId}/users</code></td>
+      <td>List users of a skill</td>
+      <td><code class="language-plaintext highlighter-rouge">listSkillUsers</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="sms">SMS</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/sms</code></td>
+      <td>Send an SMS</td>
+      <td><code class="language-plaintext highlighter-rouge">contactCenterSMS</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="teams">Teams</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams</code></td>
+      <td>List teams</td>
+      <td><code class="language-plaintext highlighter-rouge">listTeams</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams</code></td>
+      <td>Create a team</td>
+      <td><code class="language-plaintext highlighter-rouge">CreateTeam</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}</code></td>
+      <td>Delete a team</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteTeam</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}</code></td>
+      <td>Get a team</td>
+      <td><code class="language-plaintext highlighter-rouge">getTeamDetail</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}</code></td>
+      <td>Update a team</td>
+      <td><code class="language-plaintext highlighter-rouge">Updateateam</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/agents</code></td>
+      <td>Unassign team agents</td>
+      <td><code class="language-plaintext highlighter-rouge">unassignTeamAgents</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/agents</code></td>
+      <td>List team agents</td>
+      <td><code class="language-plaintext highlighter-rouge">listTeamAgents</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/agents</code></td>
+      <td>Assign team agents</td>
+      <td><code class="language-plaintext highlighter-rouge">assignTeamAgents</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/children</code></td>
+      <td>List a team’s child teams</td>
+      <td><code class="language-plaintext highlighter-rouge">getTeamChildTeams</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/move</code></td>
+      <td>Move a team</td>
+      <td><code class="language-plaintext highlighter-rouge">moveTeam</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/parents</code></td>
+      <td>List team’s parent teams</td>
+      <td><code class="language-plaintext highlighter-rouge">getTeamParentTeams</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/supervisors</code></td>
+      <td>Unassign team supervisors</td>
+      <td><code class="language-plaintext highlighter-rouge">unassignTeamSupervisors</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/supervisors</code></td>
+      <td>List team supervisors</td>
+      <td><code class="language-plaintext highlighter-rouge">listTeamSupervisors</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/teams/{teamId}/supervisors</code></td>
+      <td>Assign team supervisors</td>
+      <td><code class="language-plaintext highlighter-rouge">assignTeamSupervisors</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="users">Users</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users</code></td>
+      <td>Batch delete user profiles</td>
+      <td><code class="language-plaintext highlighter-rouge">batchDeleteUsers</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users</code></td>
+      <td>List users’ profiles</td>
+      <td><code class="language-plaintext highlighter-rouge">users</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users</code></td>
+      <td>Batch update user profiles</td>
+      <td><code class="language-plaintext highlighter-rouge">BatchUpdateUsers</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users</code></td>
+      <td>Create a user’s profile</td>
+      <td><code class="language-plaintext highlighter-rouge">createUser</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/batch</code></td>
+      <td>Batch create user profiles</td>
+      <td><code class="language-plaintext highlighter-rouge">BatchCreateUsers</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/status</code></td>
+      <td>Batch update user status</td>
+      <td><code class="language-plaintext highlighter-rouge">Batchupdateuserstatus</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/templates</code></td>
+      <td>List user templates</td>
+      <td><code class="language-plaintext highlighter-rouge">ListUserTemplates</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/templates</code></td>
+      <td>Create a user template</td>
+      <td><code class="language-plaintext highlighter-rouge">createAUserTemplate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/templates/{templateId}</code></td>
+      <td>Delete a user template</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteAUserTemplate</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/templates/{templateId}</code></td>
+      <td>Get a user template</td>
+      <td><code class="language-plaintext highlighter-rouge">Getanusertemplate</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/templates/{templateId}</code></td>
+      <td>Update a user template</td>
+      <td><code class="language-plaintext highlighter-rouge">updateAUserTemplate</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}</code></td>
+      <td>Delete a user’s profile</td>
+      <td><code class="language-plaintext highlighter-rouge">userDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}</code></td>
+      <td>Get a user’s profile</td>
+      <td><code class="language-plaintext highlighter-rouge">userGet</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}</code></td>
+      <td>Update a user’s profile</td>
+      <td><code class="language-plaintext highlighter-rouge">userUpdate</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/opt_in_out_queues</code></td>
+      <td>Batch opt in or opt out a user’s queues</td>
+      <td><code class="language-plaintext highlighter-rouge">BatchOptInOrOutUserQueues</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/queues</code></td>
+      <td>List user’s queues</td>
+      <td><code class="language-plaintext highlighter-rouge">listUserQueues</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/recordings</code></td>
+      <td>Delete a user’s recordings</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteUserRecordings</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/recordings</code></td>
+      <td>List a user’s recordings</td>
+      <td><code class="language-plaintext highlighter-rouge">listUserRecordings</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/skills</code></td>
+      <td>List user’s skills</td>
+      <td><code class="language-plaintext highlighter-rouge">ListAUserSkills</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/skills</code></td>
+      <td>Assign user’s skills</td>
+      <td><code class="language-plaintext highlighter-rouge">assignSkills</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/skills/{skillId}</code></td>
+      <td>Unassign user’s skill</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteASkill</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/users/{userId}/status</code></td>
+      <td>Update a user’s status</td>
+      <td><code class="language-plaintext highlighter-rouge">Updateauser'sstatus</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="variables">Variables</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Summary</th>
+      <th>Operation ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variable_logs</code></td>
+      <td>List variable logs</td>
+      <td><code class="language-plaintext highlighter-rouge">listVariableLogs</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variable_logs/{variableLogId}</code></td>
+      <td>Delete a variable log</td>
+      <td><code class="language-plaintext highlighter-rouge">deleteVariableLog</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variable_logs/{variableLogId}</code></td>
+      <td>Get a variable log</td>
+      <td><code class="language-plaintext highlighter-rouge">getVariableLog</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables</code></td>
+      <td>List variables</td>
+      <td><code class="language-plaintext highlighter-rouge">variables</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables</code></td>
+      <td>Create a variable</td>
+      <td><code class="language-plaintext highlighter-rouge">createVariable</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables/groups</code></td>
+      <td>List variable groups</td>
+      <td><code class="language-plaintext highlighter-rouge">listVariableGroups</code></td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables/groups</code></td>
+      <td>Create a variable group</td>
+      <td><code class="language-plaintext highlighter-rouge">createVariableGroup</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables/groups/{variableGroupId}</code></td>
+      <td>Delete a variable group</td>
+      <td><code class="language-plaintext highlighter-rouge">DeleteGroup</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables/groups/{variableGroupId}</code></td>
+      <td>Get a variable group</td>
+      <td><code class="language-plaintext highlighter-rouge">getAVariableGroup</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables/groups/{variableGroupId}</code></td>
+      <td>Update a variable group</td>
+      <td><code class="language-plaintext highlighter-rouge">updateVariableGroup</code></td>
+    </tr>
+    <tr>
+      <td>DELETE</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables/{variableId}</code></td>
+      <td>Delete a variable</td>
+      <td><code class="language-plaintext highlighter-rouge">variableDelete</code></td>
+    </tr>
+    <tr>
+      <td>GET</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables/{variableId}</code></td>
+      <td>Get a variable</td>
+      <td><code class="language-plaintext highlighter-rouge">variableGet</code></td>
+    </tr>
+    <tr>
+      <td>PATCH</td>
+      <td><code class="language-plaintext highlighter-rouge">/contact_center/variables/{variableId}</code></td>
+      <td>Update a variable</td>
+      <td><code class="language-plaintext highlighter-rouge">variableUpdate</code></td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+  <p>
+    © 2026 Knowledge Base
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/knowledge.js" defer></script>
+</body>
+</html>

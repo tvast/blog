@@ -1,0 +1,57 @@
+---
+layout: default
+---
+{%- comment -%}
+  The complete, server-rendered index: every section, every document, on one
+  page. This is what makes the corpus fully reachable without JavaScript and
+  what the sidebar's per-section fallback links point at.
+
+  It is deliberately the only page that enumerates everything.
+{%- endcomment -%}
+
+{%- assign coll = site.dracula_knowledge.collection | default: "knowledge" -%}
+{%- assign docs = site.collections | where: "label", coll | first -%}
+
+<div class="dk-content">
+  <header class="dk-pagehead">
+    <h1>{{ page.title | default: "Knowledge base" }}</h1>
+    <div class="dk-meta">
+      <span>{{ site.dk_total }} documents</span>
+      <span>{{ site.data.dk_sections | size }} sections</span>
+    </div>
+  </header>
+
+  {{ content }}
+
+  <ul class="dk-cards">
+    {%- for section in site.data.dk_sections %}
+      <li>
+        <a class="dk-card" href="#{{ section.slug | slugify | default: 'ungrouped' }}">
+          <span class="dk-card__title">{{ section.title }}</span>
+          <span class="dk-card__desc">{{ section.count }} document{% if section.count != 1 %}s{% endif %}</span>
+        </a>
+      </li>
+    {%- endfor %}
+  </ul>
+
+  {%- assign grouped = docs.docs | group_by_exp: "d", "d.relative_path | split: '/' | slice: 1, 1 | first" | sort: "name" -%}
+
+  {%- for group in grouped %}
+    {%- assign probe = group.items | first -%}
+    {%- assign segments = probe.relative_path | split: "/" -%}
+    {%- if segments.size > 2 -%}
+      {%- assign prefix = "_" | append: coll | append: "/" | append: group.name | append: "/" -%}
+      <section id="{{ group.name | slugify }}">
+        <h2>{{ group.name }} <span class="dk-sidebar__count">{{ group.items.size }}</span></h2>
+        <ul>
+          {%- for doc in group.items %}
+            <li>
+              <a href="{{ doc.url | relative_url }}">{{ doc.title | default: doc.name }}</a>
+              <code>{{ doc.relative_path | remove_first: prefix }}</code>
+            </li>
+          {%- endfor %}
+        </ul>
+      </section>
+    {%- endif -%}
+  {%- endfor %}
+</div>

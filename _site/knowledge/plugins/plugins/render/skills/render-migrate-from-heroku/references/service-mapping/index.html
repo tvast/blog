@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Service Mapping · Knowledge Base</title>
+<meta name="description" content="Heroku → Render Service Mapping">
+<link rel="canonical" href="http://localhost:4000/knowledge/plugins/plugins/render/skills/render-migrate-from-heroku/references/service-mapping/">
+
+<meta property="og:title" content="Service Mapping · Knowledge Base">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/knowledge/plugins/plugins/render/skills/render-migrate-from-heroku/references/service-mapping/">
+<meta property="og:description" content="Heroku → Render Service Mapping">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/assets/search-index.json",
+    baseUrl: "",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/">
+    Knowledge Base
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/"
+         >Home</a>
+      <a href="/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Service Mapping</h1>
+
+      <div class="dk-meta"><span>Jul 25, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="heroku--render-service-mapping">Heroku → Render Service Mapping</h1>
+
+<h2 id="how-to-use-this-reference">How to Use This Reference</h2>
+
+<p>Look up the Heroku plan from <code class="language-plaintext highlighter-rouge">ps_list</code> (dyno size) or <code class="language-plaintext highlighter-rouge">list_addons</code> (add-on plan slug) and use the corresponding Render plan in the Blueprint or MCP creation call. If the Heroku plan is unknown, use the fallback default.</p>
+
+<h2 id="compute-dynos--services">Compute (Dynos → Services)</h2>
+
+<p>Match by RAM to avoid out-of-memory issues. Worker and cron dynos use the same size mapping as web dynos.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Heroku dyno</th>
+      <th>Heroku RAM</th>
+      <th>Heroku $/mo</th>
+      <th>Render <code class="language-plaintext highlighter-rouge">plan</code> value</th>
+      <th>Render RAM</th>
+      <th>Render $/mo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Eco</td>
+      <td>512 MB</td>
+      <td>$5</td>
+      <td><code class="language-plaintext highlighter-rouge">starter</code></td>
+      <td>512 MB</td>
+      <td>$7</td>
+    </tr>
+    <tr>
+      <td>Basic</td>
+      <td>512 MB</td>
+      <td>$7</td>
+      <td><code class="language-plaintext highlighter-rouge">starter</code></td>
+      <td>512 MB</td>
+      <td>$7</td>
+    </tr>
+    <tr>
+      <td>Standard-1X</td>
+      <td>512 MB</td>
+      <td>$25</td>
+      <td><code class="language-plaintext highlighter-rouge">starter</code></td>
+      <td>512 MB</td>
+      <td>$7</td>
+    </tr>
+    <tr>
+      <td>Standard-2X</td>
+      <td>1 GB</td>
+      <td>$50</td>
+      <td><code class="language-plaintext highlighter-rouge">standard</code></td>
+      <td>2 GB</td>
+      <td>$25</td>
+    </tr>
+    <tr>
+      <td>Performance-M</td>
+      <td>2.5 GB</td>
+      <td>$250</td>
+      <td><code class="language-plaintext highlighter-rouge">pro</code></td>
+      <td>4 GB</td>
+      <td>$85</td>
+    </tr>
+    <tr>
+      <td>Performance-L</td>
+      <td>14 GB</td>
+      <td>$500</td>
+      <td><code class="language-plaintext highlighter-rouge">pro max</code></td>
+      <td>16 GB</td>
+      <td>$225</td>
+    </tr>
+    <tr>
+      <td>Performance-L-RAM</td>
+      <td>30 GB</td>
+      <td>$500</td>
+      <td><code class="language-plaintext highlighter-rouge">pro ultra</code></td>
+      <td>32 GB</td>
+      <td>$450</td>
+    </tr>
+    <tr>
+      <td>Performance-XL</td>
+      <td>62 GB</td>
+      <td>$750</td>
+      <td>Custom</td>
+      <td>64 GB</td>
+      <td>~$712</td>
+    </tr>
+    <tr>
+      <td>Performance-2XL</td>
+      <td>126 GB</td>
+      <td>$1,500</td>
+      <td>Custom</td>
+      <td>128 GB</td>
+      <td>~$1,426</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Fallback default:</strong> <code class="language-plaintext highlighter-rouge">starter</code> (when Heroku dyno size is unknown)</p>
+
+<p><strong>Notes:</strong></p>
+<ul>
+  <li>Worker dynos on Heroku can be any size (Standard-1X, Performance-M, etc.) — use the same mapping based on the dyno size reported by <code class="language-plaintext highlighter-rouge">ps_list</code></li>
+  <li>Cron jobs use the same mapping — Render cron plans match web/worker plans</li>
+  <li>Performance-L-RAM has 4 CPU (half of Pro Ultra’s 8 CPU). For non-enterprise customers, default to <code class="language-plaintext highlighter-rouge">pro ultra</code>. Enterprise customers may negotiate custom pricing (~$356) with Render for a closer CPU match.</li>
+  <li>For Performance-XL and Performance-2XL, instruct the user to <a href="https://render.com/contact">contact Render</a> for custom sizing. The estimates above (~$712, ~$1,426) are based on proportional custom pricing and may vary.</li>
+  <li>Enterprise contracts change per-dyno pricing — the “units per dyno” multiplier varies (e.g., Performance-M = 8 units, Performance-L = 16 units of a Standard-1X). Heroku prices above reflect pay-as-you-go rates.</li>
+</ul>
+
+<h2 id="postgres-heroku-postgres--render-postgres">Postgres (Heroku Postgres → Render Postgres)</h2>
+
+<p>Heroku has deprecated Mini and Basic plans. Current tiers are Essential, Standard, and Premium.</p>
+
+<p>Render has three Postgres tiers:</p>
+<ul>
+  <li><strong>Basic</strong> — entry-level, for development and low-traffic apps</li>
+  <li><strong>Pro</strong> — balanced CPU-to-RAM ratio (1:4), for production workloads</li>
+  <li><strong>Accelerated</strong> — memory-optimized CPU-to-RAM ratio (1:8), for high-performance and memory-intensive workloads</li>
+</ul>
+
+<p>Map Heroku Essential → Render Basic. For Standard and Premium, both map to the <strong>same Render plan per tier</strong> — Standard as a single instance, Premium with HA enabled (doubling the Render cost). Tiers 0 and 2 map to Render Pro; tiers 3 through 9 map to Render Accelerated.</p>
+
+<h3 id="essential-and-legacy-plans--render-basic">Essential and legacy plans → Render Basic</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Heroku plan</th>
+      <th>Heroku disk</th>
+      <th>Heroku $/mo</th>
+      <th>Render <code class="language-plaintext highlighter-rouge">plan</code> value</th>
+      <th>Render <code class="language-plaintext highlighter-rouge">diskSizeGB</code></th>
+      <th>Render $/mo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Essential-0</td>
+      <td>1 GB</td>
+      <td>$5</td>
+      <td><code class="language-plaintext highlighter-rouge">basic-256mb</code></td>
+      <td>1</td>
+      <td>$6 + storage</td>
+    </tr>
+    <tr>
+      <td>Essential-1</td>
+      <td>10 GB</td>
+      <td>$9</td>
+      <td><code class="language-plaintext highlighter-rouge">basic-256mb</code></td>
+      <td>10</td>
+      <td>$6 + storage</td>
+    </tr>
+    <tr>
+      <td>Essential-2</td>
+      <td>32 GB</td>
+      <td>$20</td>
+      <td><code class="language-plaintext highlighter-rouge">basic-1gb</code></td>
+      <td>32</td>
+      <td>$19 + storage</td>
+    </tr>
+    <tr>
+      <td>Mini (legacy, EOL)</td>
+      <td>1 GB</td>
+      <td>$5</td>
+      <td><code class="language-plaintext highlighter-rouge">basic-256mb</code></td>
+      <td>1</td>
+      <td>$6 + storage</td>
+    </tr>
+    <tr>
+      <td>Basic (legacy, EOL)</td>
+      <td>10 GB</td>
+      <td>$9</td>
+      <td><code class="language-plaintext highlighter-rouge">basic-256mb</code></td>
+      <td>10</td>
+      <td>$6 + storage</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="standard-and-premium-plans--render-pro--accelerated">Standard and Premium plans → Render Pro / Accelerated</h3>
+
+<p>Heroku Standard and Premium share the same tier numbering (X-0 through X-9) with identical vCPU, RAM, and storage specs. The difference is that <strong>Premium includes HA by default</strong>. On Render, both map to the same plan — enable HA on Render to match Premium (which doubles the Render base price for a separate replica).</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Heroku tier</th>
+      <th>Heroku Standard $/mo</th>
+      <th>Heroku Premium $/mo</th>
+      <th>vCPU</th>
+      <th>RAM</th>
+      <th>Storage</th>
+      <th>Render <code class="language-plaintext highlighter-rouge">plan</code> value</th>
+      <th>Render <code class="language-plaintext highlighter-rouge">diskSizeGB</code></th>
+      <th>Render $/mo</th>
+      <th>Render HA $/mo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>X-0</td>
+      <td>$50</td>
+      <td>$200</td>
+      <td>2</td>
+      <td>4 GB</td>
+      <td>64 GB</td>
+      <td><code class="language-plaintext highlighter-rouge">pro-4gb</code></td>
+      <td>65</td>
+      <td>$55 + storage</td>
+      <td>$110 + storage</td>
+    </tr>
+    <tr>
+      <td>X-2</td>
+      <td>$200</td>
+      <td>$350</td>
+      <td>2</td>
+      <td>8 GB</td>
+      <td>256 GB</td>
+      <td><code class="language-plaintext highlighter-rouge">pro-8gb</code></td>
+      <td>256</td>
+      <td>$100 + storage</td>
+      <td>$200 + storage</td>
+    </tr>
+    <tr>
+      <td>X-3</td>
+      <td>$400</td>
+      <td>$750</td>
+      <td>2</td>
+      <td>15 GB</td>
+      <td>512 GB</td>
+      <td><code class="language-plaintext highlighter-rouge">accelerated-16gb</code></td>
+      <td>512</td>
+      <td>$160 + storage</td>
+      <td>$320 + storage</td>
+    </tr>
+    <tr>
+      <td>X-4</td>
+      <td>$750</td>
+      <td>$1,200</td>
+      <td>4</td>
+      <td>30 GB</td>
+      <td>768 GB</td>
+      <td><code class="language-plaintext highlighter-rouge">accelerated-32gb</code></td>
+      <td>770</td>
+      <td>$350 + storage</td>
+      <td>$700 + storage</td>
+    </tr>
+    <tr>
+      <td>X-5</td>
+      <td>$1,400</td>
+      <td>$2,500</td>
+      <td>8</td>
+      <td>61 GB</td>
+      <td>1 TB</td>
+      <td><code class="language-plaintext highlighter-rouge">accelerated-64gb</code></td>
+      <td>1024</td>
+      <td>$750 + storage</td>
+      <td>$1,500 + storage</td>
+    </tr>
+    <tr>
+      <td>X-6</td>
+      <td>$2,000</td>
+      <td>$3,500</td>
+      <td>16</td>
+      <td>122 GB</td>
+      <td>1.5 TB</td>
+      <td><code class="language-plaintext highlighter-rouge">accelerated-128gb</code></td>
+      <td>1536</td>
+      <td>$1,500 + storage</td>
+      <td>$3,000 + storage</td>
+    </tr>
+    <tr>
+      <td>X-7</td>
+      <td>$3,500</td>
+      <td>$6,000</td>
+      <td>32</td>
+      <td>244 GB</td>
+      <td>2 TB</td>
+      <td><code class="language-plaintext highlighter-rouge">accelerated-256gb</code></td>
+      <td>2048</td>
+      <td>$2,500 + storage</td>
+      <td>$5,000 + storage</td>
+    </tr>
+    <tr>
+      <td>X-8</td>
+      <td>$4,500</td>
+      <td>$8,500</td>
+      <td>64</td>
+      <td>488 GB</td>
+      <td>3 TB</td>
+      <td><code class="language-plaintext highlighter-rouge">accelerated-512gb</code></td>
+      <td>3072</td>
+      <td>$6,000 + storage</td>
+      <td>$12,000 + storage</td>
+    </tr>
+    <tr>
+      <td>X-9</td>
+      <td>$5,800</td>
+      <td>$11,000</td>
+      <td>96</td>
+      <td>768 GB</td>
+      <td>4 TB</td>
+      <td><code class="language-plaintext highlighter-rouge">accelerated-768gb</code></td>
+      <td>4096</td>
+      <td>$9,000 + storage</td>
+      <td>$18,000 + storage</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>How to read the tier number:</strong> The add-on plan slug from <code class="language-plaintext highlighter-rouge">list_addons</code> looks like <code class="language-plaintext highlighter-rouge">heroku-postgresql:standard-0</code> or <code class="language-plaintext highlighter-rouge">heroku-postgresql:premium-4</code> — the number after the hyphen is the tier (X-0, X-4, etc.). Both Standard-4 and Premium-4 map to the same Render plan (<code class="language-plaintext highlighter-rouge">accelerated-32gb</code>); Premium just needs HA enabled.</p>
+
+<p><strong>HA pricing note:</strong> Heroku Premium pricing includes HA by default. To match this on Render, enable HA in the Dashboard or Blueprint, which adds a standby replica at the same cost as the primary (effectively 2x). This significantly impacts pricing competitiveness on larger instances — present both the single-instance and HA costs to the user so they can make an informed decision.</p>
+
+<h3 id="disk-sizing">Disk sizing</h3>
+
+<p>On Render, storage is billed separately at <strong>$0.30/GB/month</strong> and configured via the <code class="language-plaintext highlighter-rouge">diskSizeGB</code> field in the Blueprint. Storage is provisioned in <strong>5 GB increments</strong> (minimum 1 GB) and <strong>cannot be scaled down</strong> once provisioned.</p>
+
+<p><strong>Heuristic:</strong> Carry over the Heroku disk size as the <code class="language-plaintext highlighter-rouge">diskSizeGB</code> value. Since <code class="language-plaintext highlighter-rouge">diskSizeGB</code> must be 1 or a multiple of 5, round up to the nearest valid value.</p>
+
+<p><strong>Disclaimer to present to the user:</strong> Heroku bundles a fixed storage allocation with each plan (e.g., Standard-4 includes 768 GB). On Render, compute and storage are billed separately — compute is the plan price above, and storage is $0.30/GB/month in 5 GB increments. Storage cannot be scaled down once provisioned, so right-size based on actual usage rather than the Heroku allocation. Check your current disk usage with <code class="language-plaintext highlighter-rouge">heroku pg:info</code> (look for <code class="language-plaintext highlighter-rouge">Data Size</code>) — if your actual data is much smaller than the allocated disk, start with a smaller <code class="language-plaintext highlighter-rouge">diskSizeGB</code> to save on storage costs. You can always expand later from the Render Dashboard.</p>
+
+<p><strong>Fallback default:</strong> <code class="language-plaintext highlighter-rouge">basic-1gb</code> with no <code class="language-plaintext highlighter-rouge">diskSizeGB</code> (when Heroku Postgres plan is unknown — Render uses a default disk size)</p>
+
+<p><strong>Notes:</strong></p>
+<ul>
+  <li>Render Pro and Accelerated both support HA (enable separately in Dashboard or Blueprint)</li>
+  <li>For databases beyond tier X-9, contact Render support</li>
+  <li>Get actual disk usage from <code class="language-plaintext highlighter-rouge">pg_info</code> (<code class="language-plaintext highlighter-rouge">Data Size</code> field) to inform the <code class="language-plaintext highlighter-rouge">diskSizeGB</code> recommendation</li>
+</ul>
+
+<h2 id="key-value-heroku-redis--key-value-store--render-key-value">Key Value (Heroku Redis / Key-Value Store → Render Key Value)</h2>
+
+<p>Heroku has rebranded Redis as “Key-Value Store” (Valkey-based). Heroku Redis plans use non-sequential numbering (0, 1, 2, 3, 5, 7, 9, 10, 12, 14). Match by the exact plan number from <code class="language-plaintext highlighter-rouge">list_addons</code>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Heroku plan</th>
+      <th>Heroku memory</th>
+      <th>Heroku connections</th>
+      <th>Heroku $/mo</th>
+      <th>Render <code class="language-plaintext highlighter-rouge">plan</code> value</th>
+      <th>Render RAM</th>
+      <th>Render connections</th>
+      <th>Render $/mo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mini</td>
+      <td>25 MB</td>
+      <td>20</td>
+      <td>$3</td>
+      <td><code class="language-plaintext highlighter-rouge">free</code></td>
+      <td>25 MB</td>
+      <td>50</td>
+      <td>$0</td>
+    </tr>
+    <tr>
+      <td>Premium-0</td>
+      <td>50 MB</td>
+      <td>40</td>
+      <td>$15</td>
+      <td><code class="language-plaintext highlighter-rouge">starter</code></td>
+      <td>256 MB</td>
+      <td>250</td>
+      <td>$10</td>
+    </tr>
+    <tr>
+      <td>Premium-1</td>
+      <td>100 MB</td>
+      <td>80</td>
+      <td>$30</td>
+      <td><code class="language-plaintext highlighter-rouge">starter</code></td>
+      <td>256 MB</td>
+      <td>250</td>
+      <td>$10</td>
+    </tr>
+    <tr>
+      <td>Premium-2</td>
+      <td>250 MB</td>
+      <td>200</td>
+      <td>$60</td>
+      <td><code class="language-plaintext highlighter-rouge">starter</code></td>
+      <td>256 MB</td>
+      <td>250</td>
+      <td>$10</td>
+    </tr>
+    <tr>
+      <td>Premium-3</td>
+      <td>500 MB</td>
+      <td>400</td>
+      <td>$120</td>
+      <td><code class="language-plaintext highlighter-rouge">standard</code></td>
+      <td>1 GB</td>
+      <td>1,000</td>
+      <td>$32</td>
+    </tr>
+    <tr>
+      <td>Premium-5</td>
+      <td>1 GB</td>
+      <td>1,000</td>
+      <td>$200</td>
+      <td><code class="language-plaintext highlighter-rouge">standard</code></td>
+      <td>1 GB</td>
+      <td>1,000</td>
+      <td>$32</td>
+    </tr>
+    <tr>
+      <td>Premium-7</td>
+      <td>7 GB</td>
+      <td>10,000</td>
+      <td>$750</td>
+      <td><code class="language-plaintext highlighter-rouge">pro plus</code></td>
+      <td>10 GB</td>
+      <td>10,000</td>
+      <td>$250</td>
+    </tr>
+    <tr>
+      <td>Premium-9</td>
+      <td>10 GB</td>
+      <td>25,000</td>
+      <td>$1,450</td>
+      <td><code class="language-plaintext highlighter-rouge">pro max</code></td>
+      <td>20 GB</td>
+      <td>20,000</td>
+      <td>$550</td>
+    </tr>
+    <tr>
+      <td>Premium-10</td>
+      <td>25 GB</td>
+      <td>40,000</td>
+      <td>$3,500</td>
+      <td>Custom</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Contact Render</td>
+    </tr>
+    <tr>
+      <td>Premium-12</td>
+      <td>50 GB</td>
+      <td>65,000</td>
+      <td>$6,500</td>
+      <td>Custom</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Contact Render</td>
+    </tr>
+    <tr>
+      <td>Premium-14</td>
+      <td>100 GB</td>
+      <td>65,000</td>
+      <td>$12,500</td>
+      <td>Custom</td>
+      <td>—</td>
+      <td>—</td>
+      <td>Contact Render</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Fallback default:</strong> <code class="language-plaintext highlighter-rouge">starter</code> (when Heroku Redis plan is unknown)</p>
+
+<p><strong>Notes:</strong></p>
+<ul>
+  <li>Redis pricing heavily favors Render — most tiers cost significantly less on Render than the Heroku equivalent.</li>
+  <li>The add-on plan slug from <code class="language-plaintext highlighter-rouge">list_addons</code> looks like <code class="language-plaintext highlighter-rouge">heroku-redis:mini</code> or <code class="language-plaintext highlighter-rouge">heroku-redis:premium-0</code> — use the part after the colon to look up the mapping. Plans 4, 6, 8, 11, and 13 do not exist on Heroku.</li>
+  <li>Render Key Value requires <code class="language-plaintext highlighter-rouge">ipAllowList</code> in the Blueprint (use <code class="language-plaintext highlighter-rouge">0.0.0.0/0</code> for public access)</li>
+  <li>Neither Heroku nor Render supports Redis HA.</li>
+  <li>For Premium-10 and above, instruct the user to <a href="https://render.com/contact">contact Render</a> for custom sizing.</li>
+</ul>
+
+<h2 id="runtime-mapping">Runtime Mapping</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Heroku Buildpack</th>
+      <th>Render Runtime</th>
+      <th><code class="language-plaintext highlighter-rouge">runtime</code> param</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>heroku/nodejs</td>
+      <td>Node</td>
+      <td><code class="language-plaintext highlighter-rouge">node</code></td>
+    </tr>
+    <tr>
+      <td>heroku/python</td>
+      <td>Python</td>
+      <td><code class="language-plaintext highlighter-rouge">python</code></td>
+    </tr>
+    <tr>
+      <td>heroku/go</td>
+      <td>Go</td>
+      <td><code class="language-plaintext highlighter-rouge">go</code></td>
+    </tr>
+    <tr>
+      <td>heroku/ruby</td>
+      <td>Ruby</td>
+      <td><code class="language-plaintext highlighter-rouge">ruby</code></td>
+    </tr>
+    <tr>
+      <td>heroku/java</td>
+      <td>Docker</td>
+      <td><code class="language-plaintext highlighter-rouge">docker</code></td>
+    </tr>
+    <tr>
+      <td>heroku/php</td>
+      <td>Docker</td>
+      <td><code class="language-plaintext highlighter-rouge">docker</code></td>
+    </tr>
+    <tr>
+      <td>heroku/scala</td>
+      <td>Docker</td>
+      <td><code class="language-plaintext highlighter-rouge">docker</code></td>
+    </tr>
+    <tr>
+      <td>Multi-buildpack</td>
+      <td>Docker</td>
+      <td><code class="language-plaintext highlighter-rouge">docker</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="region-mapping">Region Mapping</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Heroku Region</th>
+      <th>Render Region</th>
+      <th><code class="language-plaintext highlighter-rouge">region</code> param</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>us</td>
+      <td>Oregon (default)</td>
+      <td><code class="language-plaintext highlighter-rouge">oregon</code></td>
+    </tr>
+    <tr>
+      <td>eu</td>
+      <td>Frankfurt</td>
+      <td><code class="language-plaintext highlighter-rouge">frankfurt</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="not-directly-mappable-manual">Not Directly Mappable (Manual)</h2>
+
+<p>These Heroku features require manual alternatives on Render:</p>
+<ul>
+  <li><strong>Heroku Pipelines</strong> → Use Render Preview Environments + manual promotion</li>
+  <li><strong>Review Apps</strong> → Render Pull Request Previews</li>
+  <li><strong>Heroku Add-ons Marketplace</strong> → Find equivalent third-party services</li>
+  <li><strong>Heroku ACM (SSL)</strong> → Render auto-provisions TLS for custom domains</li>
+  <li><strong>Private Spaces</strong> → Contact Render for private networking options</li>
+  <li><strong>Heroku Kafka</strong> → Not supported on Render. Recommend cloud providers (Confluent Cloud, AWS MSK, etc.)</li>
+  <li><strong>Hirefire</strong> → Not supported on Render. Recommend Render’s native <a href="https://render.com/docs/scaling">horizontal autoscaling</a> or JudoScale (which is supported).</li>
+  <li><strong>Bandwidth</strong> → Heroku allows ~2 TB/app/month (rarely enforced). Render bandwidth varies by workspace plan: 100 GB (Hobby), 500 GB (Professional), 1 TB (Organization). Additional bandwidth is billed at $0.10/GB.</li>
+</ul>
+
+<h2 id="environment-variables-to-filter">Environment Variables to Filter</h2>
+
+<p>Always exclude these when migrating env vars:</p>
+
+<p><strong>Render auto-generates:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">DATABASE_URL</code></li>
+  <li><code class="language-plaintext highlighter-rouge">REDIS_URL</code>, <code class="language-plaintext highlighter-rouge">REDIS_TLS_URL</code></li>
+</ul>
+
+<p><strong>Heroku-specific (no Render equivalent):</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">HEROKU_APP_NAME</code></li>
+  <li><code class="language-plaintext highlighter-rouge">HEROKU_SLUG_COMMIT</code></li>
+  <li><code class="language-plaintext highlighter-rouge">HEROKU_SLUG_DESCRIPTION</code></li>
+  <li><code class="language-plaintext highlighter-rouge">HEROKU_DYNO_ID</code></li>
+  <li><code class="language-plaintext highlighter-rouge">HEROKU_RELEASE_VERSION</code></li>
+  <li><code class="language-plaintext highlighter-rouge">PORT</code> (Render sets its own)</li>
+</ul>
+
+<p><strong>Add-on connection strings (replace with new service URLs):</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">PAPERTRAIL_*</code></li>
+  <li><code class="language-plaintext highlighter-rouge">SENDGRID_*</code></li>
+  <li><code class="language-plaintext highlighter-rouge">CLOUDAMQP_*</code></li>
+  <li><code class="language-plaintext highlighter-rouge">BONSAI_*</code></li>
+  <li><code class="language-plaintext highlighter-rouge">FIXIE_*</code></li>
+  <li>Any other <code class="language-plaintext highlighter-rouge">*_URL</code> vars pointing to Heroku add-on services</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+  <p>
+    © 2026 Knowledge Base
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/assets/js/theme.js" defer></script>
+  <script src="/assets/js/knowledge.js" defer></script>
+</body>
+</html>
