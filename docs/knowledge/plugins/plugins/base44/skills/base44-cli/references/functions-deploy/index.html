@@ -67,6 +67,11 @@
 
     if (!KNOWLEDGE_PASSWORD) return; // No password set, skip protection
 
+    // Only protect /knowledge/* routes, allow home page public access
+    var isKnowledgePage = window.location.pathname.includes("/knowledge/");
+
+    if (!isKnowledgePage) return; // Not a knowledge page, no gate needed
+
     var gate = document.getElementById("dk-password-gate");
     var form = document.getElementById("dk-password-form");
     var input = document.getElementById("dk-password-input");
@@ -92,7 +97,7 @@
       gate.hidden = true;
     }
 
-    // Show gate if not authenticated
+    // Show gate only if not authenticated AND on knowledge page
     if (!checkAuth()) {
       gate.hidden = false;
       document.body.style.overflow = "hidden";
