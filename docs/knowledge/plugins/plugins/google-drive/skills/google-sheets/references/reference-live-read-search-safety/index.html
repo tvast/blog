@@ -74,7 +74,8 @@
 
     function checkAuth() {
       try {
-        var stored = sessionStorage.getItem("dk-auth");
+        // Check both localStorage (persistent) and sessionStorage (session-only)
+        var stored = localStorage.getItem("dk-auth") || sessionStorage.getItem("dk-auth");
         return stored === KNOWLEDGE_PASSWORD;
       } catch (e) {
         return false;
@@ -83,6 +84,9 @@
 
     function grantAccess() {
       try {
+        // Store in localStorage for persistent access across browser sessions
+        localStorage.setItem("dk-auth", KNOWLEDGE_PASSWORD);
+        // Also store in sessionStorage as fallback
         sessionStorage.setItem("dk-auth", KNOWLEDGE_PASSWORD);
       } catch (e) {}
       gate.hidden = true;
