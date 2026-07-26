@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Cloudflare Workers CLI for deploying, developing, and managing Workers, KV, R2, D1, Vectorize, Hyperdrive, Workers AI, Containers, Queues, Workflows, Pipelin...">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/cloudflare/skills/wrangler/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/cloudflare/skills/wrangler/SKILL/">
+<meta property="og:description" content="Cloudflare Workers CLI for deploying, developing, and managing Workers, KV, R2, D1, Vectorize, Hyperdrive, Workers AI, Containers, Queues, Workflows, Pipelin...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Cloudflare Workers CLI for deploying, developing, and managing Workers, KV, R2, D1, Vectorize, Hyperdrive, Workers AI, Containers, Queues, Workflows, Pipelines, and Secrets Store. Load before running wrangler commands to ensure correct syntax and best practices. Biases towards retrieval from Cloudflare docs over pre-trained knowledge.</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="wrangler-cli">Wrangler CLI</h1>
+
+<p>Your knowledge of Wrangler CLI flags, config fields, and subcommands may be outdated. <strong>Prefer retrieval over pre-training</strong> for any Wrangler task.</p>
+
+<h2 id="retrieval-sources">Retrieval Sources</h2>
+
+<p>Fetch the <strong>latest</strong> information before writing or reviewing Wrangler commands and config. Do not rely on baked-in knowledge for CLI flags, config fields, or binding shapes.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>How to retrieve</th>
+      <th>Use for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Wrangler docs</td>
+      <td><code class="language-plaintext highlighter-rouge">https://developers.cloudflare.com/workers/wrangler/</code></td>
+      <td>CLI commands, flags, config reference</td>
+    </tr>
+    <tr>
+      <td>Wrangler config schema</td>
+      <td><code class="language-plaintext highlighter-rouge">node_modules/wrangler/config-schema.json</code></td>
+      <td>Config fields, binding shapes, allowed values</td>
+    </tr>
+    <tr>
+      <td>Cloudflare docs</td>
+      <td>Search tool or <code class="language-plaintext highlighter-rouge">https://developers.cloudflare.com/workers/</code></td>
+      <td>API reference, compatibility dates/flags</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="first-verify-wrangler-installation">FIRST: Verify Wrangler Installation</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wrangler <span class="nt">--version</span>  <span class="c"># Requires v4.x+</span>
+</code></pre></div></div>
+
+<p>If not installed:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">-D</span> wrangler@latest
+</code></pre></div></div>
+
+<h2 id="key-guidelines">Key Guidelines</h2>
+
+<ul>
+  <li><strong>Use <code class="language-plaintext highlighter-rouge">wrangler.jsonc</code></strong>: Prefer JSON config over TOML. Newer features are JSON-only.</li>
+  <li><strong>Set <code class="language-plaintext highlighter-rouge">compatibility_date</code></strong>: Use a recent date (within 30 days). Check https://developers.cloudflare.com/workers/configuration/compatibility-dates/</li>
+  <li><strong>Generate types after config changes</strong>: Run <code class="language-plaintext highlighter-rouge">wrangler types</code> to update TypeScript bindings.</li>
+  <li><strong>Local dev defaults to local storage</strong>: Bindings use local simulation unless <code class="language-plaintext highlighter-rouge">remote: true</code>.</li>
+  <li><strong>Validate config before deploy</strong>: Run <code class="language-plaintext highlighter-rouge">wrangler check</code> to catch errors early.</li>
+  <li><strong>Use environments for staging/prod</strong>: Define <code class="language-plaintext highlighter-rouge">env.staging</code> and <code class="language-plaintext highlighter-rouge">env.production</code> in config.</li>
+</ul>
+
+<h2 id="quick-start-new-worker">Quick Start: New Worker</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Initialize new project</span>
+npx wrangler init my-worker
+
+<span class="c"># Or with a framework</span>
+npx create-cloudflare@latest my-app
+</code></pre></div></div>
+
+<h2 id="quick-reference-core-commands">Quick Reference: Core Commands</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Command</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Start local dev server</td>
+      <td><code class="language-plaintext highlighter-rouge">wrangler dev</code></td>
+    </tr>
+    <tr>
+      <td>Deploy to Cloudflare</td>
+      <td><code class="language-plaintext highlighter-rouge">wrangler deploy</code></td>
+    </tr>
+    <tr>
+      <td>Deploy dry run</td>
+      <td><code class="language-plaintext highlighter-rouge">wrangler deploy --dry-run</code></td>
+    </tr>
+    <tr>
+      <td>Generate TypeScript types</td>
+      <td><code class="language-plaintext highlighter-rouge">wrangler types</code></td>
+    </tr>
+    <tr>
+      <td>Validate configuration</td>
+      <td><code class="language-plaintext highlighter-rouge">wrangler check</code></td>
+    </tr>
+    <tr>
+      <td>View live logs</td>
+      <td><code class="language-plaintext highlighter-rouge">wrangler tail</code></td>
+    </tr>
+    <tr>
+      <td>Delete Worker</td>
+      <td><code class="language-plaintext highlighter-rouge">wrangler delete</code></td>
+    </tr>
+    <tr>
+      <td>Auth status</td>
+      <td><code class="language-plaintext highlighter-rouge">wrangler whoami</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="configuration-wranglerjsonc">Configuration (wrangler.jsonc)</h2>
+
+<h3 id="minimal-config">Minimal Config</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./node_modules/wrangler/config-schema.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-worker"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="s2">"src/index.ts"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"compatibility_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-03-18"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="full-config-with-bindings">Full Config with Bindings</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./node_modules/wrangler/config-schema.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-worker"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="s2">"src/index.ts"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"compatibility_date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-03-18"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"compatibility_flags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"nodejs_compat_v2"</span><span class="p">],</span><span class="w">
+
+  </span><span class="c1">// Environment variables</span><span class="w">
+  </span><span class="nl">"vars"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"ENVIRONMENT"</span><span class="p">:</span><span class="w"> </span><span class="s2">"production"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+  </span><span class="c1">// KV Namespace</span><span class="w">
+  </span><span class="nl">"kv_namespaces"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KV"</span><span class="p">,</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;KV_NAMESPACE_ID&gt;"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+
+  </span><span class="c1">// R2 Bucket</span><span class="w">
+  </span><span class="nl">"r2_buckets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUCKET"</span><span class="p">,</span><span class="w"> </span><span class="nl">"bucket_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-bucket"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+
+  </span><span class="c1">// D1 Database</span><span class="w">
+  </span><span class="nl">"d1_databases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DB"</span><span class="p">,</span><span class="w"> </span><span class="nl">"database_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-db"</span><span class="p">,</span><span class="w"> </span><span class="nl">"database_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;DB_ID&gt;"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+
+  </span><span class="c1">// Workers AI (always remote)</span><span class="w">
+  </span><span class="nl">"ai"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI"</span><span class="w"> </span><span class="p">},</span><span class="w">
+
+  </span><span class="c1">// Vectorize</span><span class="w">
+  </span><span class="nl">"vectorize"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VECTOR_INDEX"</span><span class="p">,</span><span class="w"> </span><span class="nl">"index_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-index"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+
+  </span><span class="c1">// Hyperdrive</span><span class="w">
+  </span><span class="nl">"hyperdrive"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HYPERDRIVE"</span><span class="p">,</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;HYPERDRIVE_ID&gt;"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+
+  </span><span class="c1">// Durable Objects</span><span class="w">
+  </span><span class="nl">"durable_objects"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"bindings"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w"> </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"COUNTER"</span><span class="p">,</span><span class="w"> </span><span class="nl">"class_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Counter"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+  </span><span class="c1">// Cron triggers</span><span class="w">
+  </span><span class="nl">"triggers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"crons"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"0 * * * *"</span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+
+  </span><span class="c1">// Environments</span><span class="w">
+  </span><span class="nl">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"staging"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-worker-staging"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"vars"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"ENVIRONMENT"</span><span class="p">:</span><span class="w"> </span><span class="s2">"staging"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="generate-types-from-config">Generate Types from Config</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Generate worker-configuration.d.ts</span>
+wrangler types
+
+<span class="c"># Custom output path</span>
+wrangler types ./src/env.d.ts
+
+<span class="c"># Check types are up to date (CI)</span>
+wrangler types <span class="nt">--check</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="local-development">Local Development</h2>
+
+<h3 id="start-dev-server">Start Dev Server</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Local mode (default) - uses local storage simulation</span>
+wrangler dev
+
+<span class="c"># With specific environment</span>
+wrangler dev <span class="nt">--env</span> staging
+
+<span class="c"># Force local-only (disable remote bindings)</span>
+wrangler dev <span class="nt">--local</span>
+
+<span class="c"># Remote mode - runs on Cloudflare edge (legacy)</span>
+wrangler dev <span class="nt">--remote</span>
+
+<span class="c"># Custom port</span>
+wrangler dev <span class="nt">--port</span> 8787
+
+<span class="c"># Live reload for HTML changes</span>
+wrangler dev <span class="nt">--live-reload</span>
+
+<span class="c"># Test scheduled/cron handlers</span>
+wrangler dev <span class="nt">--test-scheduled</span>
+<span class="c"># Then visit: http://localhost:8787/__scheduled</span>
+</code></pre></div></div>
+
+<h3 id="remote-bindings-for-local-dev">Remote Bindings for Local Dev</h3>
+
+<p>Use <code class="language-plaintext highlighter-rouge">remote: true</code> in binding config to connect to real resources while running locally:</p>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"r2_buckets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUCKET"</span><span class="p">,</span><span class="w"> </span><span class="nl">"bucket_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-bucket"</span><span class="p">,</span><span class="w"> </span><span class="nl">"remote"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"ai"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI"</span><span class="p">,</span><span class="w"> </span><span class="nl">"remote"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"vectorize"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INDEX"</span><span class="p">,</span><span class="w"> </span><span class="nl">"index_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-index"</span><span class="p">,</span><span class="w"> </span><span class="nl">"remote"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Recommended remote bindings</strong>: AI (required), Vectorize, Browser Rendering, mTLS, Images.</p>
+
+<h3 id="local-secrets">Local Secrets</h3>
+
+<p>Create <code class="language-plaintext highlighter-rouge">.dev.vars</code> for local development secrets:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>API_KEY=local-dev-key
+DATABASE_URL=postgres://localhost:5432/dev
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="deployment">Deployment</h2>
+
+<h3 id="deploy-worker">Deploy Worker</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Deploy to production</span>
+wrangler deploy
+
+<span class="c"># Deploy specific environment</span>
+wrangler deploy <span class="nt">--env</span> staging
+
+<span class="c"># Dry run (validate without deploying)</span>
+wrangler deploy <span class="nt">--dry-run</span>
+
+<span class="c"># Keep dashboard-set variables</span>
+wrangler deploy <span class="nt">--keep-vars</span>
+
+<span class="c"># Minify code</span>
+wrangler deploy <span class="nt">--minify</span>
+</code></pre></div></div>
+
+<h3 id="manage-secrets">Manage Secrets</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Set secret interactively</span>
+wrangler secret put API_KEY
+
+<span class="c"># Set from stdin</span>
+<span class="nb">echo</span> <span class="s2">"secret-value"</span> | wrangler secret put API_KEY
+
+<span class="c"># List secrets</span>
+wrangler secret list
+
+<span class="c"># Delete secret</span>
+wrangler secret delete API_KEY
+
+<span class="c"># Bulk secrets from JSON file</span>
+wrangler secret bulk secrets.json
+</code></pre></div></div>
+
+<h3 id="versions-and-rollback">Versions and Rollback</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List recent versions</span>
+wrangler versions list
+
+<span class="c"># View specific version</span>
+wrangler versions view &lt;VERSION_ID&gt;
+
+<span class="c"># Rollback to previous version</span>
+wrangler rollback
+
+<span class="c"># Rollback to specific version</span>
+wrangler rollback &lt;VERSION_ID&gt;
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="kv-key-value-store">KV (Key-Value Store)</h2>
+
+<h3 id="manage-namespaces">Manage Namespaces</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create namespace</span>
+wrangler kv namespace create MY_KV
+
+<span class="c"># List namespaces</span>
+wrangler kv namespace list
+
+<span class="c"># Delete namespace</span>
+wrangler kv namespace delete <span class="nt">--namespace-id</span> &lt;ID&gt;
+</code></pre></div></div>
+
+<h3 id="manage-keys">Manage Keys</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Put value</span>
+wrangler kv key put <span class="nt">--namespace-id</span> &lt;ID&gt; <span class="s2">"key"</span> <span class="s2">"value"</span>
+
+<span class="c"># Put with expiration (seconds)</span>
+wrangler kv key put <span class="nt">--namespace-id</span> &lt;ID&gt; <span class="s2">"key"</span> <span class="s2">"value"</span> <span class="nt">--expiration-ttl</span> 3600
+
+<span class="c"># Get value</span>
+wrangler kv key get <span class="nt">--namespace-id</span> &lt;ID&gt; <span class="s2">"key"</span>
+
+<span class="c"># List keys</span>
+wrangler kv key list <span class="nt">--namespace-id</span> &lt;ID&gt;
+
+<span class="c"># Delete key</span>
+wrangler kv key delete <span class="nt">--namespace-id</span> &lt;ID&gt; <span class="s2">"key"</span>
+
+<span class="c"># Bulk put from JSON</span>
+wrangler kv bulk put <span class="nt">--namespace-id</span> &lt;ID&gt; data.json
+</code></pre></div></div>
+
+<h3 id="config-binding">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"kv_namespaces"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CACHE"</span><span class="p">,</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;NAMESPACE_ID&gt;"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="r2-object-storage">R2 (Object Storage)</h2>
+
+<h3 id="manage-buckets">Manage Buckets</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create bucket</span>
+wrangler r2 bucket create my-bucket
+
+<span class="c"># Create with location hint</span>
+wrangler r2 bucket create my-bucket <span class="nt">--location</span> wnam
+
+<span class="c"># List buckets</span>
+wrangler r2 bucket list
+
+<span class="c"># Get bucket info</span>
+wrangler r2 bucket info my-bucket
+
+<span class="c"># Delete bucket</span>
+wrangler r2 bucket delete my-bucket
+</code></pre></div></div>
+
+<h3 id="manage-objects">Manage Objects</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Upload object</span>
+wrangler r2 object put my-bucket/path/file.txt <span class="nt">--file</span> ./local-file.txt
+
+<span class="c"># Download object</span>
+wrangler r2 object get my-bucket/path/file.txt
+
+<span class="c"># Delete object</span>
+wrangler r2 object delete my-bucket/path/file.txt
+</code></pre></div></div>
+
+<h3 id="config-binding-1">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"r2_buckets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ASSETS"</span><span class="p">,</span><span class="w"> </span><span class="nl">"bucket_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-bucket"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="d1-sql-database">D1 (SQL Database)</h2>
+
+<h3 id="manage-databases">Manage Databases</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create database</span>
+wrangler d1 create my-database
+
+<span class="c"># Create with location</span>
+wrangler d1 create my-database <span class="nt">--location</span> wnam
+
+<span class="c"># List databases</span>
+wrangler d1 list
+
+<span class="c"># Get database info</span>
+wrangler d1 info my-database
+
+<span class="c"># Delete database</span>
+wrangler d1 delete my-database
+</code></pre></div></div>
+
+<h3 id="execute-sql">Execute SQL</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Execute SQL command (remote)</span>
+wrangler d1 execute my-database <span class="nt">--remote</span> <span class="nt">--command</span> <span class="s2">"SELECT * FROM users"</span>
+
+<span class="c"># Execute SQL file (remote)</span>
+wrangler d1 execute my-database <span class="nt">--remote</span> <span class="nt">--file</span> ./schema.sql
+
+<span class="c"># Execute locally</span>
+wrangler d1 execute my-database <span class="nt">--local</span> <span class="nt">--command</span> <span class="s2">"SELECT * FROM users"</span>
+</code></pre></div></div>
+
+<h3 id="migrations">Migrations</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create migration</span>
+wrangler d1 migrations create my-database create_users_table
+
+<span class="c"># List pending migrations</span>
+wrangler d1 migrations list my-database <span class="nt">--local</span>
+
+<span class="c"># Apply migrations locally</span>
+wrangler d1 migrations apply my-database <span class="nt">--local</span>
+
+<span class="c"># Apply migrations to remote</span>
+wrangler d1 migrations apply my-database <span class="nt">--remote</span>
+</code></pre></div></div>
+
+<h3 id="exportbackup">Export/Backup</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Export schema and data</span>
+wrangler d1 <span class="nb">export </span>my-database <span class="nt">--remote</span> <span class="nt">--output</span> backup.sql
+
+<span class="c"># Export schema only</span>
+wrangler d1 <span class="nb">export </span>my-database <span class="nt">--remote</span> <span class="nt">--output</span> schema.sql <span class="nt">--no-data</span>
+</code></pre></div></div>
+
+<h3 id="config-binding-2">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"d1_databases"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DB"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"database_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-database"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"database_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;DATABASE_ID&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"migrations_dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./migrations"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="vectorize-vector-database">Vectorize (Vector Database)</h2>
+
+<h3 id="manage-indexes">Manage Indexes</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create index with dimensions</span>
+wrangler vectorize create my-index <span class="nt">--dimensions</span> 768 <span class="nt">--metric</span> cosine
+
+<span class="c"># Create with preset (auto-configures dimensions/metric)</span>
+wrangler vectorize create my-index <span class="nt">--preset</span> @cf/baai/bge-base-en-v1.5
+
+<span class="c"># List indexes</span>
+wrangler vectorize list
+
+<span class="c"># Get index info</span>
+wrangler vectorize get my-index
+
+<span class="c"># Delete index</span>
+wrangler vectorize delete my-index
+</code></pre></div></div>
+
+<h3 id="manage-vectors">Manage Vectors</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Insert vectors from NDJSON file</span>
+wrangler vectorize insert my-index <span class="nt">--file</span> vectors.ndjson
+
+<span class="c"># Query vectors</span>
+wrangler vectorize query my-index <span class="nt">--vector</span> <span class="s2">"[0.1, 0.2, ...]"</span> <span class="nt">--top-k</span> 10
+</code></pre></div></div>
+
+<h3 id="config-binding-3">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"vectorize"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SEARCH_INDEX"</span><span class="p">,</span><span class="w"> </span><span class="nl">"index_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-index"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="hyperdrive-database-accelerator">Hyperdrive (Database Accelerator)</h2>
+
+<h3 id="manage-configs">Manage Configs</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create config</span>
+wrangler hyperdrive create my-hyperdrive <span class="se">\</span>
+  <span class="nt">--connection-string</span> <span class="s2">"postgres://user:pass@host:5432/database"</span>
+
+<span class="c"># List configs</span>
+wrangler hyperdrive list
+
+<span class="c"># Get config details</span>
+wrangler hyperdrive get &lt;HYPERDRIVE_ID&gt;
+
+<span class="c"># Update config</span>
+wrangler hyperdrive update &lt;HYPERDRIVE_ID&gt; <span class="nt">--origin-password</span> <span class="s2">"new-password"</span>
+
+<span class="c"># Delete config</span>
+wrangler hyperdrive delete &lt;HYPERDRIVE_ID&gt;
+</code></pre></div></div>
+
+<h3 id="config-binding-4">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"compatibility_flags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"nodejs_compat_v2"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"hyperdrive"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HYPERDRIVE"</span><span class="p">,</span><span class="w"> </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;HYPERDRIVE_ID&gt;"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="workers-ai">Workers AI</h2>
+
+<h3 id="list-models">List Models</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List available models</span>
+wrangler ai models
+
+<span class="c"># List finetunes</span>
+wrangler ai finetune list
+</code></pre></div></div>
+
+<h3 id="config-binding-5">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"ai"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI"</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Note</strong>: Workers AI always runs remotely and incurs usage charges even in local dev.</p>
+
+<hr />
+
+<h2 id="queues">Queues</h2>
+
+<h3 id="manage-queues">Manage Queues</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create queue</span>
+wrangler queues create my-queue
+
+<span class="c"># List queues</span>
+wrangler queues list
+
+<span class="c"># Delete queue</span>
+wrangler queues delete my-queue
+
+<span class="c"># Add consumer to queue</span>
+wrangler queues consumer add my-queue my-worker
+
+<span class="c"># Remove consumer</span>
+wrangler queues consumer remove my-queue my-worker
+</code></pre></div></div>
+
+<h3 id="config-binding-6">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"queues"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"producers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MY_QUEUE"</span><span class="p">,</span><span class="w"> </span><span class="nl">"queue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-queue"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"consumers"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"queue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-queue"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"max_batch_size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"max_batch_timeout"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="containers">Containers</h2>
+
+<h3 id="build-and-push-images">Build and Push Images</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Build container image</span>
+wrangler containers build <span class="nt">-t</span> my-app:latest <span class="nb">.</span>
+
+<span class="c"># Build and push in one command</span>
+wrangler containers build <span class="nt">-t</span> my-app:latest <span class="nb">.</span> <span class="nt">--push</span>
+
+<span class="c"># Push existing image to Cloudflare registry</span>
+wrangler containers push my-app:latest
+</code></pre></div></div>
+
+<h3 id="manage-containers">Manage Containers</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List containers</span>
+wrangler containers list
+
+<span class="c"># Get container info</span>
+wrangler containers info &lt;CONTAINER_ID&gt;
+
+<span class="c"># Delete container</span>
+wrangler containers delete &lt;CONTAINER_ID&gt;
+</code></pre></div></div>
+
+<h3 id="manage-images">Manage Images</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List images in registry</span>
+wrangler containers images list
+
+<span class="c"># Delete image</span>
+wrangler containers images delete my-app:latest
+</code></pre></div></div>
+
+<h3 id="manage-external-registries">Manage External Registries</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List configured registries</span>
+wrangler containers registries list
+
+<span class="c"># Configure external registry (e.g., ECR)</span>
+wrangler containers registries configure &lt;DOMAIN&gt; <span class="se">\</span>
+  <span class="nt">--public-credential</span> &lt;AWS_ACCESS_KEY_ID&gt;
+
+<span class="c"># Delete registry configuration</span>
+wrangler containers registries delete &lt;DOMAIN&gt;
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="workflows">Workflows</h2>
+
+<h3 id="manage-workflows">Manage Workflows</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List workflows</span>
+wrangler workflows list
+
+<span class="c"># Describe workflow</span>
+wrangler workflows describe my-workflow
+
+<span class="c"># Trigger workflow instance</span>
+wrangler workflows trigger my-workflow
+
+<span class="c"># Trigger with parameters</span>
+wrangler workflows trigger my-workflow <span class="nt">--params</span> <span class="s1">'{"key": "value"}'</span>
+
+<span class="c"># Delete workflow</span>
+wrangler workflows delete my-workflow
+</code></pre></div></div>
+
+<h3 id="manage-workflow-instances">Manage Workflow Instances</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># List instances</span>
+wrangler workflows instances list my-workflow
+
+<span class="c"># Describe instance</span>
+wrangler workflows instances describe my-workflow &lt;INSTANCE_ID&gt;
+
+<span class="c"># Terminate instance</span>
+wrangler workflows instances terminate my-workflow &lt;INSTANCE_ID&gt;
+</code></pre></div></div>
+
+<h3 id="config-binding-7">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"workflows"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MY_WORKFLOW"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-workflow"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"class_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MyWorkflow"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="pipelines">Pipelines</h2>
+
+<h3 id="manage-pipelines">Manage Pipelines</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create pipeline</span>
+wrangler pipelines create my-pipeline <span class="nt">--r2</span> my-bucket
+
+<span class="c"># List pipelines</span>
+wrangler pipelines list
+
+<span class="c"># Show pipeline details</span>
+wrangler pipelines show my-pipeline
+
+<span class="c"># Update pipeline</span>
+wrangler pipelines update my-pipeline <span class="nt">--batch-max-mb</span> 100
+
+<span class="c"># Delete pipeline</span>
+wrangler pipelines delete my-pipeline
+</code></pre></div></div>
+
+<h3 id="config-binding-8">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"pipelines"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MY_PIPELINE"</span><span class="p">,</span><span class="w"> </span><span class="nl">"pipeline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-pipeline"</span><span class="w"> </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="secrets-store">Secrets Store</h2>
+
+<h3 id="manage-stores">Manage Stores</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create store</span>
+wrangler secrets-store store create my-store
+
+<span class="c"># List stores</span>
+wrangler secrets-store store list
+
+<span class="c"># Delete store</span>
+wrangler secrets-store store delete &lt;STORE_ID&gt;
+</code></pre></div></div>
+
+<h3 id="manage-secrets-in-store">Manage Secrets in Store</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Add secret to store</span>
+wrangler secrets-store secret put &lt;STORE_ID&gt; my-secret
+
+<span class="c"># List secrets in store</span>
+wrangler secrets-store secret list &lt;STORE_ID&gt;
+
+<span class="c"># Get secret</span>
+wrangler secrets-store secret get &lt;STORE_ID&gt; my-secret
+
+<span class="c"># Delete secret from store</span>
+wrangler secrets-store secret delete &lt;STORE_ID&gt; my-secret
+</code></pre></div></div>
+
+<h3 id="config-binding-9">Config Binding</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"secrets_store_secrets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"binding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MY_SECRET"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"store_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;STORE_ID&gt;"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"secret_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my-secret"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="pages-frontend-deployment">Pages (Frontend Deployment)</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Create Pages project</span>
+wrangler pages project create my-site
+
+<span class="c"># Deploy directory to Pages</span>
+wrangler pages deploy ./dist
+
+<span class="c"># Deploy with specific branch</span>
+wrangler pages deploy ./dist <span class="nt">--branch</span> main
+
+<span class="c"># List deployments</span>
+wrangler pages deployment list <span class="nt">--project-name</span> my-site
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="observability">Observability</h2>
+
+<h3 id="tail-logs">Tail Logs</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Stream live logs</span>
+wrangler <span class="nb">tail</span>
+
+<span class="c"># Tail specific Worker</span>
+wrangler <span class="nb">tail </span>my-worker
+
+<span class="c"># Filter by status</span>
+wrangler <span class="nb">tail</span> <span class="nt">--status</span> error
+
+<span class="c"># Filter by search term</span>
+wrangler <span class="nb">tail</span> <span class="nt">--search</span> <span class="s2">"error"</span>
+
+<span class="c"># JSON output</span>
+wrangler <span class="nb">tail</span> <span class="nt">--format</span> json
+</code></pre></div></div>
+
+<h3 id="config-logging">Config Logging</h3>
+
+<div class="language-jsonc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"observability"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"head_sampling_rate"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<hr />
+
+<h2 id="testing">Testing</h2>
+
+<h3 id="local-testing-with-vitest">Local Testing with Vitest</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> <span class="nt">-D</span> @cloudflare/vitest-pool-workers vitest
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">vitest.config.ts</code>:</p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">defineWorkersConfig</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@cloudflare/vitest-pool-workers/config</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nf">defineWorkersConfig</span><span class="p">({</span>
+  <span class="na">test</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">poolOptions</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">workers</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">wrangler</span><span class="p">:</span> <span class="p">{</span> <span class="na">configPath</span><span class="p">:</span> <span class="dl">"</span><span class="s2">./wrangler.jsonc</span><span class="dl">"</span> <span class="p">},</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="test-scheduled-events">Test Scheduled Events</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Enable in dev</span>
+wrangler dev <span class="nt">--test-scheduled</span>
+
+<span class="c"># Trigger via HTTP</span>
+curl http://localhost:8787/__scheduled
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="common-issues">Common Issues</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Issue</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">command not found: wrangler</code></td>
+      <td>Install: <code class="language-plaintext highlighter-rouge">npm install -D wrangler</code></td>
+    </tr>
+    <tr>
+      <td>Auth errors</td>
+      <td>Run <code class="language-plaintext highlighter-rouge">wrangler login</code></td>
+    </tr>
+    <tr>
+      <td>Config validation errors</td>
+      <td>Run <code class="language-plaintext highlighter-rouge">wrangler check</code></td>
+    </tr>
+    <tr>
+      <td>Type errors after config change</td>
+      <td>Run <code class="language-plaintext highlighter-rouge">wrangler types</code></td>
+    </tr>
+    <tr>
+      <td>Local storage not persisting</td>
+      <td>Check <code class="language-plaintext highlighter-rouge">.wrangler/state</code> directory</td>
+    </tr>
+    <tr>
+      <td>Binding undefined in Worker</td>
+      <td>Verify binding name matches config exactly</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="debug-commands">Debug Commands</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Check auth status</span>
+wrangler <span class="nb">whoami</span>
+
+<span class="c"># Validate config</span>
+wrangler check
+
+<span class="c"># View config schema</span>
+wrangler docs configuration
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="best-practices">Best Practices</h2>
+
+<ol>
+  <li><strong>Version control <code class="language-plaintext highlighter-rouge">wrangler.jsonc</code></strong>: Treat as source of truth for Worker config.</li>
+  <li><strong>Use automatic provisioning</strong>: Omit resource IDs for auto-creation on deploy.</li>
+  <li><strong>Run <code class="language-plaintext highlighter-rouge">wrangler types</code> in CI</strong>: Add to build step to catch binding mismatches.</li>
+  <li><strong>Use environments</strong>: Separate staging/production with <code class="language-plaintext highlighter-rouge">env.staging</code>, <code class="language-plaintext highlighter-rouge">env.production</code>.</li>
+  <li><strong>Set <code class="language-plaintext highlighter-rouge">compatibility_date</code></strong>: Update quarterly to get new runtime features.</li>
+  <li><strong>Use <code class="language-plaintext highlighter-rouge">.dev.vars</code> for local secrets</strong>: Never commit secrets to config.</li>
+  <li><strong>Test locally first</strong>: <code class="language-plaintext highlighter-rouge">wrangler dev</code> with local bindings before deploying.</li>
+  <li><strong>Use <code class="language-plaintext highlighter-rouge">--dry-run</code> before major deploys</strong>: Validate changes without deployment.</li>
+</ol>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

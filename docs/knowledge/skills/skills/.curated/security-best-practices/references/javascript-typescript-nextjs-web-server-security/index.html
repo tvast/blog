@@ -1,0 +1,2803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Javascript Typescript Nextjs Web Server Security · A developer journey</title>
+<meta name="description" content="Next.js (TypeScript/JavaScript) Web Security Spec (Next.js 16.1.x, Node.js 20.9+)">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/skills/skills/.curated/security-best-practices/references/javascript-typescript-nextjs-web-server-security/">
+
+<meta property="og:title" content="Javascript Typescript Nextjs Web Server Security · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/skills/skills/.curated/security-best-practices/references/javascript-typescript-nextjs-web-server-security/">
+<meta property="og:description" content="Next.js (TypeScript/JavaScript) Web Security Spec (Next.js 16.1.x, Node.js 20.9+)">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>skills</span>
+      </nav>
+
+      <h1>Javascript Typescript Nextjs Web Server Security</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="nextjs-typescriptjavascript-web-security-spec-nextjs-161x-nodejs-209">Next.js (TypeScript/JavaScript) Web Security Spec (Next.js 16.1.x, Node.js 20.9+)</h1>
+
+<p>This document is designed as a <strong>security spec</strong> that supports:</p>
+
+<ol>
+  <li><strong>Secure-by-default code generation</strong> for new Next.js backend code (Route Handlers, API Routes, Server Actions, Proxy/Middleware).</li>
+  <li><strong>Security review / vulnerability hunting</strong> in existing Next.js repos (passive “notice issues while working” and active “scan the repo and report findings”).</li>
+</ol>
+
+<p>It is intentionally written as a set of <strong>normative requirements</strong> (“MUST/SHOULD/MAY”) plus <strong>audit rules</strong> (what bad patterns look like, how to detect them, and how to fix/mitigate them).</p>
+
+<p>Target scope: Next.js <strong>16.1.x</strong> (latest line shown in the App Router docs) (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>), running on Node.js <strong>20.9+</strong> (per Next.js system requirements). (<a href="https://nextjs.org/docs/app/getting-started/deploying?utm_source=chatgpt.com" title="Getting Started: Deploying">Next.js</a>)</p>
+
+<hr />
+
+<h2 id="0-safety-boundaries-and-anti-abuse-constraints-must-follow">0) Safety, boundaries, and anti-abuse constraints (MUST FOLLOW)</h2>
+
+<ul>
+  <li>MUST NOT request, output, log, or commit secrets (API keys, passwords, private keys, session cookies, OAuth tokens, <code class="language-plaintext highlighter-rouge">process.env</code> dumps, database URLs with credentials).</li>
+  <li>MUST NOT “fix” security by disabling protections (e.g., disabling origin checks, relaxing CORS to <code class="language-plaintext highlighter-rouge">*</code>, skipping authz checks, turning off cookie security flags, turning off CSP because it’s “hard”).</li>
+  <li>MUST provide <strong>evidence-based findings</strong> during audits: cite file paths, code snippets, and configuration values that justify each claim.</li>
+  <li>MUST treat uncertainty honestly: if a protection might exist in infrastructure (reverse proxy, CDN, WAF, platform headers), report it as “not visible in app code; verify at runtime/config”.</li>
+  <li>MUST assume all request-facing server code is reachable by attackers unless there is a clearly enforced auth boundary (not just “the UI doesn’t link to it”).</li>
+  <li>MUST treat TypeScript types as <strong>non-security boundaries</strong>: types do not validate runtime input; runtime checks are required. (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+</ul>
+
+<hr />
+
+<h2 id="1-operating-modes">1) Operating modes</h2>
+
+<h3 id="11-generation-mode-default">1.1 Generation mode (default)</h3>
+
+<p>When asked to write new Next.js code or modify existing code:</p>
+
+<ul>
+  <li>MUST follow every <strong>MUST</strong> requirement in this spec.</li>
+  <li>SHOULD follow every <strong>SHOULD</strong> requirement unless the user explicitly says otherwise.</li>
+  <li>MUST prefer safe-by-default APIs and proven libraries over custom security code.</li>
+  <li>MUST avoid introducing new risky sinks (dynamic code execution, unsafe redirects, serving user files as HTML, SSRF URL fetchers, building SQL strings, etc.).</li>
+</ul>
+
+<h3 id="12-passive-review-mode-always-on-while-editing">1.2 Passive review mode (always on while editing)</h3>
+
+<p>While working anywhere in a Next.js repo (even if the user did not ask for a security scan):</p>
+
+<ul>
+  <li>MUST “notice” violations of this spec in touched/nearby code.</li>
+  <li>SHOULD mention issues as they come up, with a brief explanation + safe fix.</li>
+</ul>
+
+<h3 id="13-active-audit-mode-explicit-scan-request">1.3 Active audit mode (explicit scan request)</h3>
+
+<p>When the user asks to “scan”, “audit”, or “hunt for vulns”:</p>
+
+<ul>
+  <li>MUST systematically search the codebase for violations of this spec.</li>
+  <li>MUST output findings in a structured format (see §2.3).</li>
+</ul>
+
+<p>Recommended audit order:</p>
+
+<ol>
+  <li>Deployment entrypoints and environment (Dockerfiles, <code class="language-plaintext highlighter-rouge">package.json</code> scripts, hosting config).</li>
+  <li>Next.js config (<code class="language-plaintext highlighter-rouge">next.config.*</code>), Proxy/Middleware, routing patterns.</li>
+  <li>Authentication, sessions, cookies.</li>
+  <li>CSRF protections and state-changing endpoints (Server Actions, Route Handlers, API Routes).</li>
+  <li>XSS (React + CSP) and unsafe HTML rendering.</li>
+  <li>Cache/data-leak hazards (static rendering + caching + “use cache”).</li>
+  <li>File handling (uploads/downloads) and path traversal.</li>
+  <li>Injection classes (SQL/ORM misuse, command execution, unsafe deserialization).</li>
+  <li>Outbound requests (SSRF).</li>
+  <li>Redirect handling (open redirects).</li>
+  <li>CORS and security headers.</li>
+</ol>
+
+<hr />
+
+<h2 id="2-definitions-and-review-guidance">2) Definitions and review guidance</h2>
+
+<h3 id="21-untrusted-input-treat-as-attacker-controlled-unless-proven-otherwise">2.1 Untrusted input (treat as attacker-controlled unless proven otherwise)</h3>
+
+<p>In Next.js backends, untrusted input includes:</p>
+
+<p>App Router:</p>
+
+<ul>
+  <li>
+    <p>Route Handler params and request data:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">context.params</code> (dynamic segments), search params (<code class="language-plaintext highlighter-rouge">request.url</code>, <code class="language-plaintext highlighter-rouge">new URL(request.url).searchParams</code>)</li>
+      <li><code class="language-plaintext highlighter-rouge">request.headers</code>, <code class="language-plaintext highlighter-rouge">request.cookies</code></li>
+      <li><code class="language-plaintext highlighter-rouge">await request.json()</code>, <code class="language-plaintext highlighter-rouge">await request.formData()</code>, <code class="language-plaintext highlighter-rouge">await request.text()</code></li>
+    </ul>
+  </li>
+  <li>
+    <p>Dynamic APIs used in Server Components/Server Functions:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">headers()</code> and <code class="language-plaintext highlighter-rouge">cookies()</code> values (<a href="https://nextjs.org/docs/app/api-reference/functions/headers" title="Functions: headers | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Pages Router:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">req.query</code>, <code class="language-plaintext highlighter-rouge">req.cookies</code>, <code class="language-plaintext highlighter-rouge">req.body</code> in <code class="language-plaintext highlighter-rouge">pages/api/*</code> handlers (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Plus:</p>
+
+<ul>
+  <li>Anything from external systems (webhooks, third-party APIs, message queues)</li>
+  <li>Any persisted user content (DB rows) that originated from users</li>
+</ul>
+
+<h3 id="22-state-changing-request">2.2 State-changing request</h3>
+
+<p>A request is state-changing if it can create/update/delete data, change auth/session state, trigger side effects (purchase, email send, webhook send), or initiate privileged actions.</p>
+
+<p>Special note for Next.js:</p>
+
+<ul>
+  <li><strong>Server Actions</strong> are invoked via network requests and can mutate state; treat them as state-changing endpoints. (<a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions" title="next.config.js: serverActions | Next.js">Next.js</a>)</li>
+</ul>
+
+<h3 id="23-required-audit-finding-format">2.3 Required audit finding format</h3>
+
+<p>For each issue found, output:</p>
+
+<ul>
+  <li>Rule ID:</li>
+  <li>Severity: Critical / High / Medium / Low</li>
+  <li>Location: file path + function/route name + line(s)</li>
+  <li>Evidence: the exact code/config snippet</li>
+  <li>Impact: what could go wrong, who can exploit it</li>
+  <li>Fix: safe change (prefer minimal diff)</li>
+  <li>Mitigation: defense-in-depth if immediate fix is hard</li>
+  <li>False positive notes: what to verify if uncertain</li>
+</ul>
+
+<hr />
+
+<h2 id="3-secure-baseline-minimum-production-configuration-must-in-production">3) Secure baseline: minimum production configuration (MUST in production)</h2>
+
+<p>This is the smallest “production baseline” that prevents common Next.js backend misconfigurations.</p>
+
+<h3 id="31-run-nextjs-in-production-mode-must">3.1 Run Next.js in production mode (MUST)</h3>
+
+<ul>
+  <li>MUST run <code class="language-plaintext highlighter-rouge">next build</code> + <code class="language-plaintext highlighter-rouge">next start</code> (or the managed platform equivalent), not <code class="language-plaintext highlighter-rouge">next dev</code>. Dev mode has different error/reporting behavior and is not designed for production exposure. (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+  <li>MUST ensure <code class="language-plaintext highlighter-rouge">NODE_ENV=production</code> in production (Next.js defaults <code class="language-plaintext highlighter-rouge">NODE_ENV</code> based on command; verify the runtime environment). (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+</ul>
+
+<h3 id="32-put-a-reverse-proxy--edge-layer-in-front-when-self-hosting-must-for-public-internet">3.2 Put a reverse proxy / edge layer in front when self-hosting (MUST for public internet)</h3>
+
+<ul>
+  <li>If self-hosting, MUST place a reverse proxy (e.g., nginx) or equivalent edge layer in front of the Next.js server to handle malformed requests, slow attacks, payload size limits, rate limiting, and similar concerns. (<a href="https://nextjs.org/docs/pages/guides/self-hosting?utm_source=chatgpt.com" title="Guides: Self-Hosting">Next.js</a>)</li>
+</ul>
+
+<h3 id="33-baseline-headercookie-posture-should">3.3 Baseline header/cookie posture (SHOULD)</h3>
+
+<ul>
+  <li>SHOULD set a baseline of security headers globally (CSP, <code class="language-plaintext highlighter-rouge">X-Content-Type-Options</code>, clickjacking defense via CSP <code class="language-plaintext highlighter-rouge">frame-ancestors</code> and/or <code class="language-plaintext highlighter-rouge">X-Frame-Options</code>, etc.). Next.js provides guidance for implementing CSP via Proxy/headers. (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+  <li>MUST ensure auth/session cookies use secure attributes (<code class="language-plaintext highlighter-rouge">Secure</code>, <code class="language-plaintext highlighter-rouge">HttpOnly</code>, <code class="language-plaintext highlighter-rouge">SameSite</code>) as appropriate. (<a href="https://nextjs.org/docs/app/api-reference/functions/cookies" title="Functions: cookies | Next.js">Next.js</a>)
+IMPORTANT NOTE: Only set <code class="language-plaintext highlighter-rouge">Secure</code> in production environment. When running in a local dev environment over HTTP, do not set <code class="language-plaintext highlighter-rouge">Secure</code> property on cookies. You should do this conditionally based on if the app is running in production mode. You should also include a property like <code class="language-plaintext highlighter-rouge">SESSION_COOKIE_SECURE</code> which can be used to disable <code class="language-plaintext highlighter-rouge">Secure</code> cookies when testing over HTTP.</li>
+</ul>
+
+<h3 id="34-clear-separation-between-server-only-and-client-code-must">3.4 Clear separation between server-only and client code (MUST)</h3>
+
+<ul>
+  <li>MUST prevent secrets and privileged logic from being bundled into client code.</li>
+  <li>MUST treat <code class="language-plaintext highlighter-rouge">NEXT_PUBLIC_*</code> environment variables as public (browser-exposed and inlined at build time). (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+</ul>
+
+<hr />
+
+<h2 id="4-rules-generation--audit">4) Rules (generation + audit)</h2>
+
+<p>Each rule contains: required practice, insecure patterns, detection hints, and remediation.</p>
+
+<h3 id="next-deploy-001-do-not-run-next-dev-in-production-ensure-production-mode-behavior">NEXT-DEPLOY-001: Do not run <code class="language-plaintext highlighter-rouge">next dev</code> in production; ensure production mode behavior</h3>
+
+<p>Severity: High (if production)</p>
+
+<p>NOTE: If they are deploying to a specific Next.js hosting provider, they do not need to worry about this.</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST NOT deploy <code class="language-plaintext highlighter-rouge">next dev</code> or any development server mode to production.</li>
+  <li>MUST ensure production builds and production runtime are used for any public deployment. (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">next dev</code> in Docker <code class="language-plaintext highlighter-rouge">CMD</code>, Procfile, platform start command.</li>
+  <li><code class="language-plaintext highlighter-rouge">NODE_ENV=development</code> in production environment config.</li>
+  <li>Debug/dev-only endpoints or flags exposed publicly.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search <code class="language-plaintext highlighter-rouge">package.json</code> scripts and deployment manifests for <code class="language-plaintext highlighter-rouge">next dev</code>.</li>
+  <li>Search infra for <code class="language-plaintext highlighter-rouge">NODE_ENV=development</code> or missing <code class="language-plaintext highlighter-rouge">NODE_ENV</code>.</li>
+  <li>Check Kubernetes/PM2/systemd entrypoints for <code class="language-plaintext highlighter-rouge">next dev</code>.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">next build</code> during CI/build and <code class="language-plaintext highlighter-rouge">next start</code> at runtime (or platform-native build/run).</li>
+  <li>Ensure environment sets <code class="language-plaintext highlighter-rouge">NODE_ENV=production</code>.</li>
+</ul>
+
+<p>Note:</p>
+
+<ul>
+  <li>Dev mode is fine for local development. Only flag if it is being used as a production entrypoint.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-supply-001-stay-on-supported-nextjs-releases-patch-quickly-for-security-advisories">NEXT-SUPPLY-001: Stay on supported Next.js releases; patch quickly for security advisories</h3>
+
+<p>Severity: High (Critical if known-vulnerable version)</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST run a supported Next.js version line and apply security updates promptly. Next.js documents an LTS/support policy. (<a href="https://nextjs.org/blog/next-16?utm_source=chatgpt.com" title="Next.js 16">Next.js</a>)</li>
+  <li>MUST treat published advisories as urgent upgrade signals (e.g., update to a patched release). (<a href="https://github.com/vercel/next.js/security/advisories/GHSA-9g9p-9gw9-jx7f?utm_source=chatgpt.com" title="Denial of Service in Image Optimizer · Advisory">GitHub</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Running EOL Next.js major/minor without backported security fixes.</li>
+  <li>Ignoring advisories, or pinning <code class="language-plaintext highlighter-rouge">next</code> to a vulnerable range.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Check <code class="language-plaintext highlighter-rouge">package.json</code> and lockfiles for <code class="language-plaintext highlighter-rouge">next</code> version.</li>
+  <li>Compare against Next.js support policy and advisories.</li>
+</ul>
+
+<p>IMPORTANT: Any versions older than these minor versions are vulnerable to “react2shell” vulnerability (https://nextjs.org/blog/CVE-2025-66478):
+15.0.5
+15.1.9
+15.2.6
+15.3.6
+15.4.8
+15.5.7
+16.0.7</p>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Upgrade <code class="language-plaintext highlighter-rouge">next</code> to a supported and patched version.</li>
+  <li>Add a dependency update process + CI checks.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-secrets-001-secrets-must-not-be-committed-or-exposed-to-the-browser">NEXT-SECRETS-001: Secrets MUST NOT be committed or exposed to the browser</h3>
+
+<p>Severity: High (Critical if secret is client-exposed)</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST store secrets in environment variables or a secret manager; MUST NOT commit <code class="language-plaintext highlighter-rouge">.env*</code> files.</li>
+  <li>MUST treat <code class="language-plaintext highlighter-rouge">.env*</code> as sensitive; Next.js warns you “almost never want to commit these files.” (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+  <li>MUST treat any <code class="language-plaintext highlighter-rouge">NEXT_PUBLIC_*</code> environment variable as public and browser-visible (inlined into the client bundle at build time). (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">.env</code>, <code class="language-plaintext highlighter-rouge">.env.local</code>, <code class="language-plaintext highlighter-rouge">.env.production</code> committed to git.</li>
+  <li><code class="language-plaintext highlighter-rouge">NEXT_PUBLIC_API_KEY</code>, <code class="language-plaintext highlighter-rouge">NEXT_PUBLIC_SECRET</code>, <code class="language-plaintext highlighter-rouge">NEXT_PUBLIC_DATABASE_URL</code>, etc.</li>
+  <li>Rendering <code class="language-plaintext highlighter-rouge">process.env</code> values into HTML or returning them from API routes.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Scan git history and repo files for <code class="language-plaintext highlighter-rouge">.env</code> content, <code class="language-plaintext highlighter-rouge">DB_PASS=</code>, <code class="language-plaintext highlighter-rouge">API_KEY=</code>, <code class="language-plaintext highlighter-rouge">SECRET=</code>.</li>
+  <li>Grep for <code class="language-plaintext highlighter-rouge">NEXT_PUBLIC_</code> and review any sensitive-looking names.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">process.env</code> usage in Client Components (<code class="language-plaintext highlighter-rouge">"use client"</code>) and shared modules.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Move secrets to server-only env vars (no <code class="language-plaintext highlighter-rouge">NEXT_PUBLIC_</code> prefix).</li>
+  <li>Ensure <code class="language-plaintext highlighter-rouge">.env*</code> is ignored and secrets are injected at deploy time.</li>
+  <li>Rotate leaked keys.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-secrets-002-avoid-server-only--client-bundling-mistakes-serverclient-boundary-is-a-security-boundary">NEXT-SECRETS-002: Avoid server-only → client bundling mistakes (server/client boundary is a security boundary)</h3>
+
+<p>Severity: High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST ensure server-only modules (DB clients, secret-dependent code) are not imported into Client Components or other client-bundled code paths.</li>
+  <li>SHOULD use server-only patterns/layers (e.g., a dedicated DAL and server-only modules) and treat boundary violations as security bugs. Next.js explicitly discusses the “server-only” concept for sensitive modules. (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Importing DB clients, admin SDKs, or secret-reading modules into <code class="language-plaintext highlighter-rouge">"use client"</code> components.</li>
+  <li>Shared <code class="language-plaintext highlighter-rouge">lib/</code> modules imported by both server and client code that reference secrets.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">"use client"</code> and examine its imports for server-only dependencies.</li>
+  <li>Look for DB client packages (<code class="language-plaintext highlighter-rouge">pg</code>, <code class="language-plaintext highlighter-rouge">mysql2</code>, <code class="language-plaintext highlighter-rouge">mongoose</code>, <code class="language-plaintext highlighter-rouge">prisma</code>, admin SDKs) imported from <code class="language-plaintext highlighter-rouge">components/</code> or other client paths.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">process.env</code> access in UI components.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Refactor into <code class="language-plaintext highlighter-rouge">lib/server/*</code> and only import from server contexts (Route Handlers, Server Components, Server Actions).</li>
+  <li>Add an explicit “server-only” guard pattern (and/or tests) to prevent accidental imports.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-auth-001-authenticationauthorization-must-be-enforced-server-side-for-every-protected-action">NEXT-AUTH-001: Authentication/authorization MUST be enforced server-side for every protected action</h3>
+
+<p>Severity: High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>MUST enforce authn/authz in server-side code for:</p>
+
+    <ul>
+      <li>Route Handlers (<code class="language-plaintext highlighter-rouge">app/**/route.ts</code>) (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+      <li>API Routes (<code class="language-plaintext highlighter-rouge">pages/api/**</code>) (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+      <li>Server Actions (<code class="language-plaintext highlighter-rouge">"use server"</code> functions invoked by clients) (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>MUST NOT rely on client-side checks (hiding UI, route guards on the client) as the only protection.</p>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Sensitive Route Handlers with no session verification.</li>
+  <li>Server Actions that mutate data but do not validate user identity/permissions.</li>
+  <li>“Authorization” checks in React components only.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Enumerate all Route Handlers and API Routes; for each, identify whether it requires auth.</li>
+  <li>Grep for <code class="language-plaintext highlighter-rouge">"use server"</code> and review all exported actions for auth checks.</li>
+  <li>Search for admin actions triggered by query params / form submits.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Centralize auth helpers and call them in every protected endpoint/action.</li>
+  <li>Implement least-privilege authorization checks (role/resource ownership) per action.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-auth-002-proxymiddleware-based-auth-must-not-create-route-coverage-gaps">NEXT-AUTH-002: Proxy/Middleware-based auth MUST NOT create route coverage gaps</h3>
+
+<p>Severity: High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>If using <strong>Proxy</strong> or <strong>Middleware</strong> for authentication checks, MUST ensure it covers every route that needs protection.</li>
+  <li>Next.js documentation notes Proxy can use a <code class="language-plaintext highlighter-rouge">matcher</code>, and for auth it’s recommended Proxy runs on all routes. (<a href="https://nextjs.org/docs/pages/guides/authentication" title="Guides: Authentication | Next.js">Next.js</a>)</li>
+  <li>MUST treat <code class="language-plaintext highlighter-rouge">matcher</code> mistakes as an auth bypass risk.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Proxy/Middleware only matches “pages” but not <code class="language-plaintext highlighter-rouge">/api/*</code>, or only matches some route groups.</li>
+  <li>“Denylist” style matchers that miss alternative request forms (framework-internal variants, RSC navigations, etc.).</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Inspect <code class="language-plaintext highlighter-rouge">proxy.ts</code> / <code class="language-plaintext highlighter-rouge">middleware.ts</code> and its <code class="language-plaintext highlighter-rouge">matcher</code>.</li>
+  <li>Compare matchers to the full set of routes (including <code class="language-plaintext highlighter-rouge">app/api/**</code> and <code class="language-plaintext highlighter-rouge">pages/api/**</code>).</li>
+  <li>Ensure static assets and Next internals are excluded only intentionally, and that sensitive routes are included.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Prefer allowlisting protected route prefixes or running Proxy globally and doing internal allow/deny logic.</li>
+  <li>Add integration tests: request protected route without auth and assert denial.</li>
+</ul>
+
+<p>Notes:</p>
+
+<ul>
+  <li>Proxy is commonly used for “optimistic checks”; it is not a complete authorization system by itself. (<a href="https://nextjs.org/docs/pages/guides/authentication" title="Guides: Authentication | Next.js">Next.js</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="next-csrf-001-cookie-authenticated-state-changing-endpoints-must-be-csrf-protected">NEXT-CSRF-001: Cookie-authenticated state-changing endpoints MUST be CSRF-protected</h3>
+
+<p>Severity: High</p>
+
+<ul>
+  <li>IMPORTANT NOTE: If cookies are not being used for auth (ie auth is via Authentication header or other passed token), then there is no CSRF risk.</li>
+</ul>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST protect every state-changing endpoint that relies on cookies for auth (POST/PUT/PATCH/DELETE).</li>
+  <li>For <strong>Server Actions</strong>, Next.js performs an Origin/Host comparison to help prevent CSRF; do not disable or weaken it. (<a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions" title="next.config.js: serverActions | Next.js">Next.js</a>)</li>
+  <li>If Server Actions must be callable from additional trusted origins (e.g., a trusted proxy domain), MUST use <code class="language-plaintext highlighter-rouge">allowedOrigins</code> with a strict allowlist. (<a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions" title="next.config.js: serverActions | Next.js">Next.js</a>)</li>
+  <li>For <strong>Route Handlers</strong> and <strong>API Routes</strong>, MUST implement CSRF protections explicitly (tokens and/or strict Origin/Referer + SameSite + custom headers). Route Handlers are an “escape hatch” and require application-level security decisions. (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>POST endpoints (including Server Actions) that mutate state and accept cross-site requests with no token/origin checks.</li>
+  <li><code class="language-plaintext highlighter-rouge">allowedOrigins: ['*']</code> (or broad wildcards) or “reflect Origin” logic.</li>
+  <li>Using GET requests to change state.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Enumerate all state-changing endpoints and determine auth mechanism.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">allowedOrigins</code> and confirm the list is small, specific, and justified. (<a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions" title="next.config.js: serverActions | Next.js">Next.js</a>)</li>
+  <li>In Route Handlers/API Routes: look for missing CSRF token validation or missing Origin/Referer checks.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Implement a CSRF token strategy for cookie-auth endpoints.</li>
+  <li>Keep cookies <code class="language-plaintext highlighter-rouge">SameSite=Lax</code> or <code class="language-plaintext highlighter-rouge">Strict</code> when compatible; don’t treat SameSite alone as sufficient.</li>
+  <li>Use strict Origin validation for JSON API endpoints, especially when not using CSRF tokens.</li>
+</ul>
+
+<p>Notes:</p>
+
+<ul>
+  <li>XSS can defeat CSRF protections; CSRF defenses do not replace XSS prevention.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-sess-001-session-cookies-must-use-secure-attributes-in-production">NEXT-SESS-001: Session cookies MUST use secure attributes in production</h3>
+
+<p>Severity: Medium</p>
+
+<p>Required (production, HTTPS):</p>
+
+<ul>
+  <li>
+    <p>MUST set session/auth cookies with:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Secure: true</code> (HTTPS-only) IMPORTANT NOTE: Only set <code class="language-plaintext highlighter-rouge">Secure</code> in production environment. When running in a local dev environment over HTTP, do not set <code class="language-plaintext highlighter-rouge">Secure</code> property on cookies. You should do this conditionally based on if the app is running in production mode. You should also include a property like <code class="language-plaintext highlighter-rouge">SESSION_COOKIE_SECURE</code> which can be used to disable <code class="language-plaintext highlighter-rouge">Secure</code> cookies when testing over HTTP.</li>
+      <li><code class="language-plaintext highlighter-rouge">HttpOnly: true</code> (not readable by JS)</li>
+      <li><code class="language-plaintext highlighter-rouge">SameSite: 'Lax'</code> (recommended) or <code class="language-plaintext highlighter-rouge">'Strict'</code> if compatible</li>
+    </ul>
+  </li>
+  <li>
+    <p>Only use <code class="language-plaintext highlighter-rouge">SameSite: 'none'</code> when you truly need cross-site cookies, and then MUST also set <code class="language-plaintext highlighter-rouge">Secure</code>. Cookie options are supported in Next.js cookie APIs. (<a href="https://nextjs.org/docs/app/api-reference/functions/cookies" title="Functions: cookies | Next.js">Next.js</a>)</p>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">secure: false</code> in production.</li>
+  <li><code class="language-plaintext highlighter-rouge">httpOnly: false</code> for auth cookies.</li>
+  <li><code class="language-plaintext highlighter-rouge">sameSite: 'none'</code> without a clear need, especially on cookie-authenticated state-changing endpoints.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for cookie setting sites (<code class="language-plaintext highlighter-rouge">cookies().set(...)</code>, <code class="language-plaintext highlighter-rouge">Set-Cookie</code> headers, auth library cookie config).</li>
+  <li>Review cookie options used in Route Handlers and Server Actions. (<a href="https://nextjs.org/docs/app/api-reference/functions/cookies" title="Functions: cookies | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Set secure cookie attributes at the auth/session layer.</li>
+  <li>Reduce cookie scope: avoid wide <code class="language-plaintext highlighter-rouge">domain</code> unless you explicitly need subdomain-wide cookies.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-sess-002-sessions-must-be-bounded-and-resistant-to-fixationreplay">NEXT-SESS-002: Sessions MUST be bounded and resistant to fixation/replay</h3>
+
+<p>Severity: Low</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>SHOULD set bounded session lifetimes appropriate to the app.</li>
+  <li>SHOULD rotate session identifiers on login and privilege changes.</li>
+  <li>MUST NOT store sensitive secrets directly in client-readable storage (including cookies that are not encrypted).</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Long-lived admin sessions with no rotation.</li>
+  <li>“Remember me forever” for privileged roles without additional risk controls.</li>
+  <li>Storing access tokens/refresh tokens in non-HttpOnly cookies or localStorage.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Review auth library configuration for expiration and rotation.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">localStorage.setItem('token'...)</code> and non-HttpOnly cookie usage.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Use short lifetimes for privileged sessions; refresh with rotation.</li>
+  <li>Store only opaque session IDs in cookies; keep sensitive material server-side.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-input-001-runtime-input-validation-is-mandatory-typescript-is-not-validation">NEXT-INPUT-001: Runtime input validation is mandatory (TypeScript is not validation)</h3>
+
+<p>Severity: High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST validate and normalize all attacker-controlled input at runtime (schemas, type checks, bounds).</li>
+  <li>Next.js API Routes explicitly note <code class="language-plaintext highlighter-rouge">req.body</code> is <code class="language-plaintext highlighter-rouge">any</code> and must be validated before use. (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+  <li>MUST validate Server Action arguments (treat as hostile). (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Trusting <code class="language-plaintext highlighter-rouge">req.body</code> shape directly.</li>
+  <li>Passing <code class="language-plaintext highlighter-rouge">params.id</code>/<code class="language-plaintext highlighter-rouge">searchParams</code> directly into DB queries or file paths.</li>
+  <li>Parsing JSON and then assuming types without validation.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Identify endpoints that accept JSON/form input and check for schema validation.</li>
+  <li>Grep for <code class="language-plaintext highlighter-rouge">req.body.</code> usage and for <code class="language-plaintext highlighter-rouge">await request.json()</code> usage in Route Handlers; verify validation exists.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Add schema validation (e.g., zod/yup/valibot) and reject invalid input with 4xx.</li>
+  <li>Validate IDs as strict types (UUID/int) and enforce length/charset constraints.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-headers-001-essential-security-headers-must-be-set-in-app-or-at-the-edge">NEXT-HEADERS-001: Essential security headers MUST be set (in app or at the edge)</h3>
+
+<p>Severity: Low</p>
+
+<p>Required (typical web app):</p>
+
+<ul>
+  <li>
+    <p>SHOULD set:</p>
+
+    <ul>
+      <li>CSP (<code class="language-plaintext highlighter-rouge">Content-Security-Policy</code>) (see NEXT-CSP-001)</li>
+      <li><code class="language-plaintext highlighter-rouge">X-Content-Type-Options: nosniff</code></li>
+      <li>Clickjacking defense (<code class="language-plaintext highlighter-rouge">frame-ancestors</code> in CSP and/or <code class="language-plaintext highlighter-rouge">X-Frame-Options</code>)</li>
+      <li><code class="language-plaintext highlighter-rouge">Referrer-Policy</code> and <code class="language-plaintext highlighter-rouge">Permissions-Policy</code> when appropriate</li>
+    </ul>
+  </li>
+  <li>
+    <p>MUST ensure cookies are set with secure attributes (see NEXT-SESS-001). (<a href="https://nextjs.org/docs/app/api-reference/functions/cookies" title="Functions: cookies | Next.js">Next.js</a>)</p>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>No security headers anywhere (app or edge).</li>
+  <li>Allowing iframing unintentionally.</li>
+  <li><code class="language-plaintext highlighter-rouge">Content-Type</code> sniffing possible due to missing <code class="language-plaintext highlighter-rouge">nosniff</code>.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Check <code class="language-plaintext highlighter-rouge">proxy.ts</code> / middleware for <code class="language-plaintext highlighter-rouge">response.headers.set(...)</code>. (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+  <li>If not visible in app code, flag as “verify at edge/CDN”.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Set headers centrally (Proxy/Middleware or other centralized mechanism).</li>
+  <li>Ensure consistent headers across routes.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-csp-001-use-a-csp-to-reduce-xss-impact-prefer-nonces-for-scripts">NEXT-CSP-001: Use a CSP to reduce XSS impact; prefer nonces for scripts</h3>
+
+<p>Severity: Medium</p>
+
+<p>NOTE: It is most important to set the CSP’s script-src. All other directives are not as important and can generally be excluded for the ease of development.</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>SHOULD deploy a CSP, ideally with nonces for scripts.</li>
+  <li>SHOULD follow Next.js guidance for CSP implementation (including nonce generation and header application). (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+  <li>MUST avoid loosening CSP as a “fix” (e.g., <code class="language-plaintext highlighter-rouge">script-src 'unsafe-inline'</code>) without explicit risk acceptance.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>CSP missing on apps that display user-generated HTML/markdown.</li>
+  <li>CSP that broadly enables inline scripts or eval without strict justification.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">Content-Security-Policy</code> header setting and examine its directives.</li>
+  <li>Check use of <code class="language-plaintext highlighter-rouge">next/script</code> and whether a nonce is provided when CSP requires it.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Implement CSP per Next.js guidance; use a nonce and apply it consistently.</li>
+  <li>Reduce inline scripts; avoid <code class="language-plaintext highlighter-rouge">eval</code>.</li>
+</ul>
+
+<p>Notes:</p>
+
+<ul>
+  <li>CSP is defense-in-depth; it does not replace proper output encoding and sanitization.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-xss-001-prevent-reflectedstored-xss-in-reactnext-rendering">NEXT-XSS-001: Prevent reflected/stored XSS in React/Next rendering</h3>
+
+<p>Severity: High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST rely on React’s default escaping; MUST NOT insert untrusted HTML into the DOM without sanitization.</li>
+  <li>
+    <p>MUST treat these as high-risk sinks:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">dangerouslySetInnerHTML</code></li>
+      <li>rendering user-controlled strings into <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tags or event handler attributes</li>
+    </ul>
+  </li>
+  <li>MUST avoid serving uploaded HTML as active HTML (serve as attachment or sanitize/transform).</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">&lt;div dangerouslySetInnerHTML={{ __html: userContent }} /&gt;</code> with no sanitizer.</li>
+  <li>Markdown renderers configured to allow raw HTML with no sanitizer.</li>
+  <li>Returning user content with <code class="language-plaintext highlighter-rouge">Content-Type: text/html</code> from a Route Handler.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">dangerouslySetInnerHTML</code>, <code class="language-plaintext highlighter-rouge">__html:</code>.</li>
+  <li>Search for template-like string concatenation that builds HTML.</li>
+  <li>Review any “render HTML” or “preview” features.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Sanitize untrusted HTML with a well-maintained sanitizer; prefer strict allowlists.</li>
+  <li>Prefer rendering user content as text, not HTML.</li>
+  <li>Add CSP to reduce impact.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-action-001-server-actions-must-be-treated-like-public-endpoints">NEXT-ACTION-001: Server Actions MUST be treated like public endpoints</h3>
+
+<p>Severity: High (Critical for privileged actions)</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>MUST apply the same controls as for Route Handlers:</p>
+
+    <ul>
+      <li>authn/authz</li>
+      <li>input validation</li>
+      <li>CSRF/origin protections</li>
+      <li>rate limiting for sensitive actions</li>
+    </ul>
+  </li>
+  <li>MUST NOT assume Server Actions are “not reachable” or “internal”.</li>
+  <li>
+    <p>MUST understand Server Action request protections:</p>
+
+    <ul>
+      <li>Next.js compares Origin with host to mitigate CSRF; extra origins must be explicitly allowlisted via <code class="language-plaintext highlighter-rouge">allowedOrigins</code>. (<a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions" title="next.config.js: serverActions | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">"use server"</code> functions that update DB state with no auth check.</li>
+  <li>Adding overly broad <code class="language-plaintext highlighter-rouge">allowedOrigins</code> to “make it work”.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Grep for <code class="language-plaintext highlighter-rouge">"use server"</code> and inventory all exported actions.</li>
+  <li>Identify any action doing privileged writes; confirm it checks identity and permission.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Wrap actions with an authz helper (fail closed).</li>
+  <li>Keep <code class="language-plaintext highlighter-rouge">allowedOrigins</code> minimal and audited.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-action-002-do-not-accidentally-leak-secrets-through-server-action-closurebinding-patterns">NEXT-ACTION-002: Do not accidentally leak secrets through Server Action closure/binding patterns</h3>
+
+<p>Severity: Medium (High if important secrets are exposed)</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST treat Server Action closed-over values as sensitive and design intentionally.</li>
+  <li>Next.js notes that closed-over values are encrypted/signed, but values passed through <code class="language-plaintext highlighter-rouge">.bind</code> are not encrypted; do not rely on <code class="language-plaintext highlighter-rouge">.bind</code> to protect secrets. (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+  <li>If using a stable encryption key for Server Actions across deployments, MUST treat it as a secret and store securely (do not commit/log it). (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">myAction.bind(null, process.env.SECRET)</code> or binding sensitive tokens/IDs that should not be client-influenced.</li>
+  <li>Logging action arguments that include secrets.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">.bind(</code> on Server Action functions.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">process.env</code> usage near Server Actions.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Avoid binding secrets into actions; fetch secrets server-side inside the action.</li>
+  <li>Keep action arguments minimal and validated.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-cache-001-prevent-data-leaks-via-static-rendering-and-shared-caching">NEXT-CACHE-001: Prevent data leaks via static rendering and shared caching</h3>
+
+<p>Severity: High (Critical if cross-user data leak)</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST ensure pages/endpoints that return user-specific or sensitive data are not statically generated or cached in a shared way.</li>
+  <li>Route Handlers are not cached by default, but GET handlers can opt into caching/static behavior; do not do this for per-user data. (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+  <li>MUST treat <code class="language-plaintext highlighter-rouge">use cache</code> and similar caching mechanisms as potentially cross-user unless explicitly proven private; do not cache per-user DB results in shared caches. (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+  <li>SHOULD set explicit <code class="language-plaintext highlighter-rouge">Cache-Control: no-store</code> / <code class="language-plaintext highlighter-rouge">private</code> for sensitive responses (auth/session/user data APIs).</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">export const dynamic = 'force-static'</code> on a route that returns user-specific data. (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+  <li>Using <code class="language-plaintext highlighter-rouge">use cache</code> around a function that queries user-specific data without a per-user cache key. (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+  <li>Returning auth/session responses from GET endpoints with caching enabled.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">dynamic = 'force-static'</code>, <code class="language-plaintext highlighter-rouge">revalidate</code>, <code class="language-plaintext highlighter-rouge">use cache</code>, <code class="language-plaintext highlighter-rouge">cacheLife</code>, <code class="language-plaintext highlighter-rouge">unstable_cache</code>.</li>
+  <li>Inspect all GET Route Handlers that are cached/static and confirm they only return public data.</li>
+  <li>Confirm that use of <code class="language-plaintext highlighter-rouge">cookies()</code>/<code class="language-plaintext highlighter-rouge">headers()</code> (dynamic APIs) is not accidentally removed in ways that make a route static. (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Mark sensitive routes as dynamic and set <code class="language-plaintext highlighter-rouge">Cache-Control: no-store</code>.</li>
+  <li>Ensure caching keys include user identity if caching is truly needed (and store it in a user-private cache).</li>
+</ul>
+
+<hr />
+
+<h3 id="next-files-001-user-uploads-must-be-validated-stored-safely-and-served-safely">NEXT-FILES-001: User uploads MUST be validated, stored safely, and served safely</h3>
+
+<p>Severity: Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST enforce upload size limits at the edge and in application logic.</li>
+  <li>MUST validate file type using allowlists and content checks (not only extension).</li>
+  <li>MUST store uploads outside the <code class="language-plaintext highlighter-rouge">public/</code> directory (anything under <code class="language-plaintext highlighter-rouge">public/</code> is served as static content by default).</li>
+  <li>MUST serve potentially active formats safely (<code class="language-plaintext highlighter-rouge">Content-Disposition: attachment</code>) unless explicitly intended.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Accepting arbitrary file types and serving them back inline.</li>
+  <li>Using user-supplied filename as the storage path.</li>
+  <li>Writing uploads into <code class="language-plaintext highlighter-rouge">public/uploads/</code> and serving them directly.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">formData()</code> / multipart parsing, <code class="language-plaintext highlighter-rouge">fs.writeFile</code>, storage SDK usage.</li>
+  <li>Look for any write path under <code class="language-plaintext highlighter-rouge">public/</code>.</li>
+  <li>Look for “download” endpoints that set <code class="language-plaintext highlighter-rouge">Content-Type: text/html</code> or serve user files inline.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Use a dedicated object store (S3/GCS) or a safe server-side directory outside static roots.</li>
+  <li>Generate random server-side filenames; store metadata separately.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-path-001-prevent-path-traversal-and-unsafe-file-access">NEXT-PATH-001: Prevent path traversal and unsafe file access</h3>
+
+<p>Severity: High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST NOT use user-controlled strings as filesystem paths.</li>
+  <li>MUST validate and normalize identifiers; use allowlists and safe base directories.</li>
+  <li>MUST avoid reading arbitrary files based on request parameters.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">fs.readFile(request.nextUrl.searchParams.get('path'))</code></li>
+  <li><code class="language-plaintext highlighter-rouge">path.join(base, userPath)</code> without normalization + boundary checks</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">fs.</code> usage in Route Handlers/API Routes.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">path.join</code>/<code class="language-plaintext highlighter-rouge">path.resolve</code> fed by request params.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Use opaque IDs that map to server-side stored paths.</li>
+  <li>Enforce that resolved paths remain within an intended base directory.</li>
+  <li>Sanitize and disallow <code class="language-plaintext highlighter-rouge">..</code> from being used when creating urls</li>
+</ul>
+
+<hr />
+
+<h3 id="next-ssrf-001-outbound-requests-using-user-influenced-urls-must-be-restricted">NEXT-SSRF-001: Outbound requests using user-influenced URLs MUST be restricted</h3>
+
+<p>Severity: Medium (High in internal networks)</p>
+
+<p>NOTE: This is mostly only applicable to apps which will be deployed in a cloud/LAN setup or have other http services on the same box. Sometimes the feature requires this functionality unavoidably (webhooks).</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST treat any server-side <code class="language-plaintext highlighter-rouge">fetch()</code> to a user-provided URL as high-risk.</li>
+  <li>SHOULD allowlist destinations (hosts/domains) for URL fetch features.</li>
+  <li>
+    <p>SHOULD block:</p>
+
+    <ul>
+      <li>localhost / private IP ranges / link-local</li>
+      <li>cloud metadata endpoints</li>
+    </ul>
+  </li>
+  <li>MUST restrict protocols to <code class="language-plaintext highlighter-rouge">http:</code> and <code class="language-plaintext highlighter-rouge">https:</code>.</li>
+  <li>SHOULD set strict timeouts and restrict redirects.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">await fetch(req.query.url)</code> or <code class="language-plaintext highlighter-rouge">await fetch((await request.json()).url)</code></li>
+  <li>“URL preview” endpoints that fetch arbitrary URLs.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">fetch(</code> in server code and trace where the URL comes from.</li>
+  <li>Look for “webhook tester”, “preview”, “import from URL” features.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Parse URL, enforce <code class="language-plaintext highlighter-rouge">http/https</code>, allowlist hostnames, re-resolve DNS/IP to block private ranges.</li>
+  <li>Set timeouts (AbortSignal) and limit redirects.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-redirect-001-prevent-open-redirects-including-auth-flows">NEXT-REDIRECT-001: Prevent open redirects (including auth flows)</h3>
+
+<p>Severity: Low</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST validate redirect targets derived from untrusted input (e.g., <code class="language-plaintext highlighter-rouge">next</code>, <code class="language-plaintext highlighter-rouge">redirect</code>, <code class="language-plaintext highlighter-rouge">returnTo</code>).</li>
+  <li>SHOULD prefer redirecting only to same-site relative paths.</li>
+  <li>MUST validate any absolute URL against an allowlist.</li>
+  <li>MUST ensure urls are <code class="language-plaintext highlighter-rouge">http</code> or <code class="language-plaintext highlighter-rouge">https:</code> schema, disallowing <code class="language-plaintext highlighter-rouge">javascript:</code> schema</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">redirect(searchParams.get('next')!)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">NextResponse.redirect(new URL(req.nextUrl.searchParams.get('to')!, req.url))</code> without checks</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">redirect(</code> (server components/actions) and <code class="language-plaintext highlighter-rouge">NextResponse.redirect</code>.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">res.redirect(</code> in API Routes. (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Only allow relative paths (<code class="language-plaintext highlighter-rouge">/path</code>) and reject protocol-relative (<code class="language-plaintext highlighter-rouge">//evil.com</code>) or absolute URLs.</li>
+  <li>If invalid, fall back to a safe default (home/dashboard).</li>
+</ul>
+
+<hr />
+
+<h3 id="next-cors-001-cors-must-be-explicit-and-least-privilege">NEXT-CORS-001: CORS must be explicit and least-privilege</h3>
+
+<p>Severity: Medium (High if misconfigured with credentials)</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>If CORS is not needed, MUST keep it disabled.</li>
+  <li>Next.js API Routes do not set CORS headers by default, meaning they are same-origin by default; only enable CORS when you truly need it. (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+  <li>
+    <p>If enabling CORS:</p>
+
+    <ul>
+      <li>MUST allowlist trusted origins (no reflection of arbitrary Origin)</li>
+      <li>MUST be careful with credentialed requests (cookies); never combine broad origins with credentials.</li>
+      <li>SHOULD restrict methods and headers.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin: *</code> with <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Credentials: true</code></li>
+  <li>Reflecting <code class="language-plaintext highlighter-rouge">Origin</code> without validation.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code>, <code class="language-plaintext highlighter-rouge">cors</code>, “CORS” middleware/wrappers.</li>
+  <li>Review preflight <code class="language-plaintext highlighter-rouge">OPTIONS</code> handlers.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Implement strict origin allowlist and minimal methods/headers.</li>
+  <li>Ensure cookies aren’t exposed cross-origin unless necessary and reviewed.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-webhook-001-webhook-endpoints-must-verify-authenticity-using-the-raw-body">NEXT-WEBHOOK-001: Webhook endpoints MUST verify authenticity using the raw body</h3>
+
+<p>Severity: Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST verify webhook signatures using the <strong>raw request body</strong> (not a re-serialized parsed object).</li>
+  <li>Next.js notes a use case for disabling body parsing is verifying the raw body of a webhook request. (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Verifying webhook signatures over <code class="language-plaintext highlighter-rouge">JSON.stringify(req.body)</code> (can change formatting).</li>
+  <li>Accepting webhooks with no signature verification and no allowlist.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Find webhook endpoints (<code class="language-plaintext highlighter-rouge">/api/webhook</code>, <code class="language-plaintext highlighter-rouge">/app/api/**/webhook</code>).</li>
+  <li>Check whether they use raw body verification.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Disable Next.js automatic body parsing only for those webhook routes, read raw bytes safely, verify signature, then parse.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-inject-001-prevent-sql-injection-use-parameterized-queries--orm">NEXT-INJECT-001: Prevent SQL injection (use parameterized queries / ORM)</h3>
+
+<p>Severity: High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST use parameterized queries or an ORM that parameterizes under the hood.</li>
+  <li>MUST NOT build SQL by string concatenation / template strings with untrusted input.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">db.query(`SELECT * FROM users WHERE id = ${id}`)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">"WHERE name = '" + user + "'"</code></li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Grep for <code class="language-plaintext highlighter-rouge">SELECT</code>, <code class="language-plaintext highlighter-rouge">INSERT</code>, <code class="language-plaintext highlighter-rouge">UPDATE</code>, <code class="language-plaintext highlighter-rouge">DELETE</code> strings.</li>
+  <li>Trace untrusted input (<code class="language-plaintext highlighter-rouge">params</code>, <code class="language-plaintext highlighter-rouge">searchParams</code>, <code class="language-plaintext highlighter-rouge">req.query</code>, <code class="language-plaintext highlighter-rouge">req.body</code>, <code class="language-plaintext highlighter-rouge">request.json()</code>) into DB calls.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Use prepared statements / ORM query APIs.</li>
+  <li>Validate and coerce types before querying.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-inject-002-prevent-os-command-injection-and-unsafe-subprocess-use">NEXT-INJECT-002: Prevent OS command injection and unsafe subprocess use</h3>
+
+<p>Severity: Critical to High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST avoid executing OS commands with attacker-controlled input.</li>
+  <li>
+    <p>If subprocess is necessary:</p>
+
+    <ul>
+      <li>MUST pass args as an array (not a single shell string)</li>
+      <li>MUST NOT use <code class="language-plaintext highlighter-rouge">shell: true</code> with attacker-influenced strings</li>
+      <li>SHOULD use strict allowlists for any variable component</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">exec("convert " + filename)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">spawn("bash", ["-c", userInput])</code></li>
+  <li><code class="language-plaintext highlighter-rouge">spawn(userInput, ["foo"])</code></li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">child_process</code>, <code class="language-plaintext highlighter-rouge">exec</code>, <code class="language-plaintext highlighter-rouge">spawn</code>, <code class="language-plaintext highlighter-rouge">shell: true</code>.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Use library APIs instead of shell commands.</li>
+  <li>Hard-code commands and allowlist validated parameters (and use <code class="language-plaintext highlighter-rouge">--</code> to separate flags where supported).</li>
+</ul>
+
+<hr />
+
+<h3 id="next-inject-003-avoid-dynamic-code-execution-and-unsafe-deserialization">NEXT-INJECT-003: Avoid dynamic code execution and unsafe deserialization</h3>
+
+<p>Severity: High to Critical</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST NOT use <code class="language-plaintext highlighter-rouge">eval</code>, <code class="language-plaintext highlighter-rouge">new Function</code>, <code class="language-plaintext highlighter-rouge">vm.runIn*</code> on untrusted strings.</li>
+  <li>MUST treat deserializing complex formats (YAML, XML, custom serialization) as risky; use safe parsers and strict schemas.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">eval(req.body.code)</code></li>
+  <li>Parsing YAML from user input with a non-safe schema.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">eval(</code>, <code class="language-plaintext highlighter-rouge">new Function</code>, <code class="language-plaintext highlighter-rouge">vm.</code>, <code class="language-plaintext highlighter-rouge">require(</code> with non-literals.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">js-yaml</code>, XML parsers, custom serializer usage on untrusted input.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Remove dynamic execution; use safe interpreters or strict parsers.</li>
+  <li>Validate and constrain input.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-log-001-logging-must-not-leak-secrets-or-sensitive-headers">NEXT-LOG-001: Logging MUST NOT leak secrets or sensitive headers</h3>
+
+<p>Severity: Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>MUST NOT log:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Authorization</code> headers</li>
+      <li>cookies / session tokens</li>
+      <li>request bodies containing credentials</li>
+      <li>environment variables or configuration dumps</li>
+    </ul>
+  </li>
+  <li>
+    <p>SHOULD implement structured logging with redaction.</p>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">console.log(req.headers)</code> in auth endpoints</li>
+  <li><code class="language-plaintext highlighter-rouge">console.log(process.env)</code> in server code</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">console.log(</code>, <code class="language-plaintext highlighter-rouge">logger.info(</code>, <code class="language-plaintext highlighter-rouge">debug(</code> in server routes/actions.</li>
+  <li>Check for logs of headers/cookies/body.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Redact sensitive fields; log only what is needed for debugging.</li>
+  <li>Use safe error messages for clients; keep detail server-side only.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-error-001-error-handling-must-avoid-leaking-implementation-details-in-production">NEXT-ERROR-001: Error handling MUST avoid leaking implementation details in production</h3>
+
+<p>Severity: Low</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST not expose stack traces or internal error details to end users in production.</li>
+  <li>Ensure production mode behavior (Next.js production error handling differs from dev). (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Returning <code class="language-plaintext highlighter-rouge">err.stack</code> in JSON responses.</li>
+  <li>Showing detailed exception data to unauthenticated users.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">res.status(500).json(err)</code> or <code class="language-plaintext highlighter-rouge">return Response.json(err)</code>.</li>
+  <li>Verify error responses are sanitized.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Return generic error messages to clients; log details server-side with redaction.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-proxy-001-proxymiddleware-must-not-introduce-header-smuggling-or-unsafe-header-forwarding">NEXT-PROXY-001: Proxy/Middleware must not introduce header smuggling or unsafe header forwarding</h3>
+
+<p>Severity: Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>MUST be careful when copying/forwarding request headers upstream:</p>
+
+    <ul>
+      <li>Do not forward attacker-controlled <code class="language-plaintext highlighter-rouge">x-forwarded-*</code> headers unless you have a trusted proxy chain.</li>
+      <li>Do not forward <code class="language-plaintext highlighter-rouge">Authorization</code>/cookies to unrelated outbound services.</li>
+    </ul>
+  </li>
+  <li>
+    <p>Next.js Proxy patterns often mutate headers; ensure this doesn’t create security issues.</p>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Blindly cloning all request headers to an outbound <code class="language-plaintext highlighter-rouge">fetch()</code> call.</li>
+  <li>Trusting <code class="language-plaintext highlighter-rouge">x-forwarded-host</code> or <code class="language-plaintext highlighter-rouge">host</code> to construct sensitive absolute URLs without allowlisting.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search <code class="language-plaintext highlighter-rouge">headers()</code> and <code class="language-plaintext highlighter-rouge">request.headers</code> usage (especially for URL building). (<a href="https://nextjs.org/docs/app/api-reference/functions/headers" title="Functions: headers | Next.js">Next.js</a>)</li>
+  <li>Search Proxy/Middleware for header rewrites.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Allowlist forwarded headers explicitly.</li>
+  <li>Validate hostnames before using them to build callback URLs or redirects.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-host-001-hostorigin-derived-url-construction-must-be-allowlisted">NEXT-HOST-001: Host/Origin-derived URL construction MUST be allowlisted</h3>
+
+<p>Severity: Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST NOT generate security-sensitive absolute URLs (password reset links, OAuth callback URLs, email verification links) directly from unvalidated <code class="language-plaintext highlighter-rouge">Host</code> headers.</li>
+  <li>For Server Actions, Origin/Host matching is part of CSRF mitigation; do not weaken it. (<a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions" title="next.config.js: serverActions | Next.js">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">const base = "https://" + request.headers.get("host")</code></li>
+  <li>Using unvalidated <code class="language-plaintext highlighter-rouge">x-forwarded-host</code> for absolute URL generation.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Grep for <code class="language-plaintext highlighter-rouge">.get('host')</code>, <code class="language-plaintext highlighter-rouge">.get('x-forwarded-host')</code>, and absolute URL building.</li>
+  <li>Review auth-related email link generation code.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Use a configured, allowlisted canonical app origin (e.g., <code class="language-plaintext highlighter-rouge">APP_ORIGIN=https://example.com</code>).</li>
+  <li>Allowlist hostnames; fail closed.</li>
+</ul>
+
+<hr />
+
+<h3 id="next-dos-001-rate-limiting-and-resource-controls-must-exist-for-abuse-prone-endpoints">NEXT-DOS-001: Rate limiting and resource controls MUST exist for abuse-prone endpoints</h3>
+
+<p>Severity: Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>SHOULD implement rate limiting/throttling for:</p>
+
+    <ul>
+      <li>login, password reset, signup</li>
+      <li>expensive Server Actions</li>
+      <li>webhook ingestion</li>
+    </ul>
+  </li>
+  <li>MUST implement request size limits (see NEXT-LIMITS-001).</li>
+  <li>If self-hosting, MUST rely on reverse proxy for additional protections. (<a href="https://nextjs.org/docs/pages/guides/self-hosting?utm_source=chatgpt.com" title="Guides: Self-Hosting">Next.js</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>No throttling on login/reset endpoints.</li>
+  <li>Expensive actions callable without auth or with unlimited frequency.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Identify auth endpoints and check for rate limiting.</li>
+  <li>Search for “send email”, “charge”, “generate report” flows.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Add edge rate limiting and app-level user/IP throttles.</li>
+  <li>Add job queues for heavy work; return 202 when appropriate.</li>
+</ul>
+
+<hr />
+
+<h2 id="5-practical-scanning-heuristics-how-to-hunt">5) Practical scanning heuristics (how to “hunt”)</h2>
+
+<p>When actively scanning, use these high-signal patterns:</p>
+
+<ul>
+  <li>
+    <p>Production misconfig:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">next dev</code>, <code class="language-plaintext highlighter-rouge">NODE_ENV=development</code>, dev-only start commands (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Secrets exposure:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">.env</code> committed, <code class="language-plaintext highlighter-rouge">NEXT_PUBLIC_</code> on sensitive variables (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">process.env</code> used in <code class="language-plaintext highlighter-rouge">"use client"</code> modules</li>
+    </ul>
+  </li>
+  <li>
+    <p>Auth coverage:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">app/**/route.ts</code> or <code class="language-plaintext highlighter-rouge">pages/api/**</code> with no auth checks (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">"use server"</code> actions with DB writes and no authz (<a href="https://nextjs.org/blog/security-nextjs-server-components-actions" title="How to Think About Security in Next.js | Next.js">Next.js</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">proxy.ts</code> / <code class="language-plaintext highlighter-rouge">middleware.ts</code> matchers that exclude sensitive routes (<a href="https://nextjs.org/docs/pages/guides/authentication" title="Guides: Authentication | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>CSRF:</p>
+
+    <ul>
+      <li>cookie-auth POST/PUT/PATCH/DELETE with no token/origin checks</li>
+      <li><code class="language-plaintext highlighter-rouge">serverActions.allowedOrigins</code> too broad (<a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions" title="next.config.js: serverActions | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>XSS:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">dangerouslySetInnerHTML</code>, raw HTML markdown rendering</li>
+      <li>missing CSP / overly permissive CSP (<a href="https://nextjs.org/docs/pages/guides/environment-variables" title="Guides: Environment Variables | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Caching/data leak:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">dynamic = 'force-static'</code> on sensitive GET handlers (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">use cache</code>, <code class="language-plaintext highlighter-rouge">cacheLife</code>, <code class="language-plaintext highlighter-rouge">unstable_cache</code> around user-specific data (<a href="https://nextjs.org/docs/app/getting-started/route-handlers" title="Getting Started: Route Handlers | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Files:</p>
+
+    <ul>
+      <li>writing uploads under <code class="language-plaintext highlighter-rouge">public/</code></li>
+      <li><code class="language-plaintext highlighter-rouge">fs.readFile</code> / <code class="language-plaintext highlighter-rouge">path.join</code> with request input</li>
+    </ul>
+  </li>
+  <li>
+    <p>SSRF:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">fetch(userProvidedUrl)</code> from Route Handlers / Server Actions</li>
+    </ul>
+  </li>
+  <li>
+    <p>Redirect:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">redirect(searchParams.get('next'))</code>, <code class="language-plaintext highlighter-rouge">NextResponse.redirect(...)</code>, <code class="language-plaintext highlighter-rouge">res.redirect(req.query.next)</code> (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>CORS:</p>
+
+    <ul>
+      <li>wildcard origins, origin reflection, credentials + broad origins (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Limits:</p>
+
+    <ul>
+      <li>API routes with <code class="language-plaintext highlighter-rouge">bodyParser: false</code> and no raw-body verification for webhooks (<a href="https://nextjs.org/docs/pages/building-your-application/routing/api-routes" title="Routing: API Routes | Next.js">Next.js</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">serverActions.bodySizeLimit</code> raised without justification (<a href="https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions" title="next.config.js: serverActions | Next.js">Next.js</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Dependency hygiene:</p>
+
+    <ul>
+      <li>old <code class="language-plaintext highlighter-rouge">next</code> versions that conflict with support policy/advisories (<a href="https://nextjs.org/blog/next-16?utm_source=chatgpt.com" title="Next.js 16">Next.js</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Always try to confirm:</p>
+
+<ul>
+  <li>data origin (untrusted vs trusted)</li>
+  <li>sink type (HTML/DOM, SQL, subprocess, files, redirect, outbound HTTP)</li>
+  <li>protective controls present (schema validation, allowlists, middleware/proxy checks, authz helpers, edge protections)</li>
+</ul>
+
+<hr />
+
+<h2 id="6-sources-accessed-2026-01-27">6) Sources (accessed 2026-01-27)</h2>
+
+<p>Primary framework documentation (Next.js):</p>
+
+<ul>
+  <li>Next.js Docs: Installation (system requirements / Node version) — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/app/getting-started/installation</code></li>
+  <li>Next.js Docs: Route Handlers — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/app/getting-started/route-handlers</code></li>
+  <li>Next.js Docs: API Routes (Pages Router) — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/pages/building-your-application/routing/api-routes</code></li>
+  <li>Next.js Docs: Environment Variables — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/pages/guides/environment-variables</code></li>
+  <li>Next.js Docs: Data Security — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/app/guides/data-security</code></li>
+  <li>Next.js Docs: Content Security Policy — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/app/guides/content-security-policy</code></li>
+  <li>Next.js Docs: Proxy — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/app/getting-started/proxy</code></li>
+  <li>Next.js Docs: <code class="language-plaintext highlighter-rouge">serverActions.allowedOrigins</code> and <code class="language-plaintext highlighter-rouge">serverActions.bodySizeLimit</code> — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/app/api-reference/config/next-config-js/serverActions</code></li>
+  <li>Next.js Docs: <code class="language-plaintext highlighter-rouge">cookies()</code> — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/app/api-reference/functions/cookies</code></li>
+  <li>Next.js Docs: <code class="language-plaintext highlighter-rouge">headers()</code> — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/app/api-reference/functions/headers</code></li>
+  <li>Next.js Docs: Self-hosting (reverse proxy guidance) — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/pages/guides/self-hosting</code></li>
+  <li>Next.js Docs: Support policy (supported versions/LTS) — <code class="language-plaintext highlighter-rouge">https://nextjs.org/docs/support-policy</code></li>
+</ul>
+
+<p>Next.js security guidance &amp; advisories:</p>
+
+<ul>
+  <li>Next.js Blog: How to think about security in Next.js — <code class="language-plaintext highlighter-rouge">https://nextjs.org/blog/security-nextjs-server-components-actions</code></li>
+  <li>GitHub Security Advisory: Next.js DoS via Server Components / Server Actions (CVE-2026-23864) — <code class="language-plaintext highlighter-rouge">https://github.com/advisories/GHSA-fq29-rrrv-cq2m</code></li>
+  <li>Next.js Blog: Security update (example security advisory context) — <code class="language-plaintext highlighter-rouge">https://nextjs.org/blog/security-update</code></li>
+</ul>
+
+<p>General web security references (recommended baseline):</p>
+
+<ul>
+  <li>OWASP Cheat Sheet Series (CSRF, Session Management, XSS Prevention, SSRF Prevention, File Upload, HTTP Headers) — <code class="language-plaintext highlighter-rouge">https://cheatsheetseries.owasp.org/</code></li>
+</ul>
+
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

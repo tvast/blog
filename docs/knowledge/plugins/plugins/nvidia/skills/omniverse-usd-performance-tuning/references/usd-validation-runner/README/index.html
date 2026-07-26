@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>README · A developer journey</title>
+<meta name="description" content="USD Validation Runner (master router)">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/usd-validation-runner/README/">
+
+<meta property="og:title" content="README · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/usd-validation-runner/README/">
+<meta property="og:description" content="USD Validation Runner (master router)">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>README</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="usd-validation-runner-master-router">USD Validation Runner (master router)</h1>
+
+<!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<h2 id="when-to-use">When to Use</h2>
+
+<p>Use this reference for validation-only requests or when the performance workflow reaches the validation-routing phase.</p>
+
+<h2 id="instructions">Instructions</h2>
+
+<ol>
+  <li>Identify whether the request is validation-only or a validation phase inside the optimization workflow.</li>
+  <li>Select the smallest validation stack that can change the user-visible decision or operation plan.</li>
+  <li>Ask before full Asset Validator sweeps or Tier 3 expensive cross-component checks.</li>
+  <li>Route execution to the owning validation reference or skill and preserve evidence paths for later reporting.</li>
+</ol>
+
+<h2 id="pre-flight-checklist">Pre-flight Checklist</h2>
+
+<p>Before running validators, re-read and confirm:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code> — tier selection, phase-aware subsets,
+ deferred validators, full-sweep approval gate.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />SA report’s <code class="language-plaintext highlighter-rouge">phase_recommendation</code> and <code class="language-plaintext highlighter-rouge">summary_counts</code> drive tier selection.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Apply <code class="language-plaintext highlighter-rouge">runtime-artifact-token-budget.md</code> for large CSV/log output.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Route findings to <code class="language-plaintext highlighter-rouge">so-interpret-validators</code> for op-chain construction —
+ do not map findings to ops yourself.
+    <h2 id="output-format">Output Format</h2>
+  </li>
+</ul>
+
+<p>Return a scoped validation plan or validation summary naming the selected validator stack, skipped expensive checks, approval gates, artifact paths, and findings that affect the optimization plan.</p>
+
+<h2 id="purpose">Purpose</h2>
+
+<p>Use this reference whenever a workflow needs to surface USD validity or performance
+validator issues. It picks the smallest validation stack that can affect the
+optimization plan, records the evidence contract, and routes concrete execution
+to the owning skill or reference.</p>
+
+<p>This reference <strong>does not</strong> execute optimization operations and <strong>does not</strong> choose fix strategies.</p>
+
+<p>Use this reference as the entry point for validation-only requests such as
+“validate this USD”, “run Asset Validator”, or “show validation issues”. For
+broad performance diagnosis, slow loading, high memory, low FPS, or “what
+should I optimize?”, start with
+<code class="language-plaintext highlighter-rouge">omniverse-usd-performance-tuning</code> so structure assessment can scope validation
+before expensive validator runs.</p>
+
+<p>For <code class="language-plaintext highlighter-rouge">omniverse://</code> targets, start with <code class="language-plaintext highlighter-rouge">omniverse-authentication</code> before this
+skill attempts runtime probing or stage open.</p>
+
+<p>Tier tables and the JSON plan template live in
+<code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code> under this reference. This router points at that
+reference for tier detail rather than duplicating it, which keeps validation
+policy portable for future SO/OAV repo splits.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Target stage or asset paths and resolver context.</li>
+  <li>Available validator runtime (Omni Asset Validator inside Kit, project-managed AV install, or installed Scene Optimizer APIs).</li>
+  <li>Artifact directory for logs, CSV/JSON findings, and provider summaries.</li>
+  <li>Baseline, waiver, or failure policy for pre/post processing gates.</li>
+  <li>(For perf-stack scoping) <code class="language-plaintext highlighter-rouge">usd-structure-assessment</code> report with <code class="language-plaintext highlighter-rouge">phase_recommendation</code> and <code class="language-plaintext highlighter-rouge">flagged_assets</code>.</li>
+</ul>
+
+<h2 id="session-start-runtime-gate-mandatory-when-this-is-the-entry-skill">Session-start runtime gate (mandatory when this is the entry skill)</h2>
+
+<p>If this reference is the <strong>entry skill</strong> for the user’s request (i.e., the
+agent invoked <code class="language-plaintext highlighter-rouge">/usd-validation-runner</code> directly rather than through
+<code class="language-plaintext highlighter-rouge">omniverse-usd-performance-tuning</code>), run the session-start gate from
+<code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/setup-usd-performance-tuning/references/runtime-context-header.md</code> <em>Mandatory session-start gate</em>
+before any routing. The gate determines <code class="language-plaintext highlighter-rouge">output_path</code>, checks
+<code class="language-plaintext highlighter-rouge">&lt;output_path&gt;/setup-preflight.json</code>, invokes <code class="language-plaintext highlighter-rouge">setup-usd-performance-tuning</code>
+if the preflight is missing, then surfaces Format A + the 4-option
+confirmation. Do not pick a validator stack until the user has
+confirmed the runtime.</p>
+
+<p>If invoked <strong>downstream of an entry skill that already fired the gate
+in the same session</strong>, skip the gate and proceed.</p>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+  <li>Validation depends on tools installed outside this repo.</li>
+  <li>Scene Optimizer validation results are valid only after imports and checker classes are verified in the active runtime.</li>
+  <li>Validation evidence is not cleanup; auto-fixes require separate change recording.</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<ul>
+  <li>If <code class="language-plaintext highlighter-rouge">omni_asset_validate</code> is unavailable, record it as missing rather than fabricating a pass.</li>
+  <li>If Scene Optimizer validator imports fail, do not report SO-specific results.</li>
+  <li>If the bundled <code class="language-plaintext highlighter-rouge">validator-venv</code> is slow or lacks dependencies, prefer a Kit or project-managed Asset Validator environment.</li>
+</ul>
+
+<hr />
+
+<h2 id="validator-stack-matrix">Validator Stack Matrix</h2>
+
+<p>The router picks one or more stacks based on the intent and the structure assessment <code class="language-plaintext highlighter-rouge">phase_recommendation</code>. Each stack lists the owned reference that describes the concrete validation command; this reference orchestrates the routing.</p>
+
+<p><strong>All validation cost-control policy lives in
+<code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code>.</strong> That reference owns tier tables,
+the full-sweep approval gate, deferred-validator rules, spot-check
+policy, phase-aware subset selection, and the per-rule timeout pattern.
+Read it when building a perf-stack plan. The key principles:</p>
+
+<ul>
+  <li>Structure assessment first — never start with a full default AV sweep.</li>
+  <li>Full-sweep approval gate — ask before a default rule set on large/unknown assets.</li>
+  <li>SO analysis stays in the validation plan regardless of execution path.</li>
+  <li>Spot-check before dropping signal — masked-stage with ≥25% mesh coverage.</li>
+</ul>
+
+<h3 id="pre-mutation-usd-stack">Pre-Mutation USD Stack</h3>
+
+<p>For “is this asset USD-correct enough to mutate?”, run only the checks needed
+to protect the requested mutation.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Step</th>
+      <th>Owner</th>
+      <th>When</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>Inline minimum-openability check</td>
+      <td>Always before mutation. Confirm the stage opens, root/default prim is valid enough for the task, asset paths resolve, and scale/up-axis metadata is known or recorded as missing.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">references/validate-usd-asset-validator.md</code></td>
+      <td>When executable NVIDIA Omniverse Asset Validator coverage is needed. Scope by targeted rules/categories unless the user explicitly approves a full sweep.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>External profile/package validators</td>
+      <td>Only when the user explicitly requests a domain profile such as SimReady or a package-validation workflow. Do not keep those command references in this package.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="performance-stack-scoped">Performance stack (scoped)</h3>
+
+<p>For “is this asset performant?” The chain is: scope -&gt; run -&gt; interpret. Tier and phase-aware scoping live in <code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code>; the router instructs the agent to load that reference and emit a plan, then invoke the downstream tools.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Step</th>
+      <th>Tool / reference</th>
+      <th>When</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>(Read <code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code>)</td>
+      <td>Build the tier plan from the structure assessment’s <code class="language-plaintext highlighter-rouge">flagged_assets</code> + <code class="language-plaintext highlighter-rouge">phase_recommendation</code>.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">so-run-validators</code></td>
+      <td>Execute the tier plan against the asset.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code class="language-plaintext highlighter-rouge">so-interpret-validators</code></td>
+      <td>Read artifacts, classify findings (T1/T2/T3), recommend fixes.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="phase-aware-subset-selection">Phase-aware subset selection</h3>
+
+<p>Owned by <code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code> → <em>Decision Tree</em>. Document the
+chosen subset in the validation plan so Phase 6 re-validation can reproduce
+the same scope.</p>
+
+<hr />
+
+<h2 id="routing-decision">Routing decision</h2>
+
+<p>For a given request, pick the stack(s) using this table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Intent</th>
+      <th>Stacks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>“Validate this USD before any mutation.”</td>
+      <td>Pre-mutation USD stack: minimum-openability plus targeted Asset Validator coverage when needed.</td>
+    </tr>
+    <tr>
+      <td>“What’s wrong with this asset?” (broad performance ask)</td>
+      <td><code class="language-plaintext highlighter-rouge">usd-structure-assessment</code> first, then Performance stack scoped per the structure assessment. Add pre-mutation USD stack only when the request is about USD validity or mutation safety.</td>
+    </tr>
+    <tr>
+      <td>“Run perf validators only.”</td>
+      <td>Performance stack only.</td>
+    </tr>
+    <tr>
+      <td>“Validate the optimized output (Phase 6 re-validation).”</td>
+      <td>Same stacks that ran in Phase 2c, for a fair before/after comparison.</td>
+    </tr>
+    <tr>
+      <td>“Validate a SimReady package/profile.”</td>
+      <td>Defer to the external SimReady/Foundation validation workflow; keep only local USD and performance evidence in this package.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>If intent is ambiguous, ask the user before expanding scope - especially before
+invoking Tier 3 perf validators or a default full-stage Asset Validator sweep
+(both can be very slow and can produce very large logs/reports).</p>
+
+<p>For performance work, the validation output should be a compact
+operation-oriented summary, not a raw issue dump. Use
+<code class="language-plaintext highlighter-rouge">so-interpret-validators/references/rule-reference.md</code> for rule-to-operation
+mapping instead of maintaining another mapping in this router.</p>
+
+<hr />
+
+<h2 id="commands">Commands</h2>
+
+<p><code class="language-plaintext highlighter-rouge">references/validate-usd-asset-validator.md</code> owns Asset Validator runtime
+details. <code class="language-plaintext highlighter-rouge">so-run-validators</code> owns Scene Optimizer performance-validator
+execution. This router keeps only the common direct invocation shape:</p>
+
+<p>Base Asset Validator (used by <code class="language-plaintext highlighter-rouge">validate-usd-asset-validator</code>). Probe the
+selected runtime before using optional output flags; use JSON output when
+the selected runtime advertises it, otherwise fall back to CSV. The commands
+below are invocation shapes, not default scope choices. A bare full-stage
+invocation is allowed only after the full-sweep gate has been approved.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>omni_asset_validate <span class="nt">--help</span>
+omni_asset_validate /path/to/asset.usd <span class="se">\</span>
+  <span class="nt">--category</span> Geometry <span class="se">\</span>
+  <span class="nt">--csv-output</span> /path/to/artifacts/issues.csv
+</code></pre></div></div>
+
+<p>Minimum openability baseline is a USD-open check, not a default Asset
+Validator run:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pxr</span> <span class="kn">import</span> <span class="n">Usd</span>
+
+<span class="n">stage</span> <span class="o">=</span> <span class="n">Usd</span><span class="p">.</span><span class="n">Stage</span><span class="p">.</span><span class="nc">Open</span><span class="p">(</span><span class="sh">"</span><span class="s">/path/to/asset.usd</span><span class="sh">"</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">stage</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="nc">RuntimeError</span><span class="p">(</span><span class="sh">"</span><span class="s">stage did not open</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">root</span> <span class="o">=</span> <span class="n">stage</span><span class="p">.</span><span class="nc">GetDefaultPrim</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">({</span>
+    <span class="sh">"</span><span class="s">opened</span><span class="sh">"</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">default_prim</span><span class="sh">"</span><span class="p">:</span> <span class="n">root</span><span class="p">.</span><span class="nc">GetPath</span><span class="p">().</span><span class="n">pathString</span> <span class="k">if</span> <span class="n">root</span> <span class="k">else</span> <span class="bp">None</span><span class="p">,</span>
+    <span class="sh">"</span><span class="s">up_axis</span><span class="sh">"</span><span class="p">:</span> <span class="n">stage</span><span class="p">.</span><span class="nc">GetMetadata</span><span class="p">(</span><span class="sh">"</span><span class="s">upAxis</span><span class="sh">"</span><span class="p">),</span>
+    <span class="sh">"</span><span class="s">meters_per_unit</span><span class="sh">"</span><span class="p">:</span> <span class="n">stage</span><span class="p">.</span><span class="nc">GetMetadata</span><span class="p">(</span><span class="sh">"</span><span class="s">metersPerUnit</span><span class="sh">"</span><span class="p">),</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>For SO-specific validators, follow <code class="language-plaintext highlighter-rouge">so-run-validators</code>; SO validator rules
+auto-register via <code class="language-plaintext highlighter-rouge">@register_rule</code> decorators when both packages share the
+same Python environment.</p>
+
+<h3 id="programmatic-per-rule-api">Programmatic per-rule API</h3>
+
+<p>For one-rule-at-a-time validation (used by the per-rule timeout pattern in
+<code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code>), drive the engine directly:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">omni.scene.optimizer.validators</span>  <span class="c1"># auto-registers SO rules
+</span><span class="kn">from</span> <span class="n">omni.asset_validator</span> <span class="kn">import</span> <span class="n">CategoryRuleRegistry</span><span class="p">,</span> <span class="n">ValidationEngine</span>
+<span class="kn">from</span> <span class="n">pxr</span> <span class="kn">import</span> <span class="n">Usd</span>
+
+<span class="n">registry</span> <span class="o">=</span> <span class="nc">CategoryRuleRegistry</span><span class="p">()</span>
+<span class="n">rule</span> <span class="o">=</span> <span class="nf">next</span><span class="p">(</span>
+    <span class="n">rule</span>
+    <span class="k">for</span> <span class="n">rule</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">.</span><span class="nf">get_rules</span><span class="p">(</span><span class="sh">"</span><span class="s">Usd:Performance</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rule</span><span class="p">.</span><span class="n">__name__</span> <span class="o">==</span> <span class="sh">"</span><span class="s">PrimitiveFitChecker</span><span class="sh">"</span>
+<span class="p">)</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="nc">ValidationEngine</span><span class="p">(</span><span class="n">init_rules</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">engine</span><span class="p">.</span><span class="nf">enable_rule</span><span class="p">(</span><span class="n">rule</span><span class="p">)</span>
+<span class="n">stage</span> <span class="o">=</span> <span class="n">Usd</span><span class="p">.</span><span class="n">Stage</span><span class="p">.</span><span class="nc">Open</span><span class="p">(</span><span class="sh">"</span><span class="s">path/to/asset.usd</span><span class="sh">"</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">engine</span><span class="p">.</span><span class="nf">validate</span><span class="p">(</span><span class="n">stage</span><span class="p">)</span>                           <span class="c1"># synchronous
+</span><span class="k">for</span> <span class="n">issue</span> <span class="ow">in</span> <span class="n">results</span><span class="p">.</span><span class="nf">issues</span><span class="p">():</span>
+    <span class="bp">...</span>
+</code></pre></div></div>
+
+<p>Inside Kit, import <code class="language-plaintext highlighter-rouge">omni.asset_validator.core</code> instead of <code class="language-plaintext highlighter-rouge">omni.asset_validator</code> (the <code class="language-plaintext highlighter-rouge">.core</code> submodule is the in-Kit name). The standalone package uses the plain <code class="language-plaintext highlighter-rouge">omni.asset_validator</code> import.</p>
+
+<p>Use this API when you need:</p>
+
+<ul>
+  <li>Per-rule timeouts on a large stage (see <code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code> <em>Per-rule timeout pattern</em>).</li>
+  <li>A single rule’s findings without running the full default set.</li>
+  <li>Cross-runtime parity checks (same stage, same rule, both Kit and standalone).</li>
+</ul>
+
+<p>Do not route validation through the Scene Optimizer package’s bundled
+<code class="language-plaintext highlighter-rouge">validator-venv</code> — it may lack <code class="language-plaintext highlighter-rouge">numpy</code>, making large-stage validation slow.
+Use a project-managed venv with both <code class="language-plaintext highlighter-rouge">omniverse-asset-validator</code> and the SO
+package on PYTHONPATH.</p>
+
+<hr />
+
+<h2 id="required-gates">Required gates</h2>
+
+<p>Pre-processing (before any mutation):</p>
+
+<ul>
+  <li>Stage opens.</li>
+  <li>Asset paths resolve.</li>
+  <li>Minimum-openability and selected Asset Validator checks complete.</li>
+  <li>Known blocker findings are either fixed or waived.</li>
+</ul>
+
+<p>Post-processing (Phase 6 re-validation):</p>
+
+<ul>
+  <li>Stage opens.</li>
+  <li>Validation is no worse than baseline unless explicitly accepted.</li>
+  <li>Generated outputs are recorded.</li>
+  <li>Processor report and validation report are attached to the optimization plan.</li>
+</ul>
+
+<hr />
+
+<h2 id="output">Output</h2>
+
+<p>Emit <code class="language-plaintext highlighter-rouge">validation-report.json</code> matching <code class="language-plaintext highlighter-rouge">scripts/validation-report.schema.json</code>. The report must point to provider artifacts including <code class="language-plaintext highlighter-rouge">issues.csv</code>, <code class="language-plaintext highlighter-rouge">provider-summary.json</code>, and <code class="language-plaintext highlighter-rouge">run.log</code>, and include the chosen tier/phase scoping so Phase 6 can reproduce it.</p>
+
+<hr />
+
+<h2 id="rules">Rules</h2>
+
+<ul>
+  <li>Validation is evidence, not cleanup by itself.</li>
+  <li>Convert findings into candidate operations via
+<code class="language-plaintext highlighter-rouge">so-interpret-validators/references/rule-reference.md</code>; do not hand the
+user raw validator jargon as the recommendation.</li>
+  <li>Do not auto-fix without recording which layers or files changed.</li>
+  <li>Do not continue after structural USD failures unless the plan is diagnosis-only.</li>
+  <li>Do not call Scene Optimizer operation skills until validation evidence has been captured or the user has explicitly chosen to proceed without it.</li>
+  <li>All cost-control rules (tiers, gates, thresholds) live in
+<code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code>. Do not invent thresholds inline.</li>
+</ul>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">references/validation-scoping.md</code> - tier 1/2/3 tables, JSON plan template, scene-aware adjustment, phase-aware subset rules. Read this when building a perf-stack plan.</li>
+  <li><code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/usd-validation-runner/references/so-run-validators/references/infrastructure.md</code> - SO validator infrastructure (programmatic API, REQUIRES_MESH cache, entry-point allow-list, CLI gotchas, libusd alignment). Read this when debugging SO validator setup.</li>
+  <li><code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/workflow.md</code> - canonical 7-phase flow context for where validation sits.</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

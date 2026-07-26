@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>CHANGELOG · A developer journey</title>
+<meta name="description" content="Changelog">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/nvim-tree.lua/CHANGELOG/">
+
+<meta property="og:title" content="CHANGELOG · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/nvim-tree.lua/CHANGELOG/">
+<meta property="og:description" content="Changelog">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>nvim-tree.lua</span>
+      </nav>
+
+      <h1>CHANGELOG</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="changelog">Changelog</h1>
+
+<h2 id="1170-2026-04-07"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.16.0...nvim-tree-v1.17.0">1.17.0</a> (2026-04-07)</h2>
+
+<h3 id="features">Features</h3>
+
+<ul>
+  <li><strong>#3292:</strong> add nvim_tree.config.filesystem_watchers.whitelist_dirs - strongly recommended for windows (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3298">#3298</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/6eaf74c9919d121d2806ac3c20e757e66bd29c31">6eaf74c</a>)</li>
+  <li><strong>#3310:</strong> minimum neovim version 0.10 (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3311">#3311</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/7adc5679feb439275255aa9e95c434cca206d10c">7adc567</a>)</li>
+</ul>
+
+<h3 id="bug-fixes">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#3257:</strong> error when calling api.tree.find_file (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3304">#3304</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/b548cfef00a79f0b3e3af24f91ae6bd14f22af95">b548cfe</a>)</li>
+  <li><strong>#3293:</strong> marks.bulk operations filter descendant nodes (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3294">#3294</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/f37ebac81164e1445c499cdd6de86e6d8e5d57e4">f37ebac</a>)</li>
+  <li><strong>#3301:</strong> setup with empty config fails (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3303">#3303</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/ec0efb06b0abfa56492acfc8c34ac8958d18601e">ec0efb0</a>)</li>
+  <li>system open native requires nvim 0.10 (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3309">#3309</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/02ccbcd4af9a7fa159251f721d763c0d16f91703">02ccbcd</a>)</li>
+</ul>
+
+<h3 id="performance-improvements">Performance Improvements</h3>
+
+<ul>
+  <li><strong>#3231:</strong> decrease setup time: optimise setup and defer requires until tree open (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3308">#3308</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/31503ad5d869fca61461d82a9126f62480ecb0ab">31503ad</a>)</li>
+  <li><strong>#3257:</strong> remove setup for actions modules, full-name and explorer (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3299">#3299</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/43a3bb4b26b4578a704f24bb6a4889b454c0eb65">43a3bb4</a>)</li>
+  <li><strong>#3257:</strong> remove setup for modules: buffers, diagnostics, git, help, keymap, lib, watcher (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3295">#3295</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/3d385d3346e4883d60dc37cf642bd47bed78a46e">3d385d3</a>)</li>
+  <li><strong>#3257:</strong> remove setup for renderer, log, appearance (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3307">#3307</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/3603f069ff783c31986894a56c2a6755331b0802">3603f06</a>)</li>
+  <li><strong>#3257:</strong> remove setup for view, extracting view-state (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3306">#3306</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/4cbe79526f8bc0bdb1a500d261dc5cc1be4e77d5">4cbe795</a>)</li>
+</ul>
+
+<h2 id="1160-2026-03-17"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.15.0...nvim-tree-v1.16.0">1.16.0</a> (2026-03-17)</h2>
+
+<h3 id="features-1">Features</h3>
+
+<ul>
+  <li><strong>#2994:</strong> add visual mode operations: copy, cut, delete, trash, toggle bookmark (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3268">#3268</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/9197f3ee3f0c9a754aab5b16500db6d7da5f68fd">9197f3e</a>)</li>
+  <li>add default &lt;Del&gt; mapping for api.fs.remove (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3238">#3238</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/ca8d82fff26cb12ced239713e3222f4a9dcd0da0">ca8d82f</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-1">Bug Fixes</h3>
+
+<ul>
+  <li><strong>##3288:</strong> restore single-item paste conflict prompts (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3289">#3289</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/b3772adec8db61ba9098c5624a0823a77be3a23d">b3772ad</a>)</li>
+  <li><strong>#3178:</strong> handle Windows paths in ignore_dirs and add .zig-cache to defaults (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3261">#3261</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/5499299746b95c49ef4fc89b30c29a79b577881f">5499299</a>)</li>
+  <li><strong>#3187:</strong> prevent closing the last non-floating window when deleting files (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3282">#3282</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/018a078c1e149bcd0c4e65c92aabb8e12501d769">018a078</a>)</li>
+  <li><strong>#3198:</strong> add filesystem_watchers.max_events to handle runaway filesystem events on PowerShell (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3232">#3232</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/c07ce43527e5f0242121f4eb1feb7ac0ecea8275">c07ce43</a>)</li>
+  <li><strong>#3248:</strong> bookmark filter shows contents of marked directories (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3249">#3249</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/5757bcf0447d22d8f78826bc5c59b28da2824c3b">5757bcf</a>)</li>
+  <li><strong>#3251:</strong> pass git.timeout to all vim.system git calls (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3277">#3277</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e49b0d9bfa70989cf8b5abf5557f51e6e57f68d6">e49b0d9</a>)</li>
+  <li><strong>#3265:</strong> rename module api.health to api.appearance, to avoid :checkhealth detection (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3266">#3266</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1df1960d0e3a26643a4100f64fa03b991b9f4b85">1df1960</a>)</li>
+  <li><strong>#3267:</strong> renderer.icons.*_placement ‘right_align’ at the right hand edge, not the right of the name (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3270">#3270</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/fa3c45875f9b1f56ace57711c6f2ac22484ed956">fa3c458</a>)</li>
+  <li><strong>#3281:</strong> fix a bug when a view width of -1 is returned from a function (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3283">#3283</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/c988e289428d9202b28ba27479647033c7dd2956">c988e28</a>)</li>
+  <li>allow 0 (unlimited) filesystem_watchers.max_events which is the new default, except for windows at 1000 (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3279">#3279</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/87594aa7c8808701b418b285e9adf690acead201">87594aa</a>)</li>
+  <li>increase filesystem_watchers.max_events from 100 to 1000 (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3263">#3263</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/0f4d2d6998dc324d54d6adce94186bee43725afb">0f4d2d6</a>)</li>
+  <li>restore bookmark filter for marked directories (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/5757bcf0447d22d8f78826bc5c59b28da2824c3b">5757bcf</a>)</li>
+</ul>
+
+<h3 id="performance-improvements-1">Performance Improvements</h3>
+
+<ul>
+  <li><strong>#3284:</strong> re-draw instead of refreshing the tree when a buffer is modified (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3285">#3285</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/c8d8d515c29f0f0b1a352e0d75616f74f42fc03b">c8d8d51</a>)</li>
+</ul>
+
+<h2 id="1150-2026-01-11"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.14.0...nvim-tree-v1.15.0">1.15.0</a> (2026-01-11)</h2>
+
+<h3 id="features-2">Features</h3>
+
+<ul>
+  <li><strong>#1826:</strong> add diagnostics.diagnostic_opts: vim.diagnostic.Opts will override diagnostics.severity and diagnostics.icons (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3190">#3190</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/fefa335f1c8f690eb668a1efd18ee4fc6d64cd3e">fefa335</a>)</li>
+  <li><strong>#1851:</strong> add bookmarks.persist, default path: vim.fn.stdpath(“data”) .. “/nvim-tree-bookmarks.json”, disabled by default (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3033">#3033</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/c89215d6a1107a3c0c134750be48657ba8e6a9aa">c89215d</a>)</li>
+  <li><strong>#3213:</strong> add <code class="language-plaintext highlighter-rouge">view.width.lines_excluded</code> option (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/776a5cdfac948b490e06f1d1d22c4cb986e40699">776a5cd</a>)</li>
+  <li><strong>#3213:</strong> add view.width.lines_excluded option (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3214">#3214</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/776a5cdfac948b490e06f1d1d22c4cb986e40699">776a5cd</a>)</li>
+  <li>add NvimTreeFilter filetype (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/64e2192f5250796aa4a7f33c6ad888515af50640">64e2192</a>)</li>
+  <li>load command definitions at nvim startup (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3211">#3211</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1eda2569394f866360e61f590f1796877388cb8a">1eda256</a>)</li>
+  <li>load command definitions in <code class="language-plaintext highlighter-rouge">plugin</code> directory (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1eda2569394f866360e61f590f1796877388cb8a">1eda256</a>)</li>
+  <li>set filter input filetype to NvimTreeFilter (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3207">#3207</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/64e2192f5250796aa4a7f33c6ad888515af50640">64e2192</a>)</li>
+  <li>use <code class="language-plaintext highlighter-rouge">add_trailing</code> also for symlink destination (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/81ede55c47528ff7c81b2a498fbee61b298c4e2f">81ede55</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-2">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#3226:</strong> set &amp;swapfile=false before setting tree buffer name, avoiding any potential collisions with a swapfile (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3227">#3227</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8298117311a1f23f039c278e4e4977ab80a15e33">8298117</a>)</li>
+  <li>api.tree.change_root_to_node on a file now changes directory to parent as per documentation (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3228">#3228</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/b8b44b6a2494d086a9177251a119f9daec6cace8">b8b44b6</a>)</li>
+  <li>correctly assign extmarks to lines when computing tree window width in <code class="language-plaintext highlighter-rouge">grow</code> when <code class="language-plaintext highlighter-rouge">nvim-tree.view.width.lines_excluded</code> contains “root” (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e66994d40db2d57c91bf9aeaee8bf7ab8b1131f6">e66994d</a>)</li>
+  <li>incorrect window width when right_align icons present (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3239">#3239</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e66994d40db2d57c91bf9aeaee8bf7ab8b1131f6">e66994d</a>)</li>
+  <li>prevent NvimTree to be alternate buffer when tab open (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3205">#3205</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e397756d2a79d74314ea4cd3efc41300e91c0ff0">e397756</a>)</li>
+  <li>renderer.add_trailing applies to symlink destination (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3217">#3217</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/81ede55c47528ff7c81b2a498fbee61b298c4e2f">81ede55</a>)</li>
+</ul>
+
+<h3 id="performance-improvements-2">Performance Improvements</h3>
+
+<ul>
+  <li><strong>commands:</strong> defer module loading (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3210">#3210</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/68c67adfabfd1ce923839570507ef2e81ab8a408">68c67ad</a>)</li>
+</ul>
+
+<h2 id="1140-2025-08-12"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.13.0...nvim-tree-v1.14.0">1.14.0</a> (2025-08-12)</h2>
+
+<h3 id="features-3">Features</h3>
+
+<ul>
+  <li><strong>#2685:</strong> highlight git new tracked with NvimTreeGitFileNewHL (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3176">#3176</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/0a52012d611f3c1492b8d2aba363fabf734de91d">0a52012</a>)</li>
+  <li><strong>#2789:</strong> add optional function expand_until to api.tree.expand_all and api.node.expand (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3166">#3166</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1b876db04903b93c78c97fd3f3dd85d59eeef5ff">1b876db</a>)</li>
+  <li><strong>#2826:</strong> allow only one window with nvim-tree buffer per tab (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3174">#3174</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/dd2364d6802f7f57a98acb8b545ed484c6697626">dd2364d</a>)</li>
+  <li><strong>#3157:</strong> add view.cursorlineopt (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3158">#3158</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8eb5e0bfd1c4da6efc03ab0c1ccf463dbaae831e">8eb5e0b</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-3">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#3077:</strong> deleting a directory containing symlinked directory will delete the contents of the linked directory (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3168">#3168</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/10db6943cb40625941a35235eeb385ffdfbf827a">10db694</a>)</li>
+  <li><strong>#3157:</strong> add view.cursorlineopt (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8eb5e0bfd1c4da6efc03ab0c1ccf463dbaae831e">8eb5e0b</a>)</li>
+  <li><strong>#3172:</strong> live filter exception (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3173">#3173</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/0a7fcdf3f8ba208f4260988a198c77ec11748339">0a7fcdf</a>)</li>
+  <li>invalid window id for popup info window (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3147">#3147</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/d54a1875a91e1a705795ea26074795210b92ce7f">d54a187</a>)</li>
+  <li><strong>picker:</strong> exclude full_name window id from the choice (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3165">#3165</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/543ed3cac212dc3993ef9f042f6c0812e34ddd43">543ed3c</a>)</li>
+  <li>window picker ignore hidden window (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3145">#3145</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/d87b41ca537e2131622d48a6c25ccf2fbe0e5d62">d87b41c</a>)</li>
+</ul>
+
+<h3 id="performance-improvements-3">Performance Improvements</h3>
+
+<ul>
+  <li><strong>#3171:</strong> cache toplevel for untracked (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3185">#3185</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/442513648c6936e754c3308a1c58591a399493e5">4425136</a>)</li>
+  <li><strong>#3171:</strong> use vim.system() instead of vim.fn.system() to execute git toplevel (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3175">#3175</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/9a05b9e9f928856ca23dbf876fab372003180c3f">9a05b9e</a>)</li>
+</ul>
+
+<h3 id="reverts">Reverts</h3>
+
+<ul>
+  <li><strong>#3180, #3177:</strong> invalid group or tabpage (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3181">#3181</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/9b289abd6998e30fd24cbc9919e0b0cbed6364ce">9b289ab</a>)</li>
+  <li><strong>#3180, #3177:</strong> resolve live filter failures (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3183">#3183</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/a4699c0904103e7767334f6da05f5c2ea5514845">a4699c0</a>)</li>
+</ul>
+
+<h2 id="1130-2025-06-14"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.12.0...nvim-tree-v1.13.0">1.13.0</a> (2025-06-14)</h2>
+
+<h3 id="features-4">Features</h3>
+
+<ul>
+  <li><strong>#3113:</strong> add renderer.icons.folder_arrow_padding (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3114">#3114</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/ea5097a1e2702b4827cb7380e7fa0bd6da87699c">ea5097a</a>)</li>
+  <li><strong>#3132:</strong> add api.node.expand and api.node.collapse (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3133">#3133</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/ae595611fb2225f2041996c042aa4e4b8663b41e">ae59561</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-4">Bug Fixes</h3>
+
+<ul>
+  <li>“Invalid buffer id” on closing nvim-tree window (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3129">#3129</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/25d16aab7d29ca940a9feb92e6bb734697417009">25d16aa</a>)</li>
+  <li><strong>#2746:</strong> background and right aligned icons in floating windows (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3128">#3128</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/cbc3165e08893bb499da035c6f6f9d1512b57664">cbc3165</a>)</li>
+  <li><strong>#3117:</strong> allow changing filename’s casing (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/bd54d1d33c20d8630703b9842480291588dbad07">bd54d1d</a>)</li>
+  <li><strong>#3117:</strong> windows: change file/dir case (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3135">#3135</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/bd54d1d33c20d8630703b9842480291588dbad07">bd54d1d</a>)</li>
+  <li><strong>#3122:</strong> remove redundant vim.validate (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3123">#3123</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e7d1b7dadc62fe2eccc17d814354b0a5688621ce">e7d1b7d</a>)</li>
+  <li><strong>#3124:</strong> fix icon padding for “right_align” placements, notably for dotfiles (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3125">#3125</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e4cd856ebf4fec51db10c69d63e43224b701cbce">e4cd856</a>)</li>
+  <li><strong>#3124:</strong> prevent empty icons_right_align response from breaking padding (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e4cd856ebf4fec51db10c69d63e43224b701cbce">e4cd856</a>)</li>
+  <li><strong>#3134:</strong> setting one glyph to “” no longer disables others (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3136">#3136</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/ebcaccda1c575fa19a8087445276e6671e2b9b37">ebcaccd</a>)</li>
+  <li><strong>#3143:</strong> actions.open_file.window_picker.exclude applies when not using window picker (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3144">#3144</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/05d8172ebf9cdb2d140cf25b75625374fbc3df7f">05d8172</a>)</li>
+  <li>fixes <a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3134">#3134</a> (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/ebcaccda1c575fa19a8087445276e6671e2b9b37">ebcaccd</a>)</li>
+  <li>invalid buffer issue (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/25d16aab7d29ca940a9feb92e6bb734697417009">25d16aa</a>)</li>
+</ul>
+
+<h2 id="1120-2025-04-20"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.11.0...nvim-tree-v1.12.0">1.12.0</a> (2025-04-20)</h2>
+
+<h3 id="features-5">Features</h3>
+
+<ul>
+  <li>add TreePreOpen event (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3105">#3105</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/c24c0470d9de277fbebecd718f33561ed7c90298">c24c047</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-5">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#3101:</strong> when renderer.highlight_opened_files = “none” do not reload on BufUnload and BufReadPost (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3102">#3102</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/5bea2b37523a31288e0fcab42f3be5c1bd4516bb">5bea2b3</a>)</li>
+  <li>explicitly set <code class="language-plaintext highlighter-rouge">border</code> to <code class="language-plaintext highlighter-rouge">"none"</code> in full name float (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3094">#3094</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/c3c193594213c5e2f89ec5d7729cad805f76b256">c3c1935</a>)</li>
+  <li>reliably dispatch exactly one TreeOpen and TreeClose events (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3107">#3107</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/3a63717d3d332d8f39aaf65be7a0e4c2265af021">3a63717</a>)</li>
+</ul>
+
+<h2 id="1110-2025-02-22"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.10.0...nvim-tree-v1.11.0">1.11.0</a> (2025-02-22)</h2>
+
+<h3 id="features-6">Features</h3>
+
+<ul>
+  <li><strong>#1984:</strong> add quit_on_open and focus opts to various api.node.open functions (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3054">#3054</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/3281f331f7f0bef13eb00fb2d5a9d28b2f6155a2">3281f33</a>)</li>
+  <li><strong>#3037:</strong> add API node.buffer.delete, node.buffer.wipe (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3040">#3040</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/fee1da88972f5972a8296813f6c00d7598325ebd">fee1da8</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-6">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#3045:</strong> wipe scratch buffers for full name and show info popups (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3050">#3050</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/fca0b67c0b5a31727fb33addc4d9c100736a2894">fca0b67</a>)</li>
+  <li><strong>#3059:</strong> test for presence of new 0.11 API vim.hl.range (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3060">#3060</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/70825f23db61ecd900c4cfea169bffe931926a9d">70825f2</a>)</li>
+  <li>arithmetic on nil value error on first git project open (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3064">#3064</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/80523101f0ae48b7f1990e907b685a3d79776c01">8052310</a>)</li>
+  <li>stl and stlnc fillchars are hidden in window picker (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/b69914325a945ee5157f0d21047210b42af5776e">b699143</a>)</li>
+  <li>window picker: hide fillchars: stl and stlnc (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3066">#3066</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/b69914325a945ee5157f0d21047210b42af5776e">b699143</a>)</li>
+</ul>
+
+<h2 id="1100-2025-01-13"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.9.0...nvim-tree-v1.10.0">1.10.0</a> (2025-01-13)</h2>
+
+<h3 id="features-7">Features</h3>
+
+<ul>
+  <li><strong>api:</strong> add node.open.vertical_no_picker, node.open.horizontal_no_picker (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3031">#3031</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/68fc4c20f5803444277022c681785c5edd11916d">68fc4c2</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-7">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#3015:</strong> dynamic width no longer truncates on right_align icons (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3022">#3022</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/f7b76cd1a75615c8d6254fc58bedd2a7304eb7d8">f7b76cd</a>)</li>
+  <li><strong>#3018:</strong> error when focusing nvim-tree when in terminal mode (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3019">#3019</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/db8d7ac1f524fc6f808764b29fa695c51e014aa6">db8d7ac</a>)</li>
+  <li><strong>#3041:</strong> use vim.diagnostic.get for updating diagnostics (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3042">#3042</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/aae01853ddbd790d1efd6ff04ff96cf38c02c95f">aae0185</a>)</li>
+  <li>Can’t re-enter normal mode from terminal mode (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/db8d7ac1f524fc6f808764b29fa695c51e014aa6">db8d7ac</a>)</li>
+  <li>hijack directory “BufEnter”, “BufNewFile” events are nested (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3044">#3044</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/39bc63081605c1d4b974131ebecaea11e8a8595f">39bc630</a>)</li>
+  <li>view.width functions may return strings (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3020">#3020</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/6b4be1dc0cd4d5d5b8e8b56b510a75016e99746f">6b4be1d</a>)</li>
+</ul>
+
+<h2 id="190-2024-12-07"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.8.0...nvim-tree-v1.9.0">1.9.0</a> (2024-12-07)</h2>
+
+<h3 id="features-8">Features</h3>
+
+<ul>
+  <li><strong>#2948:</strong> add custom decorators, :help nvim-tree-decorators (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2996">#2996</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/7a4ff1a516fe92a5ed6b79d7ce31ea4d8f341a72">7a4ff1a</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-8">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2954:</strong> more efficient LSP updates, increase diagnostics.debounce_delay from 50ms to 500ms (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3007">#3007</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1f3ffd6af145af2a4930a61c50f763264922c3fe">1f3ffd6</a>)</li>
+  <li><strong>#2990:</strong> Do not check if buffer is buflisted in diagnostics.update() (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2998">#2998</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/28eac2801b201f301449e976d7a9e8cfde053ba3">28eac28</a>)</li>
+  <li><strong>#3009:</strong> nvim &lt; 0.10 apply view options locally (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3010">#3010</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/ca7c4c33cac2ad66ec69d45e465379716ef0cc97">ca7c4c3</a>)</li>
+  <li><strong>api:</strong> correct argument types in <code class="language-plaintext highlighter-rouge">wrap_node</code> and <code class="language-plaintext highlighter-rouge">wrap_node_or_nil</code> (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/3006">#3006</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/f7c65e11d695a084ca10b93df659bb7e68b71f9f">f7c65e1</a>)</li>
+</ul>
+
+<h2 id="180-2024-11-09"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.7.1...nvim-tree-v1.8.0">1.8.0</a> (2024-11-09)</h2>
+
+<h3 id="features-9">Features</h3>
+
+<ul>
+  <li><strong>#2819:</strong> add actions.open_file.relative_path, default enabled, following successful experiment (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2995">#2995</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/2ee1c5e17fdfbf5013af31b1410e4a5f28f4cadd">2ee1c5e</a>)</li>
+  <li><strong>#2938:</strong> add default filesystem_watchers.ignore_dirs = { “/.ccls-cache”, “/build”, “/node_modules”, “/target”, } (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2940">#2940</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/010ae0365aafd6275c478d932515d2e8e897b7bb">010ae03</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-9">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2945:</strong> stack overflow on api.git.reload or fugitive event with watchers disabled (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2949">#2949</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/5ad87620ec9d1190d15c88171a3f0122bc16b0fe">5ad8762</a>)</li>
+  <li><strong>#2947:</strong> root is never a dotfile, so that it doesn’t propagate to children (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2958">#2958</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/f5f67892996b280ae78b1b0a2d07c4fa29ae0905">f5f6789</a>)</li>
+  <li><strong>#2951:</strong> highlights incorrect following cancelled pick (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2952">#2952</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1c9553a19f70df3dcb171546a3d5e034531ef093">1c9553a</a>)</li>
+  <li><strong>#2954:</strong> resolve occasional tree flashing on diagnostics, set tree buffer options in deterministic order (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2980">#2980</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/82ab19ebf79c1839d7351f2fed213d1af13a598e">82ab19e</a>)</li>
+  <li><strong>#2961:</strong> windows: escape brackets and parentheses when opening file (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2962">#2962</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/63c7ad9037fb7334682dd0b3a177cee25c5c8a0f">63c7ad9</a>)</li>
+  <li><strong>#2969:</strong> After a rename, the node loses selection (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2974">#2974</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/14039337a563f4efd72831888f332a15585f0ea1">1403933</a>)</li>
+  <li><strong>#2972:</strong> error on :colorscheme (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2973">#2973</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/6e5a204ca659bb8f2a564df75df2739edec03cb0">6e5a204</a>)</li>
+  <li><strong>#2976:</strong> use vim.loop to preserve neovim 0.9 compatibility (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2977">#2977</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/00dff482f9a8fb806a54fd980359adc6cd45d435">00dff48</a>)</li>
+  <li><strong>#2978:</strong> grouped folder not showing closed icon (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2979">#2979</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/120ba58254835d412bbc91cffe847e9be835fadd">120ba58</a>)</li>
+  <li><strong>#2981:</strong> windows: root changed when navigating with LSP (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2982">#2982</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/c22124b37409bee6d1a0da77f4f3a1526f7a204d">c22124b</a>)</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>symlink file icons rendered when renderer.icons.show.file = false, folder.symlink* was incorrectly rendered as folder.default</td>
+          <td>open (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2983">#2983</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/2156bc08c982d3c4b4cfc2b8fd7faeff58a88e10">2156bc0</a>)</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h2 id="171-2024-09-30"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.7.0...nvim-tree-v1.7.1">1.7.1</a> (2024-09-30)</h2>
+
+<h3 id="bug-fixes-10">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2794:</strong> sshfs compatibility (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2922">#2922</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/9650e735baad0d39505f4cb4867a60f02858536a">9650e73</a>)</li>
+  <li><strong>#2928:</strong> nil explorer in parent move action (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2929">#2929</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/0429f286b350c65118d66b646775bf187936fa47">0429f28</a>)</li>
+  <li><strong>#2930:</strong> empty groups expanded on reload (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2935">#2935</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/4520c0355cc561830ee2cf90dc37a2a75abf7995">4520c03</a>)</li>
+  <li>invalid explorer on open (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2927">#2927</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/59a8a6ae5e9d3eae99d08ab655d12fd51d5d17f3">59a8a6a</a>)</li>
+</ul>
+
+<h3 id="reverts-1">Reverts</h3>
+
+<ul>
+  <li><strong>#2794:</strong> sshfs compatibility (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2920">#2920</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8405ecfbd6bb08a94ffc9c68fef211eea56e8a3b">8405ecf</a>)</li>
+</ul>
+
+<h2 id="170-2024-09-21"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.6.1...nvim-tree-v1.7.0">1.7.0</a> (2024-09-21)</h2>
+
+<h3 id="features-10">Features</h3>
+
+<ul>
+  <li><strong>#2430:</strong> use vim.ui.open as default system_open, for neovim 0.10+ (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2912">#2912</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/03f737e5744a2b3ebb4b086f7636a3399224ec0c">03f737e</a>)</li>
+  <li>help closes on &lt;Esc&gt; and api.tree.toggle_help mappings (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2909">#2909</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/b652dbd0e0489c5fbb81fbededf0d99029cd2f38">b652dbd</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-11">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2862:</strong> windows path replaces backslashes with forward slashes (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2903">#2903</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/45a93d99794fff3064141d5b3a50db98ce352697">45a93d9</a>)</li>
+  <li><strong>#2906:</strong> resource leak on populate children (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2907">#2907</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/a4dd5ad5c8f9349142291d24e0e6466995594b9a">a4dd5ad</a>)</li>
+  <li><strong>#2917:</strong> fix root copy paths: Y, ge, gy, y (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2918">#2918</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/b18ce8be8f162eee0bc37addcfe17d7d019fcec7">b18ce8b</a>)</li>
+  <li>safely close last tree window (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2913">#2913</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/bd4881660bf0ddfa6acb21259f856ba3dcb26a93">bd48816</a>)</li>
+  <li>safely close tree window with pcall and debug logging (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/bd4881660bf0ddfa6acb21259f856ba3dcb26a93">bd48816</a>)</li>
+</ul>
+
+<h2 id="161-2024-09-09"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.6.0...nvim-tree-v1.6.1">1.6.1</a> (2024-09-09)</h2>
+
+<h3 id="bug-fixes-12">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2794:</strong> sshfs compatibility (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2893">#2893</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/2d6e64dd8c45a86f312552b7a47eef2c8623a25c">2d6e64d</a>)</li>
+  <li><strong>#2868:</strong> windows: do not visit unenumerable directories such as Application Data (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2874">#2874</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/210478677cb9d672c4265deb0e9b59d58b675bd4">2104786</a>)</li>
+  <li><strong>#2878:</strong> nowrapscan prevents move from root (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2880">#2880</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/42340952af598a08ab80579d067b6da72a9e6d29">4234095</a>)</li>
+  <li><strong>#2879:</strong> remove unnecessary tree window width setting to prevent unnecessary :wincmd = (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2881">#2881</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/d43ab67d0eb4317961c5e9d15fffe908519debe0">d43ab67</a>)</li>
+</ul>
+
+<h2 id="160-2024-08-10"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.5.0...nvim-tree-v1.6.0">1.6.0</a> (2024-08-10)</h2>
+
+<h3 id="features-11">Features</h3>
+
+<ul>
+  <li><strong>#2225:</strong> add renderer.hidden_display to show a summary of hidden files below the tree (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2856">#2856</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e25eb7fa83f7614bb23d762e91d2de44fcd7103b">e25eb7f</a>)</li>
+  <li><strong>#2349:</strong> add “right_align” option for renderer.icons.*_placement (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2839">#2839</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1d629a5d3f7d83d516494c221a2cfc079f43bc47">1d629a5</a>)</li>
+  <li><strong>#2349:</strong> add “right_align” option for renderer.icons.*_placement (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2846">#2846</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/48d0e82f9434691cc50d970898142a8c084a49d6">48d0e82</a>)</li>
+  <li>add renderer.highlight_hidden, renderer.icons.show.hidden and renderer.icons.hidden_placement for dotfile icons/highlights (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2840">#2840</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/48a92907575df1dbd7242975a04e98169cb3a115">48a9290</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-13">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2859:</strong> make sure window still exists when restoring options (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2863">#2863</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/466fbed3e4b61fcc23a48fe99de7bfa264a9fee8">466fbed</a>)</li>
+</ul>
+
+<h2 id="150-2024-07-11"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.4.0...nvim-tree-v1.5.0">1.5.0</a> (2024-07-11)</h2>
+
+<h3 id="features-12">Features</h3>
+
+<ul>
+  <li><strong>#2127:</strong> add experimental.actions.open_file.relative_path to open files with a relative path rather than absolute (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2805">#2805</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/869c064721a6c2091f22c3541e8f0ff958361771">869c064</a>)</li>
+  <li><strong>#2598:</strong> add api.tree.resize (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2811">#2811</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/2ede0de67b47e89e2b4cb488ea3f58b8f5a8c90a">2ede0de</a>)</li>
+  <li><strong>#2799:</strong> <code class="language-plaintext highlighter-rouge">filesystem_watchers.ignore_dirs</code> and <code class="language-plaintext highlighter-rouge">git.disable_for_dirs</code> may be functions (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2800">#2800</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8b2c5c678be4b49dff6a2df794877000113fd77b">8b2c5c6</a>)</li>
+  <li><strong>#2799:</strong> filesystem_watchers.ignore_dirs and git.disable_for_dirs may be functions (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8b2c5c678be4b49dff6a2df794877000113fd77b">8b2c5c6</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-14">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2813:</strong> macos: enable file renaming with changed capitalization (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2814">#2814</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/abfd1d1b6772540364743531cc0331e08a0027a9">abfd1d1</a>)</li>
+  <li><strong>#2819:</strong> experimental.actions.open_file.relative_path issue following change directory (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2820">#2820</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/12a9a995a455d2c2466e47140663275365a5d2fc">12a9a99</a>)</li>
+</ul>
+
+<h2 id="140-2024-06-09"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.3.3...nvim-tree-v1.4.0">1.4.0</a> (2024-06-09)</h2>
+
+<h3 id="notice">Notice</h3>
+
+<ul>
+  <li>Neovim 0.9 is now the minimum supported version; please upgrade to neovim release version 0.9 or 0.10.</li>
+</ul>
+
+<h3 id="reverts-2">Reverts</h3>
+
+<ul>
+  <li><strong>#2781:</strong> “refactor: replace deprecated use of vim.diagnostic.is_disabled()” (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2784">#2784</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/517e4fbb9ef3c0986da7047f44b4b91a2400f93c">517e4fb</a>)</li>
+</ul>
+
+<h3 id="miscellaneous-chores">Miscellaneous Chores</h3>
+
+<ul>
+  <li>release 1.4.0 (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1cac8005df6da484c97499247754afa59fef92db">1cac800</a>)</li>
+</ul>
+
+<h2 id="133-2024-05-14"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.3.2...nvim-tree-v1.3.3">1.3.3</a> (2024-05-14)</h2>
+
+<h3 id="bug-fixes-15">Bug Fixes</h3>
+
+<ul>
+  <li>nil access exception with git integration when changing branches (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2774">#2774</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/340d3a9795e06bdd1814228de398cd510f9bfbb0">340d3a9</a>)</li>
+</ul>
+
+<h2 id="132-2024-05-12"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.3.1...nvim-tree-v1.3.2">1.3.2</a> (2024-05-12)</h2>
+
+<h3 id="bug-fixes-16">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2758:</strong> use nvim-webdevicons default file icon, not renderer.icons.glyphs.default, as per :help (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2759">#2759</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/347e1eb35264677f66a79466bb5e3d111968e12c">347e1eb</a>)</li>
+  <li><strong>#2758:</strong> use nvim-webdevicons default for default files (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/347e1eb35264677f66a79466bb5e3d111968e12c">347e1eb</a>)</li>
+  <li><strong>#925:</strong> handle newlines in file names (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2754">#2754</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/64f61e4c913047a045ff90bd188dd3b54ee443cf">64f61e4</a>)</li>
+</ul>
+
+<h2 id="131-2024-04-25"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.3.0...nvim-tree-v1.3.1">1.3.1</a> (2024-04-25)</h2>
+
+<h3 id="bug-fixes-17">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2535:</strong> TextYankPost event sends vim.v.event (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2734">#2734</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/d8d3a1590a05b2d8b5eb26e2ed1c6052b1b47a77">d8d3a15</a>)</li>
+  <li><strong>#2733:</strong> escape trash path (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2735">#2735</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/81eb8d519233c105f30dc0a278607e62b20502fd">81eb8d5</a>)</li>
+</ul>
+
+<h2 id="130-2024-03-30"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.2.0...nvim-tree-v1.3.0">1.3.0</a> (2024-03-30)</h2>
+
+<h3 id="features-13">Features</h3>
+
+<ul>
+  <li>add update_focused_file.exclude  (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2673">#2673</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e20966ae558524f8d6f93dc37f5d2a8605f893e2">e20966a</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-18">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2658:</strong> change SpellCap groups to reduce confusion: ExecFile-&gt;Question, ImageFile-&gt;Question, SpecialFile-&gt;Title, Symlink-&gt;Underlined; add all other highlight groups to :NvimTreeHiTest (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2732">#2732</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/0aca0920f44b12a8383134bcb52da9faec123608">0aca092</a>)</li>
+  <li>bookmark filter shows marked directory children (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2719">#2719</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/2d97059661c83787372c8c003e743c984ba3ac50">2d97059</a>)</li>
+</ul>
+
+<h2 id="120-2024-03-24"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.1.1...nvim-tree-v1.2.0">1.2.0</a> (2024-03-24)</h2>
+
+<h3 id="features-14">Features</h3>
+
+<ul>
+  <li>add api.tree.toggle_enable_filters (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2706">#2706</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/f7c09bd72e50e1795bd3afb9e2a2b157b4bfb3c3">f7c09bd</a>)</li>
+</ul>
+
+<h2 id="111-2024-03-15"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.1.0...nvim-tree-v1.1.1">1.1.1</a> (2024-03-15)</h2>
+
+<h3 id="bug-fixes-19">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2395:</strong> marks.bulk.move defaults to directory at cursor (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2688">#2688</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/cfea5bd0806aab41bef6014c6cf5a510910ddbdb">cfea5bd</a>)</li>
+  <li><strong>#2705:</strong> change NvimTreeWindowPicker cterm background from Cyan to more visible DarkBlue (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2708">#2708</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/1fd9c98960463d2d5d400916c0633b2df016941d">1fd9c98</a>)</li>
+  <li>bookmark filter should include parent directory (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2704">#2704</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/76b98109f62caa12b2f1dff472060b2233ea2e90">76b9810</a>)</li>
+</ul>
+
+<h2 id="110-2024-03-14"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v1.0.0...nvim-tree-v1.1.0">1.1.0</a> (2024-03-14)</h2>
+
+<h3 id="features-15">Features</h3>
+
+<ul>
+  <li><strong>#2630:</strong> file renames can now create directories (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2657">#2657</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/efafd73efa9bc8c26282aed563ba0f01c7465b06">efafd73</a>)</li>
+  <li>add api.fs.copy.basename, default mapping ge (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2698">#2698</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8f2a50f1cd0c64003042364cf317c8788eaa6c8c">8f2a50f</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-20">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2695:</strong> git toplevel guard against missing paths (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2696">#2696</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/3c4267eb5045fa86b67fe40c0c63d31efc801e77">3c4267e</a>)</li>
+  <li>searchcount exception on invalid search regex (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2693">#2693</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/041dbd18f440207ad161503a384e7c82d575db66">041dbd1</a>)</li>
+</ul>
+
+<h2 id="100-2024-02-18"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v0.100.0...nvim-tree-v1.0.0">1.0.0</a> (2024-02-18)</h2>
+
+<h3 id="features-16">Features</h3>
+
+<ul>
+  <li><strong>#2654:</strong> filters.custom may be a function (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2655">#2655</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/4a87b8b46b4a30107971871df3cb7f4c30fdd5d0">4a87b8b</a>)</li>
+</ul>
+
+<h3 id="miscellaneous-chores-1">Miscellaneous Chores</h3>
+
+<ul>
+  <li>release 1.0.0 (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2678">#2678</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/d16246a7575538f77e9246520449b99333c469f7">d16246a</a>)</li>
+</ul>
+
+<h2 id="01000-2024-02-11"><a href="https://github.com/nvim-tree/nvim-tree.lua/compare/nvim-tree-v0.99.0...nvim-tree-v0.100.0">0.100.0</a> (2024-02-11)</h2>
+
+<h3 id="features-17">Features</h3>
+
+<ul>
+  <li><strong>#1389:</strong> api: recursive node navigation for git and diagnostics (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2525">#2525</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/5d13cc8205bce4963866f73c50f6fdc18a515ffe">5d13cc8</a>)</li>
+  <li><strong>#2415:</strong> add :NvimTreeHiTest (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2664">#2664</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/b278fc25ae0fc95e4808eb5618f07fc2522fd2b3">b278fc2</a>)</li>
+  <li><strong>#2415:</strong> colour and highlight overhaul, see :help nvim-tree-highlight-overhaul (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2455">#2455</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e9c5abe073a973f54d3ca10bfe30f253569f4405">e9c5abe</a>)</li>
+  <li>add node.open.toggle_group_empty, default mapping L (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2647">#2647</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8cbb1db8e90b62fc56f379992e622e9f919792ce">8cbb1db</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-21">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2415:</strong> disambiguate highlight groups, see :help nvim-tree-highlight-overhaul (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2639">#2639</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/d9cb432d2c8d8fa9267ddbd7535d76fe4df89360">d9cb432</a>)</li>
+  <li><strong>#2415:</strong> fix NvimTreeIndentMarker highlight group: FileIcon-&gt;FolderIcon (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e9ac136a3ab996aa8e4253253521dcf2cb66b81b">e9ac136</a>)</li>
+  <li><strong>#2415:</strong> highlight help header and mappings (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2669">#2669</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/39e6fef85ac3bb29532b877aa7c9c34911c661af">39e6fef</a>)</li>
+  <li><strong>#2415:</strong> nvim 0.8 highlight overhaul support, limited to only show highest highlight precedence (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2642">#2642</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/f39f7b6fcd3865ac2146de4cb4045286308f2935">f39f7b6</a>)</li>
+  <li><strong>#2415:</strong> NvimTreeIndentMarker highlight group: FileIcon-&gt;FolderIcon (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2656">#2656</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/e9ac136a3ab996aa8e4253253521dcf2cb66b81b">e9ac136</a>)</li>
+  <li><strong>#2624:</strong> open file from docked floating window (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2627">#2627</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/f24afa2cef551122b8bd53bb2e4a7df42343ce2e">f24afa2</a>)</li>
+  <li><strong>#2632:</strong> occasional error stack when locating nvim-tree window (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2633">#2633</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/48b1d8638fa3726236ae22e0e48a74ac8ea6592a">48b1d86</a>)</li>
+  <li><strong>#2637:</strong> show buffer modified icons and highlights (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2638">#2638</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/7bdb220d0fe604a77361e92cdbc7af1b8a412126">7bdb220</a>)</li>
+  <li><strong>#2643:</strong> correctly apply linked highlight groups in tree window (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2653">#2653</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/fbee8a69a46f558d29ab84e96301425b0501c668">fbee8a6</a>)</li>
+  <li>allow highlight overrides for DEFAULT_DEFS: NvimTreeFolderIcon, NvimTreeWindowPicker (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2636">#2636</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/74525ac04760bf0d9fec2bf51474d2b05f36048e">74525ac</a>)</li>
+  <li>bad column offset when using full_name (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2629">#2629</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/75ff64e6663fc3b23c72dca32b2f838acefe7c8a">75ff64e</a>)</li>
+  <li>passing nil as window handle in view.get_winnr (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/48b1d8638fa3726236ae22e0e48a74ac8ea6592a">48b1d86</a>)</li>
+</ul>
+
+<h2 id="0990-2024-01-01">0.99.0 (2024-01-01)</h2>
+
+<h3 id="features-18">Features</h3>
+
+<ul>
+  <li><strong>#1850:</strong> add “no bookmark” filter (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2571">#2571</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/8f92e1edd399f839a23776dcc6eee4ba18030370">8f92e1e</a>)</li>
+  <li>add kind param to vim.ui.select function calls (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2602">#2602</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/dc839a72a6496ce22ebd3dd959115cf97c1b20a0">dc839a7</a>)</li>
+  <li>add option to skip gitignored files on git navigation (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2583">#2583</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/50f30bcd8c62ac4a83d133d738f268279f2c2ce2">50f30bc</a>)</li>
+</ul>
+
+<h3 id="bug-fixes-22">Bug Fixes</h3>
+
+<ul>
+  <li><strong>#2519:</strong> Diagnostics Not Updated When Tree Not Visible (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2597">#2597</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/96a783fbd606a458bcce2ef8041240a8b94510ce">96a783f</a>)</li>
+  <li><strong>#2609:</strong> help toggle (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2611">#2611</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/fac4900bd18a9fa15be3d104645d9bdef7b3dcec">fac4900</a>)</li>
+  <li>hijack_cursor on update focused file and vim search (<a href="https://github.com/nvim-tree/nvim-tree.lua/issues/2600">#2600</a>) (<a href="https://github.com/nvim-tree/nvim-tree.lua/commit/02ae52357ba4da77a4c120390791584a81d15340">02ae523</a>)</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Meeting Details With Events · A developer journey</title>
+<meta name="description" content="Meeting Details with Event Subscription">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/general/use-cases/meeting-details-with-events/">
+
+<meta property="og:title" content="Meeting Details With Events · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/general/use-cases/meeting-details-with-events/">
+<meta property="og:description" content="Meeting Details with Event Subscription">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Meeting Details With Events</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="meeting-details-with-event-subscription">Meeting Details with Event Subscription</h1>
+
+<p>Retrieve meeting details and subscribe to real-time meeting events.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>A common integration pattern: get meeting information via REST API, then receive real-time updates via webhooks when meeting events occur (started, ended, participants join/leave).</p>
+
+<p>For implementation-heavy orchestration patterns (token refresh locks, retries, queue-based webhook handling, circuit-breaker and reconciliation fallbacks), see:</p>
+<ul>
+  <li><a href="../references/automatic-skill-chaining-rest-webhooks.md">../references/automatic-skill-chaining-rest-webhooks.md</a></li>
+  <li><a href="../references/meeting-webhooks-oauth-refresh-orchestration.md">../references/meeting-webhooks-oauth-refresh-orchestration.md</a></li>
+  <li><a href="../references/distributed-meeting-fallback-architecture.md">../references/distributed-meeting-fallback-architecture.md</a></li>
+</ul>
+
+<h2 id="skills-needed">Skills Needed</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Order</th>
+      <th>Skill</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><strong>zoom-rest-api</strong></td>
+      <td>Retrieve meeting details</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>webhooks</strong></td>
+      <td>Subscribe to and receive meeting events</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="skill-chaining-flow">Skill Chaining Flow</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────────────────────────────────────┐
+│                        COMPLETE INTEGRATION FLOW                         │
+└─────────────────────────────────────────────────────────────────────────┘
+
+SETUP PHASE (One-time):
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 1. Configure Event Subscriptions (Marketplace Portal or API)            │
+│    └── Subscribe to: meeting.started, meeting.ended,                    │
+│        meeting.participant_joined, meeting.participant_left             │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+RUNTIME PHASE:
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 2. GET Meeting Details (zoom-rest-api)                                  │
+│    └── GET /meetings/{meetingId}                                        │
+│    └── Store meeting info (topic, host, settings, join_url)             │
+└─────────────────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│ 3. Receive Meeting Events (webhooks)                               │
+│    └── meeting.started → Update status, notify users                    │
+│    └── meeting.participant_joined → Track attendance                    │
+│    └── meeting.participant_left → Log departure time                    │
+│    └── meeting.ended → Finalize records, trigger post-processing        │
+└─────────────────────────────────────────────────────────────────────────┘
+</code></pre></div></div>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Zoom app with OAuth or Server-to-Server OAuth</li>
+  <li>Scopes: <code class="language-plaintext highlighter-rouge">meeting:read</code> (for REST API)</li>
+  <li>Event subscriptions configured for meeting events</li>
+  <li>HTTPS endpoint for receiving webhooks</li>
+  <li><strong>See <a href="../references/authorization-patterns.md">Authorization Patterns</a></strong> for scope validation and permission checking</li>
+</ul>
+
+<h2 id="step-1-configure-event-subscriptions">Step 1: Configure Event Subscriptions</h2>
+
+<h3 id="option-a-via-marketplace-portal-recommended-for-most-apps">Option A: Via Marketplace Portal (Recommended for most apps)</h3>
+
+<ol>
+  <li>Go to <a href="https://marketplace.zoom.us/">marketplace.zoom.us</a> → Your App</li>
+  <li>Navigate to <strong>Feature</strong> → <strong>Event Subscriptions</strong></li>
+  <li>Click <strong>Add Event Subscription</strong></li>
+  <li>Configure:
+    <ul>
+      <li><strong>Subscription name</strong>: “Meeting Events”</li>
+      <li><strong>Event notification endpoint URL</strong>: <code class="language-plaintext highlighter-rouge">https://yourapp.com/webhooks/zoom</code></li>
+    </ul>
+  </li>
+  <li>Select events:
+    <ul>
+      <li>✅ <code class="language-plaintext highlighter-rouge">meeting.started</code></li>
+      <li>✅ <code class="language-plaintext highlighter-rouge">meeting.ended</code></li>
+      <li>✅ <code class="language-plaintext highlighter-rouge">meeting.participant_joined</code></li>
+      <li>✅ <code class="language-plaintext highlighter-rouge">meeting.participant_left</code></li>
+    </ul>
+  </li>
+  <li>Save and activate</li>
+</ol>
+
+<h3 id="option-b-programmatic-setup">Option B: Programmatic Setup</h3>
+
+<p>Event subscriptions are configured at app creation time in the Marketplace portal. However, you can verify your subscription status via API:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// List webhook subscriptions for your app</span>
+<span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">https://api.zoom.us/v2/webhooks</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">accessToken</span><span class="p">}</span><span class="s2">`</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">webhooks</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Active webhooks:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">webhooks</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="step-2-retrieve-meeting-details-zoom-rest-api">Step 2: Retrieve Meeting Details (zoom-rest-api)</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">axios</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="cm">/**
+ * Get meeting details from Zoom REST API
+ * @param {string} meetingId - The meeting ID
+ * @param {string} accessToken - Valid OAuth access token
+ * @returns {Promise&lt;Object&gt;} Meeting details
+ */</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">getMeetingDetails</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">accessToken</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">axios</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span>
+      <span class="s2">`https://api.zoom.us/v2/meetings/</span><span class="p">${</span><span class="nx">meetingId</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+      <span class="p">{</span>
+        <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+          <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">accessToken</span><span class="p">}</span><span class="s2">`</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">);</span>
+
+    <span class="kd">const</span> <span class="nx">meeting</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">id</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+      <span class="na">uuid</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">uuid</span><span class="p">,</span>
+      <span class="na">topic</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">topic</span><span class="p">,</span>
+      <span class="na">type</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">type</span><span class="p">,</span>
+      <span class="na">status</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">status</span><span class="p">,</span>
+      <span class="na">start_time</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">start_time</span><span class="p">,</span>
+      <span class="na">duration</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">duration</span><span class="p">,</span>
+      <span class="na">timezone</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">timezone</span><span class="p">,</span>
+      <span class="na">host_id</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">host_id</span><span class="p">,</span>
+      <span class="na">host_email</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">host_email</span><span class="p">,</span>
+      <span class="na">join_url</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">join_url</span><span class="p">,</span>
+      <span class="na">password</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">password</span><span class="p">,</span>
+      <span class="na">settings</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">settings</span>
+    <span class="p">};</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">?.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">404</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="s2">`Meeting </span><span class="p">${</span><span class="nx">meetingId</span><span class="p">}</span><span class="s2"> not found`</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">?.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">401</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Invalid or expired access token</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">throw</span> <span class="nx">error</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage</span>
+<span class="kd">const</span> <span class="nx">meeting</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getMeetingDetails</span><span class="p">(</span><span class="dl">'</span><span class="s1">123456789</span><span class="dl">'</span><span class="p">,</span> <span class="nx">accessToken</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Meeting: </span><span class="p">${</span><span class="nx">meeting</span><span class="p">.</span><span class="nx">topic</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Join URL: </span><span class="p">${</span><span class="nx">meeting</span><span class="p">.</span><span class="nx">join_url</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Host: </span><span class="p">${</span><span class="nx">meeting</span><span class="p">.</span><span class="nx">host_email</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="step-3-handle-meeting-events-webhooks">Step 3: Handle Meeting Events (webhooks)</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">crypto</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">crypto</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nf">express</span><span class="p">();</span>
+<span class="nx">app</span><span class="p">.</span><span class="nf">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nf">json</span><span class="p">());</span>
+
+<span class="c1">// Store meeting state (use database in production)</span>
+<span class="kd">const</span> <span class="nx">meetingState</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Map</span><span class="p">();</span>
+
+<span class="cm">/**
+ * Verify Zoom webhook signature
+ */</span>
+<span class="kd">function</span> <span class="nf">verifyWebhookSignature</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">webhookSecret</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="dl">'</span><span class="s1">x-zm-signature</span><span class="dl">'</span><span class="p">];</span>
+  <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="dl">'</span><span class="s1">x-zm-request-timestamp</span><span class="dl">'</span><span class="p">];</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="s2">`v0:</span><span class="p">${</span><span class="nx">timestamp</span><span class="p">}</span><span class="s2">:</span><span class="p">${</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">)}</span><span class="s2">`</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">expectedSignature</span> <span class="o">=</span> <span class="s2">`v0=</span><span class="p">${</span><span class="nx">crypto</span>
+    <span class="p">.</span><span class="nf">createHmac</span><span class="p">(</span><span class="dl">'</span><span class="s1">sha256</span><span class="dl">'</span><span class="p">,</span> <span class="nx">webhookSecret</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nx">payload</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">digest</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">)}</span><span class="s2">`</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nx">signature</span> <span class="o">===</span> <span class="nx">expectedSignature</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * Handle URL validation challenge (required for new subscriptions)
+ */</span>
+<span class="kd">function</span> <span class="nf">handleUrlValidation</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">webhookSecret</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">hashForValidation</span> <span class="o">=</span> <span class="nx">crypto</span>
+    <span class="p">.</span><span class="nf">createHmac</span><span class="p">(</span><span class="dl">'</span><span class="s1">sha256</span><span class="dl">'</span><span class="p">,</span> <span class="nx">webhookSecret</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">plainToken</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">digest</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span>
+    <span class="na">plainToken</span><span class="p">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">plainToken</span><span class="p">,</span>
+    <span class="na">encryptedToken</span><span class="p">:</span> <span class="nx">hashForValidation</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="c1">// Webhook endpoint</span>
+<span class="nx">app</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/webhooks/zoom</span><span class="dl">'</span><span class="p">,</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">WEBHOOK_SECRET</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ZOOM_WEBHOOK_SECRET</span><span class="p">;</span>
+
+  <span class="c1">// 1. Handle URL validation challenge</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">event</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">endpoint.url_validation</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nf">handleUrlValidation</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">WEBHOOK_SECRET</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 2. Verify webhook signature</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nf">verifyWebhookSignature</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">WEBHOOK_SECRET</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Invalid webhook signature</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">401</span><span class="p">).</span><span class="nf">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">Invalid signature</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// 3. Process meeting events</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">payload</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">meetingId</span> <span class="o">=</span> <span class="nc">String</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Received event: </span><span class="p">${</span><span class="nx">event</span><span class="p">}</span><span class="s2"> for meeting </span><span class="p">${</span><span class="nx">meetingId</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">switch </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="dl">'</span><span class="s1">meeting.started</span><span class="dl">'</span><span class="p">:</span>
+        <span class="k">await</span> <span class="nf">handleMeetingStarted</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="dl">'</span><span class="s1">meeting.ended</span><span class="dl">'</span><span class="p">:</span>
+        <span class="k">await</span> <span class="nf">handleMeetingEnded</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="dl">'</span><span class="s1">meeting.participant_joined</span><span class="dl">'</span><span class="p">:</span>
+        <span class="k">await</span> <span class="nf">handleParticipantJoined</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="dl">'</span><span class="s1">meeting.participant_left</span><span class="dl">'</span><span class="p">:</span>
+        <span class="k">await</span> <span class="nf">handleParticipantLeft</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+        <span class="k">break</span><span class="p">;</span>
+      <span class="nl">default</span><span class="p">:</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Unhandled event: </span><span class="p">${</span><span class="nx">event</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">send</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="s2">`Error handling </span><span class="p">${</span><span class="nx">event</span><span class="p">}</span><span class="s2">:`</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="c1">// Return 200 to prevent Zoom from retrying</span>
+    <span class="c1">// Log error for investigation</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">send</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Event handlers</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">handleMeetingStarted</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">object</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">;</span>
+
+  <span class="c1">// Initialize meeting state</span>
+  <span class="nx">meetingState</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">topic</span><span class="p">:</span> <span class="nx">object</span><span class="p">.</span><span class="nx">topic</span><span class="p">,</span>
+    <span class="na">host_id</span><span class="p">:</span> <span class="nx">object</span><span class="p">.</span><span class="nx">host_id</span><span class="p">,</span>
+    <span class="na">start_time</span><span class="p">:</span> <span class="nx">object</span><span class="p">.</span><span class="nx">start_time</span><span class="p">,</span>
+    <span class="na">participants</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">in_progress</span><span class="dl">'</span>
+  <span class="p">});</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`✅ Meeting started: </span><span class="p">${</span><span class="nx">object</span><span class="p">.</span><span class="nx">topic</span><span class="p">}</span><span class="s2"> (ID: </span><span class="p">${</span><span class="nx">meetingId</span><span class="p">}</span><span class="s2">)`</span><span class="p">);</span>
+
+  <span class="c1">// Optional: Fetch full meeting details for additional context</span>
+  <span class="c1">// const fullDetails = await getMeetingDetails(meetingId, accessToken);</span>
+<span class="p">}</span>
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">handleMeetingEnded</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">object</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">meetingState</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">);</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ended</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">end_time</span> <span class="o">=</span> <span class="nx">object</span><span class="p">.</span><span class="nx">end_time</span><span class="p">;</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">duration</span> <span class="o">=</span> <span class="nx">object</span><span class="p">.</span><span class="nx">duration</span><span class="p">;</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`🏁 Meeting ended: </span><span class="p">${</span><span class="nx">state</span><span class="p">.</span><span class="nx">topic</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`   Duration: </span><span class="p">${</span><span class="nx">state</span><span class="p">.</span><span class="nx">duration</span><span class="p">}</span><span class="s2"> minutes`</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`   Total participants: </span><span class="p">${</span><span class="nx">state</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nx">length</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+
+    <span class="c1">// Trigger post-meeting processing</span>
+    <span class="k">await</span> <span class="nf">processMeetingRecords</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">state</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">handleParticipantJoined</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">object</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">participant</span> <span class="o">=</span> <span class="nx">object</span><span class="p">.</span><span class="nx">participant</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">meetingState</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">);</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">state</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span>
+      <span class="na">user_id</span><span class="p">:</span> <span class="nx">participant</span><span class="p">.</span><span class="nx">user_id</span><span class="p">,</span>
+      <span class="na">user_name</span><span class="p">:</span> <span class="nx">participant</span><span class="p">.</span><span class="nx">user_name</span><span class="p">,</span>
+      <span class="na">email</span><span class="p">:</span> <span class="nx">participant</span><span class="p">.</span><span class="nx">email</span><span class="p">,</span>
+      <span class="na">join_time</span><span class="p">:</span> <span class="nx">participant</span><span class="p">.</span><span class="nx">join_time</span><span class="p">,</span>
+      <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">in_meeting</span><span class="dl">'</span>
+    <span class="p">});</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`👋 </span><span class="p">${</span><span class="nx">participant</span><span class="p">.</span><span class="nx">user_name</span><span class="p">}</span><span class="s2"> joined meeting </span><span class="p">${</span><span class="nx">meetingId</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">handleParticipantLeft</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">object</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">participant</span> <span class="o">=</span> <span class="nx">object</span><span class="p">.</span><span class="nx">participant</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">meetingState</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">);</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">state</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">user_id</span> <span class="o">===</span> <span class="nx">participant</span><span class="p">.</span><span class="nx">user_id</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">p</span><span class="p">.</span><span class="nx">leave_time</span> <span class="o">=</span> <span class="nx">participant</span><span class="p">.</span><span class="nx">leave_time</span><span class="p">;</span>
+      <span class="nx">p</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">left</span><span class="dl">'</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`👋 </span><span class="p">${</span><span class="nx">participant</span><span class="p">.</span><span class="nx">user_name</span><span class="p">}</span><span class="s2"> left meeting </span><span class="p">${</span><span class="nx">meetingId</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">processMeetingRecords</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">state</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Save to database, generate reports, notify stakeholders, etc.</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Processing meeting records...</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="c1">// Example: Calculate attendance stats</span>
+  <span class="kd">const</span> <span class="nx">attendanceReport</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">meeting_id</span><span class="p">:</span> <span class="nx">meetingId</span><span class="p">,</span>
+    <span class="na">topic</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">topic</span><span class="p">,</span>
+    <span class="na">duration_minutes</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">duration</span><span class="p">,</span>
+    <span class="na">total_participants</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="na">participants</span><span class="p">:</span> <span class="nx">state</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="na">name</span><span class="p">:</span> <span class="nx">p</span><span class="p">.</span><span class="nx">user_name</span><span class="p">,</span>
+      <span class="na">email</span><span class="p">:</span> <span class="nx">p</span><span class="p">.</span><span class="nx">email</span><span class="p">,</span>
+      <span class="na">joined</span><span class="p">:</span> <span class="nx">p</span><span class="p">.</span><span class="nx">join_time</span><span class="p">,</span>
+      <span class="na">left</span><span class="p">:</span> <span class="nx">p</span><span class="p">.</span><span class="nx">leave_time</span> <span class="o">||</span> <span class="nx">state</span><span class="p">.</span><span class="nx">end_time</span>
+    <span class="p">}))</span>
+  <span class="p">};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">attendanceReport</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+
+  <span class="c1">// Clean up in-memory state</span>
+  <span class="nx">meetingState</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Webhook server running on port 3000</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="complete-integration-example">Complete Integration Example</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Complete example: Meeting Dashboard Integration
+ *
+ * Skills used:
+ * 1. zoom-rest-api - Get meeting details
+ * 2. webhooks - Real-time event updates
+ */</span>
+
+<span class="kd">const</span> <span class="nx">express</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">express</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">axios</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">axios</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">crypto</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">crypto</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nf">express</span><span class="p">();</span>
+<span class="nx">app</span><span class="p">.</span><span class="nf">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nf">json</span><span class="p">());</span>
+
+<span class="c1">// In-memory store (use Redis/database in production)</span>
+<span class="kd">const</span> <span class="nx">meetings</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Map</span><span class="p">();</span>
+
+<span class="c1">// ============================================</span>
+<span class="c1">// AUTHENTICATION HELPER</span>
+<span class="c1">// ============================================</span>
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">getAccessToken</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">credentials</span> <span class="o">=</span> <span class="nx">Buffer</span><span class="p">.</span><span class="k">from</span><span class="p">(</span>
+    <span class="s2">`</span><span class="p">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ZOOM_CLIENT_ID</span><span class="p">}</span><span class="s2">:</span><span class="p">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ZOOM_CLIENT_SECRET</span><span class="p">}</span><span class="s2">`</span>
+  <span class="p">).</span><span class="nf">toString</span><span class="p">(</span><span class="dl">'</span><span class="s1">base64</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">axios</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span>
+    <span class="s2">`https://zoom.us/oauth/token?grant_type=account_credentials&amp;account_id=</span><span class="p">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ZOOM_ACCOUNT_ID</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+    <span class="kc">null</span><span class="p">,</span>
+    <span class="p">{</span> <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="s2">`Basic </span><span class="p">${</span><span class="nx">credentials</span><span class="p">}</span><span class="s2">`</span> <span class="p">}</span> <span class="p">}</span>
+  <span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">access_token</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// ============================================</span>
+<span class="c1">// STEP 1: REST API - Get Meeting Details</span>
+<span class="c1">// ============================================</span>
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">getMeetingDetails</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getAccessToken</span><span class="p">();</span>
+
+  <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">axios</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span>
+    <span class="s2">`https://api.zoom.us/v2/meetings/</span><span class="p">${</span><span class="nx">meetingId</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+    <span class="p">{</span> <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span> <span class="p">}</span> <span class="p">}</span>
+  <span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">response</span><span class="p">.</span><span class="nx">data</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// API endpoint to fetch and track a meeting</span>
+<span class="nx">app</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/api/meetings/:meetingId</span><span class="dl">'</span><span class="p">,</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="p">{</span> <span class="nx">meetingId</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">;</span>
+
+    <span class="c1">// Get meeting details from Zoom API (zoom-rest-api skill)</span>
+    <span class="kd">const</span> <span class="nx">details</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getMeetingDetails</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">);</span>
+
+    <span class="c1">// Store for tracking (webhook events will update this)</span>
+    <span class="nx">meetings</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="p">{</span>
+      <span class="p">...</span><span class="nx">details</span><span class="p">,</span>
+      <span class="na">participants</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="na">events</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="na">tracking_status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">active</span><span class="dl">'</span>
+    <span class="p">});</span>
+
+    <span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span>
+      <span class="na">success</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">meeting</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">id</span><span class="p">:</span> <span class="nx">details</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+        <span class="na">topic</span><span class="p">:</span> <span class="nx">details</span><span class="p">.</span><span class="nx">topic</span><span class="p">,</span>
+        <span class="na">start_time</span><span class="p">:</span> <span class="nx">details</span><span class="p">.</span><span class="nx">start_time</span><span class="p">,</span>
+        <span class="na">join_url</span><span class="p">:</span> <span class="nx">details</span><span class="p">.</span><span class="nx">join_url</span><span class="p">,</span>
+        <span class="na">host_email</span><span class="p">:</span> <span class="nx">details</span><span class="p">.</span><span class="nx">host_email</span>
+      <span class="p">},</span>
+      <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Meeting tracked. Events will be received via webhook.</span><span class="dl">'</span>
+    <span class="p">});</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">?.</span><span class="nx">status</span> <span class="o">||</span> <span class="mi">500</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span>
+      <span class="na">success</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="na">error</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// ============================================</span>
+<span class="c1">// STEP 2: WEBHOOKS - Receive Meeting Events</span>
+<span class="c1">// ============================================</span>
+
+<span class="kd">function</span> <span class="nf">verifyWebhook</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="dl">'</span><span class="s1">x-zm-signature</span><span class="dl">'</span><span class="p">];</span>
+  <span class="kd">const</span> <span class="nx">timestamp</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="dl">'</span><span class="s1">x-zm-request-timestamp</span><span class="dl">'</span><span class="p">];</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="s2">`v0:</span><span class="p">${</span><span class="nx">timestamp</span><span class="p">}</span><span class="s2">:</span><span class="p">${</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">)}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">expected</span> <span class="o">=</span> <span class="s2">`v0=</span><span class="p">${</span><span class="nx">crypto</span>
+    <span class="p">.</span><span class="nf">createHmac</span><span class="p">(</span><span class="dl">'</span><span class="s1">sha256</span><span class="dl">'</span><span class="p">,</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ZOOM_WEBHOOK_SECRET</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nx">payload</span><span class="p">)</span>
+    <span class="p">.</span><span class="nf">digest</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">)}</span><span class="s2">`</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nx">signature</span> <span class="o">===</span> <span class="nx">expected</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/webhooks/zoom</span><span class="dl">'</span><span class="p">,</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// URL validation challenge</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">event</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">endpoint.url_validation</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">hash</span> <span class="o">=</span> <span class="nx">crypto</span>
+      <span class="p">.</span><span class="nf">createHmac</span><span class="p">(</span><span class="dl">'</span><span class="s1">sha256</span><span class="dl">'</span><span class="p">,</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ZOOM_WEBHOOK_SECRET</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">plainToken</span><span class="p">)</span>
+      <span class="p">.</span><span class="nf">digest</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span>
+      <span class="na">plainToken</span><span class="p">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">plainToken</span><span class="p">,</span>
+      <span class="na">encryptedToken</span><span class="p">:</span> <span class="nx">hash</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Verify signature</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nf">verifyWebhook</span><span class="p">(</span><span class="nx">req</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">401</span><span class="p">).</span><span class="nf">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">Invalid signature</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">payload</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">meetingId</span> <span class="o">=</span> <span class="nc">String</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">id</span><span class="p">);</span>
+
+  <span class="c1">// Get or create meeting record</span>
+  <span class="kd">let</span> <span class="nx">meeting</span> <span class="o">=</span> <span class="nx">meetings</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">meeting</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Meeting wasn't pre-fetched, create minimal record</span>
+    <span class="nx">meeting</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="na">id</span><span class="p">:</span> <span class="nx">meetingId</span><span class="p">,</span>
+      <span class="na">topic</span><span class="p">:</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">topic</span><span class="p">,</span>
+      <span class="na">participants</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="na">events</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="na">tracking_status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">webhook_only</span><span class="dl">'</span>
+    <span class="p">};</span>
+    <span class="nx">meetings</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">meeting</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Log event</span>
+  <span class="nx">meeting</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span>
+    <span class="na">type</span><span class="p">:</span> <span class="nx">event</span><span class="p">,</span>
+    <span class="na">timestamp</span><span class="p">:</span> <span class="k">new</span> <span class="nc">Date</span><span class="p">().</span><span class="nf">toISOString</span><span class="p">(),</span>
+    <span class="na">data</span><span class="p">:</span> <span class="nx">payload</span>
+  <span class="p">});</span>
+
+  <span class="c1">// Update meeting state based on event</span>
+  <span class="k">switch </span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="dl">'</span><span class="s1">meeting.started</span><span class="dl">'</span><span class="p">:</span>
+      <span class="nx">meeting</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">in_progress</span><span class="dl">'</span><span class="p">;</span>
+      <span class="nx">meeting</span><span class="p">.</span><span class="nx">actual_start_time</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">start_time</span><span class="p">;</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`✅ Meeting started: </span><span class="p">${</span><span class="nx">meeting</span><span class="p">.</span><span class="nx">topic</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="dl">'</span><span class="s1">meeting.ended</span><span class="dl">'</span><span class="p">:</span>
+      <span class="nx">meeting</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ended</span><span class="dl">'</span><span class="p">;</span>
+      <span class="nx">meeting</span><span class="p">.</span><span class="nx">end_time</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">end_time</span><span class="p">;</span>
+      <span class="nx">meeting</span><span class="p">.</span><span class="nx">actual_duration</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">duration</span><span class="p">;</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`🏁 Meeting ended: </span><span class="p">${</span><span class="nx">meeting</span><span class="p">.</span><span class="nx">topic</span><span class="p">}</span><span class="s2"> (</span><span class="p">${</span><span class="nx">meeting</span><span class="p">.</span><span class="nx">actual_duration</span><span class="p">}</span><span class="s2"> min)`</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="dl">'</span><span class="s1">meeting.participant_joined</span><span class="dl">'</span><span class="p">:</span>
+      <span class="nx">meeting</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span>
+        <span class="p">...</span><span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">participant</span><span class="p">,</span>
+        <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">in_meeting</span><span class="dl">'</span>
+      <span class="p">});</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`👋 </span><span class="p">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">participant</span><span class="p">.</span><span class="nx">user_name</span><span class="p">}</span><span class="s2"> joined`</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+
+    <span class="k">case</span> <span class="dl">'</span><span class="s1">meeting.participant_left</span><span class="dl">'</span><span class="p">:</span>
+      <span class="kd">const</span> <span class="nx">p</span> <span class="o">=</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span>
+        <span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">user_id</span> <span class="o">===</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">participant</span><span class="p">.</span><span class="nx">user_id</span>
+      <span class="p">);</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">left</span><span class="dl">'</span><span class="p">;</span>
+        <span class="nx">p</span><span class="p">.</span><span class="nx">leave_time</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">participant</span><span class="p">.</span><span class="nx">leave_time</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`👋 </span><span class="p">${</span><span class="nx">payload</span><span class="p">.</span><span class="nx">object</span><span class="p">.</span><span class="nx">participant</span><span class="p">.</span><span class="nx">user_name</span><span class="p">}</span><span class="s2"> left`</span><span class="p">);</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">send</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="c1">// ============================================</span>
+<span class="c1">// STEP 3: Query Meeting Status</span>
+<span class="c1">// ============================================</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/api/meetings/:meetingId/status</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">meeting</span> <span class="o">=</span> <span class="nx">meetings</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">params</span><span class="p">.</span><span class="nx">meetingId</span><span class="p">);</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">meeting</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">404</span><span class="p">).</span><span class="nf">json</span><span class="p">({</span> <span class="na">error</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Meeting not tracked</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span>
+    <span class="na">id</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+    <span class="na">topic</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">topic</span><span class="p">,</span>
+    <span class="na">status</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">status</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">scheduled</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">participants_in_meeting</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nf">filter</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">in_meeting</span><span class="dl">'</span><span class="p">).</span><span class="nx">length</span><span class="p">,</span>
+    <span class="na">total_participants</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">participants</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="na">events_count</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+    <span class="na">last_event</span><span class="p">:</span> <span class="nx">meeting</span><span class="p">.</span><span class="nx">events</span><span class="p">[</span><span class="nx">meeting</span><span class="p">.</span><span class="nx">events</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]?.</span><span class="nx">type</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// ============================================</span>
+<span class="c1">// START SERVER</span>
+<span class="c1">// ============================================</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">listen</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Server running on port 3000</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Endpoints:</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">  GET  /api/meetings/:id        - Fetch &amp; track meeting (zoom-rest-api)</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">  GET  /api/meetings/:id/status - Get meeting status</span><span class="dl">'</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">  POST /webhooks/zoom           - Webhook receiver (webhooks)</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="meeting-event-types-reference">Meeting Event Types Reference</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Event</th>
+      <th>Trigger</th>
+      <th>Key Payload Fields</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">meeting.started</code></td>
+      <td>Host starts meeting</td>
+      <td><code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">topic</code>, <code class="language-plaintext highlighter-rouge">host_id</code>, <code class="language-plaintext highlighter-rouge">start_time</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">meeting.ended</code></td>
+      <td>Meeting ends</td>
+      <td><code class="language-plaintext highlighter-rouge">id</code>, <code class="language-plaintext highlighter-rouge">end_time</code>, <code class="language-plaintext highlighter-rouge">duration</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">meeting.participant_joined</code></td>
+      <td>User joins</td>
+      <td><code class="language-plaintext highlighter-rouge">participant.user_id</code>, <code class="language-plaintext highlighter-rouge">participant.user_name</code>, <code class="language-plaintext highlighter-rouge">participant.join_time</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">meeting.participant_left</code></td>
+      <td>User leaves</td>
+      <td><code class="language-plaintext highlighter-rouge">participant.user_id</code>, <code class="language-plaintext highlighter-rouge">participant.leave_time</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">meeting.sharing_started</code></td>
+      <td>Screen share begins</td>
+      <td><code class="language-plaintext highlighter-rouge">participant</code>, <code class="language-plaintext highlighter-rouge">sharing_details</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">meeting.sharing_ended</code></td>
+      <td>Screen share ends</td>
+      <td><code class="language-plaintext highlighter-rouge">participant</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="error-handling">Error Handling</h2>
+
+<h3 id="common-errors-and-solutions">Common Errors and Solutions</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Error</th>
+      <th>Cause</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>404 on GET /meetings</td>
+      <td>Invalid meeting ID</td>
+      <td>Verify meeting ID exists</td>
+    </tr>
+    <tr>
+      <td>401 on API call</td>
+      <td>Expired token</td>
+      <td>Refresh access token</td>
+    </tr>
+    <tr>
+      <td>Invalid webhook signature</td>
+      <td>Wrong secret or modified payload</td>
+      <td>Verify WEBHOOK_SECRET matches app config</td>
+    </tr>
+    <tr>
+      <td>Missing events</td>
+      <td>Subscription not active</td>
+      <td>Check Event Subscriptions in Marketplace</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="retry-logic-for-rest-api">Retry Logic for REST API</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="kd">function</span> <span class="nf">getMeetingWithRetry</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">maxRetries</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for </span><span class="p">(</span><span class="kd">let</span> <span class="nx">attempt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">attempt</span> <span class="o">&lt;=</span> <span class="nx">maxRetries</span><span class="p">;</span> <span class="nx">attempt</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">await</span> <span class="nf">getMeetingDetails</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">?.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">429</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Rate limited - wait and retry</span>
+        <span class="kd">const</span> <span class="nx">retryAfter</span> <span class="o">=</span> <span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="dl">'</span><span class="s1">retry-after</span><span class="dl">'</span><span class="p">]</span> <span class="o">||</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">await</span> <span class="k">new</span> <span class="nc">Promise</span><span class="p">(</span><span class="nx">r</span> <span class="o">=&gt;</span> <span class="nf">setTimeout</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span> <span class="nx">retryAfter</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">));</span>
+        <span class="k">continue</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">response</span><span class="p">?.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">401</span> <span class="o">&amp;&amp;</span> <span class="nx">attempt</span> <span class="o">&lt;</span> <span class="nx">maxRetries</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Token expired - refresh and retry</span>
+        <span class="k">await</span> <span class="nf">refreshAccessToken</span><span class="p">();</span>
+        <span class="k">continue</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">throw</span> <span class="nx">error</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="best-practices">Best Practices</h2>
+
+<ol>
+  <li><strong>Fetch meeting details first</strong> - Get context before events arrive</li>
+  <li><strong>Handle events idempotently</strong> - Webhooks may be delivered multiple times</li>
+  <li><strong>Use meeting UUID for tracking</strong> - More reliable than meeting ID for recurring meetings</li>
+  <li><strong>Store events for audit</strong> - Log all events for debugging and compliance</li>
+  <li><strong>Implement retry logic</strong> - REST API calls may fail transiently</li>
+  <li><strong>Return 200 for webhooks</strong> - Even on processing errors, to prevent retries</li>
+</ol>
+
+<h2 id="related-use-cases">Related Use Cases</h2>
+
+<ul>
+  <li><strong><a href="recording-transcription.md">Recording &amp; Transcription</a></strong> - Download recordings after meeting ends</li>
+  <li><strong><a href="meeting-automation.md">Meeting Automation</a></strong> - Create and manage meetings programmatically</li>
+  <li><strong><a href="real-time-media-streams.md">Real-Time Media Streams</a></strong> - Access live audio/video during meeting</li>
+</ul>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><strong>Meetings API</strong>: https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#tag/Meetings</li>
+  <li><strong>Webhook Events</strong>: https://developers.zoom.us/docs/api/rest/reference/zoom-api/events/</li>
+  <li><strong>Event Subscriptions</strong>: https://developers.zoom.us/docs/api/rest/webhook-reference/</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

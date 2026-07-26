@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Translates Figma motion and animations into production-ready application code. Use when implementing animation/motion from a Figma design — user mentions "im...">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/figma/skills/figma-implement-motion/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/figma/skills/figma-implement-motion/SKILL/">
+<meta property="og:description" content="Translates Figma motion and animations into production-ready application code. Use when implementing animation/motion from a Figma design — user mentions "im...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Translates Figma motion and animations into production-ready application code. Use when implementing animation/motion from a Figma design — user mentions "implement this motion", "add animation from Figma", "animate this component", provides a Figma URL whose node is animated, or when `get_design_context` returns motion data or instructs you to call `get_motion_context`.</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="implement-motion">Implement Motion</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p>This skill guides translation of Figma animations and transitions into runnable code (motion.dev, CSS keyframes, or framework-specific libraries).</p>
+
+<p>Figma exposes motion through two tools:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">get_motion_context</code> — authoritative motion tool. Returns the complete animated-node inventory, precomputed code snippets (CSS <code class="language-plaintext highlighter-rouge">@keyframes</code> + motion.dev), fallback keyframe bindings when snippets are unavailable, and recursive timeline coordination hints (<code class="language-plaintext highlighter-rouge">timelineCohorts</code>). <strong>Source of truth for animation data and which node IDs animate.</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">get_design_context</code> — the design’s <strong>structure</strong>: layout, sizing, assets, styling, Code Connect hints, screenshot context, and sometimes <strong>motion placement markers</strong> on animated elements (<code class="language-plaintext highlighter-rouge">data-node-id</code>, and on split nodes <code class="language-plaintext highlighter-rouge">data-motion-keys</code> / <code class="language-plaintext highlighter-rouge">data-motion-wrapper-for</code> / <code class="language-plaintext highlighter-rouge">data-motion-transform-template</code>). It may render an animated node as a plain element (<code class="language-plaintext highlighter-rouge">div</code>, <code class="language-plaintext highlighter-rouge">p</code>, <code class="language-plaintext highlighter-rouge">span</code>, etc.) or a motion element (<code class="language-plaintext highlighter-rouge">motion.div</code>); it does not inline the animation values.</li>
+</ul>
+
+<p><strong>The two are linked by node id, and that’s the whole workflow.</strong> <code class="language-plaintext highlighter-rouge">get_motion_context</code> tells you which nodes animate and gives the keyframe values, easing, timing, and snippets. <code class="language-plaintext highlighter-rouge">get_design_context</code> tells you what those nodes look like and where they sit. For every node in <code class="language-plaintext highlighter-rouge">get_motion_context.nodes</code>, find the matching <code class="language-plaintext highlighter-rouge">data-node-id</code> in design context and merge the motion into that structure — adding or wrapping a <code class="language-plaintext highlighter-rouge">motion.{tag}</code> when the structural element is plain. When design context has reused a Figma component, the motion node may also include <code class="language-plaintext highlighter-rouge">fallbackNodeId</code>; use it only as a fallback after trying the exact <code class="language-plaintext highlighter-rouge">nodeId</code>.</p>
+
+<h2 id="skill-boundaries">Skill Boundaries</h2>
+
+<ul>
+  <li>Use this skill when the deliverable is motion code in the user’s repository.</li>
+  <li>If the user asks to create/edit animations inside Figma itself, switch to <a href="../figma-use/SKILL.md">figma-use</a> and follow that skill instead.</li>
+  <li>This skill currently covers <strong>animations</strong> as emitted by <code class="language-plaintext highlighter-rouge">get_motion_context</code> (snippets plus fallback keyframe tracks, including preset-authored motion resolved into those forms). Broader interactive variant flows may still need product-specific state handling in code.</li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Figma MCP server connected and accessible.</li>
+  <li>Node ID parsed from the Figma URL the user provides. URL format: <code class="language-plaintext highlighter-rouge">https://figma.com/design/:fileKey/:fileName?node-id=1-2</code> — extract <code class="language-plaintext highlighter-rouge">fileKey</code> (the segment after <code class="language-plaintext highlighter-rouge">/design/</code>) and <code class="language-plaintext highlighter-rouge">nodeId</code> (the value of the <code class="language-plaintext highlighter-rouge">node-id</code> query parameter, e.g. <code class="language-plaintext highlighter-rouge">42-15</code>).</li>
+  <li>Target codebase. Motion output format adapts to stack (see <a href="#framework-recommendations">Framework Recommendations</a>).</li>
+</ul>
+
+<h2 id="tool-choice">Tool Choice</h2>
+
+<p>For motion implementation, use both tools with distinct roles:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Situation</th>
+      <th>Tool</th>
+      <th>Why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Understanding static structure, assets, styles, Code Connect, or visual layout</td>
+      <td><code class="language-plaintext highlighter-rouge">get_design_context</code></td>
+      <td>Gives the component/page code reference and asset URLs you need to place animated nodes correctly.</td>
+    </tr>
+    <tr>
+      <td>Fetching animation data for any node</td>
+      <td><code class="language-plaintext highlighter-rouge">get_motion_context</code></td>
+      <td>Purpose-built for motion and the source of truth for timing, easing, snippets, and keyframes.</td>
+    </tr>
+    <tr>
+      <td>A node has motion markers (<code class="language-plaintext highlighter-rouge">data-motion-keys</code>, <code class="language-plaintext highlighter-rouge">data-motion-wrapper-for</code>)</td>
+      <td>Markers for split <em>placement</em>, <code class="language-plaintext highlighter-rouge">get_motion_context</code> for <em>values</em></td>
+      <td>Split markers tell you which tracks go on which element; the keyframes/easing/timing and animated-node inventory come from <code class="language-plaintext highlighter-rouge">get_motion_context</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><code class="language-plaintext highlighter-rouge">get_motion_context</code> accepts <code class="language-plaintext highlighter-rouge">recursive: true</code> (capped at 500 nodes) when you need descendants’ motion in one call.</p>
+
+<h2 id="required-workflow">Required Workflow</h2>
+
+<h3 id="step-1-confirm-static-design-context-is-available">Step 1: Confirm static design context is available</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>get_design_context(fileKey=":fileKey", nodeId="&lt;node-id&gt;")
+</code></pre></div></div>
+
+<p>If <code class="language-plaintext highlighter-rouge">get_design_context</code> has already been called for this node, reuse that output. If not, call it normally now.</p>
+
+<p>Use it as the <strong>structure of record</strong> — hierarchy, sizing, styling, assets, Code Connect hints, screenshot context, and any motion placement markers it happens to include (Step 3). The animated-node inventory and animation values come from <code class="language-plaintext highlighter-rouge">get_motion_context</code> (Step 2).</p>
+
+<h3 id="step-2-fetch-authoritative-motion-data">Step 2: Fetch authoritative motion data</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>get_motion_context(fileKey=":fileKey", nodeId="&lt;node-id&gt;", recursive=true)
+</code></pre></div></div>
+
+<p>Response shape (one entry per animated node):</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">codeSnippets</code> — pre-generated CSS <code class="language-plaintext highlighter-rouge">@keyframes</code> and motion.dev strings. <strong>Use these directly.</strong> Do not regenerate them from fallback track data.</li>
+  <li><code class="language-plaintext highlighter-rouge">keyframeBindings</code> — bound keyframe tracks, including preset-derived motion resolved into track data, included only as fallback data when both snippet formats are missing.</li>
+  <li><code class="language-plaintext highlighter-rouge">motionSummary</code> — one-line-per-field natural-language description of the animation. Present <strong>only when there’s no snippet</strong> (keyframe-bindings-only motion codegen couldn’t express as CSS/motion.dev). Build from it when present; ignore it whenever a snippet exists.</li>
+  <li><code class="language-plaintext highlighter-rouge">fallbackNodeId</code> — optional fallback id for matching componentized design context. If <code class="language-plaintext highlighter-rouge">nodeId</code> is an instance-qualified id such as <code class="language-plaintext highlighter-rouge">I4005:6111;30:8005</code>, D2R may render the reusable component body with the backing component id instead, such as <code class="language-plaintext highlighter-rouge">4002:3957</code>. In that case, <code class="language-plaintext highlighter-rouge">fallbackNodeId</code> is the <code class="language-plaintext highlighter-rouge">data-node-id</code> to look for if exact <code class="language-plaintext highlighter-rouge">nodeId</code> lookup fails.</li>
+</ul>
+
+<p>Recursive responses also include <code class="language-plaintext highlighter-rouge">timelineCohorts</code> — a <strong>top-level</strong> array (not per-node) of nodes sharing one timeline: <code class="language-plaintext highlighter-rouge">{ rootNodeId, durationMs, loopMode: 'once' | 'loop' | 'boomerang', memberNodeIds[] }</code>. For coordinated multi-node motion, drive all <code class="language-plaintext highlighter-rouge">memberNodeIds</code> from one shared lifecycle using <code class="language-plaintext highlighter-rouge">durationMs</code> (÷1000 for seconds) and <code class="language-plaintext highlighter-rouge">loopMode</code> — don’t infer timing from sibling order.</p>
+
+<p>Implementation details that matter for LLMs:</p>
+
+<ul>
+  <li>When a snippet exists, <code class="language-plaintext highlighter-rouge">motionSummary</code>, <code class="language-plaintext highlighter-rouge">timelineDurationMs</code>, and <code class="language-plaintext highlighter-rouge">transformOrigin</code> may be omitted to shrink the payload — the snippet already carries duration + transform-origin (motion.dev <code class="language-plaintext highlighter-rouge">duration</code> / <code class="language-plaintext highlighter-rouge">style={{ transformOrigin }}</code>, or CSS <code class="language-plaintext highlighter-rouge">animation</code> / <code class="language-plaintext highlighter-rouge">transform-origin</code>) and the cohort carries <code class="language-plaintext highlighter-rouge">durationMs</code>. A missing field never means “no animation.”</li>
+  <li>Recursive responses dedupe exact duplicate snippets. A snippet may be replaced with a comment pointing to the first node with identical motion; reuse the same component, variant, class, or constants instead of writing a second animation.</li>
+  <li>The MCP server infers CSS vs motion.dev snippets from <code class="language-plaintext highlighter-rouge">clientFrameworks</code>; if the response only contains one snippet format, adapt that format to the user’s stack rather than assuming the other format failed.</li>
+</ul>
+
+<h3 id="step-3-merge-static-and-motion-context">Step 3: Merge static and motion context</h3>
+
+<ul>
+  <li>Start from <code class="language-plaintext highlighter-rouge">get_motion_context.nodes</code>, not from visible <code class="language-plaintext highlighter-rouge">motion.*</code> tags in the static JSX. <strong>Every returned node is animated.</strong> Match each motion node back to <code class="language-plaintext highlighter-rouge">get_design_context</code> by exact <code class="language-plaintext highlighter-rouge">nodeId</code> / <code class="language-plaintext highlighter-rouge">data-node-id</code> first. If and only if there is no exact match, try <code class="language-plaintext highlighter-rouge">fallbackNodeId</code> / <code class="language-plaintext highlighter-rouge">data-node-id</code>. Fall back to node name/type and screenshot position only after both ids fail.</li>
+  <li><strong>Exact id match wins over <code class="language-plaintext highlighter-rouge">fallbackNodeId</code>.</strong> <code class="language-plaintext highlighter-rouge">fallbackNodeId</code> points at the backing component id that D2R may emit inside a reusable component. It is shared by every instance of that component. If the exact <code class="language-plaintext highlighter-rouge">nodeId</code> exists in design context, apply motion there and ignore the fallback. This is critical for root-instance animation: one instance can rotate or move differently from another instance of the same component, and applying that motion to the shared component body would animate all instances incorrectly.</li>
+  <li><strong>Apply each motion node to the matching design-context structure, keyed by <code class="language-plaintext highlighter-rouge">data-node-id</code>.</strong> The matching <code class="language-plaintext highlighter-rouge">data-node-id</code> is the structural anchor, not always the final DOM element that receives motion. Use the snippet shape and placement markers to decide whether motion goes on that exact element, a wrapper, an inner element, or an inlined SVG path. <code class="language-plaintext highlighter-rouge">get_design_context</code> may already emit <code class="language-plaintext highlighter-rouge">motion.{tag}</code> with values stripped, or it may emit a plain structural element (<code class="language-plaintext highlighter-rouge">div</code>, <code class="language-plaintext highlighter-rouge">p</code>, <code class="language-plaintext highlighter-rouge">span</code>, component root, etc.). If it is plain and the snippet targets the element itself, convert it to the appropriate <code class="language-plaintext highlighter-rouge">motion.{tag}</code> or add a motion wrapper while preserving the node’s text, children, classes/styles, attributes, and <code class="language-plaintext highlighter-rouge">data-node-id</code>. Load <a href="references/examples-and-anti-examples.md">references/examples-and-anti-examples.md</a> to see examples of this merging step.</li>
+  <li><strong>Componentized child motion usually matches by fallback.</strong> When design context extracts a Figma instance into a reusable React component, children inside that component body often have backing component ids (<code class="language-plaintext highlighter-rouge">4002:3957</code>) while motion context reports live instance ids (<code class="language-plaintext highlighter-rouge">I4005:6111;30:8005</code>). In this case, use <code class="language-plaintext highlighter-rouge">fallbackNodeId</code> to find the component-body <code class="language-plaintext highlighter-rouge">data-node-id</code>, but keep the motion scoped to the rendered instance you are implementing. If there are multiple instances and only one has different root motion, exact id matching keeps that per-instance motion separate.</li>
+  <li>Split nodes carry a <code class="language-plaintext highlighter-rouge">data-motion-keys</code> / <code class="language-plaintext highlighter-rouge">data-motion-wrapper-for</code> marker — see <em>Handling interleaved transforms</em> below.</li>
+  <li><strong>Preserve <code class="language-plaintext highlighter-rouge">display: contents</code> wrappers — unless the group itself animates.</strong> Layout-transparent group wrappers come through as <code class="language-plaintext highlighter-rouge">contents</code> (Tailwind <code class="language-plaintext highlighter-rouge">contents</code>), usually alongside a dead <code class="language-plaintext highlighter-rouge">absolute</code>/<code class="language-plaintext highlighter-rouge">inset-[…]</code> (those do nothing on a <code class="language-plaintext highlighter-rouge">contents</code> box). For a <em>static</em> group, keep <code class="language-plaintext highlighter-rouge">display: contents</code> and let the children position against the nearest real ancestor — converting the wrapper’s <code class="language-plaintext highlighter-rouge">inset</code> into a positioned box reparents the children to a smaller box, so they render too small / shifted inward. For an <em>animated</em> group (the group node itself has motion), <code class="language-plaintext highlighter-rouge">display: contents</code> can’t carry a transform — replace it with a real positioned wrapper and apply the group motion there. Load <a href="references/gotchas.md">references/gotchas.md</a> before implementing this case.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">get_motion_context</code> is the complete animated-node inventory.</strong> Some animated nodes render as plain (non-<code class="language-plaintext highlighter-rouge">motion</code>) elements — component instance roots (plain positioning <code class="language-plaintext highlighter-rouge">&lt;div&gt;</code>), text (<code class="language-plaintext highlighter-rouge">&lt;p&gt;</code>), masks — that still carry a <code class="language-plaintext highlighter-rouge">data-node-id</code>. Walk every node in the motion response and apply its motion to the element with the matching <code class="language-plaintext highlighter-rouge">data-node-id</code>, wrapping or converting as needed. If an animated node has no element at all in the output (e.g. an animated mask flattened into a static <code class="language-plaintext highlighter-rouge">mask-image</code>), don’t drop it silently — leave a <code class="language-plaintext highlighter-rouge">// TODO: &lt;nodeId&gt; motion unsupported</code> comment and call it out in your summary.</li>
+  <li>If a node appears in motion context but not in the static JSX, add the element needed to represent it — design-context code is a reference, not a complete animation inventory.</li>
+  <li>On conflict between design and motion context (timing/easing/animated values), prefer <code class="language-plaintext highlighter-rouge">get_motion_context</code>.</li>
+  <li><strong>Path-level SVG motion: inline the SVG and animate the real <code class="language-plaintext highlighter-rouge">&lt;path&gt;</code>.</strong> When <code class="language-plaintext highlighter-rouge">get_motion_context</code> targets a vector’s path (<code class="language-plaintext highlighter-rouge">PATH_TRIM</code>, <code class="language-plaintext highlighter-rouge">motion.path</code>, <code class="language-plaintext highlighter-rouge">stroke-dasharray</code>) but design context renders it as an <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code>, inline the SVG and apply the snippet to the <code class="language-plaintext highlighter-rouge">&lt;path&gt;</code>, keeping the layout wrapper. Load <a href="references/svg-and-path-motion.md">references/svg-and-path-motion.md</a> for the full how-to for this case (motion.path, <code class="language-plaintext highlighter-rouge">pathLength="1"</code>, wrapper+path layering, CSS path-trim).</li>
+</ul>
+
+<h4 id="handling-interleaved-transforms">Handling interleaved transforms</h4>
+
+<p>A node with <strong>both</strong> a static base transform and animated transforms is split across nested elements so the two compose correctly instead of fighting: an id-less <code class="language-plaintext highlighter-rouge">motion.div</code> carrying <code class="language-plaintext highlighter-rouge">data-motion-wrapper-for="&lt;nodeId&gt;"</code> (the OUTER wrapper) wraps a static-transform div (e.g. <code class="language-plaintext highlighter-rouge">rotate-45</code> + <code class="language-plaintext highlighter-rouge">hypot()</code> sizing — or the wrapper itself carries <code class="language-plaintext highlighter-rouge">data-motion-transform-template="&lt;css&gt;"</code>) which wraps the INNER node (<code class="language-plaintext highlighter-rouge">data-node-id</code>). Keep the <code class="language-plaintext highlighter-rouge">wrapper &gt; static-transform div &gt; inner</code> nesting — collapsing it breaks sizing and the base transform.</p>
+
+<ul>
+  <li><strong>Place tracks by <code class="language-plaintext highlighter-rouge">data-motion-keys</code>.</strong> The wrapper’s <code class="language-plaintext highlighter-rouge">data-motion-keys</code> (transform tracks — <code class="language-plaintext highlighter-rouge">x</code>/<code class="language-plaintext highlighter-rouge">y</code>/<code class="language-plaintext highlighter-rouge">rotate</code>/<code class="language-plaintext highlighter-rouge">scaleX</code>/<code class="language-plaintext highlighter-rouge">scaleY</code>/<code class="language-plaintext highlighter-rouge">skewX</code>) go on the OUTER wrapper; the inner element’s <code class="language-plaintext highlighter-rouge">data-motion-keys</code> go on the INNER element.</li>
+  <li><strong>Re-apply a <code class="language-plaintext highlighter-rouge">data-motion-transform-template</code>.</strong> If the wrapper carries one, set <code class="language-plaintext highlighter-rouge">transformTemplate={(_, generated) =&gt; "&lt;css&gt; " + generated}</code> so the animated transform composes on top of that static layout transform.</li>
+  <li><strong>Offset the animated transform by the static base (avoid double rotation).</strong> <code class="language-plaintext highlighter-rouge">get_motion_context</code> gives the node’s <em>absolute</em> transform, which already includes whatever static base those divs apply. A <code class="language-plaintext highlighter-rouge">rotate</code> snippet of <code class="language-plaintext highlighter-rouge">[45, 125, 125]</code> over a <code class="language-plaintext highlighter-rouge">rotate-45</code> base means the wrapper animates the <strong>offset</strong> <code class="language-plaintext highlighter-rouge">[0, 80, 80]</code> (= absolute − 45), not the absolute — else the 45° applies twice and the element sits at 90° at rest. Tracks with no static base (e.g. <code class="language-plaintext highlighter-rouge">x</code>/<code class="language-plaintext highlighter-rouge">y</code> starting at 0) pass through unchanged. See the interleaved-transform example.</li>
+  <li><strong>Keep layout transforms separate from Motion transforms.</strong> For every <code class="language-plaintext highlighter-rouge">motion.*</code> element that animates <code class="language-plaintext highlighter-rouge">rotate</code>, <code class="language-plaintext highlighter-rouge">scale</code>, or <code class="language-plaintext highlighter-rouge">skew</code>, verify it does not also rely on Tailwind layout transforms such as <code class="language-plaintext highlighter-rouge">-translate-x-1/2</code> or <code class="language-plaintext highlighter-rouge">-translate-y-1/2</code> for centering/positioning. Those utilities share the CSS <code class="language-plaintext highlighter-rouge">transform</code> property that Motion.dev writes inline, so Motion’s transform can erase the layout translate. If both are needed, split the element into a static layout wrapper carrying the centering/positioning transform and an inner <code class="language-plaintext highlighter-rouge">motion.*</code> element carrying animated rotate/scale/opacity, or encode the layout offset in Motion itself (<code class="language-plaintext highlighter-rouge">x: "-50%"</code>) and keep it present for every keyframe.</li>
+</ul>
+
+<h3 id="step-4-apply-the-motion-in-code">Step 4: Apply the motion in code</h3>
+
+<ul>
+  <li><strong>motion.dev present in snippets?</strong> Use the motion.dev code verbatim for React targets. Import from <code class="language-plaintext highlighter-rouge">motion/react</code> — unless the codebase already uses another motion library (Framer Motion, React Spring, GSAP), in which case adapt the snippet to it. Load <a href="references/framework-recommendations.md">references/framework-recommendations.md</a> when adapting to another stack or choosing a library.</li>
+  <li><strong>CSS keyframes present?</strong> Use for vanilla/non-React targets, or when the codebase has no React motion library.</li>
+  <li><strong>No snippets (keyframe-bindings-only)?</strong> Build equivalent motion.dev/CSS from <code class="language-plaintext highlighter-rouge">keyframeBindings</code> + <code class="language-plaintext highlighter-rouge">motionSummary</code>, taking loop timing from the cohort’s <code class="language-plaintext highlighter-rouge">durationMs</code> / <code class="language-plaintext highlighter-rouge">loopMode</code> and reading <code class="language-plaintext highlighter-rouge">transformOrigin</code> / duration from the structured fields. Rare — snippets are normally present, including for SwiftUI/iOS (which get the CSS format).</li>
+</ul>
+
+<h3 id="step-5-validate">Step 5: Validate</h3>
+
+<ul>
+  <li>Read the component’s existing motion imports/conventions before adding new ones. If the user already uses Framer Motion / React Spring / anime.js, adapt rather than forcing motion.dev.</li>
+  <li>Spot-check one animation runs end-to-end (reload, observe, iterate) before batching changes across many nodes.</li>
+  <li>Load <a href="references/gotchas.md">references/gotchas.md</a>, which covers specific bugs and edge cases seen in Figma motion output, and correct any such cases in the generated code.</li>
+</ul>
+
+<h2 id="critical-rules">Critical Rules</h2>
+
+<p>These are the general principles. Specific gotchas (rotation pivots, HOLD semantics, color interpolation, etc.) live in the categorized <a href="#references">references</a>. When a linked reference is mentioned in this skill text and the situation applies, load that file before continuing.</p>
+
+<ol>
+  <li><strong>Respect the tool’s output’s <em>values</em>, not its layout.</strong> Preserve the exact timing, easing, keyframe values, and <code class="language-plaintext highlighter-rouge">transformOrigin</code> from <code class="language-plaintext highlighter-rouge">codeSnippets</code> — don’t regenerate them from <code class="language-plaintext highlighter-rouge">keyframeBindings</code> or the structured fields when snippets exist (regenerating loses fidelity on custom bezier easings, spring approximations, and overshoot values). <code class="language-plaintext highlighter-rouge">transformOrigin</code> is <strong>per element</strong>: apply each scaling/rotating node’s own — including nested scalers, not just the outer wrapper — or the element pivots from the default center and grows/spins from the wrong corner (see the per-element-<code class="language-plaintext highlighter-rouge">transformOrigin</code> example). But the snippet is one node’s data, not a copy-paste template: when many nodes share it, factor it per Rule 7 instead of pasting the block N times.</li>
+  <li><strong>Match the user’s existing motion stack.</strong> Read the component’s imports and any sibling animations before adding dependencies. If the user already has Framer Motion, React Spring, anime.js, GSAP — adapt the output to their stack rather than forcing motion.dev.</li>
+  <li><strong>Honor <code class="language-plaintext highlighter-rouge">prefers-reduced-motion</code>.</strong> Any motion added must soften or disable under <code class="language-plaintext highlighter-rouge">@media (prefers-reduced-motion: reduce)</code> — typically skip the <code class="language-plaintext highlighter-rouge">animate</code> (render the initial/resting state) or cut the duration to near-zero. This is an accessibility default, not an opt-in.</li>
+  <li><strong>Validate one animation end-to-end before batching.</strong> Build, reload, and watch one full timeline loop — confirm each animated node appears at the time its keyframe track says it should. “Renders without error” is not “renders correctly.” Motion failures compound when you batch — a wrong easing on one node is easy to spot; the same bug across twenty nodes is hours of untangling.</li>
+  <li><strong>Don’t fabricate motion.</strong> If a node has no motion data in the response, leave it static. Do not borrow easing/duration defaults from elsewhere in the design, and do not auto-animate “because the rest of the component is animated.”</li>
+  <li><strong>Don’t download an asset just to <code class="language-plaintext highlighter-rouge">Read</code> it.</strong> <code class="language-plaintext highlighter-rouge">get_design_context</code> / <code class="language-plaintext highlighter-rouge">get_motion_context</code> return assets as URLs (<code class="language-plaintext highlighter-rouge">/api/mcp/asset/...</code>), often SVG. Reference the URL directly where the consumer fetches it (an <code class="language-plaintext highlighter-rouge">&lt;img src&gt;</code>, CSS <code class="language-plaintext highlighter-rouge">background-image</code>, an asset import), or <code class="language-plaintext highlighter-rouge">curl</code> one to inline its contents (e.g. inline the SVG and render via <code class="language-plaintext highlighter-rouge">NSImage(data:)</code> on SwiftUI). The important exception is path-level SVG motion: if the motion snippet targets a path inside an SVG asset, inline the SVG and animate the real path instead of leaving it behind an <code class="language-plaintext highlighter-rouge">&lt;img&gt;</code>. Don’t download an asset and feed the file to the <code class="language-plaintext highlighter-rouge">Read</code> tool: SVG isn’t a Read-able image format, so the read is rejected and wasted — and a file tool that doesn’t detect SVG-as-image can stall the loop on it.</li>
+  <li><strong>Factor out repeated motion — never copy-paste the snippet per element.</strong> Many nodes usually share the <em>same</em> animation differing only by a stagger delay, offset, or target value. Implement the shared motion <strong>once</strong> — a reusable animated component or a <code class="language-plaintext highlighter-rouge">variants</code> object parameterized by the values that vary — render from a mapped array (<code class="language-plaintext highlighter-rouge">items.map(...)</code>), and pull repeated literals (durations, easing arrays, offsets) into named constants. The animation’s <em>values</em> stay verbatim from the snippet (Rule 1); the <em>code</em> stays DRY. The same transition object pasted 15+ times (800 lines that should be 150) is a low-quality result — fidelity and maintainability are both graded.</li>
+</ol>
+
+<h2 id="framework-recommendations">Framework Recommendations</h2>
+
+<p>Rule 2 covers the general posture: prefer the user’s existing stack. When none exists, defaults:</p>
+
+<ul>
+  <li><strong>React</strong>: <a href="https://motion.dev">motion.dev</a> (the <code class="language-plaintext highlighter-rouge">motion</code> package). The tool returns motion.dev code directly — use it.</li>
+  <li><strong>Vanilla / non-React web</strong>: CSS <code class="language-plaintext highlighter-rouge">@keyframes</code> with <code class="language-plaintext highlighter-rouge">animation</code> shorthand, returned directly by the tool.</li>
+  <li><strong>SwiftUI</strong>: Native <code class="language-plaintext highlighter-rouge">.animation(...)</code> modifiers, translated from the <strong>CSS</strong> snippet (<code class="language-plaintext highlighter-rouge">get_motion_context</code> emits no SwiftUI code, but SwiftUI/iOS clients still get the CSS format; fall back to <code class="language-plaintext highlighter-rouge">keyframeBindings</code> / <code class="language-plaintext highlighter-rouge">motionSummary</code> / cohort only when snippet-less). <strong>Use only real SwiftUI APIs</strong> — no modifier takes a Figma/CSS easing directly, so load <a href="references/framework-recommendations.md#swiftui-translation">references/framework-recommendations.md</a>, map the easing to its SwiftUI equivalent, and verify rather than invent. This path is evolving; confirm with the user if unsure.</li>
+</ul>
+
+<p><strong>For established effect classes, prefer a library over hand-rolled CSS.</strong> Effects like glass/glassmorphism, confetti, particle systems, physics-based interactions, and scroll-linked motion have battle-tested library implementations that handle cross-browser quirks, accessibility, and performance far better than generated keyframes. Load <a href="references/framework-recommendations.md">references/framework-recommendations.md</a> for the full library-by-effect-class table. Surface these as recommendations, not mandates — the user decides.</p>
+
+<h2 id="examples">Examples</h2>
+
+<p>Load <a href="references/examples-and-anti-examples.md">references/examples-and-anti-examples.md</a> when you need worked examples or failure patterns. It covers the simple merge flow, plain text elements that need <code class="language-plaintext highlighter-rouge">motion.*</code> added, interleaved static+animated transforms, SVG path-level motion, and anti-examples for DOM rebuilding, node-id/position drift, and missing per-element <code class="language-plaintext highlighter-rouge">transformOrigin</code>.</p>
+
+<h2 id="references">References</h2>
+
+<p>Six deep dives, fetched on demand. General frontend concerns (performance, units, accessibility mechanics) are handled by the critical rules above — these references focus on Figma-specific signal only. If this skill names one of these files in an inline instruction, load that file before continuing with that part of the task.</p>
+
+<ul>
+  <li><a href="references/examples-and-anti-examples.md">references/examples-and-anti-examples.md</a> — worked examples and failure patterns. Load when applying the merge workflow, handling interleaved transforms, or checking whether a generated implementation has rebuilt the DOM, swapped node positions, or dropped <code class="language-plaintext highlighter-rouge">transformOrigin</code>.</li>
+  <li><a href="references/gotchas.md">references/gotchas.md</a> — Figma-specific motion bugs and their fixes. Rotation/scale origin on nested groups, HOLD easing semantics, CUSTOM_SPRING preservation, independent axis scaling ambiguity, color interpolation. Load when troubleshooting unexpected runtime behavior. <strong>Always load <a href="references/motion-lint-rules.md">references/motion-lint-rules.md</a> alongside this file</strong> — gotcha entries reference specific lint rules that must be surfaced to the user.</li>
+  <li><a href="references/svg-and-path-motion.md">references/svg-and-path-motion.md</a> — implementing motion that targets an SVG vector path (inline the asset, <code class="language-plaintext highlighter-rouge">motion.path</code>, <code class="language-plaintext highlighter-rouge">pathLength="1"</code>, wrapper+path layering, CSS path-trim). Load when a vector’s snippet targets the path, not a wrapper transform.</li>
+  <li><a href="references/framework-recommendations.md">references/framework-recommendations.md</a> — motion.dev, CSS keyframes, SwiftUI defaults, library-by-effect-class table (glass, confetti, particles, physics, scroll-linked). Load before hand-rolling an effect.</li>
+  <li><a href="references/unsupported-and-fallbacks.md">references/unsupported-and-fallbacks.md</a> — Figma motion features that don’t export cleanly today (text animations, path animations, masks/booleans, variants/transitions). Includes video/lottie fallback guidance. Load when the tool response seems incomplete. <strong>Always load <a href="references/motion-lint-rules.md">references/motion-lint-rules.md</a> alongside this file</strong> — unsupported entries reference specific lint rules that must be surfaced to the user.</li>
+  <li><a href="references/motion-lint-rules.md">references/motion-lint-rules.md</a> — Linting rules: known export limitations (errors and warnings) that must be surfaced to the user. Load when generating motion code to check whether any active limitations apply.</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

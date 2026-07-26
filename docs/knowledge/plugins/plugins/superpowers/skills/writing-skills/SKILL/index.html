@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Use when creating new skills, editing existing skills, or verifying skills work before deployment">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/superpowers/skills/writing-skills/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/superpowers/skills/writing-skills/SKILL/">
+<meta property="og:description" content="Use when creating new skills, editing existing skills, or verifying skills work before deployment">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Use when creating new skills, editing existing skills, or verifying skills work before deployment</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="writing-skills">Writing Skills</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p><strong>Writing skills IS Test-Driven Development applied to process documentation.</strong></p>
+
+<p><strong>Personal skills live in agent-specific directories (<code class="language-plaintext highlighter-rouge">~/.claude/skills</code> for Claude Code, <code class="language-plaintext highlighter-rouge">~/.agents/skills/</code> for Codex)</strong></p>
+
+<p>You write test cases (pressure scenarios with subagents), watch them fail (baseline behavior), write the skill (documentation), watch tests pass (agents comply), and refactor (close loopholes).</p>
+
+<p><strong>Core principle:</strong> If you didn’t watch an agent fail without the skill, you don’t know if the skill teaches the right thing.</p>
+
+<p><strong>REQUIRED BACKGROUND:</strong> You MUST understand superpowers:test-driven-development before using this skill. That skill defines the fundamental RED-GREEN-REFACTOR cycle. This skill adapts TDD to documentation.</p>
+
+<p><strong>Official guidance:</strong> For Anthropic’s official skill authoring best practices, see anthropic-best-practices.md. This document provides additional patterns and guidelines that complement the TDD-focused approach in this skill.</p>
+
+<h2 id="what-is-a-skill">What is a Skill?</h2>
+
+<p>A <strong>skill</strong> is a reference guide for proven techniques, patterns, or tools. Skills help future Claude instances find and apply effective approaches.</p>
+
+<p><strong>Skills are:</strong> Reusable techniques, patterns, tools, reference guides</p>
+
+<p><strong>Skills are NOT:</strong> Narratives about how you solved a problem once</p>
+
+<h2 id="tdd-mapping-for-skills">TDD Mapping for Skills</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>TDD Concept</th>
+      <th>Skill Creation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Test case</strong></td>
+      <td>Pressure scenario with subagent</td>
+    </tr>
+    <tr>
+      <td><strong>Production code</strong></td>
+      <td>Skill document (SKILL.md)</td>
+    </tr>
+    <tr>
+      <td><strong>Test fails (RED)</strong></td>
+      <td>Agent violates rule without skill (baseline)</td>
+    </tr>
+    <tr>
+      <td><strong>Test passes (GREEN)</strong></td>
+      <td>Agent complies with skill present</td>
+    </tr>
+    <tr>
+      <td><strong>Refactor</strong></td>
+      <td>Close loopholes while maintaining compliance</td>
+    </tr>
+    <tr>
+      <td><strong>Write test first</strong></td>
+      <td>Run baseline scenario BEFORE writing skill</td>
+    </tr>
+    <tr>
+      <td><strong>Watch it fail</strong></td>
+      <td>Document exact rationalizations agent uses</td>
+    </tr>
+    <tr>
+      <td><strong>Minimal code</strong></td>
+      <td>Write skill addressing those specific violations</td>
+    </tr>
+    <tr>
+      <td><strong>Watch it pass</strong></td>
+      <td>Verify agent now complies</td>
+    </tr>
+    <tr>
+      <td><strong>Refactor cycle</strong></td>
+      <td>Find new rationalizations → plug → re-verify</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The entire skill creation process follows RED-GREEN-REFACTOR.</p>
+
+<h2 id="when-to-create-a-skill">When to Create a Skill</h2>
+
+<p><strong>Create when:</strong></p>
+<ul>
+  <li>Technique wasn’t intuitively obvious to you</li>
+  <li>You’d reference this again across projects</li>
+  <li>Pattern applies broadly (not project-specific)</li>
+  <li>Others would benefit</li>
+</ul>
+
+<p><strong>Don’t create for:</strong></p>
+<ul>
+  <li>One-off solutions</li>
+  <li>Standard practices well-documented elsewhere</li>
+  <li>Project-specific conventions (put in CLAUDE.md)</li>
+  <li>Mechanical constraints (if it’s enforceable with regex/validation, automate it—save documentation for judgment calls)</li>
+</ul>
+
+<h2 id="skill-types">Skill Types</h2>
+
+<h3 id="technique">Technique</h3>
+<p>Concrete method with steps to follow (condition-based-waiting, root-cause-tracing)</p>
+
+<h3 id="pattern">Pattern</h3>
+<p>Way of thinking about problems (flatten-with-flags, test-invariants)</p>
+
+<h3 id="reference">Reference</h3>
+<p>API docs, syntax guides, tool documentation (office docs)</p>
+
+<h2 id="directory-structure">Directory Structure</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>skills/
+  skill-name/
+    SKILL.md              # Main reference (required)
+    supporting-file.*     # Only if needed
+</code></pre></div></div>
+
+<p><strong>Flat namespace</strong> - all skills in one searchable namespace</p>
+
+<p><strong>Separate files for:</strong></p>
+<ol>
+  <li><strong>Heavy reference</strong> (100+ lines) - API docs, comprehensive syntax</li>
+  <li><strong>Reusable tools</strong> - Scripts, utilities, templates</li>
+</ol>
+
+<p><strong>Keep inline:</strong></p>
+<ul>
+  <li>Principles and concepts</li>
+  <li>Code patterns (&lt; 50 lines)</li>
+  <li>Everything else</li>
+</ul>
+
+<h2 id="skillmd-structure">SKILL.md Structure</h2>
+
+<p><strong>Frontmatter (YAML):</strong></p>
+<ul>
+  <li>Two required fields: <code class="language-plaintext highlighter-rouge">name</code> and <code class="language-plaintext highlighter-rouge">description</code> (see <a href="https://agentskills.io/specification">agentskills.io/specification</a> for all supported fields)</li>
+  <li>Max 1024 characters total</li>
+  <li><code class="language-plaintext highlighter-rouge">name</code>: Use letters, numbers, and hyphens only (no parentheses, special chars)</li>
+  <li><code class="language-plaintext highlighter-rouge">description</code>: Third-person, describes ONLY when to use (NOT what it does)
+    <ul>
+      <li>Start with “Use when…” to focus on triggering conditions</li>
+      <li>Include specific symptoms, situations, and contexts</li>
+      <li><strong>NEVER summarize the skill’s process or workflow</strong> (see CSO section for why)</li>
+      <li>Keep under 500 characters if possible</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">name</span><span class="pi">:</span> <span class="s">Skill-Name-With-Hyphens</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use when [specific triggering conditions and symptoms]</span>
+<span class="nn">---</span>
+
+<span class="gh"># Skill Name</span>
+
+<span class="gu">## Overview</span>
+What is this? Core principle in 1-2 sentences.
+
+<span class="gu">## When to Use</span>
+[Small inline flowchart IF decision non-obvious]
+
+Bullet list with SYMPTOMS and use cases
+When NOT to use
+
+<span class="gu">## Core Pattern (for techniques/patterns)</span>
+Before/after code comparison
+
+<span class="gu">## Quick Reference</span>
+Table or bullets for scanning common operations
+
+<span class="gu">## Implementation</span>
+Inline code for simple patterns
+Link to file for heavy reference or reusable tools
+
+<span class="gu">## Common Mistakes</span>
+What goes wrong + fixes
+
+<span class="gu">## Real-World Impact (optional)</span>
+Concrete results
+</code></pre></div></div>
+
+<h2 id="claude-search-optimization-cso">Claude Search Optimization (CSO)</h2>
+
+<p><strong>Critical for discovery:</strong> Future Claude needs to FIND your skill</p>
+
+<h3 id="1-rich-description-field">1. Rich Description Field</h3>
+
+<p><strong>Purpose:</strong> Claude reads description to decide which skills to load for a given task. Make it answer: “Should I read this skill right now?”</p>
+
+<p><strong>Format:</strong> Start with “Use when…” to focus on triggering conditions</p>
+
+<p><strong>CRITICAL: Description = When to Use, NOT What the Skill Does</strong></p>
+
+<p>The description should ONLY describe triggering conditions. Do NOT summarize the skill’s process or workflow in the description.</p>
+
+<p><strong>Why this matters:</strong> Testing revealed that when a description summarizes the skill’s workflow, Claude may follow the description instead of reading the full skill content. A description saying “code review between tasks” caused Claude to do ONE review, even though the skill’s flowchart clearly showed TWO reviews (spec compliance then code quality).</p>
+
+<p>When the description was changed to just “Use when executing implementation plans with independent tasks” (no workflow summary), Claude correctly read the flowchart and followed the two-stage review process.</p>
+
+<p><strong>The trap:</strong> Descriptions that summarize workflow create a shortcut Claude will take. The skill body becomes documentation Claude skips.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ❌ BAD: Summarizes workflow - Claude may follow this instead of reading skill</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use when executing plans - dispatches subagent per task with code review between tasks</span>
+
+<span class="c1"># ❌ BAD: Too much process detail</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use for TDD - write test first, watch it fail, write minimal code, refactor</span>
+
+<span class="c1"># ✅ GOOD: Just triggering conditions, no workflow summary</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use when executing implementation plans with independent tasks in the current session</span>
+
+<span class="c1"># ✅ GOOD: Triggering conditions only</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use when implementing any feature or bugfix, before writing implementation code</span>
+</code></pre></div></div>
+
+<p><strong>Content:</strong></p>
+<ul>
+  <li>Use concrete triggers, symptoms, and situations that signal this skill applies</li>
+  <li>Describe the <em>problem</em> (race conditions, inconsistent behavior) not <em>language-specific symptoms</em> (setTimeout, sleep)</li>
+  <li>Keep triggers technology-agnostic unless the skill itself is technology-specific</li>
+  <li>If skill is technology-specific, make that explicit in the trigger</li>
+  <li>Write in third person (injected into system prompt)</li>
+  <li><strong>NEVER summarize the skill’s process or workflow</strong></li>
+</ul>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># ❌ BAD: Too abstract, vague, doesn't include when to use</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">For async testing</span>
+
+<span class="c1"># ❌ BAD: First person</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">I can help you with async tests when they're flaky</span>
+
+<span class="c1"># ❌ BAD: Mentions technology but skill isn't specific to it</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use when tests use setTimeout/sleep and are flaky</span>
+
+<span class="c1"># ✅ GOOD: Starts with "Use when", describes problem, no workflow</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use when tests have race conditions, timing dependencies, or pass/fail inconsistently</span>
+
+<span class="c1"># ✅ GOOD: Technology-specific skill with explicit trigger</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Use when using React Router and handling authentication redirects</span>
+</code></pre></div></div>
+
+<h3 id="2-keyword-coverage">2. Keyword Coverage</h3>
+
+<p>Use words Claude would search for:</p>
+<ul>
+  <li>Error messages: “Hook timed out”, “ENOTEMPTY”, “race condition”</li>
+  <li>Symptoms: “flaky”, “hanging”, “zombie”, “pollution”</li>
+  <li>Synonyms: “timeout/hang/freeze”, “cleanup/teardown/afterEach”</li>
+  <li>Tools: Actual commands, library names, file types</li>
+</ul>
+
+<h3 id="3-descriptive-naming">3. Descriptive Naming</h3>
+
+<p><strong>Use active voice, verb-first:</strong></p>
+<ul>
+  <li>✅ <code class="language-plaintext highlighter-rouge">creating-skills</code> not <code class="language-plaintext highlighter-rouge">skill-creation</code></li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">condition-based-waiting</code> not <code class="language-plaintext highlighter-rouge">async-test-helpers</code></li>
+</ul>
+
+<h3 id="4-token-efficiency-critical">4. Token Efficiency (Critical)</h3>
+
+<p><strong>Problem:</strong> getting-started and frequently-referenced skills load into EVERY conversation. Every token counts.</p>
+
+<p><strong>Target word counts:</strong></p>
+<ul>
+  <li>getting-started workflows: &lt;150 words each</li>
+  <li>Frequently-loaded skills: &lt;200 words total</li>
+  <li>Other skills: &lt;500 words (still be concise)</li>
+</ul>
+
+<p><strong>Techniques:</strong></p>
+
+<p><strong>Move details to tool help:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ❌ BAD: Document all flags in SKILL.md</span>
+search-conversations supports <span class="nt">--text</span>, <span class="nt">--both</span>, <span class="nt">--after</span> DATE, <span class="nt">--before</span> DATE, <span class="nt">--limit</span> N
+
+<span class="c"># ✅ GOOD: Reference --help</span>
+search-conversations supports multiple modes and filters. Run <span class="nt">--help</span> <span class="k">for </span>details.
+</code></pre></div></div>
+
+<p><strong>Use cross-references:</strong></p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># ❌ BAD: Repeat workflow details</span>
+When searching, dispatch subagent with template...
+[20 lines of repeated instructions]
+
+<span class="gh"># ✅ GOOD: Reference other skill</span>
+Always use subagents (50-100x context savings). REQUIRED: Use [other-skill-name] for workflow.
+</code></pre></div></div>
+
+<p><strong>Compress examples:</strong></p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># ❌ BAD: Verbose example (42 words)</span>
+your human partner: "How did we handle authentication errors in React Router before?"
+You: I'll search past conversations for React Router authentication patterns.
+[Dispatch subagent with search query: "React Router authentication error handling 401"]
+
+<span class="gh"># ✅ GOOD: Minimal example (20 words)</span>
+Partner: "How did we handle auth errors in React Router?"
+You: Searching...
+[Dispatch subagent → synthesis]
+</code></pre></div></div>
+
+<p><strong>Eliminate redundancy:</strong></p>
+<ul>
+  <li>Don’t repeat what’s in cross-referenced skills</li>
+  <li>Don’t explain what’s obvious from command</li>
+  <li>Don’t include multiple examples of same pattern</li>
+</ul>
+
+<p><strong>Verification:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">wc</span> <span class="nt">-w</span> skills/path/SKILL.md
+<span class="c"># getting-started workflows: aim for &lt;150 each</span>
+<span class="c"># Other frequently-loaded: aim for &lt;200 total</span>
+</code></pre></div></div>
+
+<p><strong>Name by what you DO or core insight:</strong></p>
+<ul>
+  <li>✅ <code class="language-plaintext highlighter-rouge">condition-based-waiting</code> &gt; <code class="language-plaintext highlighter-rouge">async-test-helpers</code></li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">using-skills</code> not <code class="language-plaintext highlighter-rouge">skill-usage</code></li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">flatten-with-flags</code> &gt; <code class="language-plaintext highlighter-rouge">data-structure-refactoring</code></li>
+  <li>✅ <code class="language-plaintext highlighter-rouge">root-cause-tracing</code> &gt; <code class="language-plaintext highlighter-rouge">debugging-techniques</code></li>
+</ul>
+
+<p><strong>Gerunds (-ing) work well for processes:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">creating-skills</code>, <code class="language-plaintext highlighter-rouge">testing-skills</code>, <code class="language-plaintext highlighter-rouge">debugging-with-logs</code></li>
+  <li>Active, describes the action you’re taking</li>
+</ul>
+
+<h3 id="4-cross-referencing-other-skills">4. Cross-Referencing Other Skills</h3>
+
+<p><strong>When writing documentation that references other skills:</strong></p>
+
+<p>Use skill name only, with explicit requirement markers:</p>
+<ul>
+  <li>✅ Good: <code class="language-plaintext highlighter-rouge">**REQUIRED SUB-SKILL:** Use superpowers:test-driven-development</code></li>
+  <li>✅ Good: <code class="language-plaintext highlighter-rouge">**REQUIRED BACKGROUND:** You MUST understand superpowers:systematic-debugging</code></li>
+  <li>❌ Bad: <code class="language-plaintext highlighter-rouge">See skills/testing/test-driven-development</code> (unclear if required)</li>
+  <li>❌ Bad: <code class="language-plaintext highlighter-rouge">@skills/testing/test-driven-development/SKILL.md</code> (force-loads, burns context)</li>
+</ul>
+
+<p><strong>Why no @ links:</strong> <code class="language-plaintext highlighter-rouge">@</code> syntax force-loads files immediately, consuming 200k+ context before you need them.</p>
+
+<h2 id="flowchart-usage">Flowchart Usage</h2>
+
+<div class="language-dot highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">digraph</span> <span class="nv">when_flowchart</span> <span class="p">{</span>
+    <span class="s2">"Need to show information?"</span> <span class="o">[</span><span class="n">shape</span><span class="p">=</span><span class="nv">diamond</span><span class="o">]</span><span class="p">;</span>
+    <span class="s2">"Decision where I might go wrong?"</span> <span class="o">[</span><span class="n">shape</span><span class="p">=</span><span class="nv">diamond</span><span class="o">]</span><span class="p">;</span>
+    <span class="s2">"Use markdown"</span> <span class="o">[</span><span class="n">shape</span><span class="p">=</span><span class="nv">box</span><span class="o">]</span><span class="p">;</span>
+    <span class="s2">"Small inline flowchart"</span> <span class="o">[</span><span class="n">shape</span><span class="p">=</span><span class="nv">box</span><span class="o">]</span><span class="p">;</span>
+
+    <span class="s2">"Need to show information?"</span> <span class="o">-&gt;</span> <span class="s2">"Decision where I might go wrong?"</span> <span class="o">[</span><span class="n">label</span><span class="p">=</span><span class="s2">"yes"</span><span class="o">]</span><span class="p">;</span>
+    <span class="s2">"Decision where I might go wrong?"</span> <span class="o">-&gt;</span> <span class="s2">"Small inline flowchart"</span> <span class="o">[</span><span class="n">label</span><span class="p">=</span><span class="s2">"yes"</span><span class="o">]</span><span class="p">;</span>
+    <span class="s2">"Decision where I might go wrong?"</span> <span class="o">-&gt;</span> <span class="s2">"Use markdown"</span> <span class="o">[</span><span class="n">label</span><span class="p">=</span><span class="s2">"no"</span><span class="o">]</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Use flowcharts ONLY for:</strong></p>
+<ul>
+  <li>Non-obvious decision points</li>
+  <li>Process loops where you might stop too early</li>
+  <li>“When to use A vs B” decisions</li>
+</ul>
+
+<p><strong>Never use flowcharts for:</strong></p>
+<ul>
+  <li>Reference material → Tables, lists</li>
+  <li>Code examples → Markdown blocks</li>
+  <li>Linear instructions → Numbered lists</li>
+  <li>Labels without semantic meaning (step1, helper2)</li>
+</ul>
+
+<p>See @graphviz-conventions.dot for graphviz style rules.</p>
+
+<p><strong>Visualizing for your human partner:</strong> Use <code class="language-plaintext highlighter-rouge">render-graphs.js</code> in this directory to render a skill’s flowcharts to SVG:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./render-graphs.js ../some-skill           <span class="c"># Each diagram separately</span>
+./render-graphs.js ../some-skill <span class="nt">--combine</span> <span class="c"># All diagrams in one SVG</span>
+</code></pre></div></div>
+
+<h2 id="code-examples">Code Examples</h2>
+
+<p><strong>One excellent example beats many mediocre ones</strong></p>
+
+<p>Choose most relevant language:</p>
+<ul>
+  <li>Testing techniques → TypeScript/JavaScript</li>
+  <li>System debugging → Shell/Python</li>
+  <li>Data processing → Python</li>
+</ul>
+
+<p><strong>Good example:</strong></p>
+<ul>
+  <li>Complete and runnable</li>
+  <li>Well-commented explaining WHY</li>
+  <li>From real scenario</li>
+  <li>Shows pattern clearly</li>
+  <li>Ready to adapt (not generic template)</li>
+</ul>
+
+<p><strong>Don’t:</strong></p>
+<ul>
+  <li>Implement in 5+ languages</li>
+  <li>Create fill-in-the-blank templates</li>
+  <li>Write contrived examples</li>
+</ul>
+
+<p>You’re good at porting - one great example is enough.</p>
+
+<h2 id="file-organization">File Organization</h2>
+
+<h3 id="self-contained-skill">Self-Contained Skill</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>defense-in-depth/
+  SKILL.md    # Everything inline
+</code></pre></div></div>
+<p>When: All content fits, no heavy reference needed</p>
+
+<h3 id="skill-with-reusable-tool">Skill with Reusable Tool</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>condition-based-waiting/
+  SKILL.md    # Overview + patterns
+  example.ts  # Working helpers to adapt
+</code></pre></div></div>
+<p>When: Tool is reusable code, not just narrative</p>
+
+<h3 id="skill-with-heavy-reference">Skill with Heavy Reference</h3>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pptx/
+  SKILL.md       # Overview + workflows
+  pptxgenjs.md   # 600 lines API reference
+  ooxml.md       # 500 lines XML structure
+  scripts/       # Executable tools
+</code></pre></div></div>
+<p>When: Reference material too large for inline</p>
+
+<h2 id="the-iron-law-same-as-tdd">The Iron Law (Same as TDD)</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>NO SKILL WITHOUT A FAILING TEST FIRST
+</code></pre></div></div>
+
+<p>This applies to NEW skills AND EDITS to existing skills.</p>
+
+<p>Write skill before testing? Delete it. Start over.
+Edit skill without testing? Same violation.</p>
+
+<p><strong>No exceptions:</strong></p>
+<ul>
+  <li>Not for “simple additions”</li>
+  <li>Not for “just adding a section”</li>
+  <li>Not for “documentation updates”</li>
+  <li>Don’t keep untested changes as “reference”</li>
+  <li>Don’t “adapt” while running tests</li>
+  <li>Delete means delete</li>
+</ul>
+
+<p><strong>REQUIRED BACKGROUND:</strong> The superpowers:test-driven-development skill explains why this matters. Same principles apply to documentation.</p>
+
+<h2 id="testing-all-skill-types">Testing All Skill Types</h2>
+
+<p>Different skill types need different test approaches:</p>
+
+<h3 id="discipline-enforcing-skills-rulesrequirements">Discipline-Enforcing Skills (rules/requirements)</h3>
+
+<p><strong>Examples:</strong> TDD, verification-before-completion, designing-before-coding</p>
+
+<p><strong>Test with:</strong></p>
+<ul>
+  <li>Academic questions: Do they understand the rules?</li>
+  <li>Pressure scenarios: Do they comply under stress?</li>
+  <li>Multiple pressures combined: time + sunk cost + exhaustion</li>
+  <li>Identify rationalizations and add explicit counters</li>
+</ul>
+
+<p><strong>Success criteria:</strong> Agent follows rule under maximum pressure</p>
+
+<h3 id="technique-skills-how-to-guides">Technique Skills (how-to guides)</h3>
+
+<p><strong>Examples:</strong> condition-based-waiting, root-cause-tracing, defensive-programming</p>
+
+<p><strong>Test with:</strong></p>
+<ul>
+  <li>Application scenarios: Can they apply the technique correctly?</li>
+  <li>Variation scenarios: Do they handle edge cases?</li>
+  <li>Missing information tests: Do instructions have gaps?</li>
+</ul>
+
+<p><strong>Success criteria:</strong> Agent successfully applies technique to new scenario</p>
+
+<h3 id="pattern-skills-mental-models">Pattern Skills (mental models)</h3>
+
+<p><strong>Examples:</strong> reducing-complexity, information-hiding concepts</p>
+
+<p><strong>Test with:</strong></p>
+<ul>
+  <li>Recognition scenarios: Do they recognize when pattern applies?</li>
+  <li>Application scenarios: Can they use the mental model?</li>
+  <li>Counter-examples: Do they know when NOT to apply?</li>
+</ul>
+
+<p><strong>Success criteria:</strong> Agent correctly identifies when/how to apply pattern</p>
+
+<h3 id="reference-skills-documentationapis">Reference Skills (documentation/APIs)</h3>
+
+<p><strong>Examples:</strong> API documentation, command references, library guides</p>
+
+<p><strong>Test with:</strong></p>
+<ul>
+  <li>Retrieval scenarios: Can they find the right information?</li>
+  <li>Application scenarios: Can they use what they found correctly?</li>
+  <li>Gap testing: Are common use cases covered?</li>
+</ul>
+
+<p><strong>Success criteria:</strong> Agent finds and correctly applies reference information</p>
+
+<h2 id="common-rationalizations-for-skipping-testing">Common Rationalizations for Skipping Testing</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Excuse</th>
+      <th>Reality</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>“Skill is obviously clear”</td>
+      <td>Clear to you ≠ clear to other agents. Test it.</td>
+    </tr>
+    <tr>
+      <td>“It’s just a reference”</td>
+      <td>References can have gaps, unclear sections. Test retrieval.</td>
+    </tr>
+    <tr>
+      <td>“Testing is overkill”</td>
+      <td>Untested skills have issues. Always. 15 min testing saves hours.</td>
+    </tr>
+    <tr>
+      <td>“I’ll test if problems emerge”</td>
+      <td>Problems = agents can’t use skill. Test BEFORE deploying.</td>
+    </tr>
+    <tr>
+      <td>“Too tedious to test”</td>
+      <td>Testing is less tedious than debugging bad skill in production.</td>
+    </tr>
+    <tr>
+      <td>“I’m confident it’s good”</td>
+      <td>Overconfidence guarantees issues. Test anyway.</td>
+    </tr>
+    <tr>
+      <td>“Academic review is enough”</td>
+      <td>Reading ≠ using. Test application scenarios.</td>
+    </tr>
+    <tr>
+      <td>“No time to test”</td>
+      <td>Deploying untested skill wastes more time fixing it later.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>All of these mean: Test before deploying. No exceptions.</strong></p>
+
+<h2 id="bulletproofing-skills-against-rationalization">Bulletproofing Skills Against Rationalization</h2>
+
+<p>Skills that enforce discipline (like TDD) need to resist rationalization. Agents are smart and will find loopholes when under pressure.</p>
+
+<p><strong>Psychology note:</strong> Understanding WHY persuasion techniques work helps you apply them systematically. See persuasion-principles.md for research foundation (Cialdini, 2021; Meincke et al., 2025) on authority, commitment, scarcity, social proof, and unity principles.</p>
+
+<h3 id="close-every-loophole-explicitly">Close Every Loophole Explicitly</h3>
+
+<p>Don’t just state the rule - forbid specific workarounds:</p>
+
+<Bad>
+```markdown
+Write code before test? Delete it.
+```
+</Bad>
+
+<Good>
+```markdown
+Write code before test? Delete it. Start over.
+
+**No exceptions:**
+- Don't keep it as "reference"
+- Don't "adapt" it while writing tests
+- Don't look at it
+- Delete means delete
+```
+</Good>
+
+<h3 id="address-spirit-vs-letter-arguments">Address “Spirit vs Letter” Arguments</h3>
+
+<p>Add foundational principle early:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Violating the letter of the rules is violating the spirit of the rules.**</span>
+</code></pre></div></div>
+
+<p>This cuts off entire class of “I’m following the spirit” rationalizations.</p>
+
+<h3 id="build-rationalization-table">Build Rationalization Table</h3>
+
+<p>Capture rationalizations from baseline testing (see Testing section below). Every excuse agents make goes in the table:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Excuse | Reality |
+|--------|---------|
+| "Too simple to test" | Simple code breaks. Test takes 30 seconds. |
+| "I'll test after" | Tests passing immediately prove nothing. |
+| "Tests after achieve same goals" | Tests-after = "what does this do?" Tests-first = "what should this do?" |
+</code></pre></div></div>
+
+<h3 id="create-red-flags-list">Create Red Flags List</h3>
+
+<p>Make it easy for agents to self-check when rationalizing:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Red Flags - STOP and Start Over</span>
+<span class="p">
+-</span> Code before test
+<span class="p">-</span> "I already manually tested it"
+<span class="p">-</span> "Tests after achieve the same purpose"
+<span class="p">-</span> "It's about spirit not ritual"
+<span class="p">-</span> "This is different because..."
+
+<span class="gs">**All of these mean: Delete code. Start over with TDD.**</span>
+</code></pre></div></div>
+
+<h3 id="update-cso-for-violation-symptoms">Update CSO for Violation Symptoms</h3>
+
+<p>Add to description: symptoms of when you’re ABOUT to violate the rule:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">description</span><span class="pi">:</span> <span class="s">use when implementing any feature or bugfix, before writing implementation code</span>
+</code></pre></div></div>
+
+<h2 id="red-green-refactor-for-skills">RED-GREEN-REFACTOR for Skills</h2>
+
+<p>Follow the TDD cycle:</p>
+
+<h3 id="red-write-failing-test-baseline">RED: Write Failing Test (Baseline)</h3>
+
+<p>Run pressure scenario with subagent WITHOUT the skill. Document exact behavior:</p>
+<ul>
+  <li>What choices did they make?</li>
+  <li>What rationalizations did they use (verbatim)?</li>
+  <li>Which pressures triggered violations?</li>
+</ul>
+
+<p>This is “watch the test fail” - you must see what agents naturally do before writing the skill.</p>
+
+<h3 id="green-write-minimal-skill">GREEN: Write Minimal Skill</h3>
+
+<p>Write skill that addresses those specific rationalizations. Don’t add extra content for hypothetical cases.</p>
+
+<p>Run same scenarios WITH skill. Agent should now comply.</p>
+
+<h3 id="refactor-close-loopholes">REFACTOR: Close Loopholes</h3>
+
+<p>Agent found new rationalization? Add explicit counter. Re-test until bulletproof.</p>
+
+<p><strong>Testing methodology:</strong> See @testing-skills-with-subagents.md for the complete testing methodology:</p>
+<ul>
+  <li>How to write pressure scenarios</li>
+  <li>Pressure types (time, sunk cost, authority, exhaustion)</li>
+  <li>Plugging holes systematically</li>
+  <li>Meta-testing techniques</li>
+</ul>
+
+<h2 id="anti-patterns">Anti-Patterns</h2>
+
+<h3 id="-narrative-example">❌ Narrative Example</h3>
+<p>“In session 2025-10-03, we found empty projectDir caused…”
+<strong>Why bad:</strong> Too specific, not reusable</p>
+
+<h3 id="-multi-language-dilution">❌ Multi-Language Dilution</h3>
+<p>example-js.js, example-py.py, example-go.go
+<strong>Why bad:</strong> Mediocre quality, maintenance burden</p>
+
+<h3 id="-code-in-flowcharts">❌ Code in Flowcharts</h3>
+<div class="language-dot highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">step1</span> <span class="o">[</span><span class="n">label</span><span class="p">=</span><span class="s2">"import fs"</span><span class="o">]</span><span class="p">;</span>
+<span class="nv">step2</span> <span class="o">[</span><span class="n">label</span><span class="p">=</span><span class="s2">"read file"</span><span class="o">]</span><span class="p">;</span>
+</code></pre></div></div>
+<p><strong>Why bad:</strong> Can’t copy-paste, hard to read</p>
+
+<h3 id="-generic-labels">❌ Generic Labels</h3>
+<p>helper1, helper2, step3, pattern4
+<strong>Why bad:</strong> Labels should have semantic meaning</p>
+
+<h2 id="stop-before-moving-to-next-skill">STOP: Before Moving to Next Skill</h2>
+
+<p><strong>After writing ANY skill, you MUST STOP and complete the deployment process.</strong></p>
+
+<p><strong>Do NOT:</strong></p>
+<ul>
+  <li>Create multiple skills in batch without testing each</li>
+  <li>Move to next skill before current one is verified</li>
+  <li>Skip testing because “batching is more efficient”</li>
+</ul>
+
+<p><strong>The deployment checklist below is MANDATORY for EACH skill.</strong></p>
+
+<p>Deploying untested skills = deploying untested code. It’s a violation of quality standards.</p>
+
+<h2 id="skill-creation-checklist-tdd-adapted">Skill Creation Checklist (TDD Adapted)</h2>
+
+<p><strong>IMPORTANT: Use TodoWrite to create todos for EACH checklist item below.</strong></p>
+
+<p><strong>RED Phase - Write Failing Test:</strong></p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Create pressure scenarios (3+ combined pressures for discipline skills)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Run scenarios WITHOUT skill - document baseline behavior verbatim</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Identify patterns in rationalizations/failures</li>
+</ul>
+
+<p><strong>GREEN Phase - Write Minimal Skill:</strong></p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Name uses only letters, numbers, hyphens (no parentheses/special chars)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />YAML frontmatter with required <code class="language-plaintext highlighter-rouge">name</code> and <code class="language-plaintext highlighter-rouge">description</code> fields (max 1024 chars; see <a href="https://agentskills.io/specification">spec</a>)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Description starts with “Use when…” and includes specific triggers/symptoms</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Description written in third person</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Keywords throughout for search (errors, symptoms, tools)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Clear overview with core principle</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Address specific baseline failures identified in RED</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Code inline OR link to separate file</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />One excellent example (not multi-language)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Run scenarios WITH skill - verify agents now comply</li>
+</ul>
+
+<p><strong>REFACTOR Phase - Close Loopholes:</strong></p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Identify NEW rationalizations from testing</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Add explicit counters (if discipline skill)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Build rationalization table from all test iterations</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Create red flags list</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Re-test until bulletproof</li>
+</ul>
+
+<p><strong>Quality Checks:</strong></p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Small flowchart only if decision non-obvious</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Quick reference table</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Common mistakes section</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />No narrative storytelling</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Supporting files only for tools or heavy reference</li>
+</ul>
+
+<p><strong>Deployment:</strong></p>
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Commit skill to git and push to your fork (if configured)</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Consider contributing back via PR (if broadly useful)</li>
+</ul>
+
+<h2 id="discovery-workflow">Discovery Workflow</h2>
+
+<p>How future Claude finds your skill:</p>
+
+<ol>
+  <li><strong>Encounters problem</strong> (“tests are flaky”)</li>
+  <li><strong>Finds SKILL</strong> (description matches)</li>
+  <li><strong>Scans overview</strong> (is this relevant?)</li>
+  <li><strong>Reads patterns</strong> (quick reference table)</li>
+  <li><strong>Loads example</strong> (only when implementing)</li>
+</ol>
+
+<p><strong>Optimize for this flow</strong> - put searchable terms early and often.</p>
+
+<h2 id="the-bottom-line">The Bottom Line</h2>
+
+<p><strong>Creating skills IS TDD for process documentation.</strong></p>
+
+<p>Same Iron Law: No skill without failing test first.
+Same cycle: RED (baseline) → GREEN (write skill) → REFACTOR (close loopholes).
+Same benefits: Better quality, fewer surprises, bulletproof results.</p>
+
+<p>If you follow TDD for code, follow it for skills. It’s the same discipline applied to documentation.</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

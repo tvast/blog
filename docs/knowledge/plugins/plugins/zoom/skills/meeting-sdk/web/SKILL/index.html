@@ -1,0 +1,2681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Zoom Meeting SDK for Web - Embed Zoom meeting capabilities into web applications. Two integration options: Client View (full-page, familiar Zoom UI) and Comp...">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/meeting-sdk/web/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/meeting-sdk/web/SKILL/">
+<meta property="og:description" content="Zoom Meeting SDK for Web - Embed Zoom meeting capabilities into web applications. Two integration options: Client View (full-page, familiar Zoom UI) and Comp...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Zoom Meeting SDK for Web - Embed Zoom meeting capabilities into web applications. Two integration
+options: Client View (full-page, familiar Zoom UI) and Component View (embeddable, Promise-based API).
+Includes SharedArrayBuffer setup for HD video, gallery view, and virtual backgrounds.
+</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="zoom-meeting-sdk-web">Zoom Meeting SDK (Web)</h1>
+
+<p>Embed Zoom meeting capabilities into web applications with two integration options: <strong>Client View</strong> (full-page) or <strong>Component View</strong> (embeddable).</p>
+
+<h2 id="how-to-implement-a-custom-video-user-interface-for-a-zoom-meeting-in-a-web-app">How to Implement a Custom Video User Interface for a Zoom Meeting in a Web App</h2>
+
+<p>Use <strong>Meeting SDK Web Component View</strong>.</p>
+
+<p>Do not use Video SDK for this question unless the user is explicitly building a non-meeting session
+product.</p>
+
+<p>Minimal architecture:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Browser page
+  -&gt; fetch Meeting SDK signature from backend
+  -&gt; ZoomMtgEmbedded.createClient()
+  -&gt; client.init({ zoomAppRoot })
+  -&gt; client.join({ signature, sdkKey, meetingNumber, userName, password })
+  -&gt; apply layout/style/customize options around the embedded meeting container
+</code></pre></div></div>
+
+<p>Minimal implementation:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">ZoomMtgEmbedded</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@zoom/meetingsdk/embedded</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">ZoomMtgEmbedded</span><span class="p">.</span><span class="nf">createClient</span><span class="p">();</span>
+
+<span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">startEmbeddedMeeting</span><span class="p">(</span><span class="nx">meetingNumber</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">userName</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">password</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">sigRes</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">/api/signature</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span> <span class="nx">meetingNumber</span><span class="p">,</span> <span class="na">role</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}),</span>
+  <span class="p">});</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">sigRes</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="s2">`signature_fetch_failed:</span><span class="p">${</span><span class="nx">sigRes</span><span class="p">.</span><span class="nx">status</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">signature</span><span class="p">,</span> <span class="nx">sdkKey</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">sigRes</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+
+  <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+    <span class="na">zoomAppRoot</span><span class="p">:</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">meetingSDKElement</span><span class="dl">'</span><span class="p">)</span><span class="o">!</span><span class="p">,</span>
+    <span class="na">language</span><span class="p">:</span> <span class="dl">'</span><span class="s1">en-US</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">patchJsMedia</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">leaveOnPageUnload</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="na">customize</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">video</span><span class="p">:</span> <span class="p">{</span> <span class="na">isResizable</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">popper</span><span class="p">:</span> <span class="p">{</span> <span class="na">disableDraggable</span><span class="p">:</span> <span class="kc">false</span> <span class="p">}</span> <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">});</span>
+
+  <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+    <span class="nx">signature</span><span class="p">,</span>
+    <span class="nx">sdkKey</span><span class="p">,</span>
+    <span class="nx">meetingNumber</span><span class="p">,</span>
+    <span class="nx">userName</span><span class="p">,</span>
+    <span class="nx">password</span><span class="p">,</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Common failure points:</p>
+<ul>
+  <li>wrong route: Video SDK instead of Meeting SDK Component View</li>
+  <li>missing backend signature endpoint</li>
+  <li>wrong password field (<code class="language-plaintext highlighter-rouge">password</code> here, not <code class="language-plaintext highlighter-rouge">passWord</code>)</li>
+  <li>missing OBF/ZAK requirements for meetings outside the app account</li>
+  <li>missing SharedArrayBuffer headers when higher-end meeting features are expected</li>
+</ul>
+
+<h2 id="hard-routing-rule">Hard Routing Rule</h2>
+
+<p>If the user wants a <strong>custom video user interface for a Zoom meeting in a web app</strong>, route to
+<strong>Component View</strong>, not Video SDK.</p>
+
+<ul>
+  <li><strong>Meeting SDK Component View</strong> = custom UI for a real Zoom meeting</li>
+  <li><strong>Video SDK Web</strong> = custom UI for a non-meeting video session product</li>
+</ul>
+
+<p>For the direct custom-meeting-UI path, start with
+<a href="component-view/SKILL.md">component-view/SKILL.md</a>.</p>
+
+<h2 id="new-to-web-sdk-start-here">New to Web SDK? Start Here!</h2>
+
+<p><strong>The fastest way to master the SDK:</strong></p>
+
+<ol>
+  <li><strong>Choose Your View</strong> - <a href="#client-view-vs-component-view">Client View vs Component View</a> - Understand the key architectural differences</li>
+  <li><strong>Quick Start</strong> - <a href="#quick-start-client-view">Client View</a> or <a href="#quick-start-component-view">Component View</a> - Get a working meeting in minutes</li>
+  <li><strong>SharedArrayBuffer</strong> - <a href="concepts/sharedarraybuffer.md">concepts/sharedarraybuffer.md</a> - Required for HD video, gallery view, virtual backgrounds</li>
+  <li><strong>Optional preflight diagnostics</strong> - <a href="../../probe-sdk/SKILL.md">../../probe-sdk/SKILL.md</a> - Validate browser/device/network before join</li>
+</ol>
+
+<p><strong>Building a Custom Integration?</strong></p>
+<ul>
+  <li>Component View gives you Promise-based API and embeddable UI</li>
+  <li>Client View gives you the familiar full-page Zoom experience</li>
+  <li>For a custom meeting UI, prefer <strong>Component View</strong> first</li>
+  <li>Cross-product routing example: <a href="../../general/use-cases/custom-meeting-ui-web.md">../../general/use-cases/custom-meeting-ui-web.md</a></li>
+  <li><a href="concepts/browser-support.md">Browser Support</a> - Feature matrix by browser</li>
+  <li>Exact deep-dive path: <a href="component-view/SKILL.md">component-view/SKILL.md</a></li>
+</ul>
+
+<p><strong>Having issues?</strong></p>
+<ul>
+  <li>Join errors → Check signature generation and password spelling (<code class="language-plaintext highlighter-rouge">passWord</code> vs <code class="language-plaintext highlighter-rouge">password</code>)</li>
+  <li>HD video not working → Enable SharedArrayBuffer headers</li>
+  <li>Complete navigation → <a href="SKILL.md">SKILL.md</a></li>
+</ul>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Zoom app with Meeting SDK credentials from <a href="https://marketplace.zoom.us/">Marketplace</a></li>
+  <li>SDK Key (Client ID) and Secret</li>
+  <li>Modern browser (Chrome, Firefox, Safari, Edge)</li>
+  <li>Backend auth endpoint for signature generation</li>
+</ul>
+
+<blockquote>
+  <p><strong>Need help with authentication?</strong> See the <strong><a href="../../oauth/SKILL.md">zoom-oauth</a></strong> skill for JWT/signature generation.</p>
+
+  <p><strong>Want pre-join diagnostics?</strong> Chain <strong><a href="../../probe-sdk/SKILL.md">probe-sdk</a></strong> before <code class="language-plaintext highlighter-rouge">init()</code>/<code class="language-plaintext highlighter-rouge">join()</code> to gate low-readiness environments.</p>
+</blockquote>
+
+<h2 id="optional-preflight-gate-probe-sdk">Optional Preflight Gate (Probe SDK)</h2>
+
+<p>For unstable first-join environments, run Probe SDK checks before calling <code class="language-plaintext highlighter-rouge">ZoomMtg.init()</code> or <code class="language-plaintext highlighter-rouge">client.join()</code>:</p>
+
+<ol>
+  <li>Run Probe permissions/device/network diagnostics.</li>
+  <li>Apply readiness policy (<code class="language-plaintext highlighter-rouge">allow</code>, <code class="language-plaintext highlighter-rouge">warn</code>, <code class="language-plaintext highlighter-rouge">block</code>).</li>
+  <li>Continue to Meeting SDK join only for <code class="language-plaintext highlighter-rouge">allow</code>/approved <code class="language-plaintext highlighter-rouge">warn</code>.</li>
+</ol>
+
+<p>See <a href="../../probe-sdk/SKILL.md">../../probe-sdk/SKILL.md</a> and <a href="../../general/use-cases/probe-sdk-preflight-readiness-gate.md">../../general/use-cases/probe-sdk-preflight-readiness-gate.md</a>.</p>
+
+<h2 id="client-view-vs-component-view">Client View vs Component View</h2>
+
+<p><strong>CRITICAL DIFFERENCE</strong>: These are two completely different APIs with different patterns!</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Client View</th>
+      <th>Component View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Object</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ZoomMtg</code> (global singleton)</td>
+      <td><code class="language-plaintext highlighter-rouge">ZoomMtgEmbedded.createClient()</code> (instance)</td>
+    </tr>
+    <tr>
+      <td><strong>API Style</strong></td>
+      <td>Callbacks</td>
+      <td>Promises</td>
+    </tr>
+    <tr>
+      <td><strong>UI</strong></td>
+      <td>Full-page takeover</td>
+      <td>Embeddable in any container</td>
+    </tr>
+    <tr>
+      <td><strong>Password param</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">passWord</code> (capital W)</td>
+      <td><code class="language-plaintext highlighter-rouge">password</code> (lowercase)</td>
+    </tr>
+    <tr>
+      <td><strong>Events</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">inMeetingServiceListener()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">on()</code>/<code class="language-plaintext highlighter-rouge">off()</code></td>
+    </tr>
+    <tr>
+      <td><strong>Import (npm)</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">import { ZoomMtg } from '@zoom/meetingsdk'</code></td>
+      <td><code class="language-plaintext highlighter-rouge">import ZoomMtgEmbedded from '@zoom/meetingsdk/embedded'</code></td>
+    </tr>
+    <tr>
+      <td><strong>CDN</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">zoom-meeting-{VERSION}.min.js</code></td>
+      <td><code class="language-plaintext highlighter-rouge">zoom-meeting-embedded-{VERSION}.min.js</code></td>
+    </tr>
+    <tr>
+      <td><strong>Best For</strong></td>
+      <td>Quick integration, standard Zoom UI</td>
+      <td>Custom layouts, React/Vue apps</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="when-to-use-which">When to Use Which</h3>
+
+<p><strong>Use Client View when:</strong></p>
+<ul>
+  <li>You want the familiar Zoom meeting interface</li>
+  <li>Quick integration is priority over customization</li>
+  <li>Full-page meeting experience is acceptable</li>
+</ul>
+
+<p><strong>Use Component View when:</strong></p>
+<ul>
+  <li>You need to embed meetings in a specific area of your page</li>
+  <li>Building React/Vue/Angular applications</li>
+  <li>You want Promise-based async/await syntax</li>
+  <li>Custom positioning and resizing is required</li>
+</ul>
+
+<h2 id="installation">Installation</h2>
+
+<h3 id="npm-recommended">NPM (Recommended)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @zoom/meetingsdk <span class="nt">--save</span>
+</code></pre></div></div>
+
+<h3 id="cdn">CDN</h3>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Dependencies (required for both views) --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://source.zoom.us/{VERSION}/lib/vendor/react.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://source.zoom.us/{VERSION}/lib/vendor/react-dom.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://source.zoom.us/{VERSION}/lib/vendor/redux.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://source.zoom.us/{VERSION}/lib/vendor/redux-thunk.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://source.zoom.us/{VERSION}/lib/vendor/lodash.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- Client View --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://source.zoom.us/zoom-meeting-{VERSION}.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+
+<span class="c">&lt;!-- OR Component View --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://source.zoom.us/zoom-meeting-embedded-{VERSION}.min.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>Replace <code class="language-plaintext highlighter-rouge">{VERSION}</code> with the <a href="https://www.npmjs.com/package/@zoom/meetingsdk">latest version</a> (e.g., <code class="language-plaintext highlighter-rouge">3.11.0</code>).</p>
+
+<h2 id="quick-start-client-view">Quick Start (Client View)</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">ZoomMtg</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@zoom/meetingsdk</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// Step 1: Check browser compatibility</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">System requirements:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">checkSystemRequirements</span><span class="p">());</span>
+
+<span class="c1">// Step 2: Preload WebAssembly for faster initialization</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">preLoadWasm</span><span class="p">();</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">prepareWebSDK</span><span class="p">();</span>
+
+<span class="c1">// Step 3: Load language files (MUST complete before init)</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="dl">'</span><span class="s1">en-US</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nf">onLoad</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+  <span class="c1">// Step 4: Initialize SDK</span>
+  <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+    <span class="na">leaveUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://yoursite.com/meeting-ended</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">disableCORP</span><span class="p">:</span> <span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">crossOriginIsolated</span><span class="p">,</span> <span class="c1">// Auto-detect SharedArrayBuffer</span>
+    <span class="na">patchJsMedia</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>           <span class="c1">// Auto-apply media dependency fixes</span>
+    <span class="na">leaveOnPageUnload</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>      <span class="c1">// Clean up when page unloads</span>
+    <span class="na">externalLinkPage</span><span class="p">:</span> <span class="dl">'</span><span class="s1">./external.html</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// Page for external links</span>
+    <span class="na">success</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+
+      <span class="c1">// Step 5: Join meeting (note: passWord with capital W!)</span>
+      <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+        <span class="na">signature</span><span class="p">:</span> <span class="nx">signature</span><span class="p">,</span>       <span class="c1">// From your auth endpoint</span>
+        <span class="na">meetingNumber</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1234567890</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">userName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">User Name</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">passWord</span><span class="p">:</span> <span class="dl">'</span><span class="s1">meeting-password</span><span class="dl">'</span><span class="p">,</span> <span class="c1">// Capital W!</span>
+        <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Joined meeting:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">res</span><span class="p">);</span>
+
+          <span class="c1">// Post-join: Get meeting info</span>
+          <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">getAttendeeslist</span><span class="p">({});</span>
+          <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">getCurrentUser</span><span class="p">({</span>
+            <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Current user:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">res</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">currentUser</span><span class="p">)</span>
+          <span class="p">});</span>
+        <span class="p">},</span>
+        <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Join error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+        <span class="p">}</span>
+      <span class="p">});</span>
+    <span class="p">},</span>
+    <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Init error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="quick-start-component-view">Quick Start (Component View)</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">ZoomMtgEmbedded</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@zoom/meetingsdk/embedded</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// Create client instance (do this ONCE, not on every render!)</span>
+<span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">ZoomMtgEmbedded</span><span class="p">.</span><span class="nf">createClient</span><span class="p">();</span>
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">startMeeting</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// Initialize with container element</span>
+    <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+      <span class="na">zoomAppRoot</span><span class="p">:</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">meetingSDKElement</span><span class="dl">'</span><span class="p">),</span>
+      <span class="na">language</span><span class="p">:</span> <span class="dl">'</span><span class="s1">en-US</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">debug</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                  <span class="c1">// Enable debug logging</span>
+      <span class="na">patchJsMedia</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>           <span class="c1">// Auto-apply media fixes</span>
+      <span class="na">leaveOnPageUnload</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>      <span class="c1">// Clean up on page unload</span>
+    <span class="p">});</span>
+
+    <span class="c1">// Join meeting (note: password lowercase!)</span>
+    <span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+      <span class="na">signature</span><span class="p">:</span> <span class="nx">signature</span><span class="p">,</span>          <span class="c1">// From your auth endpoint</span>
+      <span class="na">sdkKey</span><span class="p">:</span> <span class="nx">SDK_KEY</span><span class="p">,</span>
+      <span class="na">meetingNumber</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1234567890</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">userName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">User Name</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">password</span><span class="p">:</span> <span class="dl">'</span><span class="s1">meeting-password</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// Lowercase!</span>
+    <span class="p">});</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Joined successfully!</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Failed to join:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="authentication-endpoint-required">Authentication Endpoint (Required)</h2>
+
+<p>Both views require a JWT signature from a backend server. <strong>Never expose your SDK Secret in frontend code!</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Clone Zoom's official auth endpoint</span>
+git clone https://github.com/zoom/meetingsdk-auth-endpoint-sample <span class="nt">--depth</span> 1
+<span class="nb">cd </span>meetingsdk-auth-endpoint-sample
+<span class="nb">cp</span> .env.example .env
+<span class="c"># Edit .env with your SDK Key and Secret</span>
+npm <span class="nb">install</span> <span class="o">&amp;&amp;</span> npm run start
+</code></pre></div></div>
+
+<h3 id="signature-generation">Signature Generation</h3>
+
+<p>The signature encodes:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">sdkKey</code> (or <code class="language-plaintext highlighter-rouge">clientId</code> for newer apps)</li>
+  <li><code class="language-plaintext highlighter-rouge">meetingNumber</code></li>
+  <li><code class="language-plaintext highlighter-rouge">role</code> (0 = participant, 1 = host)</li>
+  <li><code class="language-plaintext highlighter-rouge">iat</code> (issued at timestamp)</li>
+  <li><code class="language-plaintext highlighter-rouge">exp</code> (expiration timestamp)</li>
+  <li><code class="language-plaintext highlighter-rouge">tokenExp</code> (token expiration)</li>
+</ul>
+
+<blockquote>
+  <p><strong>IMPORTANT (March 2026)</strong>: Apps joining meetings outside their account will require an App Privilege Token (OBF) or ZAK token. See <a href="#authorization-requirements-2026-update">Authorization Requirements</a>.</p>
+</blockquote>
+
+<h2 id="core-workflow">Core Workflow</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Get Signature │───►│   init()        │───►│   join()        │
+│   (from backend)│    │   (SDK setup)   │    │   (enter mtg)   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                              │                       │
+                              ▼                       ▼
+                       success/error            success/error
+                        callback                 callback
+                     (or Promise resolve)    (or Promise resolve)
+</code></pre></div></div>
+
+<h2 id="client-view-api-reference">Client View API Reference</h2>
+
+<h3 id="zoommtginit---key-options">ZoomMtg.init() - Key Options</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+  <span class="c1">// Required</span>
+  <span class="na">leaveUrl</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>              <span class="c1">// URL to redirect after leaving</span>
+
+  <span class="c1">// Display Options</span>
+  <span class="na">showMeetingHeader</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>    <span class="c1">// Show meeting number/topic (default: true)</span>
+  <span class="na">disableInvite</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>        <span class="c1">// Hide invite button (default: false)</span>
+  <span class="na">disableRecord</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>        <span class="c1">// Hide record button (default: false)</span>
+  <span class="na">disableJoinAudio</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>     <span class="c1">// Hide join audio option (default: false)</span>
+  <span class="na">disablePreview</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>       <span class="c1">// Skip A/V preview (default: false)</span>
+
+  <span class="c1">// HD Video (requires SharedArrayBuffer)</span>
+  <span class="na">enableHD</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>             <span class="c1">// Enable 720p (default: true for &gt;=2.8.0)</span>
+  <span class="na">enableFullHD</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>         <span class="c1">// Enable 1080p for webinars (default: false)</span>
+
+  <span class="c1">// View Options</span>
+  <span class="na">defaultView</span><span class="p">:</span> <span class="dl">'</span><span class="s1">gallery</span><span class="dl">'</span> <span class="o">|</span> <span class="dl">'</span><span class="s1">speaker</span><span class="dl">'</span> <span class="o">|</span> <span class="dl">'</span><span class="s1">multiSpeaker</span><span class="dl">'</span><span class="p">,</span>
+
+  <span class="c1">// Feature Toggles</span>
+  <span class="na">isSupportChat</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>        <span class="c1">// Enable chat (default: true)</span>
+  <span class="na">isSupportCC</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>          <span class="c1">// Enable closed captions (default: true)</span>
+  <span class="na">isSupportBreakout</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>    <span class="c1">// Enable breakout rooms (default: true)</span>
+  <span class="na">isSupportPolling</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>     <span class="c1">// Enable polling (default: true)</span>
+  <span class="na">isSupportQA</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>          <span class="c1">// Enable Q&amp;A for webinars (default: true)</span>
+
+  <span class="c1">// Cross-Origin</span>
+  <span class="na">disableCORP</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>          <span class="c1">// For dev without COOP/COEP headers</span>
+
+  <span class="c1">// Callbacks</span>
+  <span class="na">success</span><span class="p">:</span> <span class="nb">Function</span><span class="p">,</span>
+  <span class="na">error</span><span class="p">:</span> <span class="nb">Function</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="zoommtgjoin---key-options">ZoomMtg.join() - Key Options</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+  <span class="c1">// Required</span>
+  <span class="na">signature</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>             <span class="c1">// JWT signature from backend</span>
+  <span class="na">meetingNumber</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span><span class="p">,</span>
+  <span class="na">userName</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+
+  <span class="c1">// Authentication</span>
+  <span class="na">passWord</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>              <span class="c1">// Meeting password (capital W!)</span>
+  <span class="na">zak</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>                   <span class="c1">// Host's ZAK token (required to start)</span>
+  <span class="na">tk</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>                    <span class="c1">// Registration token (if required)</span>
+  <span class="na">obfToken</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>              <span class="c1">// App Privilege Token (for 2026 requirement)</span>
+
+  <span class="c1">// Optional</span>
+  <span class="na">userEmail</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>             <span class="c1">// Required for webinars</span>
+  <span class="na">customerKey</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>           <span class="c1">// Custom identifier (max 36 chars)</span>
+
+  <span class="c1">// Callbacks</span>
+  <span class="na">success</span><span class="p">:</span> <span class="nb">Function</span><span class="p">,</span>
+  <span class="na">error</span><span class="p">:</span> <span class="nb">Function</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="event-listeners-client-view">Event Listeners (Client View)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// User events</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onUserJoin</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">User joined:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onUserLeave</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">User left:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+  <span class="c1">// data.reasonCode values:</span>
+  <span class="c1">// 0: OTHER</span>
+  <span class="c1">// 1: HOST_ENDED_MEETING</span>
+  <span class="c1">// 2: SELF_LEAVE_FROM_IN_MEETING</span>
+  <span class="c1">// 3: SELF_LEAVE_FROM_WAITING_ROOM</span>
+  <span class="c1">// 4: SELF_LEAVE_FROM_WAITING_FOR_HOST_START</span>
+  <span class="c1">// 5: MEETING_TRANSFER</span>
+  <span class="c1">// 6: KICK_OUT_FROM_MEETING</span>
+  <span class="c1">// 7: KICK_OUT_FROM_WAITING_ROOM</span>
+  <span class="c1">// 8: LEAVE_FROM_DISCLAIMER</span>
+<span class="p">});</span>
+
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onUserUpdate</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">User updated:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Meeting status</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onMeetingStatus</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// status: 1=connecting, 2=connected, 3=disconnected, 4=reconnecting</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Meeting status:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Waiting room</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onUserIsInWaitingRoom</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">User in waiting room:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Active speaker detection</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onActiveSpeaker</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// [{userId: number, userName: string}]</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Active speaker:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Network quality monitoring</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onNetworkQualityChange</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// {level: 0-5, userId, type: 'uplink'}</span>
+  <span class="c1">// 0-1 = bad, 2 = normal, 3-5 = good</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">level</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">warn</span><span class="p">(</span><span class="dl">'</span><span class="s1">Poor network quality</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Join performance metrics</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onJoinSpeed</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Join speed metrics:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+  <span class="c1">// Useful for performance monitoring dashboards</span>
+<span class="p">});</span>
+
+<span class="c1">// Chat</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onReceiveChatMsg</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Chat message:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Recording</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onRecordingChange</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Recording status:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Screen sharing</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onShareContentChange</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Share content changed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Transcription (requires "save closed captions" enabled)</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onReceiveTranscriptionMsg</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Transcription:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Breakout room status</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">inMeetingServiceListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">onRoomStatusChange</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// status: 2=InProgress, 3=Closing, 4=Closed</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Breakout room status:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="common-methods-client-view">Common Methods (Client View)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Get current user info</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">getCurrentUser</span><span class="p">({</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">currentUser</span><span class="p">)</span>
+<span class="p">});</span>
+
+<span class="c1">// Get all attendees</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">getAttendeeslist</span><span class="p">({});</span>
+
+<span class="c1">// Audio/Video control</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">mute</span><span class="p">({</span> <span class="nx">userId</span><span class="p">,</span> <span class="na">mute</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">muteAll</span><span class="p">({</span> <span class="na">muteAll</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+
+<span class="c1">// Chat</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">sendChat</span><span class="p">({</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Hello!</span><span class="dl">'</span><span class="p">,</span> <span class="na">userId</span><span class="p">:</span> <span class="mi">0</span> <span class="p">});</span> <span class="c1">// 0 = everyone</span>
+
+<span class="c1">// Leave/End</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">leaveMeeting</span><span class="p">({});</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">endMeeting</span><span class="p">({});</span>
+
+<span class="c1">// Host controls</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">makeHost</span><span class="p">({</span> <span class="nx">userId</span> <span class="p">});</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">makeCoHost</span><span class="p">({</span> <span class="nx">oderId</span> <span class="p">});</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">expel</span><span class="p">({</span> <span class="nx">userId</span> <span class="p">});</span>  <span class="c1">// Remove participant</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">putOnHold</span><span class="p">({</span> <span class="nx">oderId</span><span class="p">,</span> <span class="na">bHold</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+
+<span class="c1">// Breakout rooms</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">createBreakoutRoom</span><span class="p">({</span> <span class="na">rooms</span><span class="p">:</span> <span class="p">[...]</span> <span class="p">});</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">openBreakoutRooms</span><span class="p">({});</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">closeBreakoutRooms</span><span class="p">({});</span>
+
+<span class="c1">// Virtual background</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">setVirtualBackground</span><span class="p">({</span> <span class="na">imageUrl</span><span class="p">:</span> <span class="dl">'</span><span class="s1">...</span><span class="dl">'</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="component-view-api-reference">Component View API Reference</h2>
+
+<h3 id="clientinit---key-options">client.init() - Key Options</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+  <span class="c1">// Required</span>
+  <span class="na">zoomAppRoot</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>      <span class="c1">// Container element</span>
+
+  <span class="c1">// Display</span>
+  <span class="na">language</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>              <span class="c1">// e.g., 'en-US'</span>
+  <span class="na">debug</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>                <span class="c1">// Enable debug logging (default: false)</span>
+
+  <span class="c1">// Media</span>
+  <span class="na">patchJsMedia</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>         <span class="c1">// Auto-apply media fixes (default: false)</span>
+  <span class="na">leaveOnPageUnload</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>    <span class="c1">// Clean up on page unload (default: false)</span>
+
+  <span class="c1">// Video</span>
+  <span class="na">enableHD</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>             <span class="c1">// Enable 720p</span>
+  <span class="na">enableFullHD</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>         <span class="c1">// Enable 1080p</span>
+
+  <span class="c1">// Customization</span>
+  <span class="na">customize</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">video</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">isResizable</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">,</span>
+      <span class="na">viewSizes</span><span class="p">:</span> <span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="p">{</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span> <span class="p">}</span> <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">meetingInfo</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">topic</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">host</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">mn</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">pwd</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">telPwd</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">invite</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">participant</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">dc</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">enctype</span><span class="dl">'</span><span class="p">],</span>
+    <span class="na">toolbar</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">buttons</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">text</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Custom Button</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">className</span><span class="p">:</span> <span class="dl">'</span><span class="s1">custom-btn</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">onClick</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Custom button clicked</span><span class="dl">'</span><span class="p">);</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+
+  <span class="c1">// For ZFG</span>
+  <span class="na">webEndpoint</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="na">assetPath</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>             <span class="c1">// Custom path for AV libraries (self-hosting)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="clientjoin---key-options">client.join() - Key Options</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+  <span class="c1">// Required</span>
+  <span class="na">signature</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="na">sdkKey</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+  <span class="na">meetingNumber</span><span class="p">:</span> <span class="nx">string</span> <span class="o">|</span> <span class="nx">number</span><span class="p">,</span>
+  <span class="na">userName</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+
+  <span class="c1">// Authentication</span>
+  <span class="na">password</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>              <span class="c1">// Lowercase! (different from Client View)</span>
+  <span class="na">zak</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>                   <span class="c1">// Host's ZAK token</span>
+  <span class="na">tk</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>                    <span class="c1">// Registration token</span>
+
+  <span class="c1">// Optional</span>
+  <span class="na">userEmail</span><span class="p">:</span> <span class="nx">string</span><span class="p">,</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="event-listeners-component-view">Event Listeners (Component View)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Connection state</span>
+<span class="nx">client</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">connection-change</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// payload.state: 'Connecting', 'Connected', 'Reconnecting', 'Closed'</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Connection:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">state</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// User events</span>
+<span class="nx">client</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">user-added</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Users added:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">user-removed</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Users removed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">client</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">user-updated</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Users updated:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Active speaker</span>
+<span class="nx">client</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">active-speaker</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Active speaker:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Video state</span>
+<span class="nx">client</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">video-active-change</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Video active:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">payload</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// Unsubscribe</span>
+<span class="nx">client</span><span class="p">.</span><span class="nf">off</span><span class="p">(</span><span class="dl">'</span><span class="s1">connection-change</span><span class="dl">'</span><span class="p">,</span> <span class="nx">handler</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="common-methods-component-view">Common Methods (Component View)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Get current user</span>
+<span class="kd">const</span> <span class="nx">currentUser</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nf">getCurrentUser</span><span class="p">();</span>
+
+<span class="c1">// Get all participants</span>
+<span class="kd">const</span> <span class="nx">participants</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nf">getParticipantsList</span><span class="p">();</span>
+
+<span class="c1">// Audio control</span>
+<span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">mute</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+<span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">muteAudio</span><span class="p">(</span><span class="nx">userId</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="c1">// Video control</span>
+<span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">muteVideo</span><span class="p">(</span><span class="nx">userId</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="c1">// Leave</span>
+<span class="nx">client</span><span class="p">.</span><span class="nf">leaveMeeting</span><span class="p">();</span>
+
+<span class="c1">// End (host only)</span>
+<span class="nx">client</span><span class="p">.</span><span class="nf">endMeeting</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h2 id="sharedarraybuffer-critical-for-hd">SharedArrayBuffer (CRITICAL for HD)</h2>
+
+<p>SharedArrayBuffer enables advanced features:</p>
+<ul>
+  <li>720p/1080p video</li>
+  <li>Gallery view</li>
+  <li>Virtual backgrounds</li>
+  <li>Background noise suppression</li>
+</ul>
+
+<h3 id="enable-with-http-headers">Enable with HTTP Headers</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Embedder-Policy: require-corp
+</code></pre></div></div>
+
+<h3 id="verify-in-browser">Verify in Browser</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if </span><span class="p">(</span><span class="k">typeof</span> <span class="nx">SharedArrayBuffer</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">SharedArrayBuffer enabled!</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">warn</span><span class="p">(</span><span class="dl">'</span><span class="s1">HD features will be limited</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Or check cross-origin isolation</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Cross-origin isolated:</span><span class="dl">'</span><span class="p">,</span> <span class="nb">window</span><span class="p">.</span><span class="nx">crossOriginIsolated</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="platform-specific-setup">Platform-Specific Setup</h3>
+
+<p>See <a href="concepts/sharedarraybuffer.md">concepts/sharedarraybuffer.md</a> for:</p>
+<ul>
+  <li>Vercel, Netlify, AWS CloudFront configuration</li>
+  <li>nginx/Apache configuration</li>
+  <li>Service worker fallback for GitHub Pages</li>
+</ul>
+
+<h3 id="development-setup-two-server-pattern">Development Setup (Two-Server Pattern)</h3>
+
+<p>The official samples use a <strong>two-server pattern</strong> for development because COOP/COEP headers can break navigation:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Server 1: Main app (port 9999) - NO isolation headers</span>
+<span class="c1">// Serves index.html, navigation works normally</span>
+
+<span class="c1">// Server 2: Meeting page (port 9998) - WITH isolation headers</span>
+<span class="c1">// Serves meeting.html with SharedArrayBuffer support</span>
+
+<span class="c1">// Main server proxies to meeting server</span>
+<span class="nx">proxy</span><span class="p">:</span> <span class="p">[{</span>
+  <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/meeting.html</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">target</span><span class="p">:</span> <span class="dl">'</span><span class="s1">http://YOUR_MEETING_SERVER_HOST:9998/</span><span class="dl">'</span>
+<span class="p">}]</span>
+</code></pre></div></div>
+
+<p><strong>Vite config with headers:</strong></p>
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// vite.config.ts</span>
+<span class="k">export</span> <span class="k">default</span> <span class="nf">defineConfig</span><span class="p">({</span>
+  <span class="na">server</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+      <span class="dl">'</span><span class="s1">Cross-Origin-Embedder-Policy</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">require-corp</span><span class="dl">'</span><span class="p">,</span>
+      <span class="dl">'</span><span class="s1">Cross-Origin-Opener-Policy</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">same-origin</span><span class="dl">'</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="common-issues--solutions">Common Issues &amp; Solutions</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Issue</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Join fails with signature error</strong></td>
+      <td>Verify signature generation, check sdkKey format</td>
+    </tr>
+    <tr>
+      <td><strong>“passWord” typo</strong></td>
+      <td>Client View uses <code class="language-plaintext highlighter-rouge">passWord</code> (capital W), Component View uses <code class="language-plaintext highlighter-rouge">password</code></td>
+    </tr>
+    <tr>
+      <td><strong>No HD video</strong></td>
+      <td>Enable SharedArrayBuffer headers, check browser support</td>
+    </tr>
+    <tr>
+      <td><strong>Callbacks not firing</strong></td>
+      <td>Ensure <code class="language-plaintext highlighter-rouge">inMeetingServiceListener</code> called after init success</td>
+    </tr>
+    <tr>
+      <td><strong>Virtual background not working</strong></td>
+      <td>Requires SharedArrayBuffer + Chrome/Edge</td>
+    </tr>
+    <tr>
+      <td><strong>Screen share fails on Safari</strong></td>
+      <td>Safari 17+ with macOS 14+ required for client view</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Complete troubleshooting</strong>: <a href="troubleshooting/common-issues.md">troubleshooting/common-issues.md</a></p>
+
+<h2 id="browser-support-matrix">Browser Support Matrix</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Chrome</th>
+      <th>Firefox</th>
+      <th>Safari</th>
+      <th>Edge</th>
+      <th>iOS</th>
+      <th>Android</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>720p (receive)</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>720p (send)</td>
+      <td>Yes*</td>
+      <td>Yes*</td>
+      <td>Yes*</td>
+      <td>Yes*</td>
+      <td>Yes*</td>
+      <td>Yes*</td>
+    </tr>
+    <tr>
+      <td>Virtual background</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Screen share (send)</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Safari 17+</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Gallery view</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes**</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>*Requires SharedArrayBuffer
+**Safari 17+ with macOS Sonoma</p>
+
+<p>See <a href="concepts/browser-support.md">concepts/browser-support.md</a> for complete matrix.</p>
+
+<h2 id="authorization-requirements-2026-update">Authorization Requirements (2026 Update)</h2>
+
+<blockquote>
+  <p><strong>IMPORTANT</strong>: Beginning <strong>March 2, 2026</strong>, apps joining meetings outside their account must be authorized.</p>
+</blockquote>
+
+<h3 id="options">Options</h3>
+
+<ol>
+  <li><strong>App Privilege Token (OBF)</strong> - Recommended for bots
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+  <span class="p">...</span>
+  <span class="na">obfToken</span><span class="p">:</span> <span class="dl">'</span><span class="s1">your-app-privilege-token</span><span class="dl">'</span>
+<span class="p">});</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>ZAK Token</strong> - For host operations
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+  <span class="p">...</span>
+  <span class="na">zak</span><span class="p">:</span> <span class="dl">'</span><span class="s1">host-zak-token</span><span class="dl">'</span>
+<span class="p">});</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="zoom-for-government-zfg">Zoom for Government (ZFG)</h2>
+
+<h3 id="option-1-zfg-specific-npm-package">Option 1: ZFG-specific NPM Package</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"@zoom/meetingsdk"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3.11.2-zfg"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="option-2-configure-zfg-endpoints">Option 2: Configure ZFG Endpoints</h3>
+
+<p><strong>Client View:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">setZoomJSLib</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://source.zoomgov.com/{VERSION}/lib</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">/av</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+  <span class="na">webEndpoint</span><span class="p">:</span> <span class="dl">'</span><span class="s1">www.zoomgov.com</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>Component View:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">await</span> <span class="nx">client</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+  <span class="na">webEndpoint</span><span class="p">:</span> <span class="dl">'</span><span class="s1">www.zoomgov.com</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">assetPath</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://source.zoomgov.com/{VERSION}/lib/av</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="china-cdn">China CDN</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Set before preLoadWasm()</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">setZoomJSLib</span><span class="p">(</span><span class="dl">'</span><span class="s1">https://jssdk.zoomus.cn/{VERSION}/lib</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">/av</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="react-integration">React Integration</h2>
+
+<h3 id="official-pattern-from-zoommeetingsdk-react-sample">Official Pattern (from zoom/meetingsdk-react-sample)</h3>
+
+<p>The official React sample uses <strong>imperative initialization</strong> rather than React hooks:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">ZoomMtg</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@zoom/meetingsdk</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// Preload at module level (outside component)</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">preLoadWasm</span><span class="p">();</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">prepareWebSDK</span><span class="p">();</span>
+
+<span class="kd">function</span> <span class="nf">App</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">authEndpoint</span> <span class="o">=</span> <span class="k">import</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">VITE_AUTH_ENDPOINT</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">meetingNumber</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">passWord</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">role</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">userName</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">React User</span><span class="dl">'</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">getSignature</span> <span class="o">=</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="nx">authEndpoint</span><span class="p">,</span> <span class="p">{</span>
+      <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">},</span>
+      <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span>
+        <span class="nx">meetingNumber</span><span class="p">,</span>
+        <span class="nx">role</span><span class="p">,</span>
+      <span class="p">}),</span>
+    <span class="p">});</span>
+    <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+    <span class="nf">startMeeting</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">signature</span><span class="p">);</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">startMeeting</span> <span class="o">=</span> <span class="p">(</span><span class="nx">signature</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">zmmtg-root</span><span class="dl">'</span><span class="p">)</span><span class="o">!</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">block</span><span class="dl">'</span><span class="p">;</span>
+
+    <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+      <span class="na">leaveUrl</span><span class="p">:</span> <span class="nb">window</span><span class="p">.</span><span class="nx">location</span><span class="p">.</span><span class="nx">origin</span><span class="p">,</span>
+      <span class="na">patchJsMedia</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">leaveOnPageUnload</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="na">success</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+          <span class="nx">signature</span><span class="p">,</span>
+          <span class="nx">meetingNumber</span><span class="p">,</span>
+          <span class="nx">userName</span><span class="p">,</span>
+          <span class="nx">passWord</span><span class="p">,</span>
+          <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Joined:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">res</span><span class="p">),</span>
+          <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Join error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">),</span>
+        <span class="p">});</span>
+      <span class="p">},</span>
+      <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Init error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">),</span>
+    <span class="p">});</span>
+  <span class="p">};</span>
+
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">getSignature</span><span class="si">}</span><span class="p">&gt;</span>Join Meeting<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="react-gotchas-from-official-samples">React Gotchas (from official samples)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Issue</th>
+      <th>Problem</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Client Recreation</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">createClient()</code> in component body runs every render</td>
+      <td>Use <code class="language-plaintext highlighter-rouge">useRef</code> to persist client</td>
+    </tr>
+    <tr>
+      <td><strong>No useEffect</strong></td>
+      <td>Official sample doesn’t use React lifecycle hooks</td>
+      <td>SDK’s <code class="language-plaintext highlighter-rouge">leaveOnPageUnload</code> handles cleanup</td>
+    </tr>
+    <tr>
+      <td><strong>Direct DOM</strong></td>
+      <td>Sample uses <code class="language-plaintext highlighter-rouge">getElementById</code></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">useRef&lt;HTMLDivElement&gt;</code> in production</td>
+    </tr>
+    <tr>
+      <td><strong>No Error State</strong></td>
+      <td>Silent failures</td>
+      <td>Add <code class="language-plaintext highlighter-rouge">useState</code> for error handling</td>
+    </tr>
+    <tr>
+      <td><strong>Module-Scope Side Effects</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">preLoadWasm()</code> at top level</td>
+      <td>May cause issues with SSR</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="production-ready-react-pattern">Production-Ready React Pattern</h3>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">useEffect</span><span class="p">,</span> <span class="nx">useRef</span><span class="p">,</span> <span class="nx">useState</span><span class="p">,</span> <span class="nx">useCallback</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">ZoomMtgEmbedded</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@zoom/meetingsdk/embedded</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">type</span> <span class="nx">ZoomClient</span> <span class="o">=</span> <span class="nb">ReturnType</span><span class="o">&lt;</span><span class="k">typeof</span> <span class="nx">ZoomMtgEmbedded</span><span class="p">.</span><span class="nx">createClient</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">ZoomMeeting</span><span class="p">({</span> <span class="nx">meetingNumber</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">userName</span> <span class="p">}:</span> <span class="nx">Props</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">clientRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="o">&lt;</span><span class="nx">ZoomClient</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">containerRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="o">&lt;</span><span class="nx">HTMLDivElement</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isJoining</span><span class="p">,</span> <span class="nx">setIsJoining</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">error</span><span class="p">,</span> <span class="nx">setError</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="o">&lt;</span><span class="kr">string</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+  <span class="c1">// Create client once</span>
+  <span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">clientRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">clientRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="nx">ZoomMtgEmbedded</span><span class="p">.</span><span class="nf">createClient</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[]);</span>
+
+  <span class="kd">const</span> <span class="nx">joinMeeting</span> <span class="o">=</span> <span class="nf">useCallback</span><span class="p">(</span><span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">clientRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">||</span> <span class="o">!</span><span class="nx">containerRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="nf">setIsJoining</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
+    <span class="nf">setError</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="c1">// Get signature from your backend</span>
+      <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">/api/signature</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+        <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">},</span>
+        <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span> <span class="nx">meetingNumber</span><span class="p">,</span> <span class="na">role</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}),</span>
+      <span class="p">});</span>
+      <span class="kd">const</span> <span class="p">{</span> <span class="nx">signature</span><span class="p">,</span> <span class="nx">sdkKey</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+
+      <span class="k">await</span> <span class="nx">clientRef</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nf">init</span><span class="p">({</span>
+        <span class="na">zoomAppRoot</span><span class="p">:</span> <span class="nx">containerRef</span><span class="p">.</span><span class="nx">current</span><span class="p">,</span>
+        <span class="na">language</span><span class="p">:</span> <span class="dl">'</span><span class="s1">en-US</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">patchJsMedia</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="na">leaveOnPageUnload</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="p">});</span>
+
+      <span class="k">await</span> <span class="nx">clientRef</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+        <span class="nx">signature</span><span class="p">,</span>
+        <span class="nx">sdkKey</span><span class="p">,</span>
+        <span class="nx">meetingNumber</span><span class="p">,</span>
+        <span class="nx">password</span><span class="p">,</span>
+        <span class="nx">userName</span><span class="p">,</span>
+      <span class="p">});</span>
+    <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nf">setError</span><span class="p">(</span><span class="nx">err</span> <span class="k">instanceof</span> <span class="nb">Error</span> <span class="p">?</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Failed to join</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="nf">setIsJoining</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="p">[</span><span class="nx">meetingNumber</span><span class="p">,</span> <span class="nx">password</span><span class="p">,</span> <span class="nx">userName</span><span class="p">]);</span>
+
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span> <span class="na">ref</span><span class="p">=</span><span class="si">{</span><span class="nx">containerRef</span><span class="si">}</span> <span class="na">style</span><span class="p">=</span><span class="si">{</span><span class="p">{</span> <span class="na">width</span><span class="p">:</span> <span class="dl">'</span><span class="s1">100%</span><span class="dl">'</span><span class="p">,</span> <span class="na">height</span><span class="p">:</span> <span class="dl">'</span><span class="s1">500px</span><span class="dl">'</span> <span class="p">}</span><span class="si">}</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="p">=</span><span class="si">{</span><span class="nx">joinMeeting</span><span class="si">}</span> <span class="na">disabled</span><span class="p">=</span><span class="si">{</span><span class="nx">isJoining</span><span class="si">}</span><span class="p">&gt;</span>
+        <span class="si">{</span><span class="nx">isJoining</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">Joining...</span><span class="dl">'</span> <span class="p">:</span> <span class="dl">'</span><span class="s1">Join Meeting</span><span class="dl">'</span><span class="si">}</span>
+      <span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="nx">error</span> <span class="o">&amp;&amp;</span> <span class="p">&lt;</span><span class="nt">div</span> <span class="na">className</span><span class="p">=</span><span class="s">"error"</span><span class="p">&gt;</span><span class="si">{</span><span class="nx">error</span><span class="si">}</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="environment-variables-vite">Environment Variables (Vite)</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># .env.local</span>
+<span class="nv">VITE_AUTH_ENDPOINT</span><span class="o">=</span>http://YOUR_AUTH_SERVER_HOST:4000
+<span class="nv">VITE_SDK_KEY</span><span class="o">=</span>your_sdk_key
+</code></pre></div></div>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">authEndpoint</span> <span class="o">=</span> <span class="k">import</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">VITE_AUTH_ENDPOINT</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">sdkKey</span> <span class="o">=</span> <span class="k">import</span><span class="p">.</span><span class="nx">meta</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">VITE_SDK_KEY</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="detailed-references">Detailed References</h2>
+
+<h3 id="core-documentation">Core Documentation</h3>
+<ul>
+  <li><strong><a href="SKILL.md">SKILL.md</a></strong> - Complete navigation guide</li>
+  <li><strong><a href="client-view/SKILL.md">client-view/SKILL.md</a></strong> - Full Client View reference</li>
+  <li><strong><a href="component-view/SKILL.md">component-view/SKILL.md</a></strong> - Full Component View reference</li>
+</ul>
+
+<h3 id="concepts">Concepts</h3>
+<ul>
+  <li><strong><a href="concepts/sharedarraybuffer.md">concepts/sharedarraybuffer.md</a></strong> - HD video requirements</li>
+  <li><strong><a href="concepts/browser-support.md">concepts/browser-support.md</a></strong> - Feature matrix by browser</li>
+</ul>
+
+<h3 id="troubleshooting">Troubleshooting</h3>
+<ul>
+  <li><strong><a href="troubleshooting/error-codes.md">troubleshooting/error-codes.md</a></strong> - All SDK error codes</li>
+  <li><strong><a href="troubleshooting/common-issues.md">troubleshooting/common-issues.md</a></strong> - Quick diagnostics</li>
+</ul>
+
+<h3 id="examples">Examples</h3>
+<ul>
+  <li><strong><a href="client-view/SKILL.md">client-view/SKILL.md</a></strong> - Complete Client View guide</li>
+  <li><strong><a href="component-view/SKILL.md">component-view/SKILL.md</a></strong> - Component View React integration</li>
+</ul>
+
+<h2 id="helper-utilities">Helper Utilities</h2>
+
+<h3 id="extract-meeting-number-from-invite-link">Extract Meeting Number from Invite Link</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Users can paste full Zoom invite links</span>
+<span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">meeting_number</span><span class="dl">'</span><span class="p">).</span><span class="nf">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">input</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// Extract meeting number (9-11 digits)</span>
+  <span class="kd">let</span> <span class="nx">meetingNumber</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sr">/</span><span class="se">([^</span><span class="sr">0-9</span><span class="se">])</span><span class="sr">+/i</span><span class="p">,</span> <span class="dl">''</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">meetingNumber</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/</span><span class="se">([</span><span class="sr">0-9</span><span class="se">]{9,11})</span><span class="sr">/</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">meetingNumber</span> <span class="o">=</span> <span class="nx">meetingNumber</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/</span><span class="se">([</span><span class="sr">0-9</span><span class="se">]{9,11})</span><span class="sr">/</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+  <span class="p">}</span>
+
+  <span class="c1">// Auto-extract password from invite link</span>
+  <span class="kd">const</span> <span class="nx">pwdMatch</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/pwd=</span><span class="se">([\d</span><span class="sr">,</span><span class="se">\w]</span><span class="sr">+</span><span class="se">)</span><span class="sr">/</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">pwdMatch</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">password</span><span class="dl">'</span><span class="p">).</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">pwdMatch</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="dynamic-language-switching">Dynamic Language Switching</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Change language at runtime</span>
+<span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">language</span><span class="dl">'</span><span class="p">).</span><span class="nf">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">change</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">lang</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+  <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="nx">lang</span><span class="p">);</span>
+  <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">i18n</span><span class="p">.</span><span class="nf">reload</span><span class="p">(</span><span class="nx">lang</span><span class="p">);</span>
+  <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">reRender</span><span class="p">({</span> <span class="nx">lang</span> <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="check-system-requirements">Check System Requirements</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Check browser compatibility before initializing</span>
+<span class="kd">const</span> <span class="nx">requirements</span> <span class="o">=</span> <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">checkSystemRequirements</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Browser info:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">requirements</span><span class="p">));</span>
+
+<span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">requirements</span><span class="p">.</span><span class="nx">browserInfo</span><span class="p">.</span><span class="nx">isChrome</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">requirements</span><span class="p">.</span><span class="nx">browserInfo</span><span class="p">.</span><span class="nx">isFirefox</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">For best experience, use Chrome or Firefox</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="sample-repositories">Sample Repositories</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Repository</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/zoom/meetingsdk-web-sample">meetingsdk-web-sample</a></td>
+      <td>Official samples (Client View &amp; Component View)</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/meetingsdk-react-sample">meetingsdk-react-sample</a></td>
+      <td>React integration with TypeScript + Vite</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/meetingsdk-web">meetingsdk-web</a></td>
+      <td>SDK source with helper.html</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/meetingsdk-auth-endpoint-sample">meetingsdk-auth-endpoint-sample</a></td>
+      <td>Signature generation backend</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="official-resources">Official Resources</h2>
+
+<ul>
+  <li><strong>Official docs</strong>: https://developers.zoom.us/docs/meeting-sdk/web/</li>
+  <li><strong>Client View API Reference</strong>: https://marketplacefront.zoom.us/sdk/meeting/web/index.html</li>
+  <li><strong>Component View API Reference</strong>: https://marketplacefront.zoom.us/sdk/meeting/web/components/index.html</li>
+  <li><strong>Developer forum</strong>: https://devforum.zoom.us/</li>
+</ul>
+
+<hr />
+
+<p><strong>Documentation Version</strong>: Based on Zoom Web Meeting SDK v3.11+</p>
+
+<p><strong>Need help?</strong> Start with <a href="SKILL.md">SKILL.md</a> for complete navigation.</p>
+
+<h2 id="merged-from-meeting-sdkwebskillmd">Merged from meeting-sdk/web/SKILL.md</h2>
+
+<h1 id="zoom-meeting-sdk-web---documentation-index">Zoom Meeting SDK (Web) - Documentation Index</h1>
+
+<p>Quick navigation guide for all Web SDK documentation.</p>
+
+<h2 id="start-here">Start Here</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><a href="SKILL.md">SKILL.md</a></strong></td>
+      <td>Main entry point - Quick starts for both Client View and Component View</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="by-view-type">By View Type</h2>
+
+<h3 id="client-view-full-page">Client View (Full-Page)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><a href="client-view/SKILL.md">client-view/SKILL.md</a></strong></td>
+      <td>Complete Client View reference</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="component-view-embeddable">Component View (Embeddable)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><a href="component-view/SKILL.md">component-view/SKILL.md</a></strong></td>
+      <td>Complete Component View reference</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="concepts-1">Concepts</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><a href="concepts/sharedarraybuffer.md">concepts/sharedarraybuffer.md</a></strong></td>
+      <td>HD video requirements, COOP/COEP headers</td>
+    </tr>
+    <tr>
+      <td><strong><a href="concepts/browser-support.md">concepts/browser-support.md</a></strong></td>
+      <td>Feature matrix by browser</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="examples-1">Examples</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="examples/client-view-basic.md">examples/client-view-basic.md</a></td>
+      <td>Basic Client View integration</td>
+    </tr>
+    <tr>
+      <td><a href="examples/component-view-react.md">examples/component-view-react.md</a></td>
+      <td>React integration with Component View</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="troubleshooting-1">Troubleshooting</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong><a href="troubleshooting/error-codes.md">troubleshooting/error-codes.md</a></strong></td>
+      <td>All SDK error codes (3000-10000 range)</td>
+    </tr>
+    <tr>
+      <td><strong><a href="troubleshooting/common-issues.md">troubleshooting/common-issues.md</a></strong></td>
+      <td>Quick diagnostics and fixes</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="by-topic">By Topic</h2>
+
+<h3 id="authentication">Authentication</h3>
+<ul>
+  <li><a href="SKILL.md#authentication-endpoint-required">SKILL.md#authentication-endpoint</a> - Signature generation</li>
+  <li><a href="SKILL.md#authorization-requirements-2026-update">SKILL.md#authorization-requirements-2026-update</a> - OBF tokens</li>
+</ul>
+
+<h3 id="hd-video--performance">HD Video &amp; Performance</h3>
+<ul>
+  <li><a href="concepts/sharedarraybuffer.md">concepts/sharedarraybuffer.md</a> - Enable 720p/1080p</li>
+</ul>
+
+<h3 id="events--callbacks">Events &amp; Callbacks</h3>
+<ul>
+  <li><a href="SKILL.md#event-listeners-client-view">SKILL.md#event-listeners-client-view</a> - Client View events</li>
+  <li><a href="SKILL.md#event-listeners-component-view">SKILL.md#event-listeners-component-view</a> - Component View events</li>
+</ul>
+
+<h3 id="government-zfg">Government (ZFG)</h3>
+<ul>
+  <li><a href="SKILL.md#zoom-for-government-zfg">SKILL.md#zoom-for-government-zfg</a> - ZFG configuration</li>
+</ul>
+
+<h3 id="china-cdn-1">China CDN</h3>
+<ul>
+  <li><a href="SKILL.md#china-cdn">SKILL.md#china-cdn</a> - China-specific CDN</li>
+</ul>
+
+<h2 id="quick-reference">Quick Reference</h2>
+
+<h3 id="client-view-vs-component-view-1">Client View vs Component View</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Client View</th>
+      <th>Component View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Object</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">ZoomMtg</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ZoomMtgEmbedded.createClient()</code></td>
+    </tr>
+    <tr>
+      <td><strong>API Style</strong></td>
+      <td>Callbacks</td>
+      <td>Promises</td>
+    </tr>
+    <tr>
+      <td><strong>Password param</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">passWord</code> (capital W)</td>
+      <td><code class="language-plaintext highlighter-rouge">password</code> (lowercase)</td>
+    </tr>
+    <tr>
+      <td><strong>Events</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">inMeetingServiceListener()</code></td>
+      <td><code class="language-plaintext highlighter-rouge">on()</code>/<code class="language-plaintext highlighter-rouge">off()</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="key-gotchas">Key Gotchas</h3>
+
+<ol>
+  <li><strong>Password spelling differs between views!</strong>
+    <ul>
+      <li>Client View: <code class="language-plaintext highlighter-rouge">passWord</code> (capital W)</li>
+      <li>Component View: <code class="language-plaintext highlighter-rouge">password</code> (lowercase)</li>
+    </ul>
+  </li>
+  <li><strong>SharedArrayBuffer required for HD features</strong>
+    <ul>
+      <li>720p/1080p video</li>
+      <li>Gallery view (25 videos)</li>
+      <li>Virtual backgrounds</li>
+    </ul>
+  </li>
+  <li><strong>March 2026 Authorization Change</strong>
+    <ul>
+      <li>Apps joining external meetings need OBF or ZAK tokens</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="external-resources">External Resources</h2>
+
+<ul>
+  <li><strong>Official docs</strong>: https://developers.zoom.us/docs/meeting-sdk/web/</li>
+  <li><strong>Client View API</strong>: https://marketplacefront.zoom.us/sdk/meeting/web/index.html</li>
+  <li><strong>Component View API</strong>: https://marketplacefront.zoom.us/sdk/meeting/web/components/index.html</li>
+  <li><strong>GitHub samples</strong>: https://github.com/zoom/meetingsdk-web-sample</li>
+</ul>
+
+<h2 id="operations">Operations</h2>
+
+<ul>
+  <li><a href="RUNBOOK.md">RUNBOOK.md</a> - 5-minute preflight and debugging checklist.</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

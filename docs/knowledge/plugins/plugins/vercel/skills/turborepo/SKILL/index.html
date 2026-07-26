@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Turborepo expert guidance. Use when setting up or optimizing monorepo builds, configuring task caching, remote caching, parallel execution, or the --affected...">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/vercel/skills/turborepo/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/vercel/skills/turborepo/SKILL/">
+<meta property="og:description" content="Turborepo expert guidance. Use when setting up or optimizing monorepo builds, configuring task caching, remote caching, parallel execution, or the --affected...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Turborepo expert guidance. Use when setting up or optimizing monorepo builds, configuring task caching, remote caching, parallel execution, or the --affected flag for incremental CI.</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="turborepo">Turborepo</h1>
+
+<p>You are an expert in Turborepo v2.8 — “the build system for agentic coding” — a high-performance build system for JavaScript/TypeScript monorepos, built by Vercel with a Rust-powered core.</p>
+
+<h2 id="key-features">Key Features</h2>
+
+<ul>
+  <li><strong>Task caching</strong>: Content-aware hashing — only rebuilds when files actually change</li>
+  <li><strong>Remote caching</strong>: Share build caches across machines and CI via Vercel</li>
+  <li><strong>Parallel execution</strong>: Uses all CPU cores automatically</li>
+  <li><strong>Incremental builds</strong>: <code class="language-plaintext highlighter-rouge">--affected</code> flag runs only changed packages + dependents</li>
+  <li><strong>Pruned subsets</strong>: Generate minimal monorepo for deploying a single app</li>
+  <li><strong>Dependency graph awareness</strong>: Understands package relationships</li>
+  <li><strong>Git worktree cache sharing</strong>: Automatically shares local cache across worktrees (2.8+)</li>
+  <li><strong>Devtools</strong>: Visual package and task graph explorer via <code class="language-plaintext highlighter-rouge">turbo devtools</code> (2.8+)</li>
+  <li><strong>Composable configuration</strong>: Extend <code class="language-plaintext highlighter-rouge">turbo.json</code> from any package, not just root (2.7+)</li>
+  <li><strong>AI-enabled docs</strong>: <code class="language-plaintext highlighter-rouge">turbo docs</code> returns markdown responses optimized for AI agents (2.8+)</li>
+</ul>
+
+<h2 id="setup">Setup</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx create-turbo@latest
+<span class="c"># or add to existing monorepo:</span>
+npm <span class="nb">install </span>turbo <span class="nt">--save-dev</span>
+<span class="c"># upgrade existing Turborepo:</span>
+npx @turbo/codemod migrate
+</code></pre></div></div>
+
+<h2 id="turbojson-task-pipeline">turbo.json Task Pipeline</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">turbo.json</code> file defines your task dependency graph. Here are comprehensive examples:</p>
+
+<h3 id="basic-pipeline">Basic pipeline</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://turborepo.dev/schema.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Compile TypeScript and bundle the application"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"dependsOn"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"^build"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">".next/**"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dist/**"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"test"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Run the test suite"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"dependsOn"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"build"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"lint"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lint source files"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"dev"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cache"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"persistent"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="advanced-pipeline-with-environment-variables-and-inputs">Advanced pipeline with environment variables and inputs</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://turborepo.dev/schema.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"globalDependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">".env"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"globalEnv"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"CI"</span><span class="p">,</span><span class="w"> </span><span class="s2">"NODE_ENV"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"dependsOn"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"^build"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">".next/**"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dist/**"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"DATABASE_URL"</span><span class="p">,</span><span class="w"> </span><span class="s2">"NEXT_PUBLIC_API_URL"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"src/**"</span><span class="p">,</span><span class="w"> </span><span class="s2">"package.json"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tsconfig.json"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"test"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"dependsOn"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"build"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"coverage/**"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"env"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"TEST_DATABASE_URL"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"test:unit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"dependsOn"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+      </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"coverage/**"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"lint"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"src/**"</span><span class="p">,</span><span class="w"> </span><span class="s2">".eslintrc.*"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"typecheck"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"dependsOn"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"^build"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"src/**"</span><span class="p">,</span><span class="w"> </span><span class="s2">"tsconfig.json"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"db:generate"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cache"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"dev"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cache"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"persistent"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"clean"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"cache"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="key-configuration">Key Configuration</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">dependsOn: ["^build"]</code> — Run <code class="language-plaintext highlighter-rouge">build</code> in dependencies first (<code class="language-plaintext highlighter-rouge">^</code> = topological)</li>
+  <li><code class="language-plaintext highlighter-rouge">dependsOn: ["build"]</code> — Run <code class="language-plaintext highlighter-rouge">build</code> in the same package first (no <code class="language-plaintext highlighter-rouge">^</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">outputs</code> — Files to cache (build artifacts)</li>
+  <li><code class="language-plaintext highlighter-rouge">inputs</code> — Files that affect the task hash (default: all non-gitignored files)</li>
+  <li><code class="language-plaintext highlighter-rouge">env</code> — Environment variables that affect the task hash</li>
+  <li><code class="language-plaintext highlighter-rouge">cache: false</code> — Skip caching (for dev servers, codegen)</li>
+  <li><code class="language-plaintext highlighter-rouge">persistent: true</code> — Long-running tasks (dev servers)</li>
+  <li><code class="language-plaintext highlighter-rouge">globalDependencies</code> — Files that invalidate all task caches when changed</li>
+  <li><code class="language-plaintext highlighter-rouge">globalEnv</code> — Env vars that invalidate all task caches when changed</li>
+</ul>
+
+<h2 id="workspace-filtering">Workspace Filtering</h2>
+
+<p>Run tasks in specific packages or subsets of your monorepo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Single package</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>web
+
+<span class="c"># Package and its dependencies</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>web...
+
+<span class="c"># Package and its dependents (what depends on it)</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>...ui
+
+<span class="c"># Multiple packages</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>web <span class="nt">--filter</span><span class="o">=</span>api
+
+<span class="c"># By directory</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>./apps/<span class="k">*</span>
+
+<span class="c"># Packages that changed since main</span>
+turbo build <span class="nt">--filter</span><span class="o">=[</span>main]
+
+<span class="c"># Combine: changed packages and their dependents</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>...[main]
+
+<span class="c"># Exclude a package</span>
+turbo build <span class="nt">--filter</span><span class="o">=!</span>docs
+
+<span class="c"># Packages matching a pattern</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>@myorg/<span class="k">*</span>
+</code></pre></div></div>
+
+<h3 id="filter-syntax-reference">Filter syntax reference</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pattern</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">web</code></td>
+      <td>Only the <code class="language-plaintext highlighter-rouge">web</code> package</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">web...</code></td>
+      <td><code class="language-plaintext highlighter-rouge">web</code> and all its dependencies</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">...web</code></td>
+      <td><code class="language-plaintext highlighter-rouge">web</code> and all its dependents</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">...web...</code></td>
+      <td><code class="language-plaintext highlighter-rouge">web</code>, its dependencies, and its dependents</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">./apps/*</code></td>
+      <td>All packages in the <code class="language-plaintext highlighter-rouge">apps/</code> directory</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[main]</code></td>
+      <td>Packages changed since <code class="language-plaintext highlighter-rouge">main</code> branch</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">{./apps/web}[main]</code></td>
+      <td><code class="language-plaintext highlighter-rouge">web</code> only if it changed since <code class="language-plaintext highlighter-rouge">main</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">!docs</code></td>
+      <td>Exclude the <code class="language-plaintext highlighter-rouge">docs</code> package</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ci-matrix-strategies">CI Matrix Strategies</h2>
+
+<h3 id="github-actions--parallel-jobs-per-package">GitHub Actions — parallel jobs per package</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">name</span><span class="pi">:</span> <span class="s">CI</span>
+<span class="na">on</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">push</span><span class="pi">,</span> <span class="nv">pull_request</span><span class="pi">]</span>
+
+<span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">build</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v4</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">fetch-depth</span><span class="pi">:</span> <span class="m">0</span> <span class="c1"># Required for --affected</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/setup-node@v4</span>
+        <span class="na">with</span><span class="pi">:</span>
+          <span class="na">node-version</span><span class="pi">:</span> <span class="m">22</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">turbo build test lint --affected</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">TURBO_TOKEN</span><span class="pi">:</span> <span class="s">${{ secrets.TURBO_TOKEN }}</span>
+          <span class="na">TURBO_TEAM</span><span class="pi">:</span> <span class="s">${{ vars.TURBO_TEAM }}</span>
+
+  <span class="na">deploy-web</span><span class="pi">:</span>
+    <span class="na">needs</span><span class="pi">:</span> <span class="s">build</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">github.ref == 'refs/heads/main'</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v4</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">turbo build --filter=web</span>
+        <span class="na">env</span><span class="pi">:</span>
+          <span class="na">TURBO_TOKEN</span><span class="pi">:</span> <span class="s">${{ secrets.TURBO_TOKEN }}</span>
+          <span class="na">TURBO_TEAM</span><span class="pi">:</span> <span class="s">${{ vars.TURBO_TEAM }}</span>
+</code></pre></div></div>
+
+<h3 id="dynamic-matrix-from-workspace-list">Dynamic matrix from workspace list</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">jobs</span><span class="pi">:</span>
+  <span class="na">detect</span><span class="pi">:</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">outputs</span><span class="pi">:</span>
+      <span class="na">packages</span><span class="pi">:</span> <span class="s">${{ steps.list.outputs.packages }}</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v4</span>
+      <span class="pi">-</span> <span class="na">id</span><span class="pi">:</span> <span class="s">list</span>
+        <span class="na">run</span><span class="pi">:</span> <span class="pi">|</span>
+          <span class="s">PACKAGES=$(turbo ls --affected --output=json | jq -c '[.[].name]')</span>
+          <span class="s">echo "packages=$PACKAGES" &gt;&gt; "$GITHUB_OUTPUT"</span>
+
+  <span class="na">test</span><span class="pi">:</span>
+    <span class="na">needs</span><span class="pi">:</span> <span class="s">detect</span>
+    <span class="na">if</span><span class="pi">:</span> <span class="s">needs.detect.outputs.packages != '[]'</span>
+    <span class="na">runs-on</span><span class="pi">:</span> <span class="s">ubuntu-latest</span>
+    <span class="na">strategy</span><span class="pi">:</span>
+      <span class="na">matrix</span><span class="pi">:</span>
+        <span class="na">package</span><span class="pi">:</span> <span class="s">${{ fromJson(needs.detect.outputs.packages) }}</span>
+    <span class="na">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">uses</span><span class="pi">:</span> <span class="s">actions/checkout@v4</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">npm ci</span>
+      <span class="pi">-</span> <span class="na">run</span><span class="pi">:</span> <span class="s">turbo test --filter=${{ matrix.package }}</span>
+</code></pre></div></div>
+
+<h3 id="remote-caching-in-ci">Remote caching in CI</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Set in CI environment</span>
+<span class="nv">TURBO_TOKEN</span><span class="o">=</span>your-vercel-token
+<span class="nv">TURBO_TEAM</span><span class="o">=</span>your-vercel-team
+
+<span class="c"># Builds automatically use remote cache</span>
+turbo build
+</code></pre></div></div>
+
+<h2 id="watch-mode">Watch Mode</h2>
+
+<p>Run tasks in watch mode for development — re-executes when source files change:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Watch a specific task</span>
+turbo watch <span class="nb">test</span>
+
+<span class="c"># Watch with a filter</span>
+turbo watch <span class="nb">test</span> <span class="nt">--filter</span><span class="o">=</span>web
+
+<span class="c"># Watch multiple tasks</span>
+turbo watch <span class="nb">test </span>lint
+</code></pre></div></div>
+
+<p>Watch mode respects the task graph — if <code class="language-plaintext highlighter-rouge">test</code> depends on <code class="language-plaintext highlighter-rouge">build</code>, changing a source file re-runs <code class="language-plaintext highlighter-rouge">build</code> first, then <code class="language-plaintext highlighter-rouge">test</code>.</p>
+
+<h3 id="persistent-tasks-vs-watch">Persistent tasks vs watch</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">persistent: true</code> in turbo.json: The task itself is long-running (e.g., <code class="language-plaintext highlighter-rouge">next dev</code>). Turbo starts it and keeps it alive.</li>
+  <li><code class="language-plaintext highlighter-rouge">turbo watch</code>: Turbo re-invokes the task on file changes. Use for tasks that run and exit (e.g., <code class="language-plaintext highlighter-rouge">vitest run</code>, <code class="language-plaintext highlighter-rouge">tsc --noEmit</code>).</li>
+</ul>
+
+<h2 id="boundary-rules">Boundary Rules</h2>
+
+<p>Enforce architectural constraints across your monorepo with <code class="language-plaintext highlighter-rouge">boundaries</code> in turbo.json:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"boundaries"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"apps/*"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"app"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"packages/ui"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"shared"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ui"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"packages/utils"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"shared"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"packages/config"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"config"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"app"</span><span class="p">],</span><span class="w">
+        </span><span class="nl">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"shared"</span><span class="p">]</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"shared"</span><span class="p">],</span><span class="w">
+        </span><span class="nl">"deny"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"app"</span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This enforces:</p>
+<ul>
+  <li>Apps can import shared packages</li>
+  <li>Shared packages cannot import from apps</li>
+  <li>Violations produce build-time errors with <code class="language-plaintext highlighter-rouge">turbo boundaries</code></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Check boundary compliance</span>
+turbo boundaries
+
+<span class="c"># Add to your pipeline</span>
+<span class="o">{</span>
+  <span class="s2">"tasks"</span>: <span class="o">{</span>
+    <span class="s2">"check"</span>: <span class="o">{</span>
+      <span class="s2">"dependsOn"</span>: <span class="o">[</span><span class="s2">"lint"</span>, <span class="s2">"typecheck"</span>, <span class="s2">"boundaries"</span><span class="o">]</span>
+    <span class="o">}</span>,
+    <span class="s2">"boundaries"</span>: <span class="o">{}</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="graph-visualization">Graph Visualization</h2>
+
+<p>Inspect your task dependency graph:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Print graph to terminal</span>
+turbo build <span class="nt">--graph</span>
+
+<span class="c"># Output as DOT format (Graphviz)</span>
+turbo build <span class="nt">--graph</span><span class="o">=</span>graph.dot
+
+<span class="c"># Output as JSON</span>
+turbo build <span class="nt">--graph</span><span class="o">=</span>graph.json
+
+<span class="c"># Open interactive graph in browser</span>
+turbo build <span class="nt">--graph</span><span class="o">=</span>graph.html
+</code></pre></div></div>
+
+<h3 id="dry-run--see-what-would-execute">Dry run — see what would execute</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Show tasks that would run without executing them</span>
+turbo build <span class="nt">--dry-run</span>
+
+<span class="c"># JSON output for programmatic use</span>
+turbo build <span class="nt">--dry-run</span><span class="o">=</span>json
+</code></pre></div></div>
+
+<p>The dry run output shows:</p>
+<ul>
+  <li>Each task that would execute</li>
+  <li>Cache status (HIT or MISS)</li>
+  <li>Dependencies and dependents</li>
+  <li>File hash used for caching</li>
+</ul>
+
+<h2 id="devtools--docs-28">Devtools &amp; Docs (2.8+)</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Visual package/task graph explorer (hot-reloads on changes)</span>
+turbo devtools
+
+<span class="c"># Search Turborepo docs from the terminal (returns agent-friendly markdown)</span>
+turbo docs
+
+<span class="c"># Upgrade to latest Turborepo</span>
+npx @turbo/codemod migrate
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Note</strong>: <code class="language-plaintext highlighter-rouge">turbo docs</code> output is optimized for AI coding agents — markdown format preserves context windows. The docs site also includes sample prompts for common tasks you can copy directly into your agent.</p>
+</blockquote>
+
+<h2 id="composable-configuration-27">Composable Configuration (2.7+)</h2>
+
+<p>Package configs can now extend from any workspace package, not just the root:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">packages/ui/turbo.json</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"extends"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"@myorg/config"</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"dist/**"</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="common-commands">Common Commands</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Run build across all packages</span>
+turbo build
+
+<span class="c"># Run only affected packages (changed since main branch)</span>
+turbo build <span class="nt">--affected</span>
+
+<span class="c"># Run specific tasks in specific packages</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>web
+
+<span class="c"># Run with remote caching</span>
+turbo build <span class="nt">--remote-cache</span>
+
+<span class="c"># Prune monorepo for a single app deployment</span>
+turbo prune web <span class="nt">--docker</span>
+
+<span class="c"># List all packages</span>
+turbo <span class="nb">ls</span>
+
+<span class="c"># List affected packages</span>
+turbo <span class="nb">ls</span> <span class="nt">--affected</span>
+</code></pre></div></div>
+
+<h2 id="remote-caching">Remote Caching</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Login to Vercel for remote caching</span>
+turbo login
+
+<span class="c"># Link to a Vercel team</span>
+turbo <span class="nb">link</span>
+
+<span class="c"># Now builds share cache across all machines</span>
+turbo build  <span class="c"># Cache hits from CI, teammates, etc.</span>
+</code></pre></div></div>
+
+<h2 id="monorepo-structure">Monorepo Structure</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my-monorepo/
+├── turbo.json
+├── package.json
+├── apps/
+│   ├── web/           # Next.js app
+│   │   └── package.json
+│   ├── api/           # Backend service
+│   │   └── package.json
+│   └── docs/          # Documentation site
+│       └── package.json
+├── packages/
+│   ├── ui/            # Shared component library
+│   │   └── package.json
+│   ├── config/        # Shared configs (eslint, tsconfig)
+│   │   └── package.json
+│   └── utils/         # Shared utilities
+│       └── package.json
+└── node_modules/
+</code></pre></div></div>
+
+<h2 id="affected-flag">–affected Flag</h2>
+
+<p>The most important optimization for CI pipelines:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Only build/test packages that changed since main</span>
+turbo build <span class="nb">test </span>lint <span class="nt">--affected</span>
+</code></pre></div></div>
+
+<p>This performs intelligent graph traversal:</p>
+<ol>
+  <li>Identifies changed files since the base branch</li>
+  <li>Maps changes to affected packages</li>
+  <li>Includes all dependent packages (transitively)</li>
+  <li>Runs tasks only for the affected subgraph</li>
+</ol>
+
+<h2 id="microfrontends--multi-app-composition">Microfrontends &amp; Multi-App Composition</h2>
+
+<p>Turborepo is the recommended orchestration layer for Vercel’s Microfrontends architecture — composing multiple independently-deployed apps behind a single URL.</p>
+
+<h3 id="monorepo-structure-for-microfrontends">Monorepo Structure for Microfrontends</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my-platform/
+├── turbo.json
+├── package.json
+├── apps/
+│   ├── shell/          # Layout / shell app (owns top-level routing)
+│   ├── dashboard/      # Micro-app: dashboard features
+│   ├── settings/       # Micro-app: settings features
+│   └── marketing/      # Micro-app: public marketing site
+└── packages/
+    ├── ui/             # Shared component library
+    ├── auth/           # Shared auth utilities
+    └── config/         # Shared tsconfig, eslint
+</code></pre></div></div>
+
+<h3 id="independent-deploys">Independent Deploys</h3>
+
+<p>Each micro-app is a separate Vercel project with its own build and deploy lifecycle:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Deploy only the dashboard micro-app</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>dashboard
+
+<span class="c"># Deploy all micro-apps in parallel</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>./apps/<span class="k">*</span>
+
+<span class="c"># Deploy only micro-apps that changed since main</span>
+turbo build <span class="nt">--filter</span><span class="o">=</span>./apps/<span class="k">*</span>...[main]
+</code></pre></div></div>
+
+<h3 id="shared-packages-across-micro-apps">Shared Packages Across Micro-Apps</h3>
+
+<p>Use Turborepo’s dependency graph to share code without coupling deploys:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"dependsOn"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"^build"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"outputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">".next/**"</span><span class="p">,</span><span class="w"> </span><span class="s2">"dist/**"</span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Shared packages (<code class="language-plaintext highlighter-rouge">ui</code>, <code class="language-plaintext highlighter-rouge">auth</code>, <code class="language-plaintext highlighter-rouge">config</code>) are built first via <code class="language-plaintext highlighter-rouge">^build</code>, then each micro-app builds against the latest shared code. Remote caching ensures shared package builds are never repeated across micro-app deploys.</p>
+
+<h3 id="multi-zone-patterns">Multi-Zone Patterns</h3>
+
+<p>Next.js multi-zones let each micro-app own a URL path prefix while sharing a single domain:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// apps/shell/next.config.ts</span>
+<span class="k">import</span> <span class="kd">type</span> <span class="p">{</span> <span class="nx">NextConfig</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">next</span><span class="dl">'</span>
+
+<span class="kd">const</span> <span class="nx">nextConfig</span><span class="p">:</span> <span class="nx">NextConfig</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="k">async</span> <span class="nf">rewrites</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span>
+      <span class="p">{</span> <span class="na">source</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/dashboard/:path*</span><span class="dl">'</span><span class="p">,</span> <span class="na">destination</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://dashboard.example.com/dashboard/:path*</span><span class="dl">'</span> <span class="p">},</span>
+      <span class="p">{</span> <span class="na">source</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/settings/:path*</span><span class="dl">'</span><span class="p">,</span> <span class="na">destination</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://settings.example.com/settings/:path*</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="nx">nextConfig</span>
+</code></pre></div></div>
+
+<p>Combine with Turborepo boundary rules to enforce architectural isolation:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"boundaries"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"tags"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"apps/*"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"micro-app"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"packages/ui"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"shared"</span><span class="p">],</span><span class="w">
+      </span><span class="nl">"packages/auth"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"shared"</span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w"> </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"micro-app"</span><span class="p">],</span><span class="w"> </span><span class="nl">"allow"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"shared"</span><span class="p">]</span><span class="w"> </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w"> </span><span class="nl">"from"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"shared"</span><span class="p">],</span><span class="w"> </span><span class="nl">"deny"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"micro-app"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="when-to-use-turborepo-for-microfrontends">When to Use Turborepo for Microfrontends</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>Recommended?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Multiple teams owning independent features</td>
+      <td>Yes — independent deploys + shared packages</td>
+    </tr>
+    <tr>
+      <td>Single team, single app</td>
+      <td>No — standard Next.js is simpler</td>
+    </tr>
+    <tr>
+      <td>Shared component library across apps</td>
+      <td>Yes — <code class="language-plaintext highlighter-rouge">packages/ui</code> with boundary rules</td>
+    </tr>
+    <tr>
+      <td>Gradual migration from monolith</td>
+      <td>Yes — extract features into micro-apps incrementally</td>
+    </tr>
+    <tr>
+      <td>Need version-skew protection</td>
+      <td>Yes — isolated builds per micro-app</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="related-documentation">Related Documentation</h3>
+
+<ul>
+  <li><a href="https://vercel.com/docs/microfrontends">Vercel Microfrontends</a></li>
+  <li><a href="https://nextjs.org/docs/app/building-your-application/deploying/multi-zones">Next.js Multi-Zones</a></li>
+</ul>
+
+<h2 id="bun-support--lockfile-detection">Bun Support &amp; Lockfile Detection</h2>
+
+<p>Turborepo 2.6+ has <strong>stable Bun support</strong> with granular lockfile analysis:</p>
+
+<ul>
+  <li><strong>Lockfile format</strong>: Turborepo requires <code class="language-plaintext highlighter-rouge">bun.lock</code> (text format). If only <code class="language-plaintext highlighter-rouge">bun.lockb</code> (binary) is found, it errors with a prompt to generate a text lockfile. Generate with <code class="language-plaintext highlighter-rouge">bun install --save-text-lockfile</code>.</li>
+  <li><strong>Granular cache invalidation</strong>: Turborepo parses <code class="language-plaintext highlighter-rouge">bun.lock</code> to detect which specific packages changed and only invalidates caches for affected tasks — not the entire monorepo.</li>
+  <li><strong>Pruning</strong>: <code class="language-plaintext highlighter-rouge">turbo prune</code> works with Bun workspaces, generating a minimal lockfile for single-app deploys.</li>
+  <li><strong>Skip-builds detection</strong>: On Vercel, monorepo workspace detection automatically skips unaffected projects when <code class="language-plaintext highlighter-rouge">bun.lock</code> changes don’t touch a project’s dependencies. Combined with <code class="language-plaintext highlighter-rouge">--affected</code>, only changed packages and their dependents rebuild.</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Ensure text lockfile for Turborepo compatibility</span>
+bun <span class="nb">install</span> <span class="nt">--save-text-lockfile</span>
+
+<span class="c"># Run only affected packages (works with Bun lockfile detection)</span>
+turbo build <span class="nt">--affected</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Known issue</strong>: <code class="language-plaintext highlighter-rouge">turbo prune</code> with Bun 1.3+ may produce lockfiles with formatting differences that break <code class="language-plaintext highlighter-rouge">bun i --frozen-lockfile</code>. Track fixes in <a href="https://github.com/vercel/turborepo/issues/11007">turborepo#11007</a>.</p>
+</blockquote>
+
+<h2 id="deploying-to-vercel">Deploying to Vercel</h2>
+
+<p>Vercel auto-detects Turborepo and optimizes builds. Each app in <code class="language-plaintext highlighter-rouge">apps/</code> can be a separate Vercel project with automatic dependency detection.</p>
+
+<h2 id="when-to-use-turborepo">When to Use Turborepo</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>Use Turborepo?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Single Next.js app</td>
+      <td>No — Turbopack handles bundling</td>
+    </tr>
+    <tr>
+      <td>Multiple apps sharing code</td>
+      <td>Yes — orchestrate builds</td>
+    </tr>
+    <tr>
+      <td>Shared component library</td>
+      <td>Yes — manage dependencies</td>
+    </tr>
+    <tr>
+      <td>CI taking too long</td>
+      <td>Yes — caching + affected</td>
+    </tr>
+    <tr>
+      <td>Team sharing build artifacts</td>
+      <td>Yes — remote caching</td>
+    </tr>
+    <tr>
+      <td>Enforcing architecture boundaries</td>
+      <td>Yes — boundary rules</td>
+    </tr>
+    <tr>
+      <td>Complex multi-step CI pipelines</td>
+      <td>Yes — task graph + matrix</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="official-documentation">Official Documentation</h2>
+
+<ul>
+  <li><a href="https://turborepo.dev/repo/docs">Turborepo Documentation</a></li>
+  <li><a href="https://turborepo.dev/repo/docs/getting-started">Getting Started</a></li>
+  <li><a href="https://turborepo.dev/repo/docs/crafting-your-repository">Crafting Your Repository</a></li>
+  <li><a href="https://turborepo.dev/repo/docs/reference/configuration">Task Configuration</a></li>
+  <li><a href="https://turborepo.dev/repo/docs/crafting-your-repository/running-tasks#using-filters">Filtering</a></li>
+  <li><a href="https://github.com/vercel/turborepo">GitHub: Turborepo</a></li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

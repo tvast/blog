@@ -1,0 +1,2056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Blueprint Spec · A developer journey</title>
+<meta name="description" content="Render Blueprint Specification">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/skills/skills/.curated/render-deploy/references/blueprint-spec/">
+
+<meta property="og:title" content="Blueprint Spec · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/skills/skills/.curated/render-deploy/references/blueprint-spec/">
+<meta property="og:description" content="Render Blueprint Specification">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>skills</span>
+      </nav>
+
+      <h1>Blueprint Spec</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="render-blueprint-specification">Render Blueprint Specification</h1>
+
+<p>Complete reference for render.yaml Blueprint files. Blueprints define your infrastructure as code for reproducible deployments on Render.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>A Blueprint is a YAML file (typically <code class="language-plaintext highlighter-rouge">render.yaml</code>) placed in your repository root that describes:</p>
+<ul>
+  <li>Services (web, worker, cron, static, private)</li>
+  <li>Databases (PostgreSQL, Redis)</li>
+  <li>Environment variables and secrets</li>
+  <li>Scaling and resource configuration</li>
+  <li>Project organization</li>
+</ul>
+
+<h2 id="root-level-structure">Root-Level Structure</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Top-level fields</span>
+<span class="na">services</span><span class="pi">:</span> <span class="pi">[]</span>         <span class="c1"># Array of service definitions</span>
+<span class="na">databases</span><span class="pi">:</span> <span class="pi">[]</span>        <span class="c1"># Array of PostgreSQL databases</span>
+<span class="na">envVarGroups</span><span class="pi">:</span> <span class="pi">[]</span>     <span class="c1"># Reusable environment variable groups (optional)</span>
+<span class="na">projects</span><span class="pi">:</span> <span class="pi">[]</span>         <span class="c1"># Project organization (optional)</span>
+<span class="na">ungrouped</span><span class="pi">:</span> <span class="pi">[]</span>        <span class="c1"># Resources outside projects (optional)</span>
+<span class="na">previews</span><span class="pi">:</span>            <span class="c1"># Preview environment configuration (optional)</span>
+  <span class="na">generation</span><span class="pi">:</span> <span class="s">auto_preview | manual | none</span>
+</code></pre></div></div>
+
+<h2 id="service-types">Service Types</h2>
+
+<h3 id="web-services-type-web">Web Services (<code class="language-plaintext highlighter-rouge">type: web</code>)</h3>
+
+<p>HTTP services, APIs, and web applications. Publicly accessible via HTTPS.</p>
+
+<p><strong>Required fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code>: Unique service identifier</li>
+  <li><code class="language-plaintext highlighter-rouge">type</code>: Must be <code class="language-plaintext highlighter-rouge">web</code></li>
+  <li><code class="language-plaintext highlighter-rouge">runtime</code>: Language/environment (see Runtimes section)</li>
+  <li><code class="language-plaintext highlighter-rouge">buildCommand</code>: Command to build the application</li>
+  <li><code class="language-plaintext highlighter-rouge">startCommand</code>: Command to start the server</li>
+</ul>
+
+<p><strong>Common optional fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">plan</code>: Instance type (default: <code class="language-plaintext highlighter-rouge">free</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">region</code>: Deployment region (default: <code class="language-plaintext highlighter-rouge">oregon</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">branch</code>: Git branch to deploy (default: <code class="language-plaintext highlighter-rouge">main</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">autoDeploy</code>: Auto-deploy on push (default: <code class="language-plaintext highlighter-rouge">true</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">envVars</code>: Environment variables array</li>
+  <li><code class="language-plaintext highlighter-rouge">healthCheckPath</code>: Health check endpoint (default: <code class="language-plaintext highlighter-rouge">/</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">numInstances</code>: Number of instances (manual scaling)</li>
+  <li><code class="language-plaintext highlighter-rouge">scaling</code>: Autoscaling configuration</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">api-server</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci</span>
+    <span class="na">startCommand</span><span class="pi">:</span> <span class="s">npm start</span>
+    <span class="na">branch</span><span class="pi">:</span> <span class="s">main</span>
+    <span class="na">autoDeploy</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">NODE_ENV</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s">production</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">PORT</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="m">10000</span>
+</code></pre></div></div>
+
+<h3 id="worker-services-type-worker">Worker Services (<code class="language-plaintext highlighter-rouge">type: worker</code>)</h3>
+
+<p>Background job processors, queue consumers. Not publicly accessible.</p>
+
+<p><strong>Required fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code>: Unique service identifier</li>
+  <li><code class="language-plaintext highlighter-rouge">type</code>: Must be <code class="language-plaintext highlighter-rouge">worker</code></li>
+  <li><code class="language-plaintext highlighter-rouge">runtime</code>: Language/environment</li>
+  <li><code class="language-plaintext highlighter-rouge">buildCommand</code>: Command to build</li>
+  <li><code class="language-plaintext highlighter-rouge">startCommand</code>: Command to start worker process</li>
+</ul>
+
+<p><strong>Key differences from web services:</strong></p>
+<ul>
+  <li>No public URL</li>
+  <li>No health checks</li>
+  <li>No port binding required</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">worker</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">job-processor</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">python</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">pip install -r requirements.txt</span>
+    <span class="na">startCommand</span><span class="pi">:</span> <span class="s">celery -A tasks worker --loglevel=info</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">REDIS_URL</span>
+        <span class="na">fromDatabase</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+          <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+</code></pre></div></div>
+
+<h3 id="cron-jobs-type-cron">Cron Jobs (<code class="language-plaintext highlighter-rouge">type: cron</code>)</h3>
+
+<p>Scheduled tasks that run on a cron schedule.</p>
+
+<p><strong>Required fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code>: Unique service identifier</li>
+  <li><code class="language-plaintext highlighter-rouge">type</code>: Must be <code class="language-plaintext highlighter-rouge">cron</code></li>
+  <li><code class="language-plaintext highlighter-rouge">runtime</code>: Language/environment</li>
+  <li><code class="language-plaintext highlighter-rouge">schedule</code>: Cron expression</li>
+  <li><code class="language-plaintext highlighter-rouge">buildCommand</code>: Command to build</li>
+  <li><code class="language-plaintext highlighter-rouge">startCommand</code>: Command to execute on schedule</li>
+</ul>
+
+<p><strong>Schedule format:</strong> Standard cron syntax (minute hour day month weekday)</p>
+
+<p><strong>Examples:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">0 0 * * *</code> - Daily at midnight UTC</li>
+  <li><code class="language-plaintext highlighter-rouge">*/15 * * * *</code> - Every 15 minutes</li>
+  <li><code class="language-plaintext highlighter-rouge">0 9 * * 1</code> - Every Monday at 9 AM UTC</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">cron</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">daily-backup</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">schedule</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0</span><span class="nv"> </span><span class="s">2</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*"</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci</span>
+    <span class="na">startCommand</span><span class="pi">:</span> <span class="s">node scripts/backup.js</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">DATABASE_URL</span>
+        <span class="na">fromDatabase</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">postgres</span>
+          <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+</code></pre></div></div>
+
+<h3 id="static-sites-type-static-or-type-web-with-runtime-static">Static Sites (<code class="language-plaintext highlighter-rouge">type: static</code> or <code class="language-plaintext highlighter-rouge">type: web</code> with <code class="language-plaintext highlighter-rouge">runtime: static</code>)</h3>
+
+<p>Serve static HTML/CSS/JS files via CDN.</p>
+
+<p><strong>Required fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code>: Unique service identifier</li>
+  <li><code class="language-plaintext highlighter-rouge">type</code>: <code class="language-plaintext highlighter-rouge">web</code></li>
+  <li><code class="language-plaintext highlighter-rouge">runtime</code>: <code class="language-plaintext highlighter-rouge">static</code></li>
+  <li><code class="language-plaintext highlighter-rouge">buildCommand</code>: Command to build static assets</li>
+  <li><code class="language-plaintext highlighter-rouge">staticPublishPath</code>: Path to built files (e.g., <code class="language-plaintext highlighter-rouge">./build</code>, <code class="language-plaintext highlighter-rouge">./dist</code>)</li>
+</ul>
+
+<p><strong>Optional configuration:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">routes</code>: Routing rules for SPAs</li>
+  <li><code class="language-plaintext highlighter-rouge">headers</code>: Custom HTTP headers</li>
+  <li><code class="language-plaintext highlighter-rouge">buildFilter</code>: Path filters for build triggers</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">react-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">static</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci &amp;&amp; npm run build</span>
+    <span class="na">staticPublishPath</span><span class="pi">:</span> <span class="s">./dist</span>
+    <span class="na">routes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">rewrite</span>
+        <span class="na">source</span><span class="pi">:</span> <span class="s">/*</span>
+        <span class="na">destination</span><span class="pi">:</span> <span class="s">/index.html</span>
+    <span class="na">headers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/*</span>
+        <span class="na">name</span><span class="pi">:</span> <span class="s">Cache-Control</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s">public, max-age=31536000, immutable</span>
+</code></pre></div></div>
+
+<h3 id="private-services-type-pserv">Private Services (<code class="language-plaintext highlighter-rouge">type: pserv</code>)</h3>
+
+<p>Internal services accessible only within your Render account.</p>
+
+<p><strong>Required fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code>: Unique service identifier</li>
+  <li><code class="language-plaintext highlighter-rouge">type</code>: Must be <code class="language-plaintext highlighter-rouge">pserv</code></li>
+  <li><code class="language-plaintext highlighter-rouge">runtime</code>: Language/environment</li>
+  <li><code class="language-plaintext highlighter-rouge">buildCommand</code>: Command to build</li>
+  <li><code class="language-plaintext highlighter-rouge">startCommand</code>: Command to start</li>
+</ul>
+
+<p><strong>Use cases:</strong></p>
+<ul>
+  <li>Internal APIs</li>
+  <li>Database proxies</li>
+  <li>Microservices not exposed to internet</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">pserv</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">internal-api</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">go</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">go build -o bin/app</span>
+    <span class="na">startCommand</span><span class="pi">:</span> <span class="s">./bin/app</span>
+</code></pre></div></div>
+
+<h2 id="runtimes">Runtimes</h2>
+
+<h3 id="native-runtimes">Native Runtimes</h3>
+
+<p><strong>Node.js (<code class="language-plaintext highlighter-rouge">runtime: node</code>):</strong></p>
+<ul>
+  <li>Versions: 14, 16, 18, 20, 21</li>
+  <li>Default version: 20</li>
+  <li>Specify version in <code class="language-plaintext highlighter-rouge">package.json</code> engines field</li>
+</ul>
+
+<p><strong>Python (<code class="language-plaintext highlighter-rouge">runtime: python</code>):</strong></p>
+<ul>
+  <li>Versions: 3.8, 3.9, 3.10, 3.11, 3.12</li>
+  <li>Default version: 3.11</li>
+  <li>Specify version in <code class="language-plaintext highlighter-rouge">runtime.txt</code> or <code class="language-plaintext highlighter-rouge">Pipfile</code></li>
+</ul>
+
+<p><strong>Go (<code class="language-plaintext highlighter-rouge">runtime: go</code>):</strong></p>
+<ul>
+  <li>Versions: 1.20, 1.21, 1.22, 1.23</li>
+  <li>Uses go modules</li>
+  <li>Version from <code class="language-plaintext highlighter-rouge">go.mod</code></li>
+</ul>
+
+<p><strong>Ruby (<code class="language-plaintext highlighter-rouge">runtime: ruby</code>):</strong></p>
+<ul>
+  <li>Versions: 3.0, 3.1, 3.2, 3.3</li>
+  <li>Uses Bundler</li>
+  <li>Version from <code class="language-plaintext highlighter-rouge">.ruby-version</code> or <code class="language-plaintext highlighter-rouge">Gemfile</code></li>
+</ul>
+
+<p><strong>Rust (<code class="language-plaintext highlighter-rouge">runtime: rust</code>):</strong></p>
+<ul>
+  <li>Latest stable version</li>
+  <li>Uses Cargo</li>
+</ul>
+
+<p><strong>Elixir (<code class="language-plaintext highlighter-rouge">runtime: elixir</code>):</strong></p>
+<ul>
+  <li>Latest stable version</li>
+  <li>Uses Mix</li>
+</ul>
+
+<h3 id="docker-runtime">Docker Runtime</h3>
+
+<p><strong>Docker (<code class="language-plaintext highlighter-rouge">runtime: docker</code>):</strong>
+Build from a Dockerfile in your repository.</p>
+
+<p><strong>Additional fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">dockerfilePath</code>: Path to Dockerfile (default: <code class="language-plaintext highlighter-rouge">./Dockerfile</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">dockerContext</code>: Build context directory (default: <code class="language-plaintext highlighter-rouge">.</code>)</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">docker-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">docker</span>
+    <span class="na">dockerfilePath</span><span class="pi">:</span> <span class="s">./docker/Dockerfile</span>
+    <span class="na">dockerContext</span><span class="pi">:</span> <span class="s">.</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+</code></pre></div></div>
+
+<p><strong>Image (<code class="language-plaintext highlighter-rouge">runtime: image</code>):</strong>
+Deploy pre-built Docker images from a registry.</p>
+
+<p><strong>Additional fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">image</code>: Image URL (e.g., <code class="language-plaintext highlighter-rouge">registry.com/image:tag</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">registryCredential</code>: Credentials for private registries</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">prebuilt-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">image</span>
+    <span class="na">image</span><span class="pi">:</span> <span class="s">myregistry.com/app:v1.2.3</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+</code></pre></div></div>
+
+<h2 id="service-plans">Service Plans</h2>
+
+<p>Available instance types:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Plan</th>
+      <th>RAM</th>
+      <th>CPU</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">free</code></td>
+      <td>512 MB</td>
+      <td>0.5</td>
+      <td>Free (750 hrs/mo)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">starter</code></td>
+      <td>512 MB</td>
+      <td>0.5</td>
+      <td>$7/month</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">standard</code></td>
+      <td>2 GB</td>
+      <td>1</td>
+      <td>$25/month</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pro</code></td>
+      <td>4 GB</td>
+      <td>2</td>
+      <td>$85/month</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">pro_plus</code></td>
+      <td>8 GB</td>
+      <td>4</td>
+      <td>$175/month</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Always default to <code class="language-plaintext highlighter-rouge">plan: free</code> unless user specifies otherwise.</strong></p>
+
+<h2 id="regions">Regions</h2>
+
+<p>Available deployment regions:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">oregon</code> (US West) - Default</li>
+  <li><code class="language-plaintext highlighter-rouge">ohio</code> (US East)</li>
+  <li><code class="language-plaintext highlighter-rouge">virginia</code> (US East)</li>
+  <li><code class="language-plaintext highlighter-rouge">frankfurt</code> (EU)</li>
+  <li><code class="language-plaintext highlighter-rouge">singapore</code> (Asia)</li>
+</ul>
+
+<p><strong>Example:</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">my-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">region</span><span class="pi">:</span> <span class="s">frankfurt</span>
+</code></pre></div></div>
+
+<h2 id="environment-variables">Environment Variables</h2>
+
+<p>Three patterns for defining environment variables:</p>
+
+<h3 id="1-hardcoded-values">1. Hardcoded Values</h3>
+
+<p>For non-sensitive configuration:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">envVars</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">NODE_ENV</span>
+    <span class="na">value</span><span class="pi">:</span> <span class="s">production</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">API_URL</span>
+    <span class="na">value</span><span class="pi">:</span> <span class="s">https://api.example.com</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">LOG_LEVEL</span>
+    <span class="na">value</span><span class="pi">:</span> <span class="s">info</span>
+</code></pre></div></div>
+
+<h3 id="2-generated-secrets">2. Generated Secrets</h3>
+
+<p>Render generates a base64-encoded 256-bit random value:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">envVars</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">SESSION_SECRET</span>
+    <span class="na">generateValue</span><span class="pi">:</span> <span class="kc">true</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">ENCRYPTION_KEY</span>
+    <span class="na">generateValue</span><span class="pi">:</span> <span class="kc">true</span>
+</code></pre></div></div>
+
+<h3 id="3-user-provided-secrets">3. User-Provided Secrets</h3>
+
+<p>Prompt user for values during Blueprint creation:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">envVars</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">STRIPE_SECRET_KEY</span>
+    <span class="na">sync</span><span class="pi">:</span> <span class="kc">false</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">JWT_SECRET</span>
+    <span class="na">sync</span><span class="pi">:</span> <span class="kc">false</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">API_KEY</span>
+    <span class="na">sync</span><span class="pi">:</span> <span class="kc">false</span>
+</code></pre></div></div>
+
+<p><strong>The <code class="language-plaintext highlighter-rouge">sync: false</code> flag means “user will fill this in the Dashboard”.</strong></p>
+
+<h3 id="4-database-references">4. Database References</h3>
+
+<p>Link to database connection strings:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">envVars</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">DATABASE_URL</span>
+    <span class="na">fromDatabase</span><span class="pi">:</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">postgres</span>
+      <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">REDIS_URL</span>
+    <span class="na">fromDatabase</span><span class="pi">:</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+      <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+</code></pre></div></div>
+
+<p><strong>Available properties:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">connectionString</code>: Full connection URL</li>
+  <li><code class="language-plaintext highlighter-rouge">host</code>: Database host</li>
+  <li><code class="language-plaintext highlighter-rouge">port</code>: Database port</li>
+  <li><code class="language-plaintext highlighter-rouge">user</code>: Database username</li>
+  <li><code class="language-plaintext highlighter-rouge">password</code>: Database password</li>
+  <li><code class="language-plaintext highlighter-rouge">database</code>: Database name</li>
+  <li><code class="language-plaintext highlighter-rouge">hostport</code>: Combined <code class="language-plaintext highlighter-rouge">host:port</code></li>
+</ul>
+
+<h3 id="5-service-references">5. Service References</h3>
+
+<p>Link to other services:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">envVars</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">API_URL</span>
+    <span class="na">fromService</span><span class="pi">:</span>
+      <span class="na">name</span><span class="pi">:</span> <span class="s">api-server</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+      <span class="na">property</span><span class="pi">:</span> <span class="s">host</span>
+</code></pre></div></div>
+
+<h3 id="6-environment-variable-groups">6. Environment Variable Groups</h3>
+
+<p>Reusable groups shared across services:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">envVarGroups</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">shared-config</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">LOG_LEVEL</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s">info</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">ENVIRONMENT</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s">production</span>
+
+<span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">web-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">fromGroup</span><span class="pi">:</span> <span class="s">shared-config</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">PORT</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="m">10000</span>
+</code></pre></div></div>
+
+<h2 id="databases">Databases</h2>
+
+<h3 id="postgresql">PostgreSQL</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">databases</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">postgres</span>
+    <span class="na">databaseName</span><span class="pi">:</span> <span class="s">myapp_prod</span>
+    <span class="na">user</span><span class="pi">:</span> <span class="s">myapp_user</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">postgresMajorVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">15"</span>
+    <span class="na">ipAllowList</span><span class="pi">:</span> <span class="pi">[]</span>
+</code></pre></div></div>
+
+<p><strong>Plans:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">free</code>: 1 GB storage, 97 MB RAM, 0.1 CPU</li>
+  <li><code class="language-plaintext highlighter-rouge">basic-256mb</code>, <code class="language-plaintext highlighter-rouge">basic-512mb</code>, <code class="language-plaintext highlighter-rouge">basic-1gb</code>, <code class="language-plaintext highlighter-rouge">basic-4gb</code></li>
+  <li><code class="language-plaintext highlighter-rouge">pro-4gb</code>, <code class="language-plaintext highlighter-rouge">pro-8gb</code>, <code class="language-plaintext highlighter-rouge">pro-16gb</code>, etc.</li>
+  <li><code class="language-plaintext highlighter-rouge">accelerated-4gb</code>, <code class="language-plaintext highlighter-rouge">accelerated-8gb</code>, etc. (SSD-backed)</li>
+</ul>
+
+<p><strong>Key fields:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code>: Identifier for references</li>
+  <li><code class="language-plaintext highlighter-rouge">databaseName</code>: Actual PostgreSQL database name</li>
+  <li><code class="language-plaintext highlighter-rouge">user</code>: Database username</li>
+  <li><code class="language-plaintext highlighter-rouge">postgresMajorVersion</code>: PostgreSQL version (11-16)</li>
+  <li><code class="language-plaintext highlighter-rouge">ipAllowList</code>: Array of CIDR blocks (empty = internal only)</li>
+  <li><code class="language-plaintext highlighter-rouge">diskSizeGB</code>: Storage size (paid plans only)</li>
+</ul>
+
+<p><strong>High Availability (paid plans):</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">databases</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">postgres</span>
+    <span class="na">databaseName</span><span class="pi">:</span> <span class="s">myapp_prod</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">pro-4gb</span>
+    <span class="na">highAvailabilityEnabled</span><span class="pi">:</span> <span class="kc">true</span>
+</code></pre></div></div>
+
+<p><strong>Read Replicas (paid plans):</strong></p>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">databases</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">postgres</span>
+    <span class="na">databaseName</span><span class="pi">:</span> <span class="s">myapp_prod</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">pro-4gb</span>
+    <span class="na">readReplicas</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">read-replica-1</span>
+        <span class="na">region</span><span class="pi">:</span> <span class="s">ohio</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">read-replica-2</span>
+        <span class="na">region</span><span class="pi">:</span> <span class="s">frankfurt</span>
+</code></pre></div></div>
+
+<h3 id="redis-key-value-store">Redis (Key-Value Store)</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">databases</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">maxmemoryPolicy</span><span class="pi">:</span> <span class="s">allkeys-lru</span>
+    <span class="na">ipAllowList</span><span class="pi">:</span> <span class="pi">[]</span>
+</code></pre></div></div>
+
+<p><strong>Plans:</strong> Same as PostgreSQL</p>
+
+<p><strong>maxmemoryPolicy options:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">allkeys-lru</code>: Evict least recently used keys</li>
+  <li><code class="language-plaintext highlighter-rouge">volatile-lru</code>: Evict LRU keys with TTL</li>
+  <li><code class="language-plaintext highlighter-rouge">allkeys-random</code>: Evict random keys</li>
+  <li><code class="language-plaintext highlighter-rouge">volatile-random</code>: Evict random keys with TTL</li>
+  <li><code class="language-plaintext highlighter-rouge">volatile-ttl</code>: Evict keys with soonest TTL</li>
+  <li><code class="language-plaintext highlighter-rouge">noeviction</code>: Return errors when memory full</li>
+</ul>
+
+<h2 id="scaling">Scaling</h2>
+
+<h3 id="manual-scaling">Manual Scaling</h3>
+
+<p>Fixed number of instances:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">my-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">standard</span>
+    <span class="na">numInstances</span><span class="pi">:</span> <span class="m">3</span>
+</code></pre></div></div>
+
+<h3 id="autoscaling">Autoscaling</h3>
+
+<p>Dynamic scaling based on CPU/memory (Professional workspace required):</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">my-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">standard</span>
+    <span class="na">scaling</span><span class="pi">:</span>
+      <span class="na">minInstances</span><span class="pi">:</span> <span class="m">1</span>
+      <span class="na">maxInstances</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">targetCPUPercent</span><span class="pi">:</span> <span class="m">60</span>
+      <span class="na">targetMemoryPercent</span><span class="pi">:</span> <span class="m">70</span>
+</code></pre></div></div>
+
+<p><strong>Notes:</strong></p>
+<ul>
+  <li>Autoscaling disabled in preview environments</li>
+  <li>Preview environments run <code class="language-plaintext highlighter-rouge">minInstances</code> count</li>
+  <li>Requires Professional or higher workspace</li>
+</ul>
+
+<h2 id="health-checks">Health Checks</h2>
+
+<p>Configure health check endpoints:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">my-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">healthCheckPath</span><span class="pi">:</span> <span class="s">/health</span>
+</code></pre></div></div>
+
+<p><strong>Default:</strong> <code class="language-plaintext highlighter-rouge">/</code> (root path)</p>
+
+<p><strong>Recommended:</strong> Add a dedicated <code class="language-plaintext highlighter-rouge">/health</code> endpoint that returns <code class="language-plaintext highlighter-rouge">200 OK</code>.</p>
+
+<h2 id="build-filters">Build Filters</h2>
+
+<p>Control when builds are triggered based on changed files:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">frontend</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">static</span>
+    <span class="na">buildFilter</span><span class="pi">:</span>
+      <span class="na">paths</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">frontend/**</span>
+      <span class="na">ignoredPaths</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">frontend/README.md</span>
+        <span class="pi">-</span> <span class="s">frontend/**/*.test.js</span>
+</code></pre></div></div>
+
+<p><strong>Behavior:</strong></p>
+<ul>
+  <li>If <code class="language-plaintext highlighter-rouge">paths</code> specified: Build only when files in those paths change</li>
+  <li>If <code class="language-plaintext highlighter-rouge">ignoredPaths</code> specified: Don’t build when only ignored files change</li>
+</ul>
+
+<h2 id="projects-and-environments">Projects and Environments</h2>
+
+<p>Organize services into projects with multiple environments:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">projects</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">my-application</span>
+    <span class="na">environments</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">production</span>
+        <span class="na">services</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+            <span class="na">name</span><span class="pi">:</span> <span class="s">prod-api</span>
+            <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+            <span class="na">plan</span><span class="pi">:</span> <span class="s">pro</span>
+            <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci</span>
+            <span class="na">startCommand</span><span class="pi">:</span> <span class="s">npm start</span>
+        <span class="na">databases</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">prod-postgres</span>
+            <span class="na">plan</span><span class="pi">:</span> <span class="s">pro-4gb</span>
+        <span class="na">networking</span><span class="pi">:</span>
+          <span class="na">isolation</span><span class="pi">:</span> <span class="s">enabled</span>
+        <span class="na">permissions</span><span class="pi">:</span>
+          <span class="na">protection</span><span class="pi">:</span> <span class="s">enabled</span>
+
+      <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">staging</span>
+        <span class="na">services</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+            <span class="na">name</span><span class="pi">:</span> <span class="s">staging-api</span>
+            <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+            <span class="na">plan</span><span class="pi">:</span> <span class="s">starter</span>
+            <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci</span>
+            <span class="na">startCommand</span><span class="pi">:</span> <span class="s">npm start</span>
+        <span class="na">databases</span><span class="pi">:</span>
+          <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">staging-postgres</span>
+            <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+</code></pre></div></div>
+
+<p><strong>Environment features:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">networking.isolation</code>: Enable network isolation between environments</li>
+  <li><code class="language-plaintext highlighter-rouge">permissions.protection</code>: Require approval for environment changes</li>
+</ul>
+
+<h2 id="preview-environments">Preview Environments</h2>
+
+<p>Configure automatic preview environments for pull requests:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">previews</span><span class="pi">:</span>
+  <span class="na">generation</span><span class="pi">:</span> <span class="s">auto_preview</span>  <span class="c1"># auto_preview | manual | none</span>
+</code></pre></div></div>
+
+<p><strong>Options:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">auto_preview</code>: Create preview environment for each PR automatically</li>
+  <li><code class="language-plaintext highlighter-rouge">manual</code>: User manually triggers preview creation</li>
+  <li><code class="language-plaintext highlighter-rouge">none</code>: Disable preview environments</li>
+</ul>
+
+<h2 id="complete-example">Complete Example</h2>
+
+<p>Full-featured Blueprint with multiple services and databases:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">services</span><span class="pi">:</span>
+  <span class="c1"># Web service</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">web-app</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">region</span><span class="pi">:</span> <span class="s">oregon</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci &amp;&amp; npm run build</span>
+    <span class="na">startCommand</span><span class="pi">:</span> <span class="s">npm start</span>
+    <span class="na">branch</span><span class="pi">:</span> <span class="s">main</span>
+    <span class="na">autoDeploy</span><span class="pi">:</span> <span class="kc">true</span>
+    <span class="na">healthCheckPath</span><span class="pi">:</span> <span class="s">/health</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">NODE_ENV</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s">production</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">DATABASE_URL</span>
+        <span class="na">fromDatabase</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">postgres</span>
+          <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">REDIS_URL</span>
+        <span class="na">fromDatabase</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+          <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">JWT_SECRET</span>
+        <span class="na">sync</span><span class="pi">:</span> <span class="kc">false</span>
+
+  <span class="c1"># Background worker</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">worker</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">queue-worker</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci</span>
+    <span class="na">startCommand</span><span class="pi">:</span> <span class="s">node worker.js</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">REDIS_URL</span>
+        <span class="na">fromDatabase</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+          <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+
+  <span class="c1"># Cron job</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">cron</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">daily-cleanup</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">node</span>
+    <span class="na">schedule</span><span class="pi">:</span> <span class="s2">"</span><span class="s">0</span><span class="nv"> </span><span class="s">3</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*"</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci</span>
+    <span class="na">startCommand</span><span class="pi">:</span> <span class="s">node scripts/cleanup.js</span>
+    <span class="na">envVars</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">key</span><span class="pi">:</span> <span class="s">DATABASE_URL</span>
+        <span class="na">fromDatabase</span><span class="pi">:</span>
+          <span class="na">name</span><span class="pi">:</span> <span class="s">postgres</span>
+          <span class="na">property</span><span class="pi">:</span> <span class="s">connectionString</span>
+
+  <span class="c1"># Static frontend</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">web</span>
+    <span class="na">name</span><span class="pi">:</span> <span class="s">frontend</span>
+    <span class="na">runtime</span><span class="pi">:</span> <span class="s">static</span>
+    <span class="na">buildCommand</span><span class="pi">:</span> <span class="s">npm ci &amp;&amp; npm run build</span>
+    <span class="na">staticPublishPath</span><span class="pi">:</span> <span class="s">./dist</span>
+    <span class="na">routes</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">rewrite</span>
+        <span class="na">source</span><span class="pi">:</span> <span class="s">/*</span>
+        <span class="na">destination</span><span class="pi">:</span> <span class="s">/index.html</span>
+
+<span class="na">databases</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">postgres</span>
+    <span class="na">databaseName</span><span class="pi">:</span> <span class="s">app_production</span>
+    <span class="na">user</span><span class="pi">:</span> <span class="s">app_user</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">postgresMajorVersion</span><span class="pi">:</span> <span class="s2">"</span><span class="s">15"</span>
+    <span class="na">ipAllowList</span><span class="pi">:</span> <span class="pi">[]</span>
+
+  <span class="pi">-</span> <span class="na">name</span><span class="pi">:</span> <span class="s">redis</span>
+    <span class="na">plan</span><span class="pi">:</span> <span class="s">free</span>
+    <span class="na">maxmemoryPolicy</span><span class="pi">:</span> <span class="s">allkeys-lru</span>
+    <span class="na">ipAllowList</span><span class="pi">:</span> <span class="pi">[]</span>
+</code></pre></div></div>
+
+<h2 id="validation">Validation</h2>
+
+<p>Validate your Blueprint before deploying (when CLI command is available):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>render blueprint validate
+</code></pre></div></div>
+
+<p><strong>Common validation errors:</strong></p>
+<ul>
+  <li>Missing required fields</li>
+  <li>Invalid runtime values</li>
+  <li>Incorrect environment variable references</li>
+  <li>Invalid cron expressions</li>
+  <li>Invalid YAML syntax</li>
+</ul>
+
+<h2 id="best-practices">Best Practices</h2>
+
+<ol>
+  <li><strong>Always use <code class="language-plaintext highlighter-rouge">plan: free</code> by default</strong> - Let users upgrade if needed</li>
+  <li><strong>Mark all secrets with <code class="language-plaintext highlighter-rouge">sync: false</code></strong> - Never hardcode sensitive values</li>
+  <li><strong>Use <code class="language-plaintext highlighter-rouge">fromDatabase</code> for database URLs</strong> - Automatic internal connection strings</li>
+  <li><strong>Add health check endpoints</strong> - Faster deployment detection</li>
+  <li><strong>Use non-interactive build commands</strong> - Prevents build hangs</li>
+  <li><strong>Bind to <code class="language-plaintext highlighter-rouge">0.0.0.0:$PORT</code></strong> - Required for web services</li>
+  <li><strong>Use environment variable groups</strong> - Share config across services</li>
+  <li><strong>Enable autoDeploy: true</strong> - Deploy automatically on push</li>
+  <li><strong>Set appropriate regions</strong> - Choose closest to your users</li>
+  <li><strong>Use build filters</strong> - Optimize build triggers in monorepos</li>
+</ol>
+
+<h2 id="additional-resources">Additional Resources</h2>
+
+<ul>
+  <li>Official Blueprint Specification: https://render.com/docs/blueprint-spec</li>
+  <li>Render CLI Documentation: https://render.com/docs/cli</li>
+  <li>Environment Variables Guide: https://render.com/docs/environment-variables</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

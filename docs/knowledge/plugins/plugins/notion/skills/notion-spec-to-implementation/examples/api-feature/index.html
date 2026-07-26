@@ -1,0 +1,1724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Api Feature · A developer journey</title>
+<meta name="description" content="Example: API Feature Implementation">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/notion/skills/notion-spec-to-implementation/examples/api-feature/">
+
+<meta property="og:title" content="Api Feature · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/notion/skills/notion-spec-to-implementation/examples/api-feature/">
+<meta property="og:description" content="Example: API Feature Implementation">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Api Feature</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="example-api-feature-implementation">Example: API Feature Implementation</h1>
+
+<h2 id="user-request">User Request</h2>
+
+<blockquote>
+  <p>“Create an implementation plan for the User Profile API spec”</p>
+</blockquote>
+
+<h2 id="workflow-execution">Workflow Execution</h2>
+
+<h3 id="step-1-fetch-specification">Step 1: Fetch Specification</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Notion:search
+query: "User Profile API spec"
+query_type: "internal"
+filters: {}
+</code></pre></div></div>
+
+<p>Found: “User Profile API Specification” in Engineering Specs</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Notion:fetch
+id: "user-profile-api-spec-page-id"
+</code></pre></div></div>
+
+<h3 id="step-2-parse-specification">Step 2: Parse Specification</h3>
+
+<p><strong>Spec Content Extracted:</strong></p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># User Profile API Specification</span>
+
+<span class="gu">## Overview</span>
+RESTful API for user profile management
+
+<span class="gu">## Requirements</span>
+
+<span class="gu">### Functional</span>
+<span class="p">-</span> FR-1: Get user profile by ID
+<span class="p">-</span> FR-2: Update user profile (name, bio, avatar)
+<span class="p">-</span> FR-3: Upload profile avatar
+<span class="p">-</span> FR-4: Get user's public profile (limited fields)
+<span class="p">-</span> FR-5: Search users by name
+
+<span class="gu">### Non-Functional</span>
+<span class="p">-</span> NFR-1: Response time &lt; 200ms (p95)
+<span class="p">-</span> NFR-2: Support 1000 concurrent users
+<span class="p">-</span> NFR-3: Avatar upload &lt; 5MB
+<span class="p">-</span> NFR-4: GDPR compliant (data portability)
+
+<span class="gu">## API Endpoints</span>
+
+GET /api/v1/users/:id
+PUT /api/v1/users/:id
+POST /api/v1/users/:id/avatar
+GET /api/v1/users/:id/public
+GET /api/v1/users/search
+
+<span class="gu">## Data Model</span>
+<span class="p">-</span> id (UUID)
+<span class="p">-</span> email (string, unique)
+<span class="p">-</span> name (string)
+<span class="p">-</span> bio (text, max 500 chars)
+<span class="p">-</span> avatar_url (string)
+<span class="p">-</span> created_at (timestamp)
+<span class="p">-</span> updated_at (timestamp)
+
+<span class="gu">## Security</span>
+<span class="p">-</span> Authentication: JWT bearer token
+<span class="p">-</span> Authorization: Users can only update own profile
+<span class="p">-</span> Rate limiting: 100 req/min per user
+
+<span class="gu">## Acceptance Criteria</span>
+<span class="p">-</span> AC-1: All endpoints return proper HTTP status codes
+<span class="p">-</span> AC-2: Validation errors return 400 with error details
+<span class="p">-</span> AC-3: Unauthorized access returns 401
+<span class="p">-</span> AC-4: Rate limit exceeded returns 429
+<span class="p">-</span> AC-5: Avatar images stored in S3
+</code></pre></div></div>
+
+<h3 id="step-3-create-implementation-plan">Step 3: Create Implementation Plan</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Notion:notion-create-pages
+
+parent: { page_id: "engineering-plans-parent-id" }
+
+pages: [{
+  properties: {
+    "title": "Implementation Plan: User Profile API"
+  },
+  content: "[Implementation plan]"
+}]
+</code></pre></div></div>
+
+<p><strong>Implementation Plan Created:</strong></p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># Implementation Plan: User Profile API</span>
+
+<span class="gu">## Overview</span>
+Build RESTful API for user profile management with CRUD operations, avatar upload, and search functionality.
+
+<span class="gu">## Linked Specification</span>
+<span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>User Profile API Specification<span class="nt">&lt;/mention-page&gt;</span>
+
+<span class="gu">## Requirements Summary</span>
+
+<span class="gu">### Functional Requirements</span>
+<span class="p">-</span> ✅ Get user profile (authenticated)
+<span class="p">-</span> ✅ Update profile fields (name, bio)
+<span class="p">-</span> ✅ Upload avatar with image processing
+<span class="p">-</span> ✅ Public profile view (limited fields)
+<span class="p">-</span> ✅ User search by name
+
+<span class="gu">### Non-Functional Requirements</span>
+<span class="p">-</span> <span class="gs">**Performance**</span>: &lt; 200ms response time (p95)
+<span class="p">-</span> <span class="gs">**Scalability**</span>: 1000 concurrent users
+<span class="p">-</span> <span class="gs">**Storage**</span>: Avatar files &lt; 5MB to S3
+<span class="p">-</span> <span class="gs">**Compliance**</span>: GDPR data portability
+
+<span class="gu">### Acceptance Criteria</span>
+<span class="p">-</span> All endpoints with proper status codes
+<span class="p">-</span> Input validation with error details
+<span class="p">-</span> JWT authentication required
+<span class="p">-</span> Rate limiting enforced
+<span class="p">-</span> Avatars stored in S3
+
+<span class="gu">## Technical Approach</span>
+
+<span class="gu">### Architecture</span>
+<span class="p">-</span> <span class="gs">**Framework**</span>: Express.js (Node.js)
+<span class="p">-</span> <span class="gs">**Database**</span>: PostgreSQL
+<span class="p">-</span> <span class="gs">**Storage**</span>: AWS S3 for avatars
+<span class="p">-</span> <span class="gs">**Cache**</span>: Redis for profile data
+<span class="p">-</span> <span class="gs">**Search**</span>: PostgreSQL full-text search
+
+<span class="gu">### Key Design Decisions</span>
+<span class="p">1.</span> <span class="gs">**JWT Authentication**</span>: Stateless auth, scales horizontally
+<span class="p">2.</span> <span class="gs">**S3 for Avatars**</span>: Offload storage, CDN integration ready
+<span class="p">3.</span> <span class="gs">**Redis Caching**</span>: Reduce DB load for frequently accessed profiles
+<span class="p">4.</span> <span class="gs">**Rate Limiting**</span>: Token bucket algorithm, per-user limits
+
+<span class="gu">## Implementation Phases</span>
+
+<span class="gu">### Phase 1: Foundation (Days 1-2)</span>
+<span class="gs">**Goal**</span>: Set up core infrastructure
+
+<span class="gs">**Tasks**</span>:
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Setup database schema<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Configure S3 bucket<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Setup Redis cache<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Create API scaffolding<span class="nt">&lt;/mention-page&gt;</span>
+
+<span class="gs">**Deliverables**</span>: Working skeleton with DB, storage, cache ready
+<span class="gs">**Estimated effort**</span>: 2 days
+
+<span class="gu">### Phase 2: Core Endpoints (Days 3-5)</span>
+<span class="gs">**Goal**</span>: Implement main CRUD operations
+
+<span class="gs">**Tasks**</span>:
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Implement GET user profile<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Implement PUT update profile<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Add input validation<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Add JWT authentication middleware<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Implement rate limiting<span class="nt">&lt;/mention-page&gt;</span>
+
+<span class="gs">**Deliverables**</span>: Working CRUD operations with auth
+<span class="gs">**Estimated effort**</span>: 3 days
+
+<span class="gu">### Phase 3: Avatar Upload (Days 6-7)</span>
+<span class="gs">**Goal**</span>: Avatar management with S3
+
+<span class="gs">**Tasks**</span>:
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Implement avatar upload endpoint<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Add image validation (size, format)<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Process and resize images<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Upload to S3 with signed URLs<span class="nt">&lt;/mention-page&gt;</span>
+
+<span class="gs">**Deliverables**</span>: Avatar upload/update functionality
+<span class="gs">**Estimated effort**</span>: 2 days
+
+<span class="gu">### Phase 4: Search &amp; Public Profile (Days 8-9)</span>
+<span class="gs">**Goal**</span>: Complete remaining features
+
+<span class="gs">**Tasks**</span>:
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Implement user search<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Implement public profile endpoint<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Add search indexing<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Optimize search queries<span class="nt">&lt;/mention-page&gt;</span>
+
+<span class="gs">**Deliverables**</span>: Search and public profiles working
+<span class="gs">**Estimated effort**</span>: 2 days
+
+<span class="gu">### Phase 5: Testing &amp; Optimization (Days 10-12)</span>
+<span class="gs">**Goal**</span>: Production-ready quality
+
+<span class="gs">**Tasks**</span>:
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Write unit tests<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Write integration tests<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Performance testing<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Security audit<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> [ ] <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>API documentation<span class="nt">&lt;/mention-page&gt;</span>
+
+<span class="gs">**Deliverables**</span>: Tested, documented, production-ready API
+<span class="gs">**Estimated effort**</span>: 3 days
+
+<span class="gu">## Dependencies</span>
+
+<span class="gu">### External Dependencies</span>
+<span class="p">-</span> AWS S3 bucket created ✅
+<span class="p">-</span> Redis instance available ✅
+<span class="p">-</span> PostgreSQL database provisioned ✅
+
+<span class="gu">### Internal Dependencies</span>
+<span class="p">-</span> JWT authentication service (exists)
+<span class="p">-</span> User database table (exists)
+<span class="p">-</span> Logging infrastructure (exists)
+
+<span class="gu">### Blockers</span>
+None currently
+
+<span class="gu">## Risks &amp; Mitigation</span>
+
+<span class="gu">### Risk 1: Image Processing Performance</span>
+<span class="p">-</span> <span class="gs">**Probability**</span>: Medium
+<span class="p">-</span> <span class="gs">**Impact**</span>: Medium
+<span class="p">-</span> <span class="gs">**Mitigation**</span>: Use background job queue for processing, return signed upload URL immediately
+
+<span class="gu">### Risk 2: S3 Upload Failures</span>
+<span class="p">-</span> <span class="gs">**Probability**</span>: Low
+<span class="p">-</span> <span class="gs">**Impact**</span>: Medium
+<span class="p">-</span> <span class="gs">**Mitigation**</span>: Implement retry logic with exponential backoff, fallback to local storage temporarily
+
+<span class="gu">### Risk 3: Rate Limiting Complexity</span>
+<span class="p">-</span> <span class="gs">**Probability**</span>: Low
+<span class="p">-</span> <span class="gs">**Impact**</span>: Low
+<span class="p">-</span> <span class="gs">**Mitigation**</span>: Use proven library (express-rate-limit with Redis store)
+
+<span class="gu">### Risk 4: Search Performance</span>
+<span class="p">-</span> <span class="gs">**Probability**</span>: Medium
+<span class="p">-</span> <span class="gs">**Impact**</span>: Medium
+<span class="p">-</span> <span class="gs">**Mitigation**</span>: Add database indexes, consider Elasticsearch if needed later
+
+<span class="gu">## Timeline</span>
+
+| Milestone | Target Date | Status |
+|-----------|-------------|--------|
+| Phase 1 Complete | Oct 16 | ⏳ Planned |
+| Phase 2 Complete | Oct 19 | ⏳ Planned |
+| Phase 3 Complete | Oct 21 | ⏳ Planned |
+| Phase 4 Complete | Oct 23 | ⏳ Planned |
+| Phase 5 Complete | Oct 26 | ⏳ Planned |
+| <span class="gs">**Production Deploy**</span> | <span class="gs">**Oct 28**</span> | ⏳ Planned |
+
+<span class="gs">**Total Duration**</span>: 12 working days (~2.5 weeks)
+
+<span class="gu">## Success Criteria</span>
+
+<span class="gu">### Technical Success</span>
+<span class="p">-</span> [ ] All 5 endpoints implemented and working
+<span class="p">-</span> [ ] Response time &lt; 200ms (p95) verified in load testing
+<span class="p">-</span> [ ] Handles 1000 concurrent users
+<span class="p">-</span> [ ] All acceptance criteria met
+<span class="p">-</span> [ ] Test coverage &gt; 80%
+<span class="p">-</span> [ ] Security scan passed
+<span class="p">-</span> [ ] API documentation complete
+
+<span class="gu">### Business Success</span>
+<span class="p">-</span> [ ] User profile updates functional
+<span class="p">-</span> [ ] Avatar uploads working reliably
+<span class="p">-</span> [ ] Search returns relevant results in &lt; 500ms
+<span class="p">-</span> [ ] Zero critical bugs in first week
+
+<span class="gu">## Resources</span>
+
+<span class="gu">### Documentation</span>
+<span class="p">-</span> <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>User Profile API Specification<span class="nt">&lt;/mention-page&gt;</span> (original spec)
+<span class="p">-</span> <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Authentication Service Docs<span class="nt">&lt;/mention-page&gt;</span>
+<span class="p">-</span> <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>AWS S3 Setup Guide<span class="nt">&lt;/mention-page&gt;</span>
+
+<span class="gu">### Related Work</span>
+<span class="p">-</span> <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>User Authentication API<span class="nt">&lt;/mention-page&gt;</span> (similar pattern)
+<span class="p">-</span> <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>File Upload Service<span class="nt">&lt;/mention-page&gt;</span> (avatar upload reference)
+
+<span class="gu">### External References</span>
+<span class="p">-</span> Express.js best practices
+<span class="p">-</span> AWS S3 SDK documentation
+<span class="p">-</span> PostgreSQL full-text search guide
+
+<span class="gu">## Progress Tracking</span>
+
+<span class="gu">### Phase Status</span>
+<span class="p">-</span> Phase 1: ⏳ Not Started
+<span class="p">-</span> Phase 2: ⏳ Not Started
+<span class="p">-</span> Phase 3: ⏳ Not Started
+<span class="p">-</span> Phase 4: ⏳ Not Started
+<span class="p">-</span> Phase 5: ⏳ Not Started
+
+<span class="gs">**Overall Progress**</span>: 0% complete
+
+<span class="gu">### Latest Update</span>
+<span class="ge">*Implementation plan created on October 14, 2025*</span>
+</code></pre></div></div>
+
+<h3 id="step-4-find-task-database">Step 4: Find Task Database</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Notion:search
+query: "Tasks database"
+query_type: "internal"
+filters: {}
+</code></pre></div></div>
+
+<p>Found: “Engineering Tasks” database</p>
+
+<h3 id="step-5-fetch-task-database-schema">Step 5: Fetch Task Database Schema</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Notion:fetch
+id: "tasks-database-id"
+</code></pre></div></div>
+
+<p><strong>Schema retrieved:</strong></p>
+<ul>
+  <li>Data source: <code class="language-plaintext highlighter-rouge">collection://tasks-db-uuid</code></li>
+  <li>Properties: Name (title), Status (select), Priority (select), Related Tasks (relation), Story Points (number), Tags (multi_select)</li>
+</ul>
+
+<h3 id="step-6-create-implementation-tasks">Step 6: Create Implementation Tasks</h3>
+
+<p>Now create tasks for Phase 1:</p>
+
+<p><strong>Task 1: Setup database schema</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Notion:notion-create-pages
+
+parent: { data_source_id: "collection://tasks-db-uuid" }
+
+pages: [{
+  properties: {
+    "Name": "Setup database schema for User Profile API",
+    "Status": "To Do",
+    "Priority": "High",
+    "Related Tasks": ["impl-plan-page-id", "spec-page-id"],
+    "Story Points": 3,
+    "Tags": "backend, database, api"
+  },
+  content: "## Context\nImplementation task for &lt;mention-page url=\"...\"&gt;User Profile API Specification&lt;/mention-page&gt;\n\nPart of &lt;mention-page url=\"...\"&gt;Implementation Plan: User Profile API&lt;/mention-page&gt; - Phase 1\n\n## Objective\nCreate database schema for user profile storage\n\n## Requirements\nBased on spec data model:\n- id (UUID, primary key)\n- email (string, unique index)\n- name (string, not null)\n- bio (text, max 500 chars)\n- avatar_url (string, nullable)\n- created_at (timestamp)\n- updated_at (timestamp)\n\n## Acceptance Criteria\n- [ ] Migration file created\n- [ ] Schema includes all required fields\n- [ ] Indexes on email (unique) and name (search)\n- [ ] Constraints validated (bio length, email format)\n- [ ] Migration tested on dev database\n- [ ] Rollback migration created\n\n## Technical Approach\n```sql\nCREATE TABLE user_profiles (\n  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),\n  email VARCHAR(255) UNIQUE NOT NULL,\n  name VARCHAR(255) NOT NULL,\n  bio TEXT CHECK (length(bio) &lt;= 500),\n  avatar_url TEXT,\n  created_at TIMESTAMP DEFAULT NOW(),\n  updated_at TIMESTAMP DEFAULT NOW()\n);\n\nCREATE INDEX idx_user_profiles_email ON user_profiles(email);\nCREATE INDEX idx_user_profiles_name ON user_profiles USING gin(to_tsvector('english', name));\n```\n\n## Dependencies\n- Blocked By: None\n- Blocks: All Phase 2 tasks\n\n## Estimated Effort\n3 story points (half day)\n"
+}]
+</code></pre></div></div>
+
+<p><em>[Create similar tasks for all phases - 20 tasks total]</em></p>
+
+<h3 id="step-7-link-plan-back-to-spec">Step 7: Link Plan Back to Spec</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Notion:notion-update-page
+page_id: "user-profile-api-spec-page-id"
+command: "update_content"
+properties: {}
+content_updates: [{
+  old_str: "## Acceptance Criteria\n- AC-1: All endpoints return proper HTTP status codes\n- AC-2: Validation errors return 400 with error details\n- AC-3: Unauthorized access returns 401\n- AC-4: Rate limit exceeded returns 429\n- AC-5: Avatar images stored in S3",
+  new_str: "## Acceptance Criteria\n- AC-1: All endpoints return proper HTTP status codes\n- AC-2: Validation errors return 400 with error details\n- AC-3: Unauthorized access returns 401\n- AC-4: Rate limit exceeded returns 429\n- AC-5: Avatar images stored in S3\n\n---\n\n## Implementation\n\n**Implementation Plan**: &lt;mention-page url=\"...\"&gt;Implementation Plan: User Profile API&lt;/mention-page&gt;\n\n**Implementation Tasks**: See plan for full task breakdown (20 tasks across 5 phases)\n\n**Status**: Planning complete, ready to start implementation"
+}]
+</code></pre></div></div>
+
+<h2 id="summary-provided-to-user">Summary Provided to User</h2>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Implementation Plan Created ✅</span>
+
+<span class="gu">### Plan Overview</span>
+<span class="p">-</span> <span class="gs">**Feature**</span>: User Profile API
+<span class="p">-</span> <span class="gs">**Duration**</span>: 12 days (~2.5 weeks)
+<span class="p">-</span> <span class="gs">**Phases**</span>: 5 (Foundation → Core → Avatar → Search → Testing)
+<span class="p">-</span> <span class="gs">**Tasks**</span>: 20 tasks created
+<span class="p">-</span> <span class="gs">**Target Launch**</span>: October 28, 2025
+
+<span class="gu">### Implementation Phases</span>
+
+<span class="gs">**Phase 1: Foundation**</span> (2 days)
+<span class="p">-</span> Database schema
+<span class="p">-</span> S3 and Redis setup
+<span class="p">-</span> API scaffolding
+
+<span class="gs">**Phase 2: Core Endpoints**</span> (3 days)
+<span class="p">-</span> GET/PUT user profile
+<span class="p">-</span> Authentication &amp; validation
+<span class="p">-</span> Rate limiting
+
+<span class="gs">**Phase 3: Avatar Upload**</span> (2 days)
+<span class="p">-</span> Image upload &amp; validation
+<span class="p">-</span> S3 integration
+<span class="p">-</span> Image processing
+
+<span class="gs">**Phase 4: Search &amp; Public Profile**</span> (2 days)
+<span class="p">-</span> User search
+<span class="p">-</span> Public profile endpoint
+
+<span class="gs">**Phase 5: Testing &amp; Optimization**</span> (3 days)
+<span class="p">-</span> Unit &amp; integration tests
+<span class="p">-</span> Performance testing
+<span class="p">-</span> Documentation
+
+<span class="gu">### Key Deliverables</span>
+<span class="p">-</span> 5 REST API endpoints
+<span class="p">-</span> Avatar upload to S3
+<span class="p">-</span> User search functionality
+<span class="p">-</span> Comprehensive tests
+<span class="p">-</span> API documentation
+
+<span class="gu">### Links Created</span>
+✅ Plan page: <span class="nt">&lt;mention-page</span> <span class="na">url=</span><span class="s">"..."</span><span class="nt">&gt;</span>Implementation Plan: User Profile API<span class="nt">&lt;/mention-page&gt;</span>
+✅ Spec updated with plan link
+✅ 20 tasks created in task database
+✅ All tasks linked to plan and spec
+
+<span class="gu">### Next Steps</span>
+<span class="p">1.</span> Review and approve plan
+<span class="p">2.</span> Assign tasks to team members
+<span class="p">3.</span> Begin Phase 1 (Foundation)
+<span class="p">4.</span> Daily standups for progress tracking
+
+<span class="gs">**Ready to start implementation! 🚀**</span>
+</code></pre></div></div>
+
+<h2 id="key-features-demonstrated">Key Features Demonstrated</h2>
+
+<h3 id="spec-parsing">Spec Parsing</h3>
+<ul>
+  <li>Extracted requirements (functional &amp; non-functional)</li>
+  <li>Identified API endpoints</li>
+  <li>Noted data model</li>
+  <li>Captured acceptance criteria</li>
+  <li>Understood security requirements</li>
+</ul>
+
+<h3 id="implementation-planning">Implementation Planning</h3>
+<ul>
+  <li>Broke into logical phases</li>
+  <li>Sequenced work appropriately (foundation → features → testing)</li>
+  <li>Identified dependencies</li>
+  <li>Estimated effort per phase</li>
+  <li>Created realistic timeline</li>
+</ul>
+
+<h3 id="task-creation">Task Creation</h3>
+<ul>
+  <li>Generated 20 specific tasks</li>
+  <li>Each task has context, acceptance criteria, technical approach</li>
+  <li>Tasks link to both spec and plan</li>
+  <li>Proper dependencies noted</li>
+</ul>
+
+<h3 id="bidirectional-linking">Bidirectional Linking</h3>
+<ul>
+  <li>Plan links to spec</li>
+  <li>Spec updated to link to plan</li>
+  <li>Tasks link to both</li>
+  <li>Easy navigation between all artifacts</li>
+</ul>
+
+<p>Perfect for: Feature implementation, API development, technical projects</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

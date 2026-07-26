@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Meeting Sdk Bot · A developer journey</title>
+<meta name="description" content="Meeting SDK Bot (Linux)">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/meeting-sdk/linux/meeting-sdk-bot/">
+
+<meta property="og:title" content="Meeting Sdk Bot · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/meeting-sdk/linux/meeting-sdk-bot/">
+<meta property="og:description" content="Meeting SDK Bot (Linux)">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Meeting Sdk Bot</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="meeting-sdk-bot-linux">Meeting SDK Bot (Linux)</h1>
+
+<p>Build resilient meeting bots that join Zoom meetings as visible participants using the Meeting SDK.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>Meeting SDK bots join as real participants (visible in participant list) and can access raw audio/video data for recording, transcription, or AI processing.</p>
+
+<p><strong>Use this approach when:</strong></p>
+<ul>
+  <li>You need to be visible in the participant list</li>
+  <li>You want to interact with meeting features (chat, reactions, etc.)</li>
+  <li>You need local recording control</li>
+  <li>You’re processing your own meetings or have user consent</li>
+</ul>
+
+<p><strong>Alternative:</strong> See <a href="../../rtms/examples/rtms-bot.md">rtms/examples/rtms-bot.md</a> for invisible, read-only access via RTMS.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────────────────────────────────┐
+│                    MEETING SDK BOT FLOW                              │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ 1. Pre-Join: REST API                                               │
+│    └── Get meeting schedule (number, password, start time)          │
+│    └── Get OBF token for user (bot joins "on behalf of" user)       │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ 2. Join with Retry (OBF requires owner present)                     │
+│    └── Retry with configurable interval until owner joins           │
+│    └── Circuit breaker: Stop after N attempts                       │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ 3. Start Raw Recording (Meeting SDK singleton)                      │
+│    └── IMeetingRecordingController::StartRawRecording()             │
+│    └── Subscribe to raw audio/video                                 │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ 4. Process Media Streams                                            │
+│    └── Audio: PCM data via IZoomSDKAudioRawDataDelegate             │
+│    └── Video: YUV420 frames via IZoomSDKVideoRawDataDelegate        │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────────┐
+│ 5. Mid-Meeting: Connection Monitoring                               │
+│    └── Detect disconnections → Exponential backoff retry            │
+│    └── Stop after N reconnection attempts                           │
+└─────────────────────────────────────────────────────────────────────┘
+</code></pre></div></div>
+
+<h2 id="skills-required">Skills Required</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>zoom-rest-api</strong></td>
+      <td>Get meeting schedule, retrieve OBF token</td>
+    </tr>
+    <tr>
+      <td><strong>zoom-meeting-sdk</strong> (Linux)</td>
+      <td>Join meeting, control recording, access raw media</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="choose-the-recording-mode">Choose the Recording Mode</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Goal</th>
+      <th>Primary path</th>
+      <th>Skills</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Bot writes its own audio/video files</td>
+      <td><code class="language-plaintext highlighter-rouge">StartRawRecording()</code> + raw audio/video delegates</td>
+      <td><code class="language-plaintext highlighter-rouge">zoom-meeting-sdk</code> (Linux)</td>
+    </tr>
+    <tr>
+      <td>Zoom-hosted MP4/M4A/transcript assets after meeting end</td>
+      <td>Meeting/account cloud recording settings + <code class="language-plaintext highlighter-rouge">recording.completed</code> webhook + recordings download API</td>
+      <td><code class="language-plaintext highlighter-rouge">zoom-rest-api</code> + <code class="language-plaintext highlighter-rouge">zoom-webhooks</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Use raw recording when the bot must process or persist media itself. Use the cloud-recording path when the requirement is post-meeting retrieval of Zoom-managed recording assets.</p>
+
+<h2 id="automatic-join--recording-flow">Automatic Join + Recording Flow</h2>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zoom-rest-api
+  -&gt; get meeting metadata
+  -&gt; get OBF or ZAK token
+Meeting SDK Linux bot
+  -&gt; join with retry
+  -&gt; CanStartRawRecording()
+  -&gt; StartRawRecording()
+  -&gt; subscribe raw audio/video
+  -&gt; write PCM/YUV or forward to AI pipeline
+Optional post-meeting cloud path
+  -&gt; zoom-webhooks recording.completed
+  -&gt; zoom-rest-api recordings download
+</code></pre></div></div>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Zoom Meeting SDK v5.15+ (Linux)</li>
+  <li>Meeting SDK JWT credentials (SDK Key + Secret)</li>
+  <li>Server-to-Server OAuth app or OAuth app for REST API access</li>
+  <li>REST API scopes: <code class="language-plaintext highlighter-rouge">meeting:read</code>, <code class="language-plaintext highlighter-rouge">user:read</code>, optionally <code class="language-plaintext highlighter-rouge">meeting:write</code> if triggering meetings</li>
+  <li>Raw Data entitlement enabled (Admin → Account Settings → Meeting → “Allow access to raw data”)</li>
+</ul>
+
+<h2 id="configuration">Configuration</h2>
+
+<h3 id="retry-parameters-customizable">Retry Parameters (Customizable)</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// config.h or environment variables</span>
+<span class="k">struct</span> <span class="nc">BotConfig</span> <span class="p">{</span>
+    <span class="c1">// Join retry (waiting for owner to be present)</span>
+    <span class="kt">int</span> <span class="n">join_retry_attempts</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>          <span class="c1">// Max join attempts (default: 5)</span>
+    <span class="kt">int</span> <span class="n">join_retry_interval_ms</span> <span class="o">=</span> <span class="mi">60000</span><span class="p">;</span>   <span class="c1">// Constant interval: 60s (default: 1min)</span>
+
+    <span class="c1">// Mid-meeting reconnection (network failures)</span>
+    <span class="kt">int</span> <span class="n">reconnect_max_attempts</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>       <span class="c1">// Max reconnection attempts (default: 3)</span>
+    <span class="kt">int</span> <span class="n">reconnect_base_delay_ms</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">;</span>   <span class="c1">// Initial delay: 2s (default: 2s)</span>
+    <span class="c1">// Exponential backoff: 2s, 4s, 8s...</span>
+
+    <span class="c1">// Meeting schedule polling (if webhook unavailable)</span>
+    <span class="kt">int</span> <span class="n">schedule_poll_interval_ms</span> <span class="o">=</span> <span class="mi">30000</span><span class="p">;</span> <span class="c1">// Poll every 30s (default: 30s)</span>
+
+    <span class="c1">// Timeout settings</span>
+    <span class="kt">int</span> <span class="n">auth_timeout_ms</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>          <span class="c1">// SDK auth timeout (default: 10s)</span>
+    <span class="kt">int</span> <span class="n">join_timeout_ms</span> <span class="o">=</span> <span class="mi">30000</span><span class="p">;</span>          <span class="c1">// Single join attempt timeout (default: 30s)</span>
+<span class="p">};</span>
+
+<span class="c1">// Load from environment variables (recommended for production)</span>
+<span class="n">BotConfig</span> <span class="nf">loadConfig</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">BotConfig</span> <span class="n">cfg</span><span class="p">;</span>
+
+    <span class="c1">// Override defaults from env vars if present</span>
+    <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">env</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="n">env</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">"BOT_JOIN_RETRY_ATTEMPTS"</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">cfg</span><span class="p">.</span><span class="n">join_retry_attempts</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">env</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">env</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">"BOT_JOIN_RETRY_INTERVAL_MS"</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">cfg</span><span class="p">.</span><span class="n">join_retry_interval_ms</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">env</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">env</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">"BOT_RECONNECT_MAX_ATTEMPTS"</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">cfg</span><span class="p">.</span><span class="n">reconnect_max_attempts</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">env</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">((</span><span class="n">env</span> <span class="o">=</span> <span class="n">getenv</span><span class="p">(</span><span class="s">"BOT_RECONNECT_BASE_DELAY_MS"</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="n">cfg</span><span class="p">.</span><span class="n">reconnect_base_delay_ms</span> <span class="o">=</span> <span class="n">atoi</span><span class="p">(</span><span class="n">env</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">cfg</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="customization-guide">Customization Guide</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Default</th>
+      <th>When to Increase</th>
+      <th>When to Decrease</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">join_retry_attempts</code></td>
+      <td>5</td>
+      <td>High-priority meetings, owner often late</td>
+      <td>Testing, short-lived meetings</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">join_retry_interval_ms</code></td>
+      <td>60000 (1min)</td>
+      <td>Meetings with long pre-join buffer</td>
+      <td>Need faster failure detection</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">reconnect_max_attempts</code></td>
+      <td>3</td>
+      <td>Unstable networks, critical meetings</td>
+      <td>Batch processing, cost-sensitive</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">reconnect_base_delay_ms</code></td>
+      <td>2000 (2s)</td>
+      <td>Network latency high (international)</td>
+      <td>Local network, low latency</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Recommended Ranges:</strong></p>
+<ul>
+  <li>Join retry attempts: 3-10</li>
+  <li>Join retry interval: 30s-5min</li>
+  <li>Reconnect attempts: 2-5</li>
+  <li>Reconnect base delay: 1s-5s</li>
+</ul>
+
+<p><strong>Examples:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># High-priority production bot (aggressive retries)</span>
+<span class="nb">export </span><span class="nv">BOT_JOIN_RETRY_ATTEMPTS</span><span class="o">=</span>10
+<span class="nb">export </span><span class="nv">BOT_JOIN_RETRY_INTERVAL_MS</span><span class="o">=</span>30000  <span class="c"># 30s</span>
+<span class="nb">export </span><span class="nv">BOT_RECONNECT_MAX_ATTEMPTS</span><span class="o">=</span>5
+<span class="nb">export </span><span class="nv">BOT_RECONNECT_BASE_DELAY_MS</span><span class="o">=</span>1000  <span class="c"># 1s</span>
+
+<span class="c"># Cost-sensitive batch processing (conservative)</span>
+<span class="nb">export </span><span class="nv">BOT_JOIN_RETRY_ATTEMPTS</span><span class="o">=</span>3
+<span class="nb">export </span><span class="nv">BOT_JOIN_RETRY_INTERVAL_MS</span><span class="o">=</span>120000  <span class="c"># 2min</span>
+<span class="nb">export </span><span class="nv">BOT_RECONNECT_MAX_ATTEMPTS</span><span class="o">=</span>2
+<span class="nb">export </span><span class="nv">BOT_RECONNECT_BASE_DELAY_MS</span><span class="o">=</span>5000   <span class="c"># 5s</span>
+
+<span class="c"># Development/testing (fail fast)</span>
+<span class="nb">export </span><span class="nv">BOT_JOIN_RETRY_ATTEMPTS</span><span class="o">=</span>2
+<span class="nb">export </span><span class="nv">BOT_JOIN_RETRY_INTERVAL_MS</span><span class="o">=</span>10000   <span class="c"># 10s</span>
+<span class="nb">export </span><span class="nv">BOT_RECONNECT_MAX_ATTEMPTS</span><span class="o">=</span>1
+<span class="nb">export </span><span class="nv">BOT_RECONNECT_BASE_DELAY_MS</span><span class="o">=</span>1000   <span class="c"># 1s</span>
+</code></pre></div></div>
+
+<h2 id="step-1-get-meeting-info--obf-token-rest-api">Step 1: Get Meeting Info + OBF Token (REST API)</h2>
+
+<h3 id="get-meeting-schedule">Get Meeting Schedule</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Get meeting details</span>
+curl <span class="s2">"https://api.zoom.us/v2/meetings/{meetingId}"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Bearer YOUR_ACCESS_TOKEN"</span>
+</code></pre></div></div>
+
+<p><strong>Response:</strong></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234567890</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"topic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Team Standup"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"start_time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2026-02-09T15:00:00Z"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"abc123"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"pmi"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Store:</strong> meeting number, password, start time.</p>
+
+<h3 id="get-obf-token">Get OBF Token</h3>
+
+<p>The bot joins “on behalf of” a Zoom user. Get the user’s OBF token:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Get OBF token for user</span>
+curl <span class="nt">-X</span> POST <span class="s2">"https://api.zoom.us/v2/users/{userId}/token?type=obf&amp;ttl=7200"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Bearer YOUR_ACCESS_TOKEN"</span>
+</code></pre></div></div>
+
+<p><strong>Response:</strong></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJhbGc..."</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"expire_in"</span><span class="p">:</span><span class="w"> </span><span class="mi">7200</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>CRITICAL:</strong> The bot cannot join until the <strong>owner</strong> (the user whose OBF token you’re using) is present in the meeting. This is why retry logic is essential.</p>
+
+<p><strong>Error if REST API fails:</strong> ABORT. No meeting info = cannot proceed.</p>
+
+<h2 id="step-2-join-meeting-with-retry-logic">Step 2: Join Meeting with Retry Logic</h2>
+
+<h3 id="join-implementation">Join Implementation</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;chrono&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;thread&gt;</span><span class="cp">
+</span>
+<span class="k">class</span> <span class="nc">MeetingBot</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">BotConfig</span> <span class="n">config</span><span class="p">;</span>
+    <span class="n">IMeetingService</span><span class="o">*</span> <span class="n">meetingService</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">joinSuccessful</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="kt">bool</span> <span class="n">ownerNotPresentError</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+
+<span class="nl">public:</span>
+    <span class="c1">// Attempt to join with retry logic</span>
+    <span class="kt">bool</span> <span class="n">joinMeetingWithRetry</span><span class="p">(</span>
+        <span class="kt">uint64_t</span> <span class="n">meetingNumber</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">password</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">obfToken</span><span class="p">,</span>
+        <span class="k">const</span> <span class="n">string</span><span class="o">&amp;</span> <span class="n">botDisplayName</span>
+    <span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">attempt</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">attempt</span> <span class="o">&lt;=</span> <span class="n">config</span><span class="p">.</span><span class="n">join_retry_attempts</span><span class="p">;</span> <span class="n">attempt</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[JOIN] Attempt "</span> <span class="o">&lt;&lt;</span> <span class="n">attempt</span> <span class="o">&lt;&lt;</span> <span class="s">"/"</span>
+                 <span class="o">&lt;&lt;</span> <span class="n">config</span><span class="p">.</span><span class="n">join_retry_attempts</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+            <span class="c1">// Attempt join</span>
+            <span class="n">JoinParam</span> <span class="n">joinParam</span><span class="p">;</span>
+            <span class="n">joinParam</span><span class="p">.</span><span class="n">userType</span> <span class="o">=</span> <span class="n">SDK_UT_WITHOUT_LOGIN</span><span class="p">;</span>
+
+            <span class="n">JoinParam4WithoutLogin</span><span class="o">&amp;</span> <span class="n">param</span> <span class="o">=</span> <span class="n">joinParam</span><span class="p">.</span><span class="n">param</span><span class="p">.</span><span class="n">withoutloginuserJoin</span><span class="p">;</span>
+            <span class="n">param</span><span class="p">.</span><span class="n">meetingNumber</span> <span class="o">=</span> <span class="n">meetingNumber</span><span class="p">;</span>
+            <span class="n">param</span><span class="p">.</span><span class="n">userName</span> <span class="o">=</span> <span class="n">botDisplayName</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+            <span class="n">param</span><span class="p">.</span><span class="n">psw</span> <span class="o">=</span> <span class="n">password</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>
+            <span class="n">param</span><span class="p">.</span><span class="n">isVideoOff</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>   <span class="c1">// Bots typically don't send video</span>
+            <span class="n">param</span><span class="p">.</span><span class="n">isAudioOff</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>  <span class="c1">// Need audio for transcription</span>
+            <span class="n">param</span><span class="p">.</span><span class="n">app_privilege_token</span> <span class="o">=</span> <span class="n">obfToken</span><span class="p">.</span><span class="n">c_str</span><span class="p">();</span>  <span class="c1">// OBF token</span>
+
+            <span class="n">SDKError</span> <span class="n">err</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">Join</span><span class="p">(</span><span class="n">joinParam</span><span class="p">);</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[JOIN] Join() call failed: "</span> <span class="o">&lt;&lt;</span> <span class="n">err</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+                <span class="c1">// Check if it's a retriable error</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">shouldRetryJoin</span><span class="p">(</span><span class="n">err</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">config</span><span class="p">.</span><span class="n">join_retry_attempts</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[JOIN] Retrying in "</span>
+                             <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">join_retry_interval_ms</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+                             <span class="o">&lt;&lt;</span> <span class="s">"s..."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+                        <span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span>
+                            <span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">join_retry_interval_ms</span><span class="p">)</span>
+                        <span class="p">);</span>
+                        <span class="k">continue</span><span class="p">;</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Non-retriable error or out of attempts</span>
+                <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[JOIN] Giving up after "</span> <span class="o">&lt;&lt;</span> <span class="n">attempt</span> <span class="o">&lt;&lt;</span> <span class="s">" attempts"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="p">}</span>
+
+            <span class="c1">// Join() call succeeded, wait for callback</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">waitForJoinCallback</span><span class="p">())</span> <span class="p">{</span>
+                <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[JOIN] Successfully joined meeting!"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[JOIN] Join callback indicated failure"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+                <span class="c1">// If owner not present, retry</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">ownerNotPresentError</span> <span class="o">&amp;&amp;</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">config</span><span class="p">.</span><span class="n">join_retry_attempts</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[JOIN] Owner not present. Retrying in "</span>
+                         <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">join_retry_interval_ms</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"s..."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+                    <span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span>
+                        <span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">join_retry_interval_ms</span><span class="p">)</span>
+                    <span class="p">);</span>
+                    <span class="k">continue</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[JOIN] Failed to join after "</span>
+             <span class="o">&lt;&lt;</span> <span class="n">config</span><span class="p">.</span><span class="n">join_retry_attempts</span> <span class="o">&lt;&lt;</span> <span class="s">" attempts"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">bool</span> <span class="nf">shouldRetryJoin</span><span class="p">(</span><span class="n">SDKError</span> <span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="n">SDKERR_WRONG_USAGE</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">SDKERR_INVALID_PARAMETER</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">SDKERR_MODULE_LOAD_FAILED</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>  <span class="c1">// Configuration errors, don't retry</span>
+
+            <span class="k">case</span> <span class="n">SDKERR_NETWORK_ERROR</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">SDKERR_SERVICE_FAILED</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>   <span class="c1">// Network/server issues, retry</span>
+
+            <span class="nl">default:</span>
+                <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>   <span class="c1">// Unknown error, retry to be safe</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">bool</span> <span class="nf">waitForJoinCallback</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Wait for onMeetingStatusChanged callback</span>
+        <span class="c1">// Implementation depends on your callback handling</span>
+        <span class="c1">// Typical: use condition variable with timeout</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">callbackMutex</span><span class="p">);</span>
+        <span class="kt">bool</span> <span class="n">success</span> <span class="o">=</span> <span class="n">callbackCV</span><span class="p">.</span><span class="n">wait_for</span><span class="p">(</span>
+            <span class="n">lock</span><span class="p">,</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">config</span><span class="p">.</span><span class="n">join_timeout_ms</span><span class="p">),</span>
+            <span class="p">[</span><span class="k">this</span><span class="p">]{</span> <span class="k">return</span> <span class="n">joinSuccessful</span> <span class="o">||</span> <span class="n">ownerNotPresentError</span><span class="p">;</span> <span class="p">}</span>
+        <span class="p">);</span>
+
+        <span class="k">return</span> <span class="n">success</span> <span class="o">&amp;&amp;</span> <span class="n">joinSuccessful</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="k">public</span><span class="o">:</span>
+    <span class="c1">// Callback from SDK</span>
+    <span class="kt">void</span> <span class="nf">onMeetingStatusChanged</span><span class="p">(</span><span class="n">MeetingStatus</span> <span class="n">status</span><span class="p">,</span> <span class="kt">int</span> <span class="n">iResult</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">callbackMutex</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">MEETING_STATUS_INMEETING</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">joinSuccessful</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="n">callbackCV</span><span class="p">.</span><span class="n">notify_one</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">MEETING_STATUS_FAILED</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Check error code for "owner not present"</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">iResult</span> <span class="o">==</span> <span class="n">MEETING_FAIL_OBF_OWNER_NOT_IN_MEETING</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">ownerNotPresentError</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">joinSuccessful</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="n">callbackCV</span><span class="p">.</span><span class="n">notify_one</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">callbackMutex</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">condition_variable</span> <span class="n">callbackCV</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="common-join-errors">Common Join Errors</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Error Code</th>
+      <th>Meaning</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MEETING_FAIL_OBF_OWNER_NOT_IN_MEETING</code></td>
+      <td>OBF token owner not in meeting yet</td>
+      <td>RETRY (owner might join soon)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MEETING_FAIL_MEETING_NOT_EXIST</code></td>
+      <td>Meeting not started</td>
+      <td>RETRY if before end time</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MEETING_FAIL_INCORRECT_MEETING_NUMBER</code></td>
+      <td>Wrong meeting ID</td>
+      <td>ABORT (config error)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MEETING_FAIL_MEETING_NOT_START</code></td>
+      <td>Meeting hasn’t started</td>
+      <td>RETRY until start time</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MEETING_FAIL_INVALID_TOKEN</code></td>
+      <td>OBF token invalid/expired</td>
+      <td>ABORT (need new token)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="step-3-start-raw-recording">Step 3: Start Raw Recording</h2>
+
+<p>Once joined, request permission to access raw audio/video:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">onMeetingStatusChanged</span><span class="p">(</span><span class="n">MeetingStatus</span> <span class="n">status</span><span class="p">,</span> <span class="kt">int</span> <span class="n">iResult</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">status</span> <span class="o">==</span> <span class="n">MEETING_STATUS_INMEETING</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] Joined successfully, starting raw recording..."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+        <span class="c1">// Get recording controller</span>
+        <span class="n">IMeetingRecordingController</span><span class="o">*</span> <span class="n">recordCtrl</span> <span class="o">=</span>
+            <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRecordingController</span><span class="p">();</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">recordCtrl</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] Failed to get recording controller"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Check permission</span>
+        <span class="n">SDKError</span> <span class="n">canRecord</span> <span class="o">=</span> <span class="n">recordCtrl</span><span class="o">-&gt;</span><span class="n">CanStartRawRecording</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">canRecord</span> <span class="o">!=</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] Cannot start raw recording: "</span> <span class="o">&lt;&lt;</span> <span class="n">canRecord</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] Check: Raw Data entitlement enabled in Admin settings?"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Start raw recording (enables raw data flow)</span>
+        <span class="n">SDKError</span> <span class="n">err</span> <span class="o">=</span> <span class="n">recordCtrl</span><span class="o">-&gt;</span><span class="n">StartRawRecording</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] StartRawRecording failed: "</span> <span class="o">&lt;&lt;</span> <span class="n">err</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] Raw recording started, subscribing to media..."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+        <span class="c1">// Subscribe to audio/video</span>
+        <span class="n">subscribeToRawMedia</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>IMPORTANT:</strong> <code class="language-plaintext highlighter-rouge">StartRawRecording()</code> does NOT create a file. It enables access to raw audio/video data streams.</p>
+
+<h3 id="manage-recording-lifecycle-explicitly">Manage Recording Lifecycle Explicitly</h3>
+
+<p>The bot should treat raw recording as a capability switch plus media subscriptions:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">RecordingSession</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">void</span> <span class="n">start</span><span class="p">(</span><span class="n">IMeetingService</span><span class="o">*</span> <span class="n">meetingService</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">auto</span><span class="o">*</span> <span class="n">recordCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRecordingController</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">recordCtrl</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"recording_controller_unavailable"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">SDKError</span> <span class="n">canRecord</span> <span class="o">=</span> <span class="n">recordCtrl</span><span class="o">-&gt;</span><span class="n">CanStartRawRecording</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">canRecord</span> <span class="o">!=</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"raw_recording_not_permitted"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">SDKError</span> <span class="n">err</span> <span class="o">=</span> <span class="n">recordCtrl</span><span class="o">-&gt;</span><span class="n">StartRawRecording</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">"start_raw_recording_failed"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">audioHelper</span> <span class="o">=</span> <span class="n">GetAudioRawdataHelper</span><span class="p">();</span>
+        <span class="n">audioHelper</span><span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">(</span><span class="o">&amp;</span><span class="n">audioDelegate</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+
+        <span class="n">createRenderer</span><span class="p">(</span><span class="o">&amp;</span><span class="n">videoRenderer</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">videoDelegate</span><span class="p">);</span>
+        <span class="n">videoRenderer</span><span class="o">-&gt;</span><span class="n">setRawDataResolution</span><span class="p">(</span><span class="n">ZoomSDKResolution_720P</span><span class="p">);</span>
+        <span class="n">videoRenderer</span><span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">(</span><span class="n">activeUserId</span><span class="p">,</span> <span class="n">RAW_DATA_TYPE_VIDEO</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">stop</span><span class="p">(</span><span class="n">IMeetingService</span><span class="o">*</span> <span class="n">meetingService</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">audioHelper</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">audioHelper</span><span class="o">-&gt;</span><span class="n">unSubscribe</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">videoRenderer</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">videoRenderer</span><span class="o">-&gt;</span><span class="n">unSubscribe</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="k">auto</span><span class="o">*</span> <span class="n">recordCtrl</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRecordingController</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">recordCtrl</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">recordCtrl</span><span class="o">-&gt;</span><span class="n">StopRawRecording</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">IZoomSDKAudioRawDataHelper</span><span class="o">*</span> <span class="n">audioHelper</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+    <span class="n">IZoomSDKRenderer</span><span class="o">*</span> <span class="n">videoRenderer</span> <span class="o">=</span> <span class="nb">nullptr</span><span class="p">;</span>
+    <span class="n">MyAudioDelegate</span> <span class="n">audioDelegate</span><span class="p">;</span>
+    <span class="n">MyVideoDelegate</span> <span class="n">videoDelegate</span><span class="p">;</span>
+    <span class="kt">uint32_t</span> <span class="n">activeUserId</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Persisting a recording is your job after raw data arrives. Typical outputs are:</p>
+
+<ul>
+  <li>PCM audio -&gt; WAV/FLAC encoder or streaming transcription pipeline</li>
+  <li>YUV420 video -&gt; FFmpeg transcode to MP4 or frame-by-frame CV pipeline</li>
+  <li>Mixed bot pipeline -&gt; raw capture first, then post-process after leave</li>
+</ul>
+
+<h2 id="step-4-subscribe-to-raw-audiovideo">Step 4: Subscribe to Raw Audio/Video</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">subscribeToRawMedia</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Subscribe to raw audio</span>
+    <span class="n">IZoomSDKAudioRawDataDelegate</span><span class="o">*</span> <span class="n">audioDelegate</span> <span class="o">=</span> <span class="k">new</span> <span class="n">MyAudioDelegate</span><span class="p">();</span>
+    <span class="n">SDKError</span> <span class="n">audioErr</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingAudioController</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="n">GetMeetingAudioHelper</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">(</span><span class="n">audioDelegate</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>  <span class="c1">// true = mixed audio</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">audioErr</span> <span class="o">!=</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Subscribe failed: "</span> <span class="o">&lt;&lt;</span> <span class="n">audioErr</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[AUDIO] Subscribed to mixed audio"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Subscribe to raw video</span>
+    <span class="n">IZoomSDKVideoRawDataDelegate</span><span class="o">*</span> <span class="n">videoDelegate</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MyVideoDelegate</span><span class="p">();</span>
+    <span class="n">SDKError</span> <span class="n">videoErr</span> <span class="o">=</span> <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingVideoController</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="n">GetMeetingVideoHelper</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="n">subscribe</span><span class="p">(</span><span class="n">videoDelegate</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">videoErr</span> <span class="o">!=</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[VIDEO] Subscribe failed: "</span> <span class="o">&lt;&lt;</span> <span class="n">videoErr</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[VIDEO] Subscribed to video streams"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="cloud-recording-alternative">Cloud Recording Alternative</h3>
+
+<p>If the requirement is <strong>Zoom-managed cloud recording</strong> instead of raw media capture, use Meeting SDK only for the joining bot and use API/webhook skills for the recording workflow:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="s2">"https://api.zoom.us/v2/users/{userId}/meetings"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Bearer YOUR_ACCESS_TOKEN"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "topic": "Bot Recorded Meeting",
+    "type": 2,
+    "start_time": "2026-03-06T18:00:00Z",
+    "settings": {
+      "auto_recording": "cloud"
+    }
+  }'</span>
+</code></pre></div></div>
+
+<p>Then subscribe to <code class="language-plaintext highlighter-rouge">recording.completed</code> and download assets through the recordings APIs:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">zoom-webhooks</code> -&gt; receive <code class="language-plaintext highlighter-rouge">recording.completed</code></li>
+  <li><code class="language-plaintext highlighter-rouge">zoom-rest-api</code> -&gt; <code class="language-plaintext highlighter-rouge">GET /meetings/{meetingId}/recordings</code> or <code class="language-plaintext highlighter-rouge">GET /users/{userId}/recordings</code></li>
+</ul>
+
+<p>Use this path when the desired output is Zoom-hosted MP4/M4A/transcript files rather than bot-owned raw PCM/YUV.</p>
+
+<h2 id="step-5-mid-meeting-reconnection">Step 5: Mid-Meeting Reconnection</h2>
+
+<h3 id="connection-monitoring">Connection Monitoring</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MeetingBot</span> <span class="p">{</span>
+<span class="nl">private:</span>
+    <span class="n">BotConfig</span> <span class="n">config</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">reconnectionAttempt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="nl">public:</span>
+    <span class="kt">void</span> <span class="n">onMeetingStatusChanged</span><span class="p">(</span><span class="n">MeetingStatus</span> <span class="n">status</span><span class="p">,</span> <span class="kt">int</span> <span class="n">iResult</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">switch</span> <span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="n">MEETING_STATUS_RECONNECTING</span><span class="p">:</span>
+                <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] Connection lost, SDK is reconnecting..."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">MEETING_STATUS_FAILED</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">MEETING_STATUS_DISCONNECTING</span><span class="p">:</span>
+                <span class="n">handleDisconnection</span><span class="p">(</span><span class="n">iResult</span><span class="p">);</span>
+                <span class="k">break</span><span class="p">;</span>
+
+            <span class="k">case</span> <span class="n">MEETING_STATUS_INMEETING</span><span class="p">:</span>
+                <span class="c1">// Reconnection successful</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">reconnectionAttempt</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[BOT] Reconnected successfully!"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+                    <span class="n">reconnectionAttempt</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>  <span class="c1">// Reset counter</span>
+                <span class="p">}</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">void</span> <span class="nf">handleDisconnection</span><span class="p">(</span><span class="kt">int</span> <span class="n">errorCode</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">reconnectionAttempt</span><span class="o">++</span><span class="p">;</span>
+
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECONNECT] Disconnected (error: "</span> <span class="o">&lt;&lt;</span> <span class="n">errorCode</span>
+             <span class="o">&lt;&lt;</span> <span class="s">"), attempt "</span> <span class="o">&lt;&lt;</span> <span class="n">reconnectionAttempt</span> <span class="o">&lt;&lt;</span> <span class="s">"/"</span>
+             <span class="o">&lt;&lt;</span> <span class="n">config</span><span class="p">.</span><span class="n">reconnect_max_attempts</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">reconnectionAttempt</span> <span class="o">&gt;=</span> <span class="n">config</span><span class="p">.</span><span class="n">reconnect_max_attempts</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECONNECT] Giving up after "</span>
+                 <span class="o">&lt;&lt;</span> <span class="n">reconnectionAttempt</span> <span class="o">&lt;&lt;</span> <span class="s">" attempts"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="n">cleanup</span><span class="p">();</span>
+            <span class="n">notifyFailure</span><span class="p">(</span><span class="s">"Max reconnection attempts exceeded"</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Exponential backoff: 2s, 4s, 8s...</span>
+        <span class="kt">int</span> <span class="n">delay_ms</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="n">reconnect_base_delay_ms</span>
+                       <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">reconnectionAttempt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECONNECT] Retrying in "</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">delay_ms</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">"s..."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+        <span class="c1">// Schedule reconnection</span>
+        <span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="p">([</span><span class="k">this</span><span class="p">,</span> <span class="n">delay_ms</span><span class="p">]()</span> <span class="p">{</span>
+            <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">milliseconds</span><span class="p">(</span><span class="n">delay_ms</span><span class="p">));</span>
+            <span class="n">attemptRejoin</span><span class="p">();</span>
+        <span class="p">}).</span><span class="n">detach</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">attemptRejoin</span><span class="p">()</span> <span class="p">{</span>
+        <span class="c1">// Re-use same meeting number, password, OBF token</span>
+        <span class="c1">// If OBF token expired, fetch new one from REST API first</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">isOBFTokenExpired</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECONNECT] OBF token expired, fetching new one..."</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="c1">// TODO: Call REST API to get fresh OBF token</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Call join again</span>
+        <span class="kt">bool</span> <span class="n">success</span> <span class="o">=</span> <span class="n">joinMeetingWithRetry</span><span class="p">(</span>
+            <span class="n">cachedMeetingNumber</span><span class="p">,</span>
+            <span class="n">cachedPassword</span><span class="p">,</span>
+            <span class="n">cachedOBFToken</span><span class="p">,</span>
+            <span class="n">cachedBotName</span>
+        <span class="p">);</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">success</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECONNECT] Rejoin failed"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="n">cleanup</span><span class="p">();</span>
+            <span class="n">notifyFailure</span><span class="p">(</span><span class="s">"Reconnection failed"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="customizing-reconnection-behavior">Customizing Reconnection Behavior</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Example: Linear backoff instead of exponential</span>
+<span class="kt">int</span> <span class="n">delay_ms</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="n">reconnect_base_delay_ms</span> <span class="o">*</span> <span class="n">reconnectionAttempt</span><span class="p">;</span>
+
+<span class="c1">// Example: Capped exponential backoff (max 30s)</span>
+<span class="kt">int</span> <span class="n">delay_ms</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span>
+    <span class="n">config</span><span class="p">.</span><span class="n">reconnect_base_delay_ms</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">reconnectionAttempt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
+    <span class="mi">30000</span>  <span class="c1">// Cap at 30s</span>
+<span class="p">);</span>
+
+<span class="c1">// Example: Jittered backoff (avoid thundering herd)</span>
+<span class="kt">int</span> <span class="n">base_delay</span> <span class="o">=</span> <span class="n">config</span><span class="p">.</span><span class="n">reconnect_base_delay_ms</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">reconnectionAttempt</span> <span class="o">-</span> <span class="mi">1</span><span class="p">));</span>
+<span class="kt">int</span> <span class="n">jitter</span> <span class="o">=</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">1000</span><span class="p">;</span>  <span class="c1">// Random 0-1000ms</span>
+<span class="kt">int</span> <span class="n">delay_ms</span> <span class="o">=</span> <span class="n">base_delay</span> <span class="o">+</span> <span class="n">jitter</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="recording-fallback-local-vs-cloud">Recording Fallback: Local vs Cloud</h2>
+
+<p>If raw recording fails, fall back to local or cloud recording:</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">startRecordingWithFallback</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">IMeetingRecordingController</span><span class="o">*</span> <span class="n">ctrl</span> <span class="o">=</span>
+        <span class="n">meetingService</span><span class="o">-&gt;</span><span class="n">GetMeetingRecordingController</span><span class="p">();</span>
+
+    <span class="c1">// Try raw recording first</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ctrl</span><span class="o">-&gt;</span><span class="n">CanStartRawRecording</span><span class="p">()</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SDKError</span> <span class="n">err</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">-&gt;</span><span class="n">StartRawRecording</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECORDING] Using raw recording"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Fallback: Local recording</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ctrl</span><span class="o">-&gt;</span><span class="n">CanStartRecording</span><span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SDKError</span> <span class="n">err</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">-&gt;</span><span class="n">StartRecording</span><span class="p">(</span>
+            <span class="n">chrono</span><span class="o">::</span><span class="n">system_clock</span><span class="o">::</span><span class="n">now</span><span class="p">(),</span>
+            <span class="s">"/tmp/bot_recording.mp4"</span>
+        <span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECORDING] Using local recording"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Fallback: Cloud recording</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ctrl</span><span class="o">-&gt;</span><span class="n">CanStartCloudRecording</span><span class="p">()</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">SDKError</span> <span class="n">err</span> <span class="o">=</span> <span class="n">ctrl</span><span class="o">-&gt;</span><span class="n">StartCloudRecording</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">==</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECORDING] Using cloud recording"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"[RECORDING] All recording methods failed"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="complete-resilient-bot-example">Complete Resilient Bot Example</h2>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 1. Load configuration</span>
+    <span class="n">BotConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="n">loadConfig</span><span class="p">();</span>
+
+    <span class="c1">// 2. Initialize Meeting SDK</span>
+    <span class="n">InitParam</span> <span class="n">initParam</span><span class="p">;</span>
+    <span class="n">initParam</span><span class="p">.</span><span class="n">strWebDomain</span> <span class="o">=</span> <span class="s">"https://zoom.us"</span><span class="p">;</span>
+    <span class="n">initParam</span><span class="p">.</span><span class="n">emLanguageID</span> <span class="o">=</span> <span class="n">LANGUAGE_English</span><span class="p">;</span>
+    <span class="n">initParam</span><span class="p">.</span><span class="n">enableLogByDefault</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+
+    <span class="n">SDKError</span> <span class="n">err</span> <span class="o">=</span> <span class="n">InitSDK</span><span class="p">(</span><span class="n">initParam</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">err</span> <span class="o">!=</span> <span class="n">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"InitSDK failed: "</span> <span class="o">&lt;&lt;</span> <span class="n">err</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 3. Authenticate SDK with JWT</span>
+    <span class="n">AuthContext</span> <span class="n">authCtx</span><span class="p">;</span>
+    <span class="n">authCtx</span><span class="p">.</span><span class="n">jwt_token</span> <span class="o">=</span> <span class="n">generateJWT</span><span class="p">(</span><span class="n">SDK_KEY</span><span class="p">,</span> <span class="n">SDK_SECRET</span><span class="p">);</span>
+
+    <span class="n">IAuthService</span><span class="o">*</span> <span class="n">authService</span> <span class="o">=</span> <span class="n">CreateAuthService</span><span class="p">();</span>
+    <span class="n">authService</span><span class="o">-&gt;</span><span class="n">SDKAuth</span><span class="p">(</span><span class="n">authCtx</span><span class="p">);</span>
+
+    <span class="c1">// Wait for auth callback...</span>
+
+    <span class="c1">// 4. Fetch meeting info + OBF token from REST API</span>
+    <span class="n">MeetingInfo</span> <span class="n">meetingInfo</span> <span class="o">=</span> <span class="n">fetchMeetingInfoFromAPI</span><span class="p">(</span><span class="n">MEETING_ID</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">obfToken</span> <span class="o">=</span> <span class="n">fetchOBFTokenFromAPI</span><span class="p">(</span><span class="n">USER_ID</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">meetingInfo</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">||</span> <span class="n">obfToken</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"ABORT: Failed to get meeting info or OBF token"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 5. Join meeting with retry</span>
+    <span class="n">MeetingBot</span> <span class="nf">bot</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
+    <span class="kt">bool</span> <span class="n">joined</span> <span class="o">=</span> <span class="n">bot</span><span class="p">.</span><span class="n">joinMeetingWithRetry</span><span class="p">(</span>
+        <span class="n">meetingInfo</span><span class="p">.</span><span class="n">number</span><span class="p">,</span>
+        <span class="n">meetingInfo</span><span class="p">.</span><span class="n">password</span><span class="p">,</span>
+        <span class="n">obfToken</span><span class="p">,</span>
+        <span class="s">"Transcription Bot"</span>
+    <span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">joined</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">"ABORT: Failed to join meeting"</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 6. SDK callbacks handle: StartRawRecording, subscribe, reconnection</span>
+
+    <span class="c1">// 7. Keep running until meeting ends</span>
+    <span class="n">bot</span><span class="p">.</span><span class="n">runEventLoop</span><span class="p">();</span>
+
+    <span class="c1">// 8. Cleanup</span>
+    <span class="n">bot</span><span class="p">.</span><span class="n">cleanup</span><span class="p">();</span>
+    <span class="n">CleanUPSDK</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="comparison-meeting-sdk-bot-vs-rtms-bot">Comparison: Meeting SDK Bot vs RTMS Bot</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>Meeting SDK Bot</th>
+      <th>RTMS Bot</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Visibility</strong></td>
+      <td>Visible participant</td>
+      <td>Invisible (read-only service)</td>
+    </tr>
+    <tr>
+      <td><strong>Authentication</strong></td>
+      <td>JWT + OBF token</td>
+      <td>REST API trigger + webhook</td>
+    </tr>
+    <tr>
+      <td><strong>Join Dependency</strong></td>
+      <td>Owner must be present</td>
+      <td>No dependency on participants</td>
+    </tr>
+    <tr>
+      <td><strong>Retry Logic</strong></td>
+      <td>Required (owner presence)</td>
+      <td>Not applicable (webhook-based)</td>
+    </tr>
+    <tr>
+      <td><strong>Media Access</strong></td>
+      <td>Raw audio/video/share via SDK</td>
+      <td>Audio/video/text/share/chat via WebSocket</td>
+    </tr>
+    <tr>
+      <td><strong>Recording Control</strong></td>
+      <td>Full (local, cloud, raw)</td>
+      <td>None (read-only)</td>
+    </tr>
+    <tr>
+      <td><strong>Interaction</strong></td>
+      <td>Can send chat, reactions</td>
+      <td>Cannot interact</td>
+    </tr>
+    <tr>
+      <td><strong>Resource Usage</strong></td>
+      <td>Higher (full SDK)</td>
+      <td>Lower (WebSocket only)</td>
+    </tr>
+    <tr>
+      <td><strong>Use Case</strong></td>
+      <td>Interactive bots, recording, moderation</td>
+      <td>Passive transcription, analytics</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Choose Meeting SDK Bot when:</strong></p>
+<ul>
+  <li>You need to interact with the meeting (chat, reactions)</li>
+  <li>You need local recording control</li>
+  <li>You want to be visible in participant list</li>
+  <li>You’re processing your own meetings</li>
+</ul>
+
+<p><strong>Choose RTMS Bot when:</strong></p>
+<ul>
+  <li>You only need to observe/transcribe</li>
+  <li>You want minimal resource usage</li>
+  <li>You prefer invisible operation</li>
+  <li>You’re processing external meetings</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<h3 id="bot-never-joins-obf-owner-not-present">Bot Never Joins (OBF Owner Not Present)</h3>
+
+<p><strong>Symptom:</strong> All join attempts fail with “owner not in meeting”</p>
+
+<p><strong>Solution:</strong></p>
+<ol>
+  <li>Verify owner (OBF token holder) has joined the meeting</li>
+  <li>Increase <code class="language-plaintext highlighter-rouge">join_retry_attempts</code> or <code class="language-plaintext highlighter-rouge">join_retry_interval_ms</code></li>
+  <li>Check meeting start time - don’t attempt join before meeting starts</li>
+  <li>Consider webhook: Listen for <code class="language-plaintext highlighter-rouge">meeting.participant_joined</code> event for owner</li>
+</ol>
+
+<h3 id="raw-recording-permission-denied">Raw Recording Permission Denied</h3>
+
+<p><strong>Symptom:</strong> <code class="language-plaintext highlighter-rouge">CanStartRawRecording()</code> returns error</p>
+
+<p><strong>Solution:</strong></p>
+<ol>
+  <li>Admin → Account Settings → Meeting → In Meeting (Advanced)</li>
+  <li>Enable “Allow access to raw data (audio, video, sharing) for Meeting SDK”</li>
+  <li>Requires “Raw Data” entitlement from Zoom support</li>
+</ol>
+
+<h3 id="frequent-disconnections-during-meeting">Frequent Disconnections During Meeting</h3>
+
+<p><strong>Symptom:</strong> Bot reconnects multiple times, then gives up</p>
+
+<p><strong>Solution:</strong></p>
+<ol>
+  <li>Increase <code class="language-plaintext highlighter-rouge">reconnect_max_attempts</code> (e.g., 5 instead of 3)</li>
+  <li>Increase <code class="language-plaintext highlighter-rouge">reconnect_base_delay_ms</code> if network is slow</li>
+  <li>Check server network stability</li>
+  <li>Monitor CPU/memory usage (insufficient resources can cause disconnects)</li>
+</ol>
+
+<h3 id="obf-token-expires-during-meeting">OBF Token Expires During Meeting</h3>
+
+<p><strong>Symptom:</strong> Reconnection fails with “invalid token”</p>
+
+<p><strong>Solution:</strong></p>
+<ol>
+  <li>Fetch fresh OBF token in <code class="language-plaintext highlighter-rouge">attemptRejoin()</code> before rejoining</li>
+  <li>Monitor token expiration (<code class="language-plaintext highlighter-rouge">expire_in</code> from API response)</li>
+  <li>Request longer-lived tokens (max TTL: 7200s = 2 hours)</li>
+</ol>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><strong>Meeting SDK Linux</strong>: https://developers.zoom.us/docs/meeting-sdk/linux/</li>
+  <li><strong>Raw Data Guide</strong>: https://developers.zoom.us/docs/meeting-sdk/linux/add-features/raw-data/</li>
+  <li><strong>OBF FAQ</strong>: https://developers.zoom.us/docs/meeting-sdk/obf-faq/</li>
+  <li><strong>REST API - Get Meeting</strong>: https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/meeting</li>
+  <li><strong>REST API - Get OBF Token</strong>: https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#operation/userToken</li>
+  <li><strong>RTMS Bot Alternative</strong>: <a href="../../rtms/examples/rtms-bot.md">../../rtms/examples/rtms-bot.md</a></li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

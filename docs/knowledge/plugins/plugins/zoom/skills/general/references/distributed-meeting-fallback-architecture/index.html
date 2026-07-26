@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Distributed Meeting Fallback Architecture · A developer journey</title>
+<meta name="description" content="Distributed Meeting Creation and Event Processing with Fallbacks">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/general/references/distributed-meeting-fallback-architecture/">
+
+<meta property="og:title" content="Distributed Meeting Fallback Architecture · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/general/references/distributed-meeting-fallback-architecture/">
+<meta property="og:description" content="Distributed Meeting Creation and Event Processing with Fallbacks">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Distributed Meeting Fallback Architecture</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="distributed-meeting-creation-and-event-processing-with-fallbacks">Distributed Meeting Creation and Event Processing with Fallbacks</h1>
+
+<p>Use this architecture for high-volume meeting creation with resilient event processing.</p>
+
+<h2 id="core-architectural-considerations">Core Architectural Considerations</h2>
+
+<ol>
+  <li><strong>Separation of planes</strong>
+    <ul>
+      <li>Command plane: REST meeting creation/update APIs.</li>
+      <li>Event plane: webhook ingestion and async projection.</li>
+    </ul>
+  </li>
+  <li><strong>Idempotency and dedupe</strong>
+    <ul>
+      <li>Require caller-provided idempotency key per create request.</li>
+      <li>Dedupe webhook events by stable event key.</li>
+    </ul>
+  </li>
+  <li><strong>Token isolation</strong>
+    <ul>
+      <li>Central token broker with distributed lock (Redis/Postgres advisory lock).</li>
+    </ul>
+  </li>
+  <li><strong>Backpressure and queueing</strong>
+    <ul>
+      <li>Queue all webhook events and meeting commands.</li>
+      <li>Use DLQ for poison messages.</li>
+    </ul>
+  </li>
+  <li><strong>Fallback mechanisms</strong>
+    <ul>
+      <li>Retry with exponential backoff + jitter for retriable failures (<code class="language-plaintext highlighter-rouge">429/5xx/network</code>).</li>
+      <li>Circuit breaker around Zoom API dependency.</li>
+      <li>Reconciliation poller when webhook delivery is delayed/missed.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="reference-topology">Reference Topology</h2>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>API Gateway
+  -&gt; Meeting Command Service
+      -&gt; Idempotency Store (Redis/Postgres)
+      -&gt; Token Broker
+      -&gt; Zoom REST API
+      -&gt; Outbox/Event Bus
+
+Webhook Ingress
+  -&gt; Signature Verify + URL Validation
+  -&gt; Queue (Kafka/SQS/Rabbit)
+  -&gt; Projection Workers
+  -&gt; Meeting State Store
+
+Recovery Services
+  -&gt; Retry Worker
+  -&gt; Reconciliation Poller (REST pull)
+  -&gt; Dead Letter Reprocessor
+</code></pre></div></div>
+
+<h2 id="command-plane-example-meeting-creation-service">Command Plane Example (Meeting Creation Service)</h2>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">CreateMeetingInput</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">idempotencyKey</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">hostUserId</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="c1">// explicit user for S2S</span>
+  <span class="nl">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">startTime</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">duration</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">type</span> <span class="nx">QueuePublisher</span> <span class="o">=</span> <span class="p">{</span> <span class="na">publish</span><span class="p">:</span> <span class="p">(</span><span class="na">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">payload</span><span class="p">:</span> <span class="nx">object</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">};</span>
+<span class="kd">type</span> <span class="nx">IdempotencyStore</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">get</span><span class="p">:</span> <span class="p">(</span><span class="na">key</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">object</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nl">put</span><span class="p">:</span> <span class="p">(</span><span class="na">key</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">value</span><span class="p">:</span> <span class="nx">object</span><span class="p">,</span> <span class="na">ttlSec</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">createMeetingCommand</span><span class="p">(</span>
+  <span class="nx">input</span><span class="p">:</span> <span class="nx">CreateMeetingInput</span><span class="p">,</span>
+  <span class="nx">deps</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">tokenBroker</span><span class="p">:</span> <span class="p">{</span> <span class="na">getToken</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">string</span><span class="o">&gt;</span> <span class="p">};</span>
+    <span class="nl">idempotency</span><span class="p">:</span> <span class="nx">IdempotencyStore</span><span class="p">;</span>
+    <span class="nl">queue</span><span class="p">:</span> <span class="nx">QueuePublisher</span><span class="p">;</span>
+    <span class="nl">breaker</span><span class="p">:</span> <span class="nx">CircuitBreaker</span><span class="p">;</span>
+  <span class="p">},</span>
+<span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">cached</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">idempotency</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">idempotencyKey</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">cached</span><span class="p">)</span> <span class="k">return</span> <span class="nx">cached</span><span class="p">;</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">deps</span><span class="p">.</span><span class="nx">breaker</span><span class="p">.</span><span class="nf">canCall</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// degraded mode: queue command for delayed processing</span>
+    <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span><span class="dl">'</span><span class="s1">meeting.create.delayed</span><span class="dl">'</span><span class="p">,</span> <span class="nx">input</span><span class="p">);</span>
+    <span class="k">return</span> <span class="p">{</span> <span class="na">accepted</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">mode</span><span class="p">:</span> <span class="dl">'</span><span class="s1">degraded_queued</span><span class="dl">'</span> <span class="p">};</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">op</span> <span class="o">=</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">tokenBroker</span><span class="p">.</span><span class="nf">getToken</span><span class="p">();</span>
+    <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+      <span class="s2">`https://api.zoom.us/v2/users/</span><span class="p">${</span><span class="nf">encodeURIComponent</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">hostUserId</span><span class="p">)}</span><span class="s2">/meetings`</span><span class="p">,</span>
+      <span class="p">{</span>
+        <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+        <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">Authorization</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+          <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span>
+          <span class="na">topic</span><span class="p">:</span> <span class="nx">input</span><span class="p">.</span><span class="nx">topic</span><span class="p">,</span>
+          <span class="na">type</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+          <span class="na">start_time</span><span class="p">:</span> <span class="nx">input</span><span class="p">.</span><span class="nx">startTime</span><span class="p">,</span>
+          <span class="na">duration</span><span class="p">:</span> <span class="nx">input</span><span class="p">.</span><span class="nx">duration</span><span class="p">,</span>
+        <span class="p">}),</span>
+      <span class="p">},</span>
+    <span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">res</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">err</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="s2">`zoom_create_failed:</span><span class="p">${</span><span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+      <span class="p">(</span><span class="nx">err</span> <span class="kd">as </span><span class="kr">any</span><span class="p">).</span><span class="nx">status</span> <span class="o">=</span> <span class="nx">res</span><span class="p">.</span><span class="nx">status</span><span class="p">;</span>
+      <span class="k">throw</span> <span class="nx">err</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+  <span class="p">};</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">created</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">retry</span><span class="p">(</span>
+      <span class="nx">op</span><span class="p">,</span>
+      <span class="p">{</span> <span class="na">retries</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="na">baseMs</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span> <span class="na">maxMs</span><span class="p">:</span> <span class="mi">5000</span> <span class="p">},</span>
+      <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="mi">429</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">502</span><span class="p">,</span> <span class="mi">503</span><span class="p">,</span> <span class="mi">504</span><span class="p">].</span><span class="nf">includes</span><span class="p">((</span><span class="nx">e</span> <span class="kd">as </span><span class="kr">any</span><span class="p">).</span><span class="nx">status</span><span class="p">),</span>
+    <span class="p">);</span>
+
+    <span class="nx">deps</span><span class="p">.</span><span class="nx">breaker</span><span class="p">.</span><span class="nf">recordSuccess</span><span class="p">();</span>
+    <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">idempotency</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">idempotencyKey</span><span class="p">,</span> <span class="nx">created</span><span class="p">,</span> <span class="mi">3600</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">queue</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span><span class="dl">'</span><span class="s1">meeting.created</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span> <span class="na">meetingId</span><span class="p">:</span> <span class="nx">created</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">hostUserId</span><span class="p">:</span> <span class="nx">input</span><span class="p">.</span><span class="nx">hostUserId</span> <span class="p">});</span>
+    <span class="k">return</span> <span class="nx">created</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">deps</span><span class="p">.</span><span class="nx">breaker</span><span class="p">.</span><span class="nf">recordFailure</span><span class="p">();</span>
+    <span class="k">throw</span> <span class="nx">e</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="event-plane-example-webhook-ingress--queue--projection">Event Plane Example (Webhook Ingress + Queue + Projection)</h2>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">crypto</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">crypto</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kd">function</span> <span class="nf">verifyWebhook</span><span class="p">(</span><span class="nx">rawBody</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">ts</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">sig</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">secret</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nx">boolean</span> <span class="p">{</span>
+  <span class="c1">// reject stale requests to reduce replay risk</span>
+  <span class="kd">const</span> <span class="nx">nowSec</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">floor</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">tsSec</span> <span class="o">=</span> <span class="nc">Number</span><span class="p">(</span><span class="nx">ts</span> <span class="o">||</span> <span class="mi">0</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nb">Number</span><span class="p">.</span><span class="nf">isFinite</span><span class="p">(</span><span class="nx">tsSec</span><span class="p">)</span> <span class="o">||</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">abs</span><span class="p">(</span><span class="nx">nowSec</span> <span class="o">-</span> <span class="nx">tsSec</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">300</span><span class="p">)</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">msg</span> <span class="o">=</span> <span class="s2">`v0:</span><span class="p">${</span><span class="nx">ts</span><span class="p">}</span><span class="s2">:</span><span class="p">${</span><span class="nx">rawBody</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">expected</span> <span class="o">=</span> <span class="s2">`v0=</span><span class="p">${</span><span class="nx">crypto</span><span class="p">.</span><span class="nf">createHmac</span><span class="p">(</span><span class="dl">'</span><span class="s1">sha256</span><span class="dl">'</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nf">update</span><span class="p">(</span><span class="nx">msg</span><span class="p">).</span><span class="nf">digest</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">)}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">sig</span> <span class="o">===</span> <span class="nx">expected</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">ingestWebhook</span><span class="p">(</span><span class="nx">req</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">res</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">queue</span><span class="p">:</span> <span class="nx">QueuePublisher</span><span class="p">,</span> <span class="nx">secret</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">event</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">endpoint.url_validation</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">plainToken</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">payload</span><span class="p">?.</span><span class="nx">plainToken</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">encryptedToken</span> <span class="o">=</span> <span class="nx">crypto</span><span class="p">.</span><span class="nf">createHmac</span><span class="p">(</span><span class="dl">'</span><span class="s1">sha256</span><span class="dl">'</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nf">update</span><span class="p">(</span><span class="nx">plainToken</span><span class="p">).</span><span class="nf">digest</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span> <span class="nx">plainToken</span><span class="p">,</span> <span class="nx">encryptedToken</span> <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">ts</span> <span class="o">=</span> <span class="nc">String</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="dl">'</span><span class="s1">x-zm-request-timestamp</span><span class="dl">'</span><span class="p">]</span> <span class="o">||</span> <span class="dl">''</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">sig</span> <span class="o">=</span> <span class="nc">String</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">[</span><span class="dl">'</span><span class="s1">x-zm-signature</span><span class="dl">'</span><span class="p">]</span> <span class="o">||</span> <span class="dl">''</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">raw</span> <span class="o">=</span> <span class="nc">String</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">rawBody</span> <span class="o">||</span> <span class="dl">''</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nf">verifyWebhook</span><span class="p">(</span><span class="nx">raw</span><span class="p">,</span> <span class="nx">ts</span><span class="p">,</span> <span class="nx">sig</span><span class="p">,</span> <span class="nx">secret</span><span class="p">))</span> <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">401</span><span class="p">).</span><span class="nf">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">invalid_signature</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// durable write first, then ack</span>
+    <span class="k">await</span> <span class="nx">queue</span><span class="p">.</span><span class="nf">publish</span><span class="p">(</span><span class="dl">'</span><span class="s1">zoom.webhook.raw</span><span class="dl">'</span><span class="p">,</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">ok</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+    <span class="c1">// non-200 triggers Zoom retry for at-least-once delivery</span>
+    <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">503</span><span class="p">).</span><span class="nf">send</span><span class="p">(</span><span class="dl">'</span><span class="s1">queue_unavailable</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">projectEvent</span><span class="p">(</span><span class="nx">evt</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">stateStore</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">dedupe</span><span class="p">:</span> <span class="nx">IdempotencyStore</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">dedupeKey</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">evt</span><span class="p">.</span><span class="nx">event</span><span class="p">}</span><span class="s2">:</span><span class="p">${</span><span class="nx">evt</span><span class="p">.</span><span class="nx">event_ts</span><span class="p">}</span><span class="s2">:</span><span class="p">${</span><span class="nx">evt</span><span class="p">.</span><span class="nx">payload</span><span class="p">?.</span><span class="nx">object</span><span class="p">?.</span><span class="nx">uuid</span> <span class="o">||</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">payload</span><span class="p">?.</span><span class="nx">object</span><span class="p">?.</span><span class="nx">id</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">unknown</span><span class="dl">'</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">seen</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">dedupe</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">dedupeKey</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">seen</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">id</span> <span class="o">=</span> <span class="nc">String</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">payload</span><span class="p">?.</span><span class="nx">object</span><span class="p">?.</span><span class="nx">id</span> <span class="o">||</span> <span class="dl">''</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">current</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="nx">stateStore</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">id</span><span class="p">))</span> <span class="o">||</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">unknown</span><span class="dl">'</span><span class="p">,</span> <span class="na">participants</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">lastEventTs</span><span class="p">:</span> <span class="mi">0</span> <span class="p">};</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">event_ts</span> <span class="o">&lt;</span> <span class="nx">current</span><span class="p">.</span><span class="nx">lastEventTs</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">dedupe</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="nx">dedupeKey</span><span class="p">,</span> <span class="p">{</span> <span class="na">stale</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="mi">86400</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span> <span class="c1">// stale event guard</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">event</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">meeting.started</span><span class="dl">'</span><span class="p">)</span> <span class="nx">current</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">in_progress</span><span class="dl">'</span><span class="p">;</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">event</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">meeting.ended</span><span class="dl">'</span><span class="p">)</span> <span class="nx">current</span><span class="p">.</span><span class="nx">status</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ended</span><span class="dl">'</span><span class="p">;</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">event</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">meeting.participant_joined</span><span class="dl">'</span><span class="p">)</span> <span class="nx">current</span><span class="p">.</span><span class="nx">participants</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">event</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">meeting.participant_left</span><span class="dl">'</span><span class="p">)</span> <span class="nx">current</span><span class="p">.</span><span class="nx">participants</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">current</span><span class="p">.</span><span class="nx">participants</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="nx">current</span><span class="p">.</span><span class="nx">lastEventTs</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">event_ts</span><span class="p">;</span>
+
+  <span class="k">await</span> <span class="nx">stateStore</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="nx">id</span><span class="p">,</span> <span class="nx">current</span><span class="p">);</span>
+  <span class="k">await</span> <span class="nx">dedupe</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="nx">dedupeKey</span><span class="p">,</span> <span class="p">{</span> <span class="na">ok</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span> <span class="mi">86400</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="express-raw-body-setup-required-for-signature-verification">Express raw-body setup (required for signature verification)</h3>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">app</span><span class="p">.</span><span class="nf">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="nf">json</span><span class="p">({</span>
+  <span class="na">verify</span><span class="p">:</span> <span class="p">(</span><span class="na">req</span><span class="p">:</span> <span class="kr">any</span><span class="p">,</span> <span class="nx">_res</span><span class="p">,</span> <span class="nx">buf</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nx">rawBody</span> <span class="o">=</span> <span class="nx">buf</span><span class="p">.</span><span class="nf">toString</span><span class="p">(</span><span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">}));</span>
+</code></pre></div></div>
+
+<h2 id="retry--circuit-breaker-example-typescript">Retry + Circuit Breaker Example (TypeScript)</h2>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">RetryOptions</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">retries</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+  <span class="nl">baseMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+  <span class="nl">maxMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nf">sleep</span><span class="p">(</span><span class="nx">ms</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nc">Promise</span><span class="p">((</span><span class="nx">r</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nf">setTimeout</span><span class="p">(</span><span class="nx">r</span><span class="p">,</span> <span class="nx">ms</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">backoff</span><span class="p">(</span><span class="nx">attempt</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">baseMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="nx">maxMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">exp</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">min</span><span class="p">(</span><span class="nx">maxMs</span><span class="p">,</span> <span class="nx">baseMs</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="nx">attempt</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">jitter</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nf">random</span><span class="p">()</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">min</span><span class="p">(</span><span class="mi">250</span><span class="p">,</span> <span class="nx">exp</span> <span class="o">/</span> <span class="mi">4</span><span class="p">));</span>
+  <span class="k">return</span> <span class="nx">exp</span> <span class="o">+</span> <span class="nx">jitter</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">retry</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">fn</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nx">opts</span><span class="p">:</span> <span class="nx">RetryOptions</span><span class="p">,</span> <span class="nx">isRetriable</span><span class="p">:</span> <span class="p">(</span><span class="nx">e</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">boolean</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">T</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="na">lastErr</span><span class="p">:</span> <span class="kr">any</span><span class="p">;</span>
+  <span class="k">for </span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">retries</span><span class="p">;</span> <span class="nx">i</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="k">await</span> <span class="nf">fn</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">lastErr</span> <span class="o">=</span> <span class="nx">e</span><span class="p">;</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">i</span> <span class="o">===</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">retries</span> <span class="o">||</span> <span class="o">!</span><span class="nf">isRetriable</span><span class="p">(</span><span class="nx">e</span><span class="p">))</span> <span class="k">break</span><span class="p">;</span>
+      <span class="k">await</span> <span class="nf">sleep</span><span class="p">(</span><span class="nf">backoff</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">baseMs</span><span class="p">,</span> <span class="nx">opts</span><span class="p">.</span><span class="nx">maxMs</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">throw</span> <span class="nx">lastErr</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">CircuitBreaker</span> <span class="p">{</span>
+  <span class="k">private</span> <span class="nx">failures</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">private</span> <span class="nx">openUntil</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+  <span class="nf">constructor</span><span class="p">(</span><span class="k">private</span> <span class="nx">threshold</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="k">private</span> <span class="nx">coolDownMs</span> <span class="o">=</span> <span class="mi">15</span><span class="nx">_000</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="nf">canCall</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">openUntil</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nf">recordSuccess</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">failures</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nf">recordFailure</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">failures</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">if </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">failures</span> <span class="o">&gt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">threshold</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">openUntil</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">coolDownMs</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="reconciliation-poller-example-fallback-for-missed-events">Reconciliation Poller Example (Fallback for Missed Events)</h2>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">reconcileMeetingState</span><span class="p">(</span>
+  <span class="nx">meetingId</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>
+  <span class="nx">hostUserId</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>
+  <span class="nx">deps</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">tokenBroker</span><span class="p">:</span> <span class="p">{</span> <span class="na">getToken</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">string</span><span class="o">&gt;</span> <span class="p">};</span>
+    <span class="nl">stateStore</span><span class="p">:</span> <span class="p">{</span> <span class="na">get</span><span class="p">:</span> <span class="p">(</span><span class="na">id</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">put</span><span class="p">:</span> <span class="p">(</span><span class="na">id</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">v</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">};</span>
+  <span class="p">},</span>
+<span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">token</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">tokenBroker</span><span class="p">.</span><span class="nf">getToken</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="s2">`https://api.zoom.us/v2/meetings/</span><span class="p">${</span><span class="nf">encodeURIComponent</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">)}</span><span class="s2">`</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="na">Authorization</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">token</span><span class="p">}</span><span class="s2">`</span> <span class="p">},</span>
+  <span class="p">});</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">res</span><span class="p">.</span><span class="nx">ok</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">apiState</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">res</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="nx">projected</span> <span class="o">=</span> <span class="p">(</span><span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">stateStore</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">))</span> <span class="o">||</span> <span class="p">{};</span>
+  <span class="kd">const</span> <span class="nx">merged</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="p">...</span><span class="nx">projected</span><span class="p">,</span>
+    <span class="na">status</span><span class="p">:</span> <span class="nx">apiState</span><span class="p">.</span><span class="nx">status</span> <span class="o">||</span> <span class="nx">projected</span><span class="p">.</span><span class="nx">status</span><span class="p">,</span>
+    <span class="na">topic</span><span class="p">:</span> <span class="nx">apiState</span><span class="p">.</span><span class="nx">topic</span> <span class="o">||</span> <span class="nx">projected</span><span class="p">.</span><span class="nx">topic</span><span class="p">,</span>
+    <span class="na">hostId</span><span class="p">:</span> <span class="nx">hostUserId</span><span class="p">,</span>
+    <span class="na">reconciledAt</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">(),</span>
+  <span class="p">};</span>
+  <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">stateStore</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">merged</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="distributed-coordination-and-load-balancing-considerations">Distributed Coordination and Load-Balancing Considerations</h2>
+
+<ul>
+  <li>Partition command/event streams by <code class="language-plaintext highlighter-rouge">meetingId</code> or <code class="language-plaintext highlighter-rouge">hostUserId</code> so all updates for one meeting land on the same consumer shard.</li>
+  <li>Use a distributed lock for shared singleton jobs (token refresh rotation, reconciliation scheduler leader).</li>
+  <li>Keep webhook ingress stateless so horizontal autoscaling is safe behind L4/L7 load balancers.</li>
+  <li>Apply queue consumer concurrency limits to protect downstream Zoom API quotas.</li>
+</ul>
+
+<h3 id="redis-style-lock-skeleton">Redis-Style Lock Skeleton</h3>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">withLock</span><span class="p">(</span><span class="nx">lock</span><span class="p">:</span> <span class="p">{</span> <span class="nl">acquire</span><span class="p">:</span> <span class="p">(</span><span class="nx">k</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">ttlMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">boolean</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">release</span><span class="p">:</span> <span class="p">(</span><span class="nx">k</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">},</span> <span class="nx">key</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">fn</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">got</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">lock</span><span class="p">.</span><span class="nf">acquire</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="mi">10</span><span class="nx">_000</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">got</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nf">fn</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">lock</span><span class="p">.</span><span class="nf">release</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="token-broker-example-cached-refresh--distributed-lock">Token Broker Example (Cached Refresh + Distributed Lock)</h2>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">CachedToken</span> <span class="o">=</span> <span class="p">{</span> <span class="na">accessToken</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">expiresAtMs</span><span class="p">:</span> <span class="kr">number</span> <span class="p">};</span>
+
+<span class="k">export</span> <span class="kd">class</span> <span class="nc">TokenBroker</span> <span class="p">{</span>
+  <span class="nf">constructor</span><span class="p">(</span>
+    <span class="k">private</span> <span class="nx">cache</span><span class="p">:</span> <span class="p">{</span> <span class="nl">get</span><span class="p">:</span> <span class="p">(</span><span class="nx">k</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">CachedToken</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">put</span><span class="p">:</span> <span class="p">(</span><span class="nx">k</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">v</span><span class="p">:</span> <span class="nx">CachedToken</span><span class="p">,</span> <span class="nx">ttlSec</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">},</span>
+    <span class="k">private</span> <span class="nx">lock</span><span class="p">:</span> <span class="p">{</span> <span class="nl">acquire</span><span class="p">:</span> <span class="p">(</span><span class="nx">k</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">ttlMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">boolean</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">release</span><span class="p">:</span> <span class="p">(</span><span class="nx">k</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">},</span>
+    <span class="k">private</span> <span class="nx">fetchToken</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">access_token</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">expires_in</span><span class="p">:</span> <span class="kr">number</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">,</span>
+  <span class="p">)</span> <span class="p">{}</span>
+
+  <span class="k">async</span> <span class="nf">getToken</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">string</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">cached</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">zoom:s2s-token</span><span class="dl">'</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">();</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">cached</span> <span class="o">&amp;&amp;</span> <span class="nx">cached</span><span class="p">.</span><span class="nx">expiresAtMs</span> <span class="o">-</span> <span class="nx">now</span> <span class="o">&gt;</span> <span class="mi">60</span><span class="nx">_000</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">cached</span><span class="p">.</span><span class="nx">accessToken</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">const</span> <span class="nx">gotLock</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">acquire</span><span class="p">(</span><span class="dl">'</span><span class="s1">zoom:s2s-token:refresh</span><span class="dl">'</span><span class="p">,</span> <span class="mi">10</span><span class="nx">_000</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">gotLock</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">await</span> <span class="nf">sleep</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+      <span class="kd">const</span> <span class="nx">retryCached</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">zoom:s2s-token</span><span class="dl">'</span><span class="p">);</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">retryCached</span> <span class="o">&amp;&amp;</span> <span class="nx">retryCached</span><span class="p">.</span><span class="nx">expiresAtMs</span> <span class="o">-</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">30</span><span class="nx">_000</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">retryCached</span><span class="p">.</span><span class="nx">accessToken</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">token_refresh_lock_contention</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">fresh</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nf">fetchToken</span><span class="p">();</span>
+      <span class="kd">const</span> <span class="nx">value</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">accessToken</span><span class="p">:</span> <span class="nx">fresh</span><span class="p">.</span><span class="nx">access_token</span><span class="p">,</span>
+        <span class="na">expiresAtMs</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">+</span> <span class="nx">fresh</span><span class="p">.</span><span class="nx">expires_in</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+      <span class="p">};</span>
+      <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nf">put</span><span class="p">(</span><span class="dl">'</span><span class="s1">zoom:s2s-token</span><span class="dl">'</span><span class="p">,</span> <span class="nx">value</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="nx">fresh</span><span class="p">.</span><span class="nx">expires_in</span> <span class="o">-</span> <span class="mi">90</span><span class="p">));</span>
+      <span class="k">return</span> <span class="nx">value</span><span class="p">.</span><span class="nx">accessToken</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+      <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">release</span><span class="p">(</span><span class="dl">'</span><span class="s1">zoom:s2s-token:refresh</span><span class="dl">'</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="high-volume-create-worker-concurrency--rate-protection">High-Volume Create Worker (Concurrency + Rate Protection)</h2>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">CreateJob</span> <span class="o">=</span> <span class="nx">CreateMeetingInput</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="na">attempts</span><span class="p">:</span> <span class="kr">number</span> <span class="p">};</span>
+
+<span class="kd">class</span> <span class="nc">TokenBucket</span> <span class="p">{</span>
+  <span class="k">private</span> <span class="nx">tokens</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+  <span class="k">private</span> <span class="nx">lastRefill</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">();</span>
+
+  <span class="nf">constructor</span><span class="p">(</span><span class="k">private</span> <span class="k">readonly</span> <span class="nx">capacity</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="k">private</span> <span class="k">readonly</span> <span class="nx">refillPerSec</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">tokens</span> <span class="o">=</span> <span class="nx">capacity</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">async</span> <span class="nf">take</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">while </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">now</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">();</span>
+      <span class="kd">const</span> <span class="nx">elapsedSec</span> <span class="o">=</span> <span class="p">(</span><span class="nx">now</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">lastRefill</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">tokens</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">min</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">capacity</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">tokens</span> <span class="o">+</span> <span class="nx">elapsedSec</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">refillPerSec</span><span class="p">);</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">lastRefill</span> <span class="o">=</span> <span class="nx">now</span><span class="p">;</span>
+      <span class="k">if </span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">tokens</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">tokens</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+      <span class="k">await</span> <span class="nf">sleep</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">runCreateWorker</span><span class="p">(</span>
+  <span class="nx">queue</span><span class="p">:</span> <span class="p">{</span> <span class="nl">receiveBatch</span><span class="p">:</span> <span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">CreateJob</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">ack</span><span class="p">:</span> <span class="p">(</span><span class="nx">job</span><span class="p">:</span> <span class="nx">CreateJob</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">retryLater</span><span class="p">:</span> <span class="p">(</span><span class="nx">job</span><span class="p">:</span> <span class="nx">CreateJob</span><span class="p">,</span> <span class="nx">delayMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">},</span>
+  <span class="nx">deps</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">createMeeting</span><span class="p">:</span> <span class="p">(</span><span class="nx">job</span><span class="p">:</span> <span class="nx">CreateJob</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+    <span class="nl">breaker</span><span class="p">:</span> <span class="nx">CircuitBreaker</span><span class="p">;</span>
+    <span class="nl">limiter</span><span class="p">:</span> <span class="nx">TokenBucket</span><span class="p">;</span>
+  <span class="p">},</span>
+  <span class="nx">concurrency</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span>
+<span class="p">)</span> <span class="p">{</span>
+  <span class="k">while </span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">jobs</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">queue</span><span class="p">.</span><span class="nf">receiveBatch</span><span class="p">(</span><span class="nx">concurrency</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nf">all</span><span class="p">(</span><span class="nx">jobs</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="k">async </span><span class="p">(</span><span class="nx">job</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">deps</span><span class="p">.</span><span class="nx">breaker</span><span class="p">.</span><span class="nf">canCall</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">await</span> <span class="nx">queue</span><span class="p">.</span><span class="nf">retryLater</span><span class="p">(</span><span class="nx">job</span><span class="p">,</span> <span class="mi">30</span><span class="nx">_000</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="k">try</span> <span class="p">{</span>
+        <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">limiter</span><span class="p">.</span><span class="nf">take</span><span class="p">();</span>
+        <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nf">createMeeting</span><span class="p">(</span><span class="nx">job</span><span class="p">);</span>
+        <span class="nx">deps</span><span class="p">.</span><span class="nx">breaker</span><span class="p">.</span><span class="nf">recordSuccess</span><span class="p">();</span>
+        <span class="k">await</span> <span class="nx">queue</span><span class="p">.</span><span class="nf">ack</span><span class="p">(</span><span class="nx">job</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="na">e</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">deps</span><span class="p">.</span><span class="nx">breaker</span><span class="p">.</span><span class="nf">recordFailure</span><span class="p">();</span>
+        <span class="kd">const</span> <span class="nx">delay</span> <span class="o">=</span> <span class="nf">backoff</span><span class="p">(</span><span class="nx">job</span><span class="p">.</span><span class="nx">attempts</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">60</span><span class="nx">_000</span><span class="p">);</span>
+        <span class="k">await</span> <span class="nx">queue</span><span class="p">.</span><span class="nf">retryLater</span><span class="p">({</span> <span class="p">...</span><span class="nx">job</span><span class="p">,</span> <span class="na">attempts</span><span class="p">:</span> <span class="nx">job</span><span class="p">.</span><span class="nx">attempts</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">},</span> <span class="nx">delay</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}));</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="reconciliation-scheduler-lag-detection--leader-election">Reconciliation Scheduler (Lag Detection + Leader Election)</h2>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">reconcileLaggingMeetings</span><span class="p">(</span>
+  <span class="nx">deps</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">lock</span><span class="p">:</span> <span class="p">{</span> <span class="na">acquire</span><span class="p">:</span> <span class="p">(</span><span class="na">k</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="na">ttlMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">boolean</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">release</span><span class="p">:</span> <span class="p">(</span><span class="na">k</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">};</span>
+    <span class="nl">stateStore</span><span class="p">:</span> <span class="p">{</span> <span class="na">listLagging</span><span class="p">:</span> <span class="p">(</span><span class="na">ageMs</span><span class="p">:</span> <span class="kr">number</span><span class="p">,</span> <span class="na">limit</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">meetingId</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">hostUserId</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span><span class="o">&gt;&gt;</span> <span class="p">};</span>
+    <span class="nl">reconcile</span><span class="p">:</span> <span class="p">(</span><span class="nx">meetingId</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">hostUserId</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="p">},</span>
+<span class="p">)</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nf">withLock</span><span class="p">(</span><span class="nx">deps</span><span class="p">.</span><span class="nx">lock</span><span class="p">,</span> <span class="dl">'</span><span class="s1">zoom:reconcile:leader</span><span class="dl">'</span><span class="p">,</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">lagging</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nx">stateStore</span><span class="p">.</span><span class="nf">listLagging</span><span class="p">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">60</span><span class="nx">_000</span><span class="p">,</span> <span class="mi">250</span><span class="p">);</span>
+    <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">item</span> <span class="k">of</span> <span class="nx">lagging</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">await</span> <span class="nx">deps</span><span class="p">.</span><span class="nf">reconcile</span><span class="p">(</span><span class="nx">item</span><span class="p">.</span><span class="nx">meetingId</span><span class="p">,</span> <span class="nx">item</span><span class="p">.</span><span class="nx">hostUserId</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="dlq-replay-worker">DLQ Replay Worker</h2>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="k">async</span> <span class="kd">function</span> <span class="nf">replayDlq</span><span class="p">(</span>
+  <span class="nx">dlq</span><span class="p">:</span> <span class="p">{</span> <span class="nl">receiveBatch</span><span class="p">:</span> <span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="kr">any</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">ack</span><span class="p">:</span> <span class="p">(</span><span class="nx">msg</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span> <span class="nl">moveBack</span><span class="p">:</span> <span class="p">(</span><span class="nx">topic</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">msg</span><span class="p">:</span> <span class="kr">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span> <span class="p">},</span>
+  <span class="nx">topic</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">meeting.create.delayed</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">failed</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">dlq</span><span class="p">.</span><span class="nf">receiveBatch</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+  <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">msg</span> <span class="k">of</span> <span class="nx">failed</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">await</span> <span class="nx">dlq</span><span class="p">.</span><span class="nf">moveBack</span><span class="p">(</span><span class="nx">topic</span><span class="p">,</span> <span class="p">{</span> <span class="p">...</span><span class="nx">msg</span><span class="p">,</span> <span class="na">replayedAt</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="p">});</span>
+    <span class="k">await</span> <span class="nx">dlq</span><span class="p">.</span><span class="nf">ack</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="distributed-state-rules">Distributed State Rules</h2>
+
+<ul>
+  <li>Meeting state is event-sourced or projection-based, not only request-response based.</li>
+  <li>Persist <code class="language-plaintext highlighter-rouge">last_seen_event_ts</code> and status transitions to handle out-of-order events.</li>
+  <li>Add monotonic transition guards (e.g., do not move <code class="language-plaintext highlighter-rouge">ended -&gt; in_progress</code>).</li>
+</ul>
+
+<h2 id="fallback-matrix">Fallback Matrix</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Failure</th>
+      <th>Primary response</th>
+      <th>Fallback</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Token refresh failure</td>
+      <td>Retry token exchange</td>
+      <td>Fail fast + alert + pause new create requests</td>
+    </tr>
+    <tr>
+      <td>REST <code class="language-plaintext highlighter-rouge">429</code> / <code class="language-plaintext highlighter-rouge">5xx</code></td>
+      <td>Retry w/ backoff</td>
+      <td>Queue command for delayed retry</td>
+    </tr>
+    <tr>
+      <td>Webhook verification failure</td>
+      <td>Reject <code class="language-plaintext highlighter-rouge">401</code></td>
+      <td>Alert security pipeline</td>
+    </tr>
+    <tr>
+      <td>Webhook processor down</td>
+      <td>Buffer in queue</td>
+      <td>DLQ + replay job</td>
+    </tr>
+    <tr>
+      <td>Missing webhook event</td>
+      <td>Detect via reconciliation lag</td>
+      <td>REST poll and repair projection</td>
+    </tr>
+    <tr>
+      <td>Dependency outage</td>
+      <td>Open circuit breaker</td>
+      <td>Serve degraded status + queued commands</td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

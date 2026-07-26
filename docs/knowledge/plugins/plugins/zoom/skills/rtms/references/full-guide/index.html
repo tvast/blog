@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Full Guide · A developer journey</title>
+<meta name="description" content="Zoom Realtime Media Streams (RTMS)">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/rtms/references/full-guide/">
+
+<meta property="og:title" content="Full Guide · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/zoom/skills/rtms/references/full-guide/">
+<meta property="og:description" content="Zoom Realtime Media Streams (RTMS)">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Full Guide</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="zoom-realtime-media-streams-rtms">Zoom Realtime Media Streams (RTMS)</h1>
+
+<p>Background reference for live Zoom media pipelines. Prefer <code class="language-plaintext highlighter-rouge">build-zoom-bot</code> first, then use this skill for stream types, capabilities, and RTMS-specific implementation constraints.</p>
+
+<h1 id="zoom-realtime-media-streams-rtms-1">Zoom Realtime Media Streams (RTMS)</h1>
+
+<p>Expert guidance for accessing live audio, video, transcript, chat, and screen share data from Zoom meetings, webinars, Video SDK sessions, and Zoom Contact Center Voice in real-time. RTMS uses a WebSocket-based protocol with open standards and does not require a meeting bot to capture the media plane.</p>
+
+<h2 id="read-this-first-critical">Read This First (Critical)</h2>
+
+<p>RTMS is primarily a <strong>backend media ingestion service</strong>.</p>
+
+<ul>
+  <li>Your backend receives and processes live media: <strong>audio, video, screen share, chat, transcript</strong>.</li>
+  <li>RTMS is not a frontend UI SDK by itself.</li>
+  <li>Processing is <strong>event-triggered</strong>: backend waits for RTMS start webhook events before stream handling begins.</li>
+</ul>
+
+<p>Optional architecture (common):</p>
+
+<ul>
+  <li>Add a <strong>Zoom App SDK</strong> frontend for in-client UI/controls.</li>
+  <li>Stream backend RTMS outputs to frontend via <strong>WebSocket</strong> (or SSE, gRPC, queue workers, etc.).</li>
+</ul>
+
+<p>Use RTMS for media/data plane, and use frontend frameworks/Zoom Apps for presentation + user interactions.</p>
+
+<p><strong>Official Documentation</strong>: https://developers.zoom.us/docs/rtms/
+<strong>SDK Reference (JS)</strong>: https://zoom.github.io/rtms/js/
+<strong>SDK Reference (Python)</strong>: https://zoom.github.io/rtms/py/
+<strong>Sample Repository</strong>: https://github.com/zoom/rtms-samples</p>
+
+<h2 id="quick-links">Quick Links</h2>
+
+<p><strong>New to RTMS? Follow this path:</strong></p>
+
+<ol>
+  <li><strong><a href="../concepts/connection-architecture.md">Connection Architecture</a></strong> - Two-phase WebSocket design</li>
+  <li><strong><a href="../examples/sdk-quickstart.md">SDK Quickstart</a></strong> - Fastest way to receive media (recommended)</li>
+  <li><strong><a href="../examples/manual-websocket.md">Manual WebSocket</a></strong> - Full protocol control without SDK</li>
+  <li><strong><a href="../references/media-types.md">Media Types</a></strong> - Audio, video, transcript, chat, screen share</li>
+</ol>
+
+<p><strong>Complete Implementation:</strong></p>
+<ul>
+  <li><strong><a href="../examples/rtms-bot.md">RTMS Bot</a></strong> - End-to-end bot implementation guide</li>
+</ul>
+
+<p><strong>Reference:</strong></p>
+<ul>
+  <li><strong><a href="../concepts/lifecycle-flow.md">Lifecycle Flow</a></strong> - Complete webhook-to-streaming flow</li>
+  <li><strong><a href="../references/data-types.md">Data Types</a></strong> - All enums and constants</li>
+  <li><strong><a href="../references/webhooks.md">Webhooks</a></strong> - Event subscription details</li>
+  <li><strong><a href="../references/environment-variables.md">Environment Variables</a></strong> - credential modes and runtime knobs</li>
+  <li><strong><a href="../references/quickstart.md">Quickstart Notes</a></strong> - Secondary quickstart guide</li>
+  <li><strong>Integrated Index</strong> - see the section below in this file</li>
+</ul>
+
+<p><strong>Having issues?</strong></p>
+<ul>
+  <li>Connection fails -&gt; <a href="../troubleshooting/common-issues.md">Common Issues</a></li>
+  <li>Duplicate connections -&gt; <a href="../troubleshooting/common-issues.md">Webhook Gotchas</a></li>
+  <li>No audio/video -&gt; <a href="../references/media-types.md">Media Configuration</a></li>
+  <li>Start with preflight checks -&gt; <a href="../RUNBOOK.md">5-Minute Runbook</a></li>
+</ul>
+
+<h2 id="supported-products">Supported Products</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Webhook Event</th>
+      <th>Payload ID</th>
+      <th>App Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Meetings</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">meeting.rtms_started</code> / <code class="language-plaintext highlighter-rouge">meeting.rtms_stopped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">meeting_uuid</code></td>
+      <td>General App</td>
+    </tr>
+    <tr>
+      <td><strong>Webinars</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">webinar.rtms_started</code> / <code class="language-plaintext highlighter-rouge">webinar.rtms_stopped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">meeting_uuid</code> (same!)</td>
+      <td>General App</td>
+    </tr>
+    <tr>
+      <td><strong>Video SDK</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">session.rtms_started</code> / <code class="language-plaintext highlighter-rouge">session.rtms_stopped</code></td>
+      <td><code class="language-plaintext highlighter-rouge">session_id</code></td>
+      <td>Video SDK App</td>
+    </tr>
+    <tr>
+      <td><strong>Zoom Contact Center Voice</strong></td>
+      <td>Product-specific RTMS/ZCC Voice events</td>
+      <td>Product-specific stream/session identifiers</td>
+      <td>Contact Center / approved RTMS integration</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Once connected, the core signaling/media socket model is shared across products. Meetings, webinars, and Video SDK sessions use the familiar start/stop webhooks. Zoom Contact Center Voice adds its own RTMS/ZCC Voice event family and should be treated as the same transport model with product-specific event payloads.</p>
+
+<h2 id="rtms-overview">RTMS Overview</h2>
+
+<p>RTMS is a data pipeline that gives your app access to live media from Zoom meetings, webinars, and Video SDK sessions <strong>without participant bots</strong>. Instead of having automated clients join meetings, use RTMS to collect media data directly from Zoom’s infrastructure.</p>
+
+<h3 id="what-rtms-provides">What RTMS Provides</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Media Type</th>
+      <th>Format</th>
+      <th>Use Cases</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Audio</strong></td>
+      <td>PCM (L16), G.711, G.722, Opus</td>
+      <td>Transcription, voice analysis, recording</td>
+    </tr>
+    <tr>
+      <td><strong>Video</strong></td>
+      <td>H.264, JPG, PNG</td>
+      <td>Recording, AI vision, thumbnails, active participant selection</td>
+    </tr>
+    <tr>
+      <td><strong>Screen Share</strong></td>
+      <td>H.264, JPG, PNG</td>
+      <td>Content capture, slide extraction</td>
+    </tr>
+    <tr>
+      <td><strong>Transcript</strong></td>
+      <td>JSON text</td>
+      <td>Meeting notes, search, compliance</td>
+    </tr>
+    <tr>
+      <td><strong>Chat</strong></td>
+      <td>JSON text</td>
+      <td>Archive, sentiment analysis</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="march-2026-protocol-changes">March 2026 Protocol Changes</h3>
+
+<ul>
+  <li><strong>Zoom Contact Center Voice support</strong>: RTMS now covers Contact Center Voice audio and transcript scenarios.</li>
+  <li><strong>Transcript Language Identification control</strong>: transcript media handshakes now support <code class="language-plaintext highlighter-rouge">src_language</code> and <code class="language-plaintext highlighter-rouge">enable_lid</code>. Default behavior is LID enabled. Set <code class="language-plaintext highlighter-rouge">enable_lid: false</code> to force a fixed language.</li>
+  <li><strong>Single individual video stream subscription</strong>: RTMS can now stream one participant’s camera feed at a time when <code class="language-plaintext highlighter-rouge">data_opt</code> is set to <code class="language-plaintext highlighter-rouge">VIDEO_SINGLE_INDIVIDUAL_STREAM</code>.</li>
+  <li><strong>Graceful client-initiated shutdown</strong>: backends can send <code class="language-plaintext highlighter-rouge">STREAM_CLOSE_REQ</code> over the signaling socket and wait for <code class="language-plaintext highlighter-rouge">STREAM_CLOSE_RESP</code>.</li>
+  <li><strong>Media keep-alive tolerance increased</strong>: media socket keep-alive timeout is now <strong>65 seconds</strong>, not 35.</li>
+</ul>
+
+<h3 id="two-approaches">Two Approaches</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Approach</th>
+      <th>Best For</th>
+      <th>Complexity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>SDK</strong> (<code class="language-plaintext highlighter-rouge">@zoom/rtms</code>)</td>
+      <td>Most use cases</td>
+      <td>Low - handles WebSocket complexity</td>
+    </tr>
+    <tr>
+      <td><strong>Manual WebSocket</strong></td>
+      <td>Custom protocols, other languages</td>
+      <td>High - full protocol implementation</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li><strong>Node.js 20.3.0+</strong> (24 LTS recommended) for JavaScript SDK</li>
+  <li><strong>Python 3.10+</strong> for Python SDK</li>
+  <li>Zoom General App (for meetings/webinars) or Video SDK App (for Video SDK) with RTMS feature enabled</li>
+  <li>Webhook endpoint for RTMS events</li>
+  <li>Server to receive WebSocket streams</li>
+</ul>
+
+<blockquote>
+  <p><strong>Need RTMS access?</strong> Post in <a href="https://devforum.zoom.us/">Zoom Developer Forum</a> requesting RTMS access with your use case.</p>
+</blockquote>
+
+<h2 id="quick-start-sdk---recommended">Quick Start (SDK - Recommended)</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">rtms</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@zoom/rtms</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// All RTMS start/stop events across products</span>
+<span class="kd">const</span> <span class="nx">RTMS_EVENTS</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">meeting.rtms_started</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">webinar.rtms_started</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">session.rtms_started</span><span class="dl">"</span><span class="p">];</span>
+
+<span class="c1">// Handle webhook events</span>
+<span class="nx">rtms</span><span class="p">.</span><span class="nf">onWebhookEvent</span><span class="p">(({</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">payload</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">RTMS_EVENTS</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="nx">event</span><span class="p">))</span> <span class="k">return</span><span class="p">;</span>
+
+  <span class="kd">const</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">rtms</span><span class="p">.</span><span class="nc">Client</span><span class="p">();</span>
+
+  <span class="nx">client</span><span class="p">.</span><span class="nf">onAudioData</span><span class="p">((</span><span class="nx">data</span><span class="p">,</span> <span class="nx">timestamp</span><span class="p">,</span> <span class="nx">metadata</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Audio from </span><span class="p">${</span><span class="nx">metadata</span><span class="p">.</span><span class="nx">userName</span><span class="p">}</span><span class="s2">: </span><span class="p">${</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">}</span><span class="s2"> bytes`</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">client</span><span class="p">.</span><span class="nf">onTranscriptData</span><span class="p">((</span><span class="nx">data</span><span class="p">,</span> <span class="nx">timestamp</span><span class="p">,</span> <span class="nx">metadata</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nf">toString</span><span class="p">(</span><span class="dl">'</span><span class="s1">utf8</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">metadata</span><span class="p">.</span><span class="nx">userName</span><span class="p">}</span><span class="s2">: </span><span class="p">${</span><span class="nx">text</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">client</span><span class="p">.</span><span class="nf">onJoinConfirm</span><span class="p">((</span><span class="nx">reason</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Joined session: </span><span class="p">${</span><span class="nx">reason</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// SDK handles all WebSocket connections automatically</span>
+  <span class="c1">// Accepts both meeting_uuid and session_id transparently</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nx">payload</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h2 id="quick-start-manual-websocket">Quick Start (Manual WebSocket)</h2>
+
+<p>For full control or non-SDK languages, implement the two-phase WebSocket protocol:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">WebSocket</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">ws</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">crypto</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">crypto</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">RTMS_EVENTS</span> <span class="o">=</span> <span class="p">[</span><span class="dl">'</span><span class="s1">meeting.rtms_started</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">webinar.rtms_started</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">session.rtms_started</span><span class="dl">'</span><span class="p">];</span>
+
+<span class="c1">// 1. Generate signature</span>
+<span class="c1">// For meetings/webinars: uses meeting_uuid. For Video SDK: uses session_id.</span>
+<span class="kd">function</span> <span class="nf">generateSignature</span><span class="p">(</span><span class="nx">clientId</span><span class="p">,</span> <span class="nx">idValue</span><span class="p">,</span> <span class="nx">streamId</span><span class="p">,</span> <span class="nx">clientSecret</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">clientId</span><span class="p">}</span><span class="s2">,</span><span class="p">${</span><span class="nx">idValue</span><span class="p">}</span><span class="s2">,</span><span class="p">${</span><span class="nx">streamId</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">crypto</span><span class="p">.</span><span class="nf">createHmac</span><span class="p">(</span><span class="dl">'</span><span class="s1">sha256</span><span class="dl">'</span><span class="p">,</span> <span class="nx">clientSecret</span><span class="p">).</span><span class="nf">update</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="nf">digest</span><span class="p">(</span><span class="dl">'</span><span class="s1">hex</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 2. Handle webhook</span>
+<span class="nx">app</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span><span class="dl">'</span><span class="s1">/webhook</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">200</span><span class="p">).</span><span class="nf">send</span><span class="p">();</span>  <span class="c1">// CRITICAL: Respond immediately!</span>
+
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">event</span><span class="p">,</span> <span class="nx">payload</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">;</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">RTMS_EVENTS</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="nx">event</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nf">connectToRTMS</span><span class="p">(</span><span class="nx">payload</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// 3. Connect to signaling WebSocket</span>
+<span class="kd">function</span> <span class="nf">connectToRTMS</span><span class="p">(</span><span class="nx">payload</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">server_urls</span><span class="p">,</span> <span class="nx">rtms_stream_id</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">;</span>
+  <span class="c1">// meeting_uuid for meetings/webinars, session_id for Video SDK</span>
+  <span class="kd">const</span> <span class="nx">idValue</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">meeting_uuid</span> <span class="o">||</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">session_id</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="nf">generateSignature</span><span class="p">(</span><span class="nx">CLIENT_ID</span><span class="p">,</span> <span class="nx">idValue</span><span class="p">,</span> <span class="nx">rtms_stream_id</span><span class="p">,</span> <span class="nx">CLIENT_SECRET</span><span class="p">);</span>
+
+  <span class="kd">const</span> <span class="nx">signalingWs</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WebSocket</span><span class="p">(</span><span class="nx">server_urls</span><span class="p">);</span>
+
+  <span class="nx">signalingWs</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">signalingWs</span><span class="p">.</span><span class="nf">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span>
+      <span class="na">msg_type</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="c1">// Handshake request</span>
+      <span class="na">protocol_version</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="na">meeting_uuid</span><span class="p">:</span> <span class="nx">idValue</span><span class="p">,</span>
+      <span class="nx">rtms_stream_id</span><span class="p">,</span>
+      <span class="nx">signature</span><span class="p">,</span>
+      <span class="na">media_type</span><span class="p">:</span> <span class="mi">9</span>  <span class="c1">// AUDIO(1) | TRANSCRIPT(8)</span>
+    <span class="p">}));</span>
+  <span class="p">});</span>
+
+  <span class="c1">// ... handle responses, connect to media WebSocket</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>See</strong>: <a href="../examples/manual-websocket.md">Manual WebSocket Guide</a> for complete implementation.</p>
+
+<h2 id="media-type-bitmask">Media Type Bitmask</h2>
+
+<p>Combine types with bitwise OR:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Audio</td>
+      <td>1</td>
+      <td>PCM audio samples</td>
+    </tr>
+    <tr>
+      <td>Video</td>
+      <td>2</td>
+      <td>H.264/JPG video frames</td>
+    </tr>
+    <tr>
+      <td>Screen Share</td>
+      <td>4</td>
+      <td><strong>Separate from video!</strong></td>
+    </tr>
+    <tr>
+      <td>Transcript</td>
+      <td>8</td>
+      <td>Real-time speech-to-text</td>
+    </tr>
+    <tr>
+      <td>Chat</td>
+      <td>16</td>
+      <td>In-meeting chat messages</td>
+    </tr>
+    <tr>
+      <td>All</td>
+      <td>32</td>
+      <td>All media types</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Example</strong>: Audio + Transcript = <code class="language-plaintext highlighter-rouge">1 | 8</code> = <code class="language-plaintext highlighter-rouge">9</code></p>
+
+<h2 id="critical-gotchas">Critical Gotchas</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Issue</th>
+      <th>Solution</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Only 1 connection allowed</strong></td>
+      <td>New connections kick out existing ones. Track active sessions!</td>
+    </tr>
+    <tr>
+      <td><strong>Respond 200 immediately</strong></td>
+      <td>If webhook delays, Zoom retries creating duplicate connections</td>
+    </tr>
+    <tr>
+      <td><strong>Heartbeat mandatory</strong></td>
+      <td>Respond to msg_type 12 with msg_type 13, or connection dies</td>
+    </tr>
+    <tr>
+      <td><strong>Reconnection is YOUR job</strong></td>
+      <td>RTMS doesn’t auto-reconnect. Media keep-alive tolerance is now about <strong>65s</strong>; signaling remains around <strong>60s</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Transcript language drift</strong></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">src_language</code> plus <code class="language-plaintext highlighter-rouge">enable_lid: false</code> when you want fixed-language transcription instead of automatic language switching</td>
+    </tr>
+    <tr>
+      <td><strong>Single participant video only</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">VIDEO_SINGLE_INDIVIDUAL_STREAM</code> supports one participant at a time. A new <code class="language-plaintext highlighter-rouge">VIDEO_SUBSCRIPTION_REQ</code> overrides the previous selection</td>
+    </tr>
+    <tr>
+      <td><strong>Graceful close is explicit now</strong></td>
+      <td>Use <code class="language-plaintext highlighter-rouge">STREAM_CLOSE_REQ</code> / <code class="language-plaintext highlighter-rouge">STREAM_CLOSE_RESP</code> when your backend wants to terminate the stream cleanly</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="environment-variables">Environment Variables</h2>
+
+<h3 id="sdk-environment-variables">SDK Environment Variables</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Required - Authentication</span>
+<span class="nv">ZM_RTMS_CLIENT</span><span class="o">=</span>your_client_id          <span class="c"># Zoom OAuth Client ID</span>
+<span class="nv">ZM_RTMS_SECRET</span><span class="o">=</span>your_client_secret      <span class="c"># Zoom OAuth Client Secret</span>
+
+<span class="c"># Optional - Webhook server</span>
+<span class="nv">ZM_RTMS_PORT</span><span class="o">=</span>8080                      <span class="c"># Default: 8080</span>
+<span class="nv">ZM_RTMS_PATH</span><span class="o">=</span>/webhook                  <span class="c"># Default: /</span>
+
+<span class="c"># Optional - Logging</span>
+<span class="nv">ZM_RTMS_LOG_LEVEL</span><span class="o">=</span>info                 <span class="c"># error, warn, info, debug, trace</span>
+<span class="nv">ZM_RTMS_LOG_FORMAT</span><span class="o">=</span>progressive         <span class="c"># progressive or json</span>
+<span class="nv">ZM_RTMS_LOG_ENABLED</span><span class="o">=</span><span class="nb">true</span>
+</code></pre></div></div>
+
+<h3 id="manual-implementation-variables">Manual Implementation Variables</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ZOOM_CLIENT_ID</span><span class="o">=</span>your_client_id
+<span class="nv">ZOOM_CLIENT_SECRET</span><span class="o">=</span>your_client_secret
+<span class="nv">ZOOM_SECRET_TOKEN</span><span class="o">=</span>your_webhook_token   <span class="c"># For webhook validation</span>
+</code></pre></div></div>
+
+<h2 id="zoom-app-setup">Zoom App Setup</h2>
+
+<h3 id="for-meetings-and-webinars-general-app">For Meetings and Webinars (General App)</h3>
+
+<ol>
+  <li>Go to <a href="https://marketplace.zoom.us">marketplace.zoom.us</a> -&gt; Develop -&gt; Build App</li>
+  <li>Choose <strong>General App</strong> -&gt; <strong>User-Managed</strong></li>
+  <li>Features -&gt; Access -&gt; <strong>Enable Event Subscription</strong></li>
+  <li>Add Events -&gt; Search “rtms” -&gt; Select:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">meeting.rtms_started</code></li>
+      <li><code class="language-plaintext highlighter-rouge">meeting.rtms_stopped</code></li>
+      <li><code class="language-plaintext highlighter-rouge">webinar.rtms_started</code> (if using webinars)</li>
+      <li><code class="language-plaintext highlighter-rouge">webinar.rtms_stopped</code> (if using webinars)</li>
+    </ul>
+  </li>
+  <li>Scopes -&gt; Add Scopes -&gt; Search “rtms” -&gt; Add:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">meeting:read:meeting_audio</code></li>
+      <li><code class="language-plaintext highlighter-rouge">meeting:read:meeting_video</code></li>
+      <li><code class="language-plaintext highlighter-rouge">meeting:read:meeting_transcript</code></li>
+      <li><code class="language-plaintext highlighter-rouge">meeting:read:meeting_chat</code></li>
+      <li><code class="language-plaintext highlighter-rouge">webinar:read:webinar_audio</code> (if using webinars)</li>
+      <li><code class="language-plaintext highlighter-rouge">webinar:read:webinar_video</code> (if using webinars)</li>
+      <li><code class="language-plaintext highlighter-rouge">webinar:read:webinar_transcript</code> (if using webinars)</li>
+      <li><code class="language-plaintext highlighter-rouge">webinar:read:webinar_chat</code> (if using webinars)</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="for-video-sdk-video-sdk-app">For Video SDK (Video SDK App)</h3>
+
+<ol>
+  <li>Go to <a href="https://marketplace.zoom.us">marketplace.zoom.us</a> -&gt; Develop -&gt; Build App</li>
+  <li>Choose <strong>Video SDK App</strong></li>
+  <li>Use your SDK Key and SDK Secret (not OAuth Client ID/Secret)</li>
+  <li>Add Events:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">session.rtms_started</code></li>
+      <li><code class="language-plaintext highlighter-rouge">session.rtms_stopped</code></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="sample-repositories">Sample Repositories</h2>
+
+<h3 id="official-samples">Official Samples</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Repository</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/zoom/rtms-samples">rtms-samples</a></td>
+      <td>RTMSManager, boilerplates, AI samples</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/rtms-quickstart-js">rtms-quickstart-js</a></td>
+      <td>JavaScript SDK quickstart</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/rtms-quickstart-py">rtms-quickstart-py</a></td>
+      <td>Python SDK quickstart</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/rtms-sdk-cpp">rtms-sdk-cpp</a></td>
+      <td>C++ SDK</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/rtms">zoom-rtms</a></td>
+      <td>Main SDK repository</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="ai-integration-samples">AI Integration Samples</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Sample</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/zoom/rtms-meeting-assistant-starter-kit">rtms-meeting-assistant-starter-kit</a></td>
+      <td>AI meeting assistant with summaries</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/arlo-meeting-assistant">arlo-meeting-assistant</a></td>
+      <td>Production meeting assistant with DB</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/zoom/videosdk-rtms-transcribe-audio">videosdk-rtms-transcribe-audio</a></td>
+      <td>Whisper transcription</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="complete-documentation">Complete Documentation</h2>
+
+<h3 id="concepts">Concepts</h3>
+<ul>
+  <li><strong><a href="../concepts/connection-architecture.md">Connection Architecture</a></strong> - Two-phase WebSocket design</li>
+  <li><strong><a href="../concepts/lifecycle-flow.md">Lifecycle Flow</a></strong> - Webhook to streaming flow</li>
+</ul>
+
+<h3 id="examples">Examples</h3>
+<ul>
+  <li><strong><a href="../examples/sdk-quickstart.md">SDK Quickstart</a></strong> - Using @zoom/rtms SDK</li>
+  <li><strong><a href="../examples/manual-websocket.md">Manual WebSocket</a></strong> - Raw protocol implementation</li>
+  <li><strong><a href="../examples/rtms-bot.md">RTMS Bot</a></strong> - Complete bot implementation guide</li>
+  <li><strong><a href="../examples/ai-integration.md">AI Integration</a></strong> - Transcription and analysis patterns</li>
+</ul>
+
+<h3 id="references">References</h3>
+<ul>
+  <li><strong><a href="../references/media-types.md">Media Types</a></strong> - Audio, video, transcript, chat, screen share</li>
+  <li><strong><a href="../references/data-types.md">Data Types</a></strong> - All enums and constants</li>
+  <li><strong><a href="../references/connection.md">Connection</a></strong> - WebSocket protocol details</li>
+  <li><strong><a href="../references/webhooks.md">Webhooks</a></strong> - Event subscription</li>
+</ul>
+
+<h3 id="troubleshooting">Troubleshooting</h3>
+<ul>
+  <li><strong><a href="../troubleshooting/common-issues.md">Common Issues</a></strong> - FAQ and solutions</li>
+</ul>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><strong>Official docs</strong>: https://developers.zoom.us/docs/rtms/</li>
+  <li><strong>Data types</strong>: https://developers.zoom.us/docs/rtms/data-types/</li>
+  <li><strong>Media params</strong>: https://developers.zoom.us/docs/rtms/media-parameter-definition/</li>
+  <li><strong>Developer forum</strong>: https://devforum.zoom.us/</li>
+</ul>
+
+<hr />
+
+<p><strong>Need help?</strong> Start with Integrated Index section below for complete navigation.</p>
+
+<hr />
+
+<h2 id="integrated-index">Integrated Index</h2>
+
+<p><em>This section was migrated from <code class="language-plaintext highlighter-rouge">SKILL.md</code>.</em></p>
+
+<p>RTMS provides real-time access to live audio, video, transcript, chat, and screen share from Zoom meetings, webinars, and Video SDK sessions.</p>
+
+<h2 id="critical-positioning">Critical Positioning</h2>
+
+<p>Treat RTMS as a <strong>backend service</strong> for receiving and processing media streams.</p>
+
+<ul>
+  <li>Backend role: ingest audio/video/share/chat/transcript, run AI/analytics, persist/forward data.</li>
+  <li>Optional frontend role: Zoom App SDK or web dashboard that consumes processed stream data from backend transport (WebSocket/SSE/other).</li>
+  <li>Kickoff model: backend waits for RTMS start webhook events, then starts stream processing.</li>
+</ul>
+
+<p>Do not model RTMS as a frontend-only SDK.</p>
+
+<h2 id="quick-start-path">Quick Start Path</h2>
+
+<p><strong>If you’re new to RTMS, follow this order:</strong></p>
+
+<ol>
+  <li><strong>Run preflight checks first</strong> -&gt; <a href="../RUNBOOK.md">RUNBOOK.md</a></li>
+  <li><strong>Understand the architecture</strong> -&gt; <a href="../concepts/connection-architecture.md">concepts/connection-architecture.md</a>
+    <ul>
+      <li>Two-phase WebSocket: Signaling + Media</li>
+      <li>Why RTMS doesn’t use bots</li>
+    </ul>
+  </li>
+  <li><strong>Choose your approach</strong> -&gt; SDK or Manual
+    <ul>
+      <li>SDK (recommended): <a href="../examples/sdk-quickstart.md">examples/sdk-quickstart.md</a></li>
+      <li>Manual WebSocket: <a href="../examples/manual-websocket.md">examples/manual-websocket.md</a></li>
+    </ul>
+  </li>
+  <li><strong>Understand the lifecycle</strong> -&gt; <a href="../concepts/lifecycle-flow.md">concepts/lifecycle-flow.md</a>
+    <ul>
+      <li>Webhook -&gt; Signaling -&gt; Media -&gt; Streaming</li>
+    </ul>
+  </li>
+  <li><strong>Configure media types</strong> -&gt; <a href="../references/media-types.md">references/media-types.md</a>
+    <ul>
+      <li>Audio, video, transcript, chat, screen share</li>
+    </ul>
+  </li>
+  <li><strong>Troubleshoot issues</strong> -&gt; <a href="../troubleshooting/common-issues.md">troubleshooting/common-issues.md</a>
+    <ul>
+      <li>Connection problems, duplicate webhooks, missing data</li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="documentation-structure">Documentation Structure</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rtms/
+├── SKILL.md                           # Main skill overview
+├── SKILL.md                           # This file - navigation guide
+│
+├── concepts/                          # Core architectural patterns
+│   ├── connection-architecture.md     # Two-phase WebSocket design
+│   └── lifecycle-flow.md              # Webhook to streaming flow
+│
+├── examples/                          # Complete working code
+│   ├── sdk-quickstart.md              # Using @zoom/rtms SDK
+│   ├── manual-websocket.md            # Raw protocol implementation
+│   ├── rtms-bot.md                    # Complete RTMS bot implementation
+│   └── ai-integration.md              # Transcription and analysis
+│
+├── references/                        # Reference documentation
+│   ├── media-types.md                 # Audio, video, transcript, chat, share
+│   ├── data-types.md                  # All enums and constants
+│   ├── connection.md                  # WebSocket protocol details
+│   └── webhooks.md                    # Event subscription
+│
+└── troubleshooting/                   # Problem solving guides
+    └── common-issues.md               # FAQ and solutions
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="by-use-case">By Use Case</h2>
+
+<h3 id="i-want-to-get-meeting-transcripts">I want to get meeting transcripts</h3>
+<ol>
+  <li><a href="../examples/sdk-quickstart.md">SDK Quickstart</a> - Fastest approach</li>
+  <li><a href="../references/media-types.md">Media Types</a> - Transcript configuration</li>
+  <li><a href="../examples/ai-integration.md">AI Integration</a> - Whisper, Deepgram, AssemblyAI</li>
+</ol>
+
+<h3 id="i-want-to-record-meetings">I want to record meetings</h3>
+<ol>
+  <li><a href="../references/media-types.md">Media Types</a> - Audio + Video configuration</li>
+  <li><a href="../examples/sdk-quickstart.md">SDK Quickstart</a> - Receiving media</li>
+  <li><a href="../examples/ai-integration.md">AI Integration</a> - Gap-filled recording</li>
+</ol>
+
+<h3 id="i-want-to-build-an-ai-meeting-assistant">I want to build an AI meeting assistant</h3>
+<ol>
+  <li><a href="../examples/ai-integration.md">AI Integration</a> - Complete patterns</li>
+  <li><a href="../examples/sdk-quickstart.md">SDK Quickstart</a> - Media ingestion</li>
+  <li><a href="../concepts/lifecycle-flow.md">Lifecycle Flow</a> - Event handling</li>
+</ol>
+
+<h3 id="i-want-to-build-a-complete-rtms-bot">I want to build a complete RTMS bot</h3>
+<ol>
+  <li><a href="../examples/rtms-bot.md">RTMS Bot</a> - <strong>Complete implementation guide</strong></li>
+  <li><a href="../concepts/lifecycle-flow.md">Lifecycle Flow</a> - Webhook to streaming flow</li>
+  <li><a href="../concepts/connection-architecture.md">Connection Architecture</a> - Two-phase design</li>
+</ol>
+
+<h3 id="i-need-full-protocol-control">I need full protocol control</h3>
+<ol>
+  <li><a href="../examples/manual-websocket.md">Manual WebSocket</a> - <strong>START HERE</strong></li>
+  <li><a href="../concepts/connection-architecture.md">Connection Architecture</a> - Two-phase design</li>
+  <li><a href="../references/data-types.md">Data Types</a> - All message types and enums</li>
+  <li><a href="../references/connection.md">Connection</a> - Protocol details</li>
+</ol>
+
+<h3 id="im-getting-connection-errors">I’m getting connection errors</h3>
+<ol>
+  <li><a href="../troubleshooting/common-issues.md">Common Issues</a> - Diagnostic checklist</li>
+  <li><a href="../concepts/connection-architecture.md">Connection Architecture</a> - Verify flow</li>
+  <li><a href="../references/webhooks.md">Webhooks</a> - Validation and timing</li>
+</ol>
+
+<h3 id="i-want-to-understand-the-architecture">I want to understand the architecture</h3>
+<ol>
+  <li><a href="../concepts/connection-architecture.md">Connection Architecture</a> - Two-phase WebSocket</li>
+  <li><a href="../concepts/lifecycle-flow.md">Lifecycle Flow</a> - Complete flow diagram</li>
+  <li><a href="../references/data-types.md">Data Types</a> - Protocol constants</li>
+</ol>
+
+<hr />
+
+<h2 id="by-product">By Product</h2>
+
+<h3 id="im-building-for-zoom-meetings">I’m building for Zoom Meetings</h3>
+<ul>
+  <li>Standard RTMS setup. Webhook event: <code class="language-plaintext highlighter-rouge">meeting.rtms_started</code>. Uses General App with OAuth.</li>
+  <li>Start with <a href="../examples/sdk-quickstart.md">SDK Quickstart</a> or <a href="../examples/manual-websocket.md">Manual WebSocket</a>.</li>
+</ul>
+
+<h3 id="im-building-for-zoom-webinars">I’m building for Zoom Webinars</h3>
+<ul>
+  <li>Same as meetings, but webhook event is <code class="language-plaintext highlighter-rouge">webinar.rtms_started</code>. Payload still uses <code class="language-plaintext highlighter-rouge">meeting_uuid</code> (NOT <code class="language-plaintext highlighter-rouge">webinar_uuid</code>).</li>
+  <li>Add webinar scopes and event subscriptions. See <a href="../references/webhooks.md">Webhooks</a>.</li>
+  <li>Only <strong>panelist</strong> streams are confirmed available. Attendee streams may not be individual.</li>
+</ul>
+
+<h3 id="im-building-for-zoom-video-sdk">I’m building for Zoom Video SDK</h3>
+<ul>
+  <li>Webhook event: <code class="language-plaintext highlighter-rouge">session.rtms_started</code>. Payload uses <code class="language-plaintext highlighter-rouge">session_id</code> (NOT <code class="language-plaintext highlighter-rouge">meeting_uuid</code>).</li>
+  <li>Requires a <strong>Video SDK App</strong> with SDK Key/Secret (not OAuth Client ID/Secret).</li>
+  <li>Once connected, the protocol is <strong>identical</strong> to meetings.</li>
+  <li>See <a href="../references/webhooks.md">Webhooks</a> for payload details.</li>
+</ul>
+
+<hr />
+
+<h2 id="key-documents">Key Documents</h2>
+
+<h3 id="1-connection-architecture-critical">1. Connection Architecture (CRITICAL)</h3>
+<p><strong><a href="../concepts/connection-architecture.md">concepts/connection-architecture.md</a></strong></p>
+
+<p>RTMS uses <strong>two separate WebSocket connections</strong>:</p>
+<ul>
+  <li><strong>Signaling WebSocket</strong>: Authentication, control, heartbeats</li>
+  <li><strong>Media WebSocket</strong>: Actual audio/video/transcript data</li>
+</ul>
+
+<h3 id="2-sdk-vs-manual-decision-point">2. SDK vs Manual (DECISION POINT)</h3>
+<p><strong><a href="../examples/sdk-quickstart.md">examples/sdk-quickstart.md</a></strong> vs <strong><a href="../examples/manual-websocket.md">examples/manual-websocket.md</a></strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>SDK</th>
+      <th>Manual</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Handles WebSocket complexity</td>
+      <td>Full protocol control</td>
+    </tr>
+    <tr>
+      <td>Automatic reconnection</td>
+      <td>DIY reconnection</td>
+    </tr>
+    <tr>
+      <td>Less code</td>
+      <td>More code</td>
+    </tr>
+    <tr>
+      <td>Best for most use cases</td>
+      <td>Best for custom requirements</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="3-critical-gotchas-most-common-issues">3. Critical Gotchas (MOST COMMON ISSUES)</h3>
+<p><strong><a href="../troubleshooting/common-issues.md">troubleshooting/common-issues.md</a></strong></p>
+
+<ol>
+  <li><strong>Respond 200 immediately</strong> - Delayed webhook responses cause duplicates</li>
+  <li><strong>Only 1 connection per stream</strong> - New connections kick out existing</li>
+  <li><strong>Heartbeat required</strong> - Must respond to keep-alive or connection dies</li>
+  <li><strong>Track active sessions</strong> - Prevent duplicate join attempts</li>
+</ol>
+
+<hr />
+
+<h2 id="key-learnings">Key Learnings</h2>
+
+<h3 id="critical-discoveries">Critical Discoveries:</h3>
+
+<ol>
+  <li><strong>Two-Phase WebSocket Design</strong>
+    <ul>
+      <li>Signaling: Control plane (handshake, heartbeat, start/stop)</li>
+      <li>Media: Data plane (audio, video, transcript, chat, share)</li>
+      <li>See: <a href="../concepts/connection-architecture.md">Connection Architecture</a></li>
+    </ul>
+  </li>
+  <li><strong>Webhook Response Timing</strong>
+    <ul>
+      <li>MUST respond 200 BEFORE any processing</li>
+      <li>Delayed response -&gt; Zoom retries -&gt; duplicate connections</li>
+      <li>See: <a href="../troubleshooting/common-issues.md">Common Issues</a></li>
+    </ul>
+  </li>
+  <li><strong>Heartbeat is Mandatory</strong>
+    <ul>
+      <li>Signaling: Receive msg_type 12, respond with msg_type 13</li>
+      <li>Media: Same pattern</li>
+      <li>Failure to respond = connection closed</li>
+      <li>See: <a href="../references/connection.md">Connection</a></li>
+    </ul>
+  </li>
+  <li><strong>Signature Generation</strong>
+    <ul>
+      <li>Format: <code class="language-plaintext highlighter-rouge">HMAC-SHA256(clientSecret, "clientId,meetingUuid,streamId")</code></li>
+      <li>For Video SDK, use <code class="language-plaintext highlighter-rouge">session_id</code> in place of <code class="language-plaintext highlighter-rouge">meetingUuid</code></li>
+      <li>Webinars still use <code class="language-plaintext highlighter-rouge">meeting_uuid</code> (not <code class="language-plaintext highlighter-rouge">webinar_uuid</code>)</li>
+      <li>Required for both signaling and media handshakes</li>
+      <li>See: <a href="../examples/manual-websocket.md">Manual WebSocket</a></li>
+    </ul>
+  </li>
+  <li><strong>Media Types are Bitmasks</strong>
+    <ul>
+      <li>Audio=1, Video=2, Share=4, Transcript=8, Chat=16, All=32</li>
+      <li>
+        <table>
+          <tbody>
+            <tr>
+              <td>Combine with OR: Audio+Transcript = 1</td>
+              <td>8 = 9</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+      <li>See: <a href="../references/media-types.md">Media Types</a></li>
+    </ul>
+  </li>
+  <li><strong>Screen Share is SEPARATE from Video</strong>
+    <ul>
+      <li>Different msg_type (16 vs 15)</li>
+      <li>Different media flag (4 vs 2)</li>
+      <li>Must subscribe separately</li>
+      <li>See: <a href="../references/media-types.md">Media Types</a></li>
+    </ul>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="quick-reference">Quick Reference</h2>
+
+<h3 id="connection-fails">“Connection fails”</h3>
+<p>-&gt; <a href="../troubleshooting/common-issues.md">Common Issues</a></p>
+
+<h3 id="duplicate-connections">“Duplicate connections”</h3>
+<p>-&gt; <a href="../troubleshooting/common-issues.md">Webhook timing</a></p>
+
+<h3 id="no-audiovideo-data">“No audio/video data”</h3>
+<p>-&gt; <a href="../references/media-types.md">Media Types</a> - Check configuration</p>
+
+<h3 id="how-do-i-implement-manually">“How do I implement manually?”</h3>
+<p>-&gt; <a href="../examples/manual-websocket.md">Manual WebSocket</a></p>
+
+<h3 id="what-message-types-exist">“What message types exist?”</h3>
+<p>-&gt; <a href="../references/data-types.md">Data Types</a></p>
+
+<h3 id="how-do-i-integrate-ai">“How do I integrate AI?”</h3>
+<p>-&gt; <a href="../examples/ai-integration.md">AI Integration</a></p>
+
+<hr />
+
+<h2 id="document-version">Document Version</h2>
+
+<p>Based on <strong>Zoom RTMS SDK v1.x</strong> and official documentation as of 2026.</p>
+
+<hr />
+
+<p><strong>Happy coding!</strong></p>
+
+<p>Remember: Start with <a href="../examples/sdk-quickstart.md">SDK Quickstart</a> for the fastest path, or <a href="../examples/manual-websocket.md">Manual WebSocket</a> if you need full control.</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

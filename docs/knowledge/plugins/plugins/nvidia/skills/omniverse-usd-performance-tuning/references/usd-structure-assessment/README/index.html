@@ -1,0 +1,1859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>README · A developer journey</title>
+<meta name="description" content="USD Structure Assessment">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/README/">
+
+<meta property="og:title" content="README · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/README/">
+<meta property="og:description" content="USD Structure Assessment">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>README</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="usd-structure-assessment">USD Structure Assessment</h1>
+
+<!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<h2 id="when-to-use">When to Use</h2>
+
+<p>Use when scoping USD structural validation; do not use for fixes or validator execution.</p>
+
+<h2 id="instructions">Instructions</h2>
+
+<ol>
+  <li>Confirm the target asset, artifact, or user intent and check the prerequisites listed below.</li>
+  <li>Read only the referenced files needed for the current phase, failure mode, or output contract.</li>
+  <li>Follow the workflow, rules, and safety gates in this reference before invoking downstream references or shell commands.</li>
+  <li>Return the result using the Output Format section and name any blocked prerequisite or unresolved user decision.</li>
+</ol>
+
+<h2 id="output-format">Output Format</h2>
+
+<p>Return a concise status or report that names the input, selected runtime or evidence source, actions planned or performed, artifacts written, blockers, and the next validation or user-decision step. When a schema or template is referenced below, conform to that contract.</p>
+
+<h2 id="purpose">Purpose</h2>
+
+<p>Use this reference as the first analytical step after performance triage to combine
+composition, layer, instancing, variant/payload, and spatial heuristics into one
+validation-scope assessment. Do not use it to run geometry validators or apply
+fixes.</p>
+
+<p>For detailed guidance on any subtopic, consult these references:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">references/composition-audit.md</code> - composition audit checklist + findings taxonomy + audit-report.schema.json mapping.</li>
+  <li><code class="language-plaintext highlighter-rouge">references/layer-health.md</code> - layer-health checks, file-format guidance, asset-path hygiene, flattening policy.</li>
+  <li><code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/references/instancing-readiness/references/instancing-tradeoffs.md</code> - instancing/dedupe decision tree, merge safety, findings taxonomy.</li>
+  <li><code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/references/usd-edit-target-planner/references/variants-payloads.md</code> - payload strategy, variant strategy, output policy, stop conditions.</li>
+</ul>
+
+<p>This reference consolidates the operational checklists into a single pass and adds spatial heuristics that the individual references do not cover.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Stage path and resolver context from performance triage.</li>
+  <li>Access to layer metadata, composition arcs, authored extents, and asset paths.</li>
+  <li>User goal for diagnosis, restructuring, or optimization handoff.</li>
+</ul>
+
+<h2 id="pre-flight-checklist">Pre-flight Checklist</h2>
+
+<p>Before producing the SA report, re-read and confirm:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">scripts/usd-structure-assessment-report.schema.json</code> — required fields
+ and strict/permissive boundaries.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">references/asset-structure-principles.md</code> — asset vs layer vs composition
+ arc distinctions.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />SA is structural only — no geometry arrays (points, faceVertexCounts).
+ <code class="language-plaintext highlighter-rouge">mesh_count</code> comes from prim-type traversal, not array reads.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Spatial heuristics use authored <code class="language-plaintext highlighter-rouge">extentsHint</code> only. Skip if absent.</li>
+</ul>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+  <li>Phase 1 is purely structural: metadata, composition arcs, prim traversal.
+No geometry arrays (points, faceVertexCounts) are read. No renderer, viewport,
+or BBoxCache computation. Mesh-level stats (triangle counts, density) are
+deferred to Phase 2c validators (SO analysis mode).</li>
+  <li>Phase 2 heuristics flag validation candidates; they do not justify operations
+by themselves.</li>
+  <li>Outlier detection (§2.1) uses authored <code class="language-plaintext highlighter-rouge">extentsHint</code> attributes when present.
+If extents are not authored, SA cannot flag spatial outliers — Phase 2c
+validators (<code class="language-plaintext highlighter-rouge">countVertices</code> / <code class="language-plaintext highlighter-rouge">MeshDensityChecker</code>) catch density outliers
+downstream with SO loaded.
+    <h2 id="troubleshooting">Troubleshooting</h2>
+  </li>
+  <li>If assets, layers, and composition arcs are conflated, re-read the reference
+docs before estimating scope.</li>
+  <li>If duplicate hierarchy patterns appear, run <code class="language-plaintext highlighter-rouge">usd-hierarchy-dedupe-candidates</code>
+before recommending mesh-level deduplication.
+    <h2 id="references">References</h2>
+  </li>
+</ul>
+
+<p>Before running, read:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">references/asset-structure-principles.md</code> — asset vs layer vs composition arc; the interface/payload/geometry pattern.</li>
+  <li><code class="language-plaintext highlighter-rouge">references/factory-level-structuring.md</code> — asset boundaries, kind hierarchy, the seven-step structuring pattern.</li>
+  <li><code class="language-plaintext highlighter-rouge">references/optimization-tradeoffs.md</code> — three-phase pipeline, packaging strategies.</li>
+</ul>
+
+<p>If you have network access, prefer the live URLs (noted in each reference file).</p>
+
+<h2 id="phase-1-structure-analysis-no-geometry-load">Phase 1: Structure Analysis (no geometry load)</h2>
+
+<p>These checks run without a Kit viewport, GPU, or renderer. SA opens the stage
+with <code class="language-plaintext highlighter-rouge">Usd.Stage.Open(path)</code> (default load rules) and traverses the composed
+prim hierarchy. No geometry arrays (points, faceVertexCounts, normals) are
+read — SA only inspects metadata, composition arcs, prim types, and authored
+attributes like <code class="language-plaintext highlighter-rouge">extentsHint</code>.</p>
+
+<p>Mesh-level statistics (triangle counts, vertex density) are <strong>not</strong> SA’s job.
+Those are produced by Phase 2c validators (<code class="language-plaintext highlighter-rouge">countVertices</code>, <code class="language-plaintext highlighter-rouge">MeshDensityChecker</code>)
+which run Scene Optimizer in analysis mode.</p>
+
+<h3 id="11-composition-inventory">1.1 Composition inventory</h3>
+
+<ul>
+  <li>Root layer path, default prim, up axis, meters per unit.</li>
+  <li>Total layer count, sublayer stack.</li>
+  <li>Count authored composition list-op items by type where the Python API exposes
+them: references, payloads, inherits, specializes, variants. For references
+and payloads, read the authored list-op metadata and count list items; do not
+depend on <code class="language-plaintext highlighter-rouge">PrimIndex.GetNodeRange()</code>, which is not exposed by all USD 25.11
+Python builds. If a runtime only supports prim-level boolean checks, report
+the count as prims-with-authored-arcs and record that limitation in
+<code class="language-plaintext highlighter-rouge">composition.counting_method</code>.</li>
+  <li>Distinguish between assets, layers, and composition arcs (see reference docs).</li>
+  <li><strong>Populate <code class="language-plaintext highlighter-rouge">asset_physical_context</code>:</strong> <code class="language-plaintext highlighter-rouge">metersPerUnit</code>, <code class="language-plaintext highlighter-rouge">upAxis</code>, <code class="language-plaintext highlighter-rouge">scale_hint</code>
+from stage metadata (zero cost). <code class="language-plaintext highlighter-rouge">mesh_count</code> from prim-type traversal (count
+prims of type <code class="language-plaintext highlighter-rouge">UsdGeom.Mesh</code> — no geometry arrays needed).
+These fields are consumed by downstream operations
+(see <code class="language-plaintext highlighter-rouge">so-run-operations/references/units-and-tolerances.md</code>).
+    <h3 id="12-asset-inventory">1.2 Asset inventory</h3>
+  </li>
+</ul>
+
+<p>Group layers into assets. An asset is typically a directory containing:</p>
+
+<ul>
+  <li>Interface layer (e.g., <code class="language-plaintext highlighter-rouge">Robot.usd</code>) — lightweight, always loaded.</li>
+  <li>Payload layer (e.g., <code class="language-plaintext highlighter-rouge">Robot_payload.usd</code>) — deferred loading wrapper.</li>
+  <li>Geometry/content layer (e.g., <code class="language-plaintext highlighter-rouge">Robot.geom.usd</code>) — heavy mesh data.</li>
+</ul>
+
+<p>Report:</p>
+
+<ul>
+  <li>Total unique assets (not layers, not composition arcs).</li>
+  <li>Assets with full interface/payload/geometry structure.</li>
+  <li>Assets missing expected layers (no payload, no interface, geometry-only).</li>
+  <li>The <strong>referenced asset manifest</strong>: list of geometry layer paths for downstream per-asset work.</li>
+</ul>
+
+<h3 id="13-layer-health">1.3 Layer health</h3>
+
+<ul>
+  <li>File formats (usdc vs usda vs usd).</li>
+  <li>Flag large <code class="language-plaintext highlighter-rouge">.usda</code> data files (&gt;100KB) — should be <code class="language-plaintext highlighter-rouge">.usdc</code>.</li>
+  <li>Flag tiny layers (&lt;500B) — accumulated automation artifacts?</li>
+  <li>Flag anonymous or session layers.</li>
+  <li>Total size on disk.</li>
+</ul>
+
+<h3 id="14-instancing-analysis">1.4 Instancing analysis</h3>
+
+<ul>
+  <li>Count instanceable prims and active instances.</li>
+  <li>Count prototypes.</li>
+  <li>Identify repeated references to the same asset — these are instancing candidates.</li>
+  <li>Compute instance ratio: instances / total referenceable prims.</li>
+</ul>
+
+<h3 id="15-variant-and-payload-state">1.5 Variant and payload state</h3>
+
+<ul>
+  <li>Count variant sets and selected variants.</li>
+  <li>Identify unloaded payloads.</li>
+  <li>Flag variant-dependent geometry or material differences.</li>
+</ul>
+
+<h3 id="16-kind-hierarchy">1.6 Kind hierarchy</h3>
+
+<ul>
+  <li>Check that kind metadata is present and consistent (assembly → component → subcomponent).</li>
+  <li>Flag prims with geometry but no kind assignment.</li>
+  <li>Flag kind assignments that don’t match the hierarchy (e.g., a component inside a component).</li>
+</ul>
+
+<h2 id="phase-2-structural-heuristics-metadata-only-narrows-validation-scope">Phase 2: Structural Heuristics (metadata only, narrows validation scope)</h2>
+
+<p>These checks use authored extent metadata (<code class="language-plaintext highlighter-rouge">extentsHint</code>) and structural
+patterns to identify assets that likely need deep validation. They do not
+load geometry arrays. If <code class="language-plaintext highlighter-rouge">extentsHint</code> is not authored on a prim, SA skips
+spatial heuristics for that prim — Phase 2c validators catch it downstream.</p>
+
+<h3 id="21-outlier-detection">2.1 Outlier detection</h3>
+
+<p>Using <code class="language-plaintext highlighter-rouge">extentsHint</code> or authored extent attributes (when present):</p>
+
+<ul>
+  <li>Flag assets where a single mesh’s authored extent spans a large fraction of
+the overall stage extent. This suggests fused architectural geometry that should
+be split into separate assets (e.g., floor + walls + ceiling as one mesh).</li>
+  <li>Flag assets with authored extents disproportionately small relative to their
+subtree depth or sibling count — possible over-tessellation candidates.</li>
+  <li>If extents are not authored, SA cannot flag spatial outliers. This is expected
+for many real-world assets. Phase 2c validators (<code class="language-plaintext highlighter-rouge">countVertices</code> /
+<code class="language-plaintext highlighter-rouge">MeshDensityChecker</code>) provide the density signal when SO is loaded.</li>
+</ul>
+
+<h3 id="22-containment-detection">2.2 Containment detection</h3>
+
+<p>Using authored extent overlap analysis (only when <code class="language-plaintext highlighter-rouge">extentsHint</code> is present):</p>
+
+<ul>
+  <li>Identify asset pairs where one asset’s authored extent is fully enclosed
+by another’s. These are candidates for occlusion testing — the inner
+asset may be invisible from the outside (e.g., piping inside a cabinet).</li>
+  <li><strong>Check enclosure opacity:</strong> For each containment pair, inspect the
+enclosing asset’s bound material for transparency signals:
+    <ul>
+      <li>UsdPreviewSurface: <code class="language-plaintext highlighter-rouge">opacity</code> &lt; 1.0 or <code class="language-plaintext highlighter-rouge">opacityThreshold</code> present</li>
+      <li>MDL: glass/transmission shader, <code class="language-plaintext highlighter-rouge">ior</code> parameter, alpha-blend mode</li>
+      <li>Any material with <code class="language-plaintext highlighter-rouge">opacity</code>, <code class="language-plaintext highlighter-rouge">transmission</code>, or <code class="language-plaintext highlighter-rouge">ior</code> inputs
+Set <code class="language-plaintext highlighter-rouge">enclosure_opaque: true</code> when the enclosing material is fully opaque.
+Set <code class="language-plaintext highlighter-rouge">enclosure_opaque: false</code> when any transparency signal is detected.
+This is a metadata read (material binding → shader attributes) — no
+geometry access needed.</li>
+    </ul>
+  </li>
+  <li><strong>Asset type context:</strong> Containment is most actionable for equipment,
+machines, vehicles, cabinets, housings, enclosures, pumps, motors,
+compressors — sealed assemblies with opaque shells. Flag the asset type
+when identifiable from prim names or kind metadata.</li>
+  <li>Only flag pairs, don’t confirm occlusion — that requires expensive
+geometry analysis via <code class="language-plaintext highlighter-rouge">findOccludedMeshes</code> in Phase 4.</li>
+  <li>Skip this check for prims without authored extents.</li>
+</ul>
+
+<h3 id="23-repetition-detection">2.3 Repetition detection</h3>
+
+<ul>
+  <li>Identify assets with similar authored extent dimensions
+that reference different source layers (when extentsHint is authored). These may be near-duplicates
+that could share a common source via deduplication.</li>
+  <li>Distinguish from intentional instancing (same source, already shared).</li>
+  <li>Treat repeated CAD/BIM assembly names as a deep-tree signal, not just a
+root-level signal. Clean root children or clean depth-2 groups do not rule
+out duplicated modules nested under floor, discipline, category, or linked
+model containers.</li>
+  <li>If the stage is monolithic, has no references/payloads, has low instance
+count, or contains repeated CAD/BIM assembly names, invoke
+<code class="language-plaintext highlighter-rouge">usd-hierarchy-dedupe-candidates</code> for subtree-hash candidate detection before
+recommending mesh-level deduplication.</li>
+</ul>
+
+<h3 id="24-hierarchy-depth-analysis">2.4 Hierarchy depth analysis</h3>
+
+<ul>
+  <li>Flag deep nesting without kind boundaries (many Xform ancestors before
+reaching a component or assembly kind).</li>
+  <li>Flag flat hierarchies where a single prim has hundreds of direct children
+with geometry — may benefit from grouping into subcomponents.</li>
+</ul>
+
+<h3 id="25-prim-count-and-mesh-sizing-interpretation">2.5 Prim count and mesh sizing interpretation</h3>
+
+<p>Use <code class="language-plaintext highlighter-rouge">summary_counts</code>, extents, and hierarchy context to explain scale before
+recommending a downstream validation or optimization path:</p>
+
+<ul>
+  <li>Very large stages, including million-prim scenes, are not automatically
+mesh-merge candidates. First decide whether the count comes from duplicated
+hierarchy, over-fragmented composition, missing instancing, payload policy, or
+genuinely distinct authored content.</li>
+  <li>Prefer prototype-local or asset-local cleanup before whole-stage merging.
+Local work preserves references, variants, and reviewability, and it is easier
+to validate before the optimized assets are remapped into the assembly.</li>
+  <li>Treat entire-prototype or whole-assembly merging as a high-friction option.
+Before recommending it, surface overlap risk, shared hierarchy semantics,
+reference/payload rewrites, material and primvar preservation, important
+metadata, and the user’s intent for future selective loading.</li>
+  <li>Small meshes are not always bad. They may be visible details, engineering
+fasteners, collision markers, or source-of-truth geometry. Keep, instance, or
+delete them based on visibility and user intent; do not assume removal is the
+right fix just because the mesh is small.</li>
+  <li>Large overlapping meshes can be expensive for ray tracing and selection even
+when prim count looks reasonable. Flag them as split/cull/occlusion-analysis
+candidates, especially when a single mesh spans rooms, floors, disciplines, or
+enclosing shells.</li>
+  <li>Any recommendation that may drop geometry, collapse hierarchy, or discard
+authored attrs/metadata requires explicit user confirmation downstream.</li>
+</ul>
+
+<h3 id="26-duplicate-subtree-detection">2.6 Duplicate subtree detection</h3>
+
+<p>Identify subtrees that are structurally identical and positioned at the same
+transform. This is common in BIM/Revit exports where linked models are
+included multiple times.</p>
+
+<p>Check:</p>
+
+<ul>
+  <li>Scan multiple hierarchy depths. For CAD/BIM trees, normalize sibling names at
+each candidate depth by stripping numeric suffixes, generated copy suffixes,
+and export IDs before grouping. A duplicate pattern at depth 3+ is still a
+hierarchy-dedupe candidate even if the scene root and depth-2 containers look
+unique.</li>
+  <li>Group candidate roots by normalized sibling-name pattern and by subtree hash.</li>
+  <li>For each group with &gt;1 member, compare:
+    <ul>
+      <li>Child names (are they identical?).</li>
+      <li>Transforms (are they all identity or all the same?).</li>
+      <li>Instance counts and prototype usage (same count per copy?).</li>
+    </ul>
+  </li>
+  <li>If copies are structurally identical at the same transform, they are
+export duplicates — the scene contains N× the data it should.</li>
+  <li>If the shallow scan is clean but deep normalized names suggest repeated
+modules, report <code class="language-plaintext highlighter-rouge">hierarchy_dedupe.recommended: true</code> with a reason such as
+“needs deeper scan” and invoke <code class="language-plaintext highlighter-rouge">usd-hierarchy-dedupe-candidates</code>; do not set
+it to <code class="language-plaintext highlighter-rouge">false</code> based only on root-level or depth-2 evidence.</li>
+</ul>
+
+<p>Report:</p>
+
+<ul>
+  <li>Which discipline/subtree groups have duplicates.</li>
+  <li>Maximum depth scanned and whether repeated names only appear at depth 3+.</li>
+  <li>How many copies exist vs how many are needed (1).</li>
+  <li>Total redundant prims and the percentage of the scene they represent.</li>
+  <li>Whether the copies reference the same prototypes (shared) or generated
+separate prototypes (unshared — each copy inflates the prototype pool).</li>
+</ul>
+
+<p>This is distinct from instancing: instancing shares geometry within a
+hierarchy, while duplicate subtrees are entire hierarchy copies that
+should not exist at all.</p>
+
+<p>Recommendation:</p>
+
+<ul>
+  <li>Flag as “export duplication — keep one copy per discipline, deactivate rest.”</li>
+  <li>If transforms differ, it may be intentional (separate building wings) —
+ask the user before deactivating.</li>
+  <li>If transforms are identical (all at origin), it is almost certainly an
+export artifact.</li>
+  <li>Quantify the saving: removing N-1 copies of each group eliminates
+(N-1)/N of the scene’s prims and associated prototypes.</li>
+</ul>
+
+<h3 id="27-asset-boundary-identification">2.7 Asset boundary identification</h3>
+
+<p>For monolithic stages, identify natural grouping levels that could become
+separate assets. Present candidates to the user rather than prescribing a
+specific level.</p>
+
+<p>Analyze the existing hierarchy for repeating patterns:</p>
+
+<ul>
+  <li><strong>Disciplines</strong> (HVAC, Architectural, Structural, Electrical, Plumbing, Facades)</li>
+  <li><strong>Spatial units</strong> (Buildings, Wings/Blocks, Floors, Rooms)</li>
+  <li><strong>Categories</strong> (Walls, Doors, Ducts, Fittings, Equipment)</li>
+</ul>
+
+<p>Report the hierarchy as a tree with prim counts at each level:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Scene (123K prims)
+├── Discipline (×7): Architectural, HVAC, Plumbing, Electrical, Structural, Facades, Site
+│   ├── Floor (×8): L1, L2, L3, L4, L5, M1, Parking, R1
+│   │   └── Category: Walls, Ducts, Fittings, Equipment...
+</code></pre></div></div>
+
+<p>Ask the user: “Which level should be the asset boundary for selective loading
+and optimization?” Common choices:</p>
+
+<ul>
+  <li><strong>Per-floor</strong> — enables floor-by-floor loading. Good for construction/FM.</li>
+  <li><strong>Per-discipline-per-floor</strong> — enables “show me L3 HVAC only.” Most granular.</li>
+  <li><strong>Per-discipline</strong> — enables discipline toggling. Simplest extraction.</li>
+</ul>
+
+<p>The answer drives downstream structuring: each identified asset boundary
+becomes a candidate for extraction into a separate layer (payload or reference).</p>
+
+<p>Selective loading is a separate decision from deduplication. A stage can be
+well-instanced and still be a poor delivery package if it has <code class="language-plaintext highlighter-rouge">payload_count: 0</code>
+and clear floor, discipline, linked-model, building-wing, or category
+boundaries. In that case:</p>
+
+<ul>
+  <li>Set <code class="language-plaintext highlighter-rouge">asset_boundary_suggestions.user_choice_required</code> to <code class="language-plaintext highlighter-rouge">true</code>.</li>
+  <li>Route to <code class="language-plaintext highlighter-rouge">restructure-decision</code> even when mesh optimization can proceed
+“as-is”.</li>
+  <li>Ask whether the user wants loadable sub-assets (for example per-floor or
+per-discipline-per-floor payloads), wants to optimize the monolith as-is, or
+wants a diagnosis-only exit.</li>
+  <li>Do not record <code class="language-plaintext highlighter-rouge">choice: optimize-as-is</code> without presenting that selective
+loading choice to the user.</li>
+</ul>
+
+<h4 id="hash-backed-boundary-refinement">Hash-backed boundary refinement</h4>
+
+<p>When <code class="language-plaintext highlighter-rouge">usd-hierarchy-dedupe-candidates</code> has produced a read-only candidate report
+for the same stage, refine the boundary suggestions above using its hash output.
+Subtree hashes identify structurally identical (or near-identical) sub-hierarchies;
+preferring cut points that align with those hashes creates immediate dedupe wins
+when the boundaries are materialized.</p>
+
+<p>Augment the candidate tree from the previous step with hash-backed signal:</p>
+
+<ul>
+  <li>For each candidate boundary level (e.g. per-floor, per-discipline-per-floor),
+count how many of the children at that level have matching subtree hashes.</li>
+  <li>Promote boundaries where multiple children share a hash - extracting at that
+level produces fewer, more reusable prototypes.</li>
+  <li>Demote boundaries that cut across hash-equal subtrees - extracting there
+fragments what could have been a single shared prototype.</li>
+</ul>
+
+<p>If <code class="language-plaintext highlighter-rouge">usd-hierarchy-dedupe-candidates</code> has not been run yet and the stage is
+monolithic, recommend running it before finalizing the boundary plan. The
+combined SA + dedupe-candidates output is what <code class="language-plaintext highlighter-rouge">restructure-decision</code> (Phase 2e
+in the tuning workflow) consumes when asking the user to confirm.</p>
+
+<h3 id="28-prototype-library-assessment">2.8 Prototype library assessment</h3>
+
+<p>For scenes with explicit prototypes:</p>
+
+<ul>
+  <li>Identify the authored prototype hierarchy path (e.g., <code class="language-plaintext highlighter-rouge">/Root/Prototypes/</code>).</li>
+  <li>Count prototypes and assess whether they should be extracted into a shared
+library layer (per the VFI “component + subcomponent library packaging” pattern).</li>
+  <li>Assess whether the prototype pool is inflated by duplicate subtrees (see 2.6).</li>
+</ul>
+
+<p>Extraction recommendation:</p>
+
+<ul>
+  <li><strong>Prototype library as shared layer</strong> — all prototype definitions in one
+referenced file, assemblies reference them. Reduces duplication if multiple
+stages share the same component library.</li>
+  <li><strong>Keep inline</strong> — for single-file delivery where composition overhead
+should be minimized.</li>
+</ul>
+
+<h2 id="output">Output</h2>
+
+<p>Emit a structure assessment report containing:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"stage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"path/to/stage.usd"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"rootLayer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"path/to/stage.usd"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"metersPerUnit"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"upAxis"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"scale_hint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"centimeters"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"asset_physical_context"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"metersPerUnit"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"upAxis"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"scale_hint"</span><span class="p">:</span><span class="w"> </span><span class="s2">"centimeters"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mesh_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">18200</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"summary_counts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"prim_count"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mesh_count"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"material_count"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"prototype_count"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instance_count"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"reference_count"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"payload_count"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"composition"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"layers"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"references"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"payloads"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"counting_method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"authored_list_op_items | prims_with_authored_arcs"</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"assets"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"total"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"well_structured"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"manifest"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"path/to/A.geom.usd"</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"layer_health"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"large_usda"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">...</span><span class="p">],</span><span class="w"> </span><span class="nl">"tiny"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"instancing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"instances"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w"> </span><span class="nl">"prototypes"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w"> </span><span class="nl">"candidates"</span><span class="p">:</span><span class="w"> </span><span class="err">N</span><span class="p">,</span><span class="w"> </span><span class="nl">"ratio"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"hierarchy_dedupe"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"recommended"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"monolithic stage with repeated assembly names and no instances"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"top_candidates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w"> </span><span class="nl">"path_pattern"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"subtree_prims"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nl">"copies"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nl">"estimated_prim_savings"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"scale_assessment"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"prim_count_interpretation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"structural_reuse_needed | local_cleanup_first | acceptable"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mesh_sizing_flags"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"small_mesh_detail"</span><span class="p">,</span><span class="w"> </span><span class="s2">"large_overlap_candidate"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"merge_posture"</span><span class="p">:</span><span class="w"> </span><span class="s2">"prototype_local_preferred | whole_assembly_requires_user_confirmation"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"asset_boundary_suggestions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"candidate_levels"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+      </span><span class="p">{</span><span class="w"> </span><span class="nl">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"per-floor"</span><span class="p">,</span><span class="w"> </span><span class="nl">"child_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nl">"hash_matched_groups"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nl">"promoted"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w"> </span><span class="nl">"level"</span><span class="p">:</span><span class="w"> </span><span class="s2">"per-discipline-per-floor"</span><span class="p">,</span><span class="w"> </span><span class="nl">"child_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w"> </span><span class="nl">"hash_matched_groups"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="nl">"promoted"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4 hash-matched assembly groups align with this cut - immediate dedupe wins on extraction"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nl">"user_choice_required"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"choice_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"payload_count is 0 and clear spatial/discipline boundaries exist; selective loading is a user decision even if geometry reuse is already strong"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"consumed_by"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restructure-decision (Phase 2e)"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"flagged_assets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"outlier_extent"</span><span class="p">,</span><span class="w"> </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"containment"</span><span class="p">,</span><span class="w"> </span><span class="nl">"pair"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"enclosure_opaque"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w"> </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"repetition"</span><span class="p">,</span><span class="w"> </span><span class="nl">"similar_to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w"> </span><span class="nl">"details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"validation_scope"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"per_asset"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"list of assets needing individual validation"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"cross_component_pairs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"list of (A,B) pairs needing spatial analysis"</span><span class="p">],</span><span class="w">
+    </span><span class="nl">"skip"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"list of assets with no flags — low priority for deep validation"</span><span class="p">],</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"phase_recommendation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"structuring | optimization | already_optimized"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">validation_scope</code> section feeds directly into <code class="language-plaintext highlighter-rouge">so-run-validators</code> — it tells
+the agent which assets to validate and which to skip.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">summary_counts</code> section is the compact handoff consumed by
+<code class="language-plaintext highlighter-rouge">usd-validation-runner</code> and <code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/usd-validation-runner/references/validation-scoping.md</code>: it tells the
+validator router whether the asset is monolithic, prototype-heavy, already
+instanced, or worth restructuring before expensive validators run.</p>
+
+<p>For <code class="language-plaintext highlighter-rouge">reference_count</code> and <code class="language-plaintext highlighter-rouge">payload_count</code>, prefer authored list-op item counts.
+If the selected USD Python runtime can only produce prim-level booleans, use
+the prims-with-authored-arcs count and write
+<code class="language-plaintext highlighter-rouge">composition.counting_method: "prims_with_authored_arcs"</code> so downstream readers
+do not mistake it for a total arc-item count.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">phase_recommendation</code> indicates which phase of the three-phase pipeline
+(extraction → structuring → optimization) the scene is currently in, based on
+the structural evidence. This guides the edit-target planner and Scene Optimizer
+handoff decisions.</p>
+
+<p>If <code class="language-plaintext highlighter-rouge">hierarchy_dedupe.recommended</code> is true, run
+<code class="language-plaintext highlighter-rouge">usd-hierarchy-dedupe-candidates</code> before <code class="language-plaintext highlighter-rouge">restructure-decision</code> or mesh-level
+<code class="language-plaintext highlighter-rouge">so-run-operations</code>. That skill is read-only and decides whether repeated
+subtrees should be turned into shared prototype/reference assets before any
+mesh-level dedupe.</p>
+
+<h2 id="rules">Rules</h2>
+
+<ul>
+  <li>Do not read geometry arrays (points, faceVertexCounts, normals). SA is
+structural only. Mesh-level stats belong to Phase 2c validators.</li>
+  <li>Do not run geometry validators in this reference; hand validation scope to
+<code class="language-plaintext highlighter-rouge">usd-validation-runner</code> / <code class="language-plaintext highlighter-rouge">so-run-validators</code>.</li>
+  <li>Do not recommend operations based on structural heuristics alone — heuristics
+flag candidates for validation, not confirmed issues.</li>
+  <li>Report <code class="language-plaintext highlighter-rouge">summary_counts</code> explicitly. Asset counts are the primary scope metric;
+layer counts and arc counts are supporting evidence.</li>
+  <li>Report <code class="language-plaintext highlighter-rouge">scale_assessment</code> when prim count, mesh size, or merge strategy affects
+the validation or optimization path.</li>
+  <li>Do not set <code class="language-plaintext highlighter-rouge">hierarchy_dedupe.recommended: false</code> from only a root-child or
+depth-2 name scan on CAD/BIM exports. Deep repeated names require a deeper
+normalized scan or <code class="language-plaintext highlighter-rouge">usd-hierarchy-dedupe-candidates</code> evidence.</li>
+  <li>If <code class="language-plaintext highlighter-rouge">payload_count</code> is 0 and clear asset boundaries exist, require a
+<code class="language-plaintext highlighter-rouge">restructure-decision</code> selective-loading choice even when instancing is
+strong and the mesh-optimization path is otherwise “optimize as-is”.</li>
+  <li>Use the reference docs to distinguish assets from layers from arcs — conflating
+them leads to incorrect scope estimates.</li>
+  <li>Spatial heuristics (§2.1, §2.2, §2.3) use only authored <code class="language-plaintext highlighter-rouge">extentsHint</code>
+attributes. If extents are not authored, skip the spatial check for that
+prim — do not compute bounds to fill the gap.</li>
+</ul>
+
+<h2 id="tools-for-asset-extraction">Tools for asset extraction</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">isaacsim.asset.transformer</code> extension provides a rule-based pipeline
+framework for transforming USD assets. It can be configured with custom rules
+to perform extraction:</p>
+
+<ul>
+  <li>Extract subtrees into separate layers</li>
+  <li>Create interface/payload structure</li>
+  <li>Collect and remap external assets</li>
+  <li>Re-route references after extraction</li>
+</ul>
+
+<p>The framework handles: flattening, asset collection, path remapping, and
+sequential rule execution. Custom rules implement <code class="language-plaintext highlighter-rouge">RuleInterface.process_rule()</code>
+to perform specific extraction logic.</p>
+
+<p>For the actual extraction, also consider plain USD Python API:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Sdf.Layer.CreateNew()</code> + copy prim specs</li>
+  <li><code class="language-plaintext highlighter-rouge">Sdf.CopySpec()</code> / layer export for subtree extraction</li>
+  <li>Reference/payload arc insertion on the assembly layer</li>
+  <li><code class="language-plaintext highlighter-rouge">UsdUtils.ModifyAssetPaths()</code> for path remapping after restructuring</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Design, secure, and operate Twilio webhook endpoints. Covers inbound event handling, status callbacks, signature validation, connection overrides for retry a...">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/twilio-developer-kit/skills/twilio-webhook-architecture/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/twilio-developer-kit/skills/twilio-webhook-architecture/SKILL/">
+<meta property="og:description" content="Design, secure, and operate Twilio webhook endpoints. Covers inbound event handling, status callbacks, signature validation, connection overrides for retry a...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Design, secure, and operate Twilio webhook endpoints. Covers inbound event handling, status callbacks, signature validation, connection overrides for retry and timeout tuning, local development tunneling, and production hardening. Use this skill whenever an agent needs to receive HTTP callbacks from Twilio for any product -- messaging, voice, verify, or event streams.
+</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h2 id="overview">Overview</h2>
+
+<p>Twilio delivers events to your application via HTTP callbacks (webhooks). Inbound messages and calls trigger webhooks that expect a TwiML response; status callbacks and event streams push delivery and lifecycle data asynchronously. This skill covers the cross-product patterns that apply to every webhook integration.</p>
+
+<hr />
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>Twilio account with a phone number or service configured with a webhook URL
+– New to Twilio? See <code class="language-plaintext highlighter-rouge">twilio-account-setup</code></li>
+  <li><code class="language-plaintext highlighter-rouge">TWILIO_ACCOUNT_SID</code> and <code class="language-plaintext highlighter-rouge">TWILIO_AUTH_TOKEN</code> – see <code class="language-plaintext highlighter-rouge">twilio-iam-auth-setup</code></li>
+  <li>SDK: <code class="language-plaintext highlighter-rouge">pip install twilio flask</code> / <code class="language-plaintext highlighter-rouge">npm install twilio express</code></li>
+  <li>Publicly accessible HTTPS endpoint (see Local Development section below)</li>
+</ul>
+
+<hr />
+
+<h2 id="quickstart">Quickstart</h2>
+
+<p>Receive an inbound SMS and validate the request signature before replying.</p>
+
+<p><strong>Python (Flask)</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span>
+<span class="kn">from</span> <span class="n">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">abort</span>
+<span class="kn">from</span> <span class="n">twilio.request_validator</span> <span class="kn">import</span> <span class="n">RequestValidator</span>
+<span class="kn">from</span> <span class="n">twilio.twiml.messaging_response</span> <span class="kn">import</span> <span class="n">MessagingResponse</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="nc">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="n">validator</span> <span class="o">=</span> <span class="nc">RequestValidator</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">TWILIO_AUTH_TOKEN</span><span class="sh">"</span><span class="p">])</span>
+
+<span class="nd">@app.route</span><span class="p">(</span><span class="sh">"</span><span class="s">/sms</span><span class="sh">"</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">incoming_sms</span><span class="p">():</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">X-Twilio-Signature</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">validator</span><span class="p">.</span><span class="nf">validate</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">url</span><span class="p">,</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
+        <span class="nf">abort</span><span class="p">(</span><span class="mi">403</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="nc">MessagingResponse</span><span class="p">()</span>
+    <span class="n">resp</span><span class="p">.</span><span class="nf">message</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Got: </span><span class="si">{</span><span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">'</span><span class="s">Body</span><span class="sh">'</span><span class="p">)</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nf">str</span><span class="p">(</span><span class="n">resp</span><span class="p">),</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span><span class="sh">"</span><span class="s">Content-Type</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">text/xml</span><span class="sh">"</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Node.js (Express)</strong></p>
+<pre><code class="language-node">const express = require("express");
+const twilio = require("twilio");
+const app = express();
+app.use(express.urlencoded({ extended: false }));
+
+app.post("/sms", (req, res) =&gt; {
+    const valid = twilio.validateRequest(
+        process.env.TWILIO_AUTH_TOKEN,
+        req.headers["x-twilio-signature"],
+        `https://${req.headers.host}${req.originalUrl}`,
+        req.body
+    );
+    if (!valid) return res.status(403).send("Forbidden");
+    const twiml = new twilio.twiml.MessagingResponse();
+    twiml.message(`Got: ${req.body.Body}`);
+    res.type("text/xml").send(twiml.toString());
+});
+</code></pre>
+
+<p>Set your webhook URL in Console: <strong>Phone Numbers &gt; Active Numbers &gt; (your number) &gt; Messaging &gt; “A Message Comes In”</strong>.</p>
+
+<hr />
+
+<h2 id="key-patterns">Key Patterns</h2>
+
+<h3 id="1-webhook-types-across-products">1. Webhook Types Across Products</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Webhook type</th>
+      <th>Trigger</th>
+      <th>Expected response</th>
+      <th>Products</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Inbound event</td>
+      <td>Message received / call answered</td>
+      <td>TwiML (XML)</td>
+      <td>Messaging, Voice</td>
+    </tr>
+    <tr>
+      <td>Status callback</td>
+      <td>Resource state change</td>
+      <td><code class="language-plaintext highlighter-rouge">200</code> or <code class="language-plaintext highlighter-rouge">204</code> (no body required)</td>
+      <td>Messaging, Voice, Verify, Video</td>
+    </tr>
+    <tr>
+      <td>Action URL</td>
+      <td>TwiML verb completes (<code class="language-plaintext highlighter-rouge">&lt;Gather&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;Record&gt;</code>)</td>
+      <td>Next TwiML</td>
+      <td>Voice</td>
+    </tr>
+    <tr>
+      <td>Recording status</td>
+      <td>Recording processing completes</td>
+      <td><code class="language-plaintext highlighter-rouge">200</code> or <code class="language-plaintext highlighter-rouge">204</code></td>
+      <td>Voice</td>
+    </tr>
+    <tr>
+      <td>Debugger event</td>
+      <td>Error or warning on account</td>
+      <td><code class="language-plaintext highlighter-rouge">200</code> or <code class="language-plaintext highlighter-rouge">204</code></td>
+      <td>All</td>
+    </tr>
+    <tr>
+      <td>Event Streams</td>
+      <td>Any subscribed event</td>
+      <td><code class="language-plaintext highlighter-rouge">200</code> or <code class="language-plaintext highlighter-rouge">204</code></td>
+      <td>All (via Sink)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="2-signature-validation">2. Signature Validation</h3>
+
+<p>Twilio signs every webhook with an <code class="language-plaintext highlighter-rouge">X-Twilio-Signature</code> header (HMAC-SHA1 using your Auth Token). Always validate before processing.</p>
+
+<p><strong>Form-encoded requests (<code class="language-plaintext highlighter-rouge">application/x-www-form-urlencoded</code>):</strong></p>
+
+<p>Pass the full URL and POST body parameters to the validator.</p>
+
+<p><strong>Python</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">twilio.request_validator</span> <span class="kn">import</span> <span class="n">RequestValidator</span>
+
+<span class="n">validator</span> <span class="o">=</span> <span class="nc">RequestValidator</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">TWILIO_AUTH_TOKEN</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">is_valid</span> <span class="o">=</span> <span class="n">validator</span><span class="p">.</span><span class="nf">validate</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">url</span><span class="p">,</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">,</span> <span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">X-Twilio-Signature</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><strong>Node.js</strong></p>
+<pre><code class="language-node">const { validateRequest } = require("twilio");
+
+const isValid = validateRequest(
+    process.env.TWILIO_AUTH_TOKEN,
+    req.headers["x-twilio-signature"],
+    `https://${req.headers.host}${req.originalUrl}`,
+    req.body
+);
+</code></pre>
+
+<p><strong>JSON requests (<code class="language-plaintext highlighter-rouge">application/json</code>):</strong></p>
+
+<p>Twilio appends a <code class="language-plaintext highlighter-rouge">bodySHA256</code> query parameter to your URL. Use the SDK’s JSON-specific validation.</p>
+
+<p><strong>Python</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">twilio.request_validator</span> <span class="kn">import</span> <span class="n">RequestValidator</span>
+
+<span class="n">validator</span> <span class="o">=</span> <span class="nc">RequestValidator</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">TWILIO_AUTH_TOKEN</span><span class="sh">"</span><span class="p">])</span>
+<span class="n">is_valid</span> <span class="o">=</span> <span class="n">validator</span><span class="p">.</span><span class="nf">validate_body</span><span class="p">(</span>
+    <span class="n">request</span><span class="p">.</span><span class="n">url</span><span class="p">,</span>
+    <span class="n">request</span><span class="p">.</span><span class="nf">get_data</span><span class="p">(</span><span class="n">as_text</span><span class="o">=</span><span class="bp">True</span><span class="p">),</span>
+    <span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">X-Twilio-Signature</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Node.js</strong></p>
+<pre><code class="language-node">const twilio = require("twilio");
+
+// Use express.raw() or a verify callback to preserve the raw body
+const isValid = twilio.validateRequestWithBody(
+    process.env.TWILIO_AUTH_TOKEN,
+    req.headers["x-twilio-signature"],
+    `https://${req.headers.host}${req.originalUrl}`,
+    req.rawBody  // must be the exact bytes Twilio sent, not JSON.stringify(req.body)
+);
+</code></pre>
+
+<p><strong>Critical:</strong> Use the SDK validator. Do not implement your own – Twilio may add parameters without notice, and the exact algorithm (including port handling) has edge cases the SDK handles.</p>
+
+<h3 id="3-status-callback-handling">3. Status Callback Handling</h3>
+
+<p>Status callbacks are asynchronous POST requests Twilio sends when a resource changes state. They do not expect TwiML – return <code class="language-plaintext highlighter-rouge">200</code> or <code class="language-plaintext highlighter-rouge">204</code>.</p>
+
+<p><strong>Messaging status flow:</strong> <code class="language-plaintext highlighter-rouge">queued</code> -&gt; <code class="language-plaintext highlighter-rouge">sent</code> -&gt; <code class="language-plaintext highlighter-rouge">delivered</code> (or <code class="language-plaintext highlighter-rouge">undelivered</code> / <code class="language-plaintext highlighter-rouge">failed</code>)</p>
+
+<p>When using Messaging Services, the flow starts with <code class="language-plaintext highlighter-rouge">accepted</code> -&gt; <code class="language-plaintext highlighter-rouge">queued</code> -&gt; …</p>
+
+<p><strong>Voice status events:</strong> <code class="language-plaintext highlighter-rouge">initiated</code>, <code class="language-plaintext highlighter-rouge">ringing</code>, <code class="language-plaintext highlighter-rouge">answered</code>, <code class="language-plaintext highlighter-rouge">completed</code></p>
+
+<p>Subscribe to specific events via <code class="language-plaintext highlighter-rouge">StatusCallbackEvent</code> parameter.</p>
+
+<p>Status callbacks are signed with <code class="language-plaintext highlighter-rouge">X-Twilio-Signature</code> like all Twilio webhooks. Validate before acting on the payload – an unvalidated endpoint lets anyone forge delivery status and drive downstream logic.</p>
+
+<p><strong>Python (Flask) – messaging status handler</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@app.route</span><span class="p">(</span><span class="sh">"</span><span class="s">/status</span><span class="sh">"</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">message_status</span><span class="p">():</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">headers</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">X-Twilio-Signature</span><span class="sh">"</span><span class="p">,</span> <span class="sh">""</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">validator</span><span class="p">.</span><span class="nf">validate</span><span class="p">(</span><span class="n">request</span><span class="p">.</span><span class="n">url</span><span class="p">,</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">,</span> <span class="n">sig</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sh">"</span><span class="s">Forbidden</span><span class="sh">"</span><span class="p">,</span> <span class="mi">403</span>
+    <span class="n">sid</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">MessageSid</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">MessageStatus</span><span class="sh">"</span><span class="p">)</span>
+    <span class="n">error_code</span> <span class="o">=</span> <span class="n">request</span><span class="p">.</span><span class="n">form</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="sh">"</span><span class="s">ErrorCode</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">status</span> <span class="ow">in</span> <span class="p">(</span><span class="sh">"</span><span class="s">failed</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">undelivered</span><span class="sh">"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">error_code</span><span class="p">:</span>
+        <span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="sh">"</span><span class="s">Delivery failed </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s">: error </span><span class="si">{</span><span class="n">error_code</span><span class="si">}</span><span class="sh">"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sh">""</span><span class="p">,</span> <span class="mi">204</span>
+</code></pre></div></div>
+
+<p><strong>Node.js (Express) – voice status handler</strong></p>
+<pre><code class="language-node">app.post("/call-status", (req, res) =&gt; {
+    const valid = twilio.validateRequest(
+        process.env.TWILIO_AUTH_TOKEN,
+        req.headers["x-twilio-signature"],
+        `https://${req.headers.host}${req.originalUrl}`,
+        req.body
+    );
+    if (!valid) return res.status(403).send("Forbidden");
+    const { CallSid, CallStatus, Duration } = req.body;
+    console.log(`${CallSid}: ${CallStatus} (${Duration}s)`);
+    res.sendStatus(204);
+});
+</code></pre>
+
+<p><strong>Attach status callbacks when creating resources:</strong></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Messaging
+</span><span class="n">message</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">messages</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
+    <span class="n">to</span><span class="o">=</span><span class="sh">"</span><span class="s">+15558675310</span><span class="sh">"</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="sh">"</span><span class="s">+15017122661</span><span class="sh">"</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="sh">"</span><span class="s">Hello!</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">status_callback</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/status</span><span class="sh">"</span>
+<span class="p">)</span>
+
+<span class="c1"># Voice
+</span><span class="n">call</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">calls</span><span class="p">.</span><span class="nf">create</span><span class="p">(</span>
+    <span class="n">to</span><span class="o">=</span><span class="sh">"</span><span class="s">+15558675310</span><span class="sh">"</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="sh">"</span><span class="s">+15017122661</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">url</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/voice</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">status_callback</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/call-status</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">status_callback_event</span><span class="o">=</span><span class="p">[</span><span class="sh">"</span><span class="s">initiated</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">ringing</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">answered</span><span class="sh">"</span><span class="p">,</span> <span class="sh">"</span><span class="s">completed</span><span class="sh">"</span><span class="p">],</span>
+    <span class="n">status_callback_method</span><span class="o">=</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="4-connection-overrides-retry-and-timeout-tuning">4. Connection Overrides (Retry and Timeout Tuning)</h3>
+
+<p>Append URL fragments to any webhook URL to override default connection behavior. Fragments are not included in signature computation.</p>
+
+<p><strong>Format:</strong> <code class="language-plaintext highlighter-rouge">https://yourapp.com/webhook#key=value&amp;key=value</code></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Key</th>
+      <th>Default</th>
+      <th>Range</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Connect Timeout</td>
+      <td><code class="language-plaintext highlighter-rouge">ct</code></td>
+      <td>5000ms</td>
+      <td>100-10000</td>
+      <td>TCP connection timeout</td>
+    </tr>
+    <tr>
+      <td>Read Timeout</td>
+      <td><code class="language-plaintext highlighter-rouge">rt</code></td>
+      <td>15000ms</td>
+      <td>100-15000</td>
+      <td>Time to wait for first response byte</td>
+    </tr>
+    <tr>
+      <td>Total Time</td>
+      <td><code class="language-plaintext highlighter-rouge">tt</code></td>
+      <td>15000ms</td>
+      <td>100-15000</td>
+      <td>Total time for all retries</td>
+    </tr>
+    <tr>
+      <td>Retry Count</td>
+      <td><code class="language-plaintext highlighter-rouge">rc</code></td>
+      <td>1</td>
+      <td>0-5</td>
+      <td>Number of retry attempts</td>
+    </tr>
+    <tr>
+      <td>Retry Policy</td>
+      <td><code class="language-plaintext highlighter-rouge">rp</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ct</code></td>
+      <td><code class="language-plaintext highlighter-rouge">4xx</code>, <code class="language-plaintext highlighter-rouge">5xx</code>, <code class="language-plaintext highlighter-rouge">ct</code>, <code class="language-plaintext highlighter-rouge">rt</code>, <code class="language-plaintext highlighter-rouge">all</code></td>
+      <td>What triggers a retry</td>
+    </tr>
+    <tr>
+      <td>Edge Location</td>
+      <td><code class="language-plaintext highlighter-rouge">e</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ashburn</code></td>
+      <td><code class="language-plaintext highlighter-rouge">ashburn</code>, <code class="language-plaintext highlighter-rouge">dublin</code>, <code class="language-plaintext highlighter-rouge">frankfurt</code>, <code class="language-plaintext highlighter-rouge">sao-paulo</code>, <code class="language-plaintext highlighter-rouge">singapore</code>, <code class="language-plaintext highlighter-rouge">sydney</code>, <code class="language-plaintext highlighter-rouge">tokyo</code>, <code class="language-plaintext highlighter-rouge">umatilla</code></td>
+      <td>Egress edge</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Examples:</strong></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Retry up to 3 times on connection or read timeout
+https://yourapp.com/sms#rc=3&amp;rp=ct,rt
+
+# Fast failover: 1s connect timeout, 2 retries
+https://yourapp.com/voice#ct=1000&amp;rc=2
+
+# Rotate edge locations on retry
+https://yourapp.com/status#e=ashburn,dublin&amp;rc=1
+</code></pre></div></div>
+
+<p>Twilio adds an <code class="language-plaintext highlighter-rouge">I-Twilio-Idempotency-Token</code> header on retries for deduplication.</p>
+
+<p><strong>Limitations:</strong> Connection overrides are not available on Twilio Conversations or Frontline webhooks. Voice webhooks have a hard 15-second ceiling regardless of override values.</p>
+
+<h3 id="5-configure-webhook-urls-via-api">5. Configure Webhook URLs via API</h3>
+
+<p><strong>Python</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Phone number -- messaging
+</span><span class="n">client</span><span class="p">.</span><span class="nf">incoming_phone_numbers</span><span class="p">(</span><span class="sh">"</span><span class="s">PNxxxxxxxxxx</span><span class="sh">"</span><span class="p">).</span><span class="nf">update</span><span class="p">(</span>
+    <span class="n">sms_url</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/sms</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">sms_method</span><span class="o">=</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">sms_fallback_url</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/sms-fallback</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">sms_fallback_method</span><span class="o">=</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span>
+<span class="p">)</span>
+
+<span class="c1"># Phone number -- voice
+</span><span class="n">client</span><span class="p">.</span><span class="nf">incoming_phone_numbers</span><span class="p">(</span><span class="sh">"</span><span class="s">PNxxxxxxxxxx</span><span class="sh">"</span><span class="p">).</span><span class="nf">update</span><span class="p">(</span>
+    <span class="n">voice_url</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/voice</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">voice_method</span><span class="o">=</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">voice_fallback_url</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/voice-fallback</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">voice_fallback_method</span><span class="o">=</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">status_callback</span><span class="o">=</span><span class="sh">"</span><span class="s">https://yourapp.com/call-status</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">status_callback_method</span><span class="o">=</span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Node.js</strong></p>
+<pre><code class="language-node">// Phone number -- messaging
+await client.incomingPhoneNumbers("PNxxxxxxxxxx").update({
+    smsUrl: "https://yourapp.com/sms",
+    smsMethod: "POST",
+    smsFallbackUrl: "https://yourapp.com/sms-fallback",
+    smsFallbackMethod: "POST",
+});
+
+// Phone number -- voice
+await client.incomingPhoneNumbers("PNxxxxxxxxxx").update({
+    voiceUrl: "https://yourapp.com/voice",
+    voiceMethod: "POST",
+    voiceFallbackUrl: "https://yourapp.com/voice-fallback",
+    voiceFallbackMethod: "POST",
+    statusCallback: "https://yourapp.com/call-status",
+    statusCallbackMethod: "POST",
+});
+</code></pre>
+
+<h3 id="6-local-development-with-tunnels">6. Local Development with Tunnels</h3>
+
+<p>Twilio cannot reach <code class="language-plaintext highlighter-rouge">localhost</code>. Use a tunnel to expose your local server.</p>
+
+<p><strong>ngrok (recommended for development):</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ngrok http 5000
+<span class="c"># Copy the HTTPS URL, e.g. https://abc123.ngrok-free.app</span>
+</code></pre></div></div>
+
+<p>Then set the ngrok URL as your webhook in Console or via API.</p>
+
+<p><strong>Twilio CLI:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Install and use the CLI webhook plugin</span>
+twilio phone-numbers:update +15017122661 <span class="se">\</span>
+  <span class="nt">--sms-url</span><span class="o">=</span><span class="s2">"https://abc123.ngrok-free.app/sms"</span>
+</code></pre></div></div>
+
+<p><strong>ngrok caveats:</strong></p>
+<ul>
+  <li>Free tier URLs change on restart – update Twilio config each time</li>
+  <li>Free tier sessions expire after hours – use a stable host for anything beyond quick tests</li>
+  <li>For persistent local dev, use ngrok with a custom domain (paid) or deploy to a cloud host</li>
+</ul>
+
+<h3 id="7-event-streams-webhook-sink">7. Event Streams (Webhook Sink)</h3>
+
+<p>For high-volume or cross-product event delivery, use Event Streams instead of per-resource status callbacks. Event Streams deliver events to a Sink (webhook, Kinesis, or Segment). The Twilio SDK does not wrap Event Streams – use <code class="language-plaintext highlighter-rouge">requests</code> / <code class="language-plaintext highlighter-rouge">fetch</code> directly.</p>
+
+<p><strong>Python – create a webhook sink and subscribe to error events</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">os</span><span class="p">,</span> <span class="n">requests</span>
+
+<span class="n">account_sid</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">TWILIO_ACCOUNT_SID</span><span class="sh">"</span><span class="p">]</span>
+<span class="n">auth_token</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">environ</span><span class="p">[</span><span class="sh">"</span><span class="s">TWILIO_AUTH_TOKEN</span><span class="sh">"</span><span class="p">]</span>
+
+<span class="c1"># Create a webhook sink
+</span><span class="n">sink</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span>
+    <span class="sh">"</span><span class="s">https://events.twilio.com/v1/Sinks</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">account_sid</span><span class="p">,</span> <span class="n">auth_token</span><span class="p">),</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+        <span class="sh">"</span><span class="s">Description</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Error log sink</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">SinkType</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">webhook</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">SinkConfiguration</span><span class="sh">"</span><span class="p">:</span> <span class="sh">'</span><span class="s">{</span><span class="sh">"</span><span class="s">destination</span><span class="sh">"</span><span class="s">: </span><span class="sh">"</span><span class="s">https://yourapp.com/events</span><span class="sh">"</span><span class="s">, </span><span class="sh">"</span><span class="s">method</span><span class="sh">"</span><span class="s">: </span><span class="sh">"</span><span class="s">POST</span><span class="sh">"</span><span class="s">}</span><span class="sh">'</span>
+    <span class="p">}</span>
+<span class="p">).</span><span class="nf">json</span><span class="p">()</span>
+
+<span class="c1"># Subscribe to error log events
+</span><span class="n">requests</span><span class="p">.</span><span class="nf">post</span><span class="p">(</span>
+    <span class="sh">"</span><span class="s">https://events.twilio.com/v1/Subscriptions</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">auth</span><span class="o">=</span><span class="p">(</span><span class="n">account_sid</span><span class="p">,</span> <span class="n">auth_token</span><span class="p">),</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">{</span>
+        <span class="sh">"</span><span class="s">Description</span><span class="sh">"</span><span class="p">:</span> <span class="sh">"</span><span class="s">Error log subscription</span><span class="sh">"</span><span class="p">,</span>
+        <span class="sh">"</span><span class="s">SinkSid</span><span class="sh">"</span><span class="p">:</span> <span class="n">sink</span><span class="p">[</span><span class="sh">"</span><span class="s">sid</span><span class="sh">"</span><span class="p">],</span>
+        <span class="sh">"</span><span class="s">Types</span><span class="sh">"</span><span class="p">:</span> <span class="sh">'</span><span class="s">[{</span><span class="sh">"</span><span class="s">type</span><span class="sh">"</span><span class="s">: </span><span class="sh">"</span><span class="s">com.twilio.error-logs.error.logged</span><span class="sh">"</span><span class="s">}]</span><span class="sh">'</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>Sink types: <code class="language-plaintext highlighter-rouge">webhook</code>, <code class="language-plaintext highlighter-rouge">kinesis</code>, <code class="language-plaintext highlighter-rouge">segment</code>. Subscriptions filter which event types route to which sinks.</p>
+
+<h3 id="8-http-authentication-for-webhook-urls">8. HTTP Authentication for Webhook URLs</h3>
+
+<p>Twilio supports HTTP Basic and Digest authentication. Embed credentials in the URL:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://username:password@yourapp.com/sms
+</code></pre></div></div>
+
+<p>This provides an additional layer of protection beyond signature validation. Note: these credentials are visible in Console webhook configuration and may appear in server access logs – rotate them independently of your Auth Token.</p>
+
+<hr />
+
+<h2 id="common-webhook-parameters">Common Webhook Parameters</h2>
+
+<h3 id="inbound-sms">Inbound SMS</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MessageSid</code></td>
+      <td>Unique message identifier</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">AccountSid</code></td>
+      <td>Your Twilio account SID</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">From</code></td>
+      <td>Sender phone number (E.164)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">To</code></td>
+      <td>Your Twilio number</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Body</code></td>
+      <td>Message text</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">NumMedia</code></td>
+      <td>Number of media attachments</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MediaUrl0..N</code></td>
+      <td>URL of each media attachment</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MediaContentType0..N</code></td>
+      <td>MIME type of each attachment</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="inbound-voice-call">Inbound Voice Call</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CallSid</code></td>
+      <td>Unique call identifier</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">AccountSid</code></td>
+      <td>Your Twilio account SID</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">From</code></td>
+      <td>Caller phone number (E.164)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">To</code></td>
+      <td>Your Twilio number</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CallStatus</code></td>
+      <td><code class="language-plaintext highlighter-rouge">queued</code>, <code class="language-plaintext highlighter-rouge">ringing</code>, <code class="language-plaintext highlighter-rouge">in-progress</code>, <code class="language-plaintext highlighter-rouge">completed</code>, <code class="language-plaintext highlighter-rouge">busy</code>, <code class="language-plaintext highlighter-rouge">failed</code>, <code class="language-plaintext highlighter-rouge">no-answer</code>, <code class="language-plaintext highlighter-rouge">canceled</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Direction</code></td>
+      <td><code class="language-plaintext highlighter-rouge">inbound</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ForwardedFrom</code></td>
+      <td>Number that forwarded the call (if applicable)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="message-status-callback">Message Status Callback</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MessageSid</code></td>
+      <td>Unique message identifier</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MessageStatus</code></td>
+      <td><code class="language-plaintext highlighter-rouge">accepted</code>, <code class="language-plaintext highlighter-rouge">queued</code>, <code class="language-plaintext highlighter-rouge">sending</code>, <code class="language-plaintext highlighter-rouge">sent</code>, <code class="language-plaintext highlighter-rouge">delivered</code>, <code class="language-plaintext highlighter-rouge">undelivered</code>, <code class="language-plaintext highlighter-rouge">failed</code>, <code class="language-plaintext highlighter-rouge">read</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ErrorCode</code></td>
+      <td>Twilio error code (present on <code class="language-plaintext highlighter-rouge">failed</code>/<code class="language-plaintext highlighter-rouge">undelivered</code>)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ErrorMessage</code></td>
+      <td>Human-readable error description</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="debugger-event-callback">Debugger Event Callback</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Sid</code></td>
+      <td>Debugger event identifier</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">AccountSid</code></td>
+      <td>Account that generated the event</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Level</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Error</code> or <code class="language-plaintext highlighter-rouge">Warning</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Timestamp</code></td>
+      <td>ISO 8601 time of occurrence</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">Payload</code></td>
+      <td>JSON with <code class="language-plaintext highlighter-rouge">resource_sid</code>, <code class="language-plaintext highlighter-rouge">error_code</code>, <code class="language-plaintext highlighter-rouge">more_info</code>, <code class="language-plaintext highlighter-rouge">webhook</code> (request/response details)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="cannot">CANNOT</h2>
+
+<ul>
+  <li><strong>Cannot exceed 15-second voice webhook response time</strong> — Twilio hangs up or falls back. Messaging webhooks retry on timeout.</li>
+  <li><strong>Cannot use HTTP in production</strong> — HTTPS required. No self-signed certificates. Do not pin Twilio certificates — they rotate without notice.</li>
+  <li><strong>Cannot allowlist Twilio by IP</strong> — Webhooks come from dynamic IPs. Use signature validation instead.</li>
+  <li><strong>Cannot guarantee status callback delivery or order</strong> — Best-effort. Implement idempotency using <code class="language-plaintext highlighter-rouge">MessageSid</code> + <code class="language-plaintext highlighter-rouge">MessageStatus</code> or <code class="language-plaintext highlighter-rouge">CallSid</code> + <code class="language-plaintext highlighter-rouge">CallStatus</code> as composite keys.</li>
+  <li><strong>Cannot redirect without losing POST parameters</strong> — HTTP 301/302 redirects cause Twilio to follow with GET, dropping <code class="language-plaintext highlighter-rouge">Digits</code>, <code class="language-plaintext highlighter-rouge">RecordingUrl</code>, etc.</li>
+  <li><strong>Cannot use connection overrides on Conversations or Frontline webhooks</strong> — Not supported for these products</li>
+</ul>
+
+<hr />
+
+<h2 id="next-steps">Next Steps</h2>
+
+<ul>
+  <li><strong>Receive inbound SMS:</strong> <code class="language-plaintext highlighter-rouge">twilio-messaging-webhooks</code></li>
+  <li><strong>Voice call handling:</strong> <code class="language-plaintext highlighter-rouge">twilio-voice-twiml</code></li>
+  <li><strong>Scale webhook handling:</strong> <code class="language-plaintext highlighter-rouge">twilio-reliability-patterns</code></li>
+  <li><strong>Debug webhook failures:</strong> <code class="language-plaintext highlighter-rouge">twilio-debugging-observability</code></li>
+  <li><strong>Secure credentials:</strong> <code class="language-plaintext highlighter-rouge">twilio-iam-auth-setup</code></li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>README · A developer journey</title>
+<meta name="description" content="Streaming Client">
+<link rel="canonical" href="https://tvast.github.io/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-realtime-viewer/references/streaming-client/README/">
+
+<meta property="og:title" content="README · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tvast.github.io/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-realtime-viewer/references/streaming-client/README/">
+<meta property="og:description" content="Streaming Client">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>README</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="streaming-client">Streaming Client</h1>
+
+<h2 id="triggers">Triggers</h2>
+
+<p>Use this skill for React streaming client, AppStreamer, DirectConfig,
+standalone ovstream Direct WebRTC, browser-streamed Omniverse Realtime Viewer,
+remote-video, StreamingContext, VITE_SERVER_HOST, frontend no video, or
+object-fit contain.</p>
+
+<p>Use this for the browser side of a WebRTC Omniverse Realtime Viewer backed by
+standalone <code class="language-plaintext highlighter-rouge">ovstream</code>. The viewer service may run under OKAS, Kubernetes, or
+another session orchestrator, but the browser WebRTC client profile remains
+standalone <code class="language-plaintext highlighter-rouge">ovstream</code> Direct mode, not a Kit, OVC, NVCF, or GFN connection
+profile.</p>
+
+<h2 id="appstreamer-direct-api">AppStreamer Direct API</h2>
+
+<p>Install the current released <code class="language-plaintext highlighter-rouge">@nvidia/ov-web-rtc</code> package as described in
+<code class="language-plaintext highlighter-rouge">references/dependencies/nvidia-runtime.md</code>. For the connection shape, use the
+current <code class="language-plaintext highlighter-rouge">ovstream</code> WebRTC browser client example as the reference:
+<a href="https://github.com/NVIDIA-Omniverse/ovstream/tree/main/examples/webrtc_client">https://github.com/NVIDIA-Omniverse/ovstream/tree/main/examples/webrtc_client</a></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">AppStreamer</span><span class="p">,</span> <span class="nx">StreamType</span><span class="p">,</span> <span class="kd">type</span> <span class="nx">DirectConfig</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">@nvidia/ov-web-rtc</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">config</span><span class="p">:</span> <span class="nx">DirectConfig</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">videoElementId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-video</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">audioElementId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">remote-audio</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">server</span><span class="p">:</span> <span class="dl">'</span><span class="s1">localhost</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">signalingPort</span><span class="p">:</span> <span class="mi">49100</span><span class="p">,</span>
+  <span class="na">nativeTouchEvents</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">fps</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+  <span class="na">maxReconnects</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="na">reconnectDelay</span><span class="p">:</span> <span class="mi">3000</span><span class="p">,</span>
+  <span class="na">onStart</span><span class="p">:</span> <span class="nx">msg</span> <span class="o">=&gt;</span> <span class="p">{},</span>
+  <span class="na">onUpdate</span><span class="p">:</span> <span class="nx">msg</span> <span class="o">=&gt;</span> <span class="p">{},</span>
+  <span class="na">onCustomEvent</span><span class="p">:</span> <span class="nx">msg</span> <span class="o">=&gt;</span> <span class="p">{},</span>
+  <span class="na">onStop</span><span class="p">:</span> <span class="nx">msg</span> <span class="o">=&gt;</span> <span class="p">{},</span>
+  <span class="na">onTerminate</span><span class="p">:</span> <span class="nx">msg</span> <span class="o">=&gt;</span> <span class="p">{},</span>
+<span class="p">};</span>
+
+<span class="k">await</span> <span class="nx">AppStreamer</span><span class="p">.</span><span class="nf">connect</span><span class="p">({</span> <span class="na">streamSource</span><span class="p">:</span> <span class="nx">StreamType</span><span class="p">.</span><span class="nx">DIRECT</span><span class="p">,</span> <span class="na">streamConfig</span><span class="p">:</span> <span class="nx">config</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">onCustomEvent</code> receives parsed app JSON. Mouse, keyboard, wheel, and touch events are forwarded by the streaming library automatically; do not send them manually as JSON messages.</p>
+
+<h2 id="directconfig-gotchas">DirectConfig Gotchas</h2>
+
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">streamSource: StreamType.DIRECT</code> with <code class="language-plaintext highlighter-rouge">server</code> and <code class="language-plaintext highlighter-rouge">signalingPort</code> for
+the standalone <code class="language-plaintext highlighter-rouge">ovstream</code> server.</li>
+  <li>Do not use Kit, OVC, NVCF, or GFN client connection profiles in the browser
+WebRTC config. If an orchestrator launches the session, map its exposed
+endpoint to <code class="language-plaintext highlighter-rouge">server</code> and <code class="language-plaintext highlighter-rouge">signalingPort</code>.</li>
+  <li>Do not set <code class="language-plaintext highlighter-rouge">mediaServer</code> or <code class="language-plaintext highlighter-rouge">mediaPort</code>; SDP discovers the UDP media endpoint. Setting <code class="language-plaintext highlighter-rouge">mediaPort: 49100</code> sends media to the TCP signaling port and causes connected-with-no-video failures.</li>
+  <li>Do not construct a sign-in URL, append a custom signaling path, or add
+auth/session fields to <code class="language-plaintext highlighter-rouge">DirectConfig</code>. Portal auth and session lifecycle
+belong outside the browser WebRTC client config.</li>
+  <li>The <code class="language-plaintext highlighter-rouge">&lt;video id="remote-video"&gt;</code> element must exist in the DOM before <code class="language-plaintext highlighter-rouge">connect()</code>.</li>
+  <li>Tune reconnects to avoid log storms: <code class="language-plaintext highlighter-rouge">maxReconnects: 5</code>, <code class="language-plaintext highlighter-rouge">reconnectDelay: 3000</code>.</li>
+  <li>Keep the React effect that calls <code class="language-plaintext highlighter-rouge">AppStreamer.connect()</code> stable. It should depend only on immutable connection config, not on stateful message routers that change when app messages arrive.</li>
+  <li>Avoid <code class="language-plaintext highlighter-rouge">React.StrictMode</code> for the first direct-streaming scaffold unless the connect effect explicitly guards double mount/connect. StrictMode can intentionally mount, cleanup, and remount effects in development.</li>
+  <li><code class="language-plaintext highlighter-rouge">AppStreamer.sendMessage()</code> returns a Promise. Treat app messages as fire-and-forget during reconnect windows and catch rejected sends so transient disconnects do not surface as unhandled browser errors.</li>
+</ul>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">sendMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">:</span> <span class="nx">StreamMessage</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">connectedRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="k">void</span> <span class="nx">AppStreamer</span><span class="p">.</span><span class="nf">sendMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">).</span><span class="k">catch</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="kc">undefined</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="streamingcontext-pattern">StreamingContext Pattern</h2>
+
+<p>Wrap AppStreamer in React context:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">StreamingProvider</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">AppContent</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nc">StreamingProvider</span><span class="p">&gt;</span>
+
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">status</span><span class="p">,</span> <span class="nx">sendMessage</span><span class="p">,</span> <span class="nx">onCustomEvent</span><span class="p">,</span> <span class="nx">errorMessage</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">useStreaming</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>The provider should own exactly one <code class="language-plaintext highlighter-rouge">AppStreamer.connect()</code> call for a given host/port pair. Keep <code class="language-plaintext highlighter-rouge">onCustomEvent</code> routing behind a stable callback or a ref-backed dispatcher so state updates from server events do not recreate the connection effect and trigger cleanup.</p>
+
+<p>The hook should expose:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">status</code></td>
+      <td><code class="language-plaintext highlighter-rouge">'connecting' | 'connected' | 'failed'</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">sendMessage</code></td>
+      <td>send <code class="language-plaintext highlighter-rouge">{event_type, payload}</code>; no-op if disconnected</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">onCustomEvent</code></td>
+      <td>subscribe to server messages; returns cleanup</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">errorMessage</code></td>
+      <td>failure detail</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>On connect, prefer the server’s <code class="language-plaintext highlighter-rouge">push_initial_state</code> when a stage is already loaded; it should send <code class="language-plaintext highlighter-rouge">openStageResult</code>, root <code class="language-plaintext highlighter-rouge">getChildrenResult</code>, AOV state, and any overlay state after the data channel opens. If the server starts idle and the app has bundled samples, auto-open the first sample once after <code class="language-plaintext highlighter-rouge">status === 'connected'</code>. Send later <code class="language-plaintext highlighter-rouge">openStageRequest</code> messages only when the user switches scenes, opens a file, or resets/reloads.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">openedInitial</span> <span class="o">=</span> <span class="nf">useRef</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+
+<span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">status</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">connected</span><span class="dl">'</span> <span class="o">||</span> <span class="nx">openedInitial</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="nx">openedInitial</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="nf">sendMessage</span><span class="p">({</span> <span class="na">event_type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">openStageRequest</span><span class="dl">'</span><span class="p">,</span> <span class="na">payload</span><span class="p">:</span> <span class="p">{</span> <span class="na">url</span><span class="p">:</span> <span class="nx">sampleAssets</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">url</span> <span class="p">}</span> <span class="p">});</span>
+<span class="p">},</span> <span class="p">[</span><span class="nx">status</span><span class="p">,</span> <span class="nx">sendMessage</span><span class="p">]);</span>
+
+<span class="kd">function</span> <span class="nf">handleSelectAsset</span><span class="p">(</span><span class="nx">url</span><span class="p">:</span> <span class="kr">string</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">sendMessage</span><span class="p">({</span> <span class="na">event_type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">openStageRequest</span><span class="dl">'</span><span class="p">,</span> <span class="na">payload</span><span class="p">:</span> <span class="p">{</span> <span class="nx">url</span> <span class="p">}</span> <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Clean up handlers:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">unsub</span> <span class="o">=</span> <span class="nf">onCustomEvent</span><span class="p">(</span><span class="nx">event</span> <span class="o">=&gt;</span> <span class="nf">routeEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">));</span>
+  <span class="k">return</span> <span class="nx">unsub</span><span class="p">;</span>
+<span class="p">},</span> <span class="p">[</span><span class="nx">onCustomEvent</span><span class="p">]);</span>
+</code></pre></div></div>
+
+<p>Do not call <code class="language-plaintext highlighter-rouge">AppStreamer.terminate()</code> from ordinary message-handler cleanup. Only terminate when the provider is truly unmounting or the user intentionally disconnects. A common failure is: connect, receive <code class="language-plaintext highlighter-rouge">openStageResult</code>, rerender, effect cleanup calls terminate, video shows one frame, then goes black.</p>
+
+<h2 id="video-layout">Video Layout</h2>
+
+<p>Browser-streamed Omniverse Realtime Viewer apps use a fixed server render resolution, typically 1920x1080. Let the page resize the video element with preserve-aspect containment:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#remote-video</span> <span class="p">{</span>
+  <span class="nl">display</span><span class="p">:</span> <span class="nb">block</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">object-fit</span><span class="p">:</span> <span class="nb">contain</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Do not send viewport-size messages when CSS layout changes. NVST handles letterbox coordinate mapping for stream input when the video is contained inside a differently shaped DOM box. Do not synthesize JSON <code class="language-plaintext highlighter-rouge">mouseInput</code>; AppStreamer/NVST forwards browser input through the native input channel.</p>
+
+<p>For React shells with sidebars, top bars, or inspectors, keep the stream surface
+layout-stable while UI state changes:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.viewer-shell</span> <span class="p">{</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">100vh</span><span class="p">;</span>
+  <span class="nl">overflow</span><span class="p">:</span> <span class="nb">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.viewer-content</span><span class="o">,</span>
+<span class="nc">.sidebar</span><span class="o">,</span>
+<span class="nc">.viewport</span> <span class="p">{</span>
+  <span class="nl">min-height</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">overflow</span><span class="p">:</span> <span class="nb">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.viewport</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">relative</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nf">#remote-video</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">inset</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+  <span class="nl">width</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">height</span><span class="p">:</span> <span class="m">100%</span><span class="p">;</span>
+  <span class="nl">object-fit</span><span class="p">:</span> <span class="nb">contain</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Do not let tree expansion, property-panel updates, or selection state change the
+viewport container’s dimensions. Use flex/grid tracks with constrained overflow
+for adjacent panels so the <code class="language-plaintext highlighter-rouge">&lt;video&gt;</code> element remains pinned while React rerenders.</p>
+
+<h2 id="viewport-input-ownership">Viewport Input Ownership</h2>
+
+<p>Browser DOM controls can sit above or beside the streamed video, but native WebRTC
+input still belongs to the server. Explicitly arm viewport input only while the
+pointer is over the viewport, and disarm it when the pointer enters or presses UI
+chrome:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">setViewportInputActive</span><span class="p">(</span><span class="nx">active</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nf">sendMessage</span><span class="p">({</span>
+    <span class="na">event_type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">setViewportInputActive</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">payload</span><span class="p">:</span> <span class="p">{</span> <span class="nx">active</span> <span class="p">},</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="p">&lt;</span><span class="nt">aside</span>
+  <span class="na">onPointerEnter</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">setViewportInputActive</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="si">}</span>
+  <span class="na">onPointerDown</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">setViewportInputActive</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="si">}</span>
+  <span class="na">onWheel</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">setViewportInputActive</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="si">}</span>
+<span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">StageTree</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">aside</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">main</span>
+  <span class="na">className</span><span class="p">=</span><span class="s">"viewport"</span>
+  <span class="na">onPointerEnter</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">setViewportInputActive</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="si">}</span>
+  <span class="na">onPointerDown</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">setViewportInputActive</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span><span class="si">}</span>
+  <span class="na">onPointerLeave</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">setViewportInputActive</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span><span class="si">}</span>
+<span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">video</span> <span class="na">id</span><span class="p">=</span><span class="s">"remote-video"</span> <span class="na">muted</span> <span class="na">autoPlay</span> <span class="na">playsInline</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nt">main</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p>The server should implement the matching gate from <code class="language-plaintext highlighter-rouge">viewer-input-routing</code>, ignore
+<code class="language-plaintext highlighter-rouge">on_input</code> events while this flag is false, and cancel any active camera drag.
+This prevents sidebar clicks, tree expansion, inspector scrolling, and top-bar
+selection changes from being interpreted as camera orbit, pan, zoom, or pick
+gestures.</p>
+
+<h2 id="config-resolution">Config Resolution</h2>
+
+<p>Use this priority:</p>
+
+<ol>
+  <li>URL params: <code class="language-plaintext highlighter-rouge">?server=192.168.1.50&amp;signalingport=49100</code></li>
+  <li>Env vars: <code class="language-plaintext highlighter-rouge">VITE_SERVER_HOST</code>, <code class="language-plaintext highlighter-rouge">VITE_SIGNALING_PORT</code></li>
+  <li>Defaults: <code class="language-plaintext highlighter-rouge">window.location.hostname</code>, port <code class="language-plaintext highlighter-rouge">49100</code></li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">VITE_SERVER_HOST</span><span class="o">=</span>192.168.1.100
+<span class="nv">VITE_SIGNALING_PORT</span><span class="o">=</span>49100
+</code></pre></div></div>
+
+<h2 id="component-layout">Component Layout</h2>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>App.tsx
+  StreamingProvider
+    AppContent
+      video#remote-video
+      stage selector
+      StageTree recursive tree
+      Inspector selected-prim panel
+</code></pre></div></div>
+
+<p>When generating a streaming frontend, create equivalent files such as
+<code class="language-plaintext highlighter-rouge">frontend/src/streaming/StreamingContext.tsx</code>, <code class="language-plaintext highlighter-rouge">frontend/src/App.tsx</code>,
+<code class="language-plaintext highlighter-rouge">frontend/src/components/StageTree.tsx</code>,
+<code class="language-plaintext highlighter-rouge">frontend/src/components/Inspector.tsx</code>,
+<code class="language-plaintext highlighter-rouge">frontend/src/hooks/useWebRTCBackend.ts</code>, and <code class="language-plaintext highlighter-rouge">frontend/src/types/usd.ts</code>.</p>
+
+<h2 id="viewerbackend-adapter">ViewerBackend Adapter</h2>
+
+<p>When using shared UI components, wrap AppStreamer in a <code class="language-plaintext highlighter-rouge">ViewerBackend</code> adapter instead of letting every component send raw messages. The adapter is promise-based for query responses, observable for selection, and caches tree responses by path.</p>
+
+<p>Required methods:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">ViewerBackend</span> <span class="p">{</span>
+  <span class="nf">connect</span><span class="p">():</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nf">disconnect</span><span class="p">():</span> <span class="k">void</span><span class="p">;</span>
+  <span class="nf">loadStage</span><span class="p">(</span><span class="nx">url</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nf">getChildren</span><span class="p">(</span><span class="nx">path</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">PrimNode</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nf">getStageTree</span><span class="p">(</span><span class="nx">rootPath</span><span class="p">?:</span> <span class="kr">string</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">PrimNode</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nf">getProperties</span><span class="p">(</span><span class="nx">path</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nx">PrimProperty</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nf">getVariants</span><span class="p">(</span><span class="nx">path</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="nb">Record</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="p">{</span> <span class="na">options</span><span class="p">:</span> <span class="kr">string</span><span class="p">[];</span> <span class="nl">selection</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span><span class="o">&gt;&gt;</span><span class="p">;</span>
+  <span class="nf">setVariant</span><span class="p">(</span><span class="nx">path</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">variantSet</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">selection</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nf">selectPrims</span><span class="p">(</span><span class="nx">paths</span><span class="p">:</span> <span class="kr">string</span><span class="p">[]):</span> <span class="nb">Promise</span><span class="o">&lt;</span><span class="k">void</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="nf">onSelectionChanged</span><span class="p">(</span><span class="nx">callback</span><span class="p">:</span> <span class="p">(</span><span class="nx">paths</span><span class="p">:</span> <span class="kr">string</span><span class="p">[])</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">):</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Adapter implementation rules:</p>
+
+<ul>
+  <li>Keep resolver buckets keyed by URL or prim path for <code class="language-plaintext highlighter-rouge">openStageResult</code>, <code class="language-plaintext highlighter-rouge">getChildrenResult</code>, <code class="language-plaintext highlighter-rouge">getPropertiesResponse</code>, and <code class="language-plaintext highlighter-rouge">getVariantsResponse</code>.</li>
+  <li>Add timeouts to promises so dropped data-channel responses do not hang UI components permanently.</li>
+  <li>Cache latest children per <code class="language-plaintext highlighter-rouge">prim_path</code> and return cached rows if a request times out.</li>
+  <li>Subscribe to <code class="language-plaintext highlighter-rouge">stageSelectionChanged</code> and call every selection subscriber with the canonical server path list.</li>
+  <li>On <code class="language-plaintext highlighter-rouge">getChildrenResult</code>, make returned child paths selectable by sending <code class="language-plaintext highlighter-rouge">makePrimsSelectable {paths}</code>.</li>
+  <li>Accept the current property event name <code class="language-plaintext highlighter-rouge">getPropertiesResponse</code>; handle <code class="language-plaintext highlighter-rouge">getPropertiesResult</code> only as a compatibility alias.</li>
+  <li>For selected-prim panels, keep the latest selected path in a <code class="language-plaintext highlighter-rouge">useRef</code> and
+compare <code class="language-plaintext highlighter-rouge">getPropertiesResponse.prim_path</code> against that ref. Do not compare
+against a <code class="language-plaintext highlighter-rouge">selectedPath</code> value captured in the React message callback closure;
+fast server responses can otherwise be dropped after a valid
+<code class="language-plaintext highlighter-rouge">stageSelectionChanged</code> event.</li>
+  <li>Route AppStreamer lifecycle through <code class="language-plaintext highlighter-rouge">EventAction</code> and <code class="language-plaintext highlighter-rouge">EventStatus</code>: <code class="language-plaintext highlighter-rouge">EventAction.START</code> plus <code class="language-plaintext highlighter-rouge">EventStatus.SUCCESS</code> means connected; <code class="language-plaintext highlighter-rouge">EventStatus.ERROR</code>, <code class="language-plaintext highlighter-rouge">onStop</code>, and <code class="language-plaintext highlighter-rouge">onTerminate</code> update failed/connecting state and reject relevant pending work.</li>
+</ul>
+
+<p>Resolver pattern:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">childResolvers</span> <span class="o">=</span> <span class="nf">useRef</span><span class="p">(</span><span class="k">new</span> <span class="nb">Map</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">Resolver</span><span class="o">&lt;</span><span class="nx">PrimNode</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="kd">const</span> <span class="nx">propertyResolvers</span> <span class="o">=</span> <span class="nf">useRef</span><span class="p">(</span><span class="k">new</span> <span class="nb">Map</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">Resolver</span><span class="o">&lt;</span><span class="nx">PrimProperty</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="kd">const</span> <span class="nx">variantResolvers</span> <span class="o">=</span> <span class="nf">useRef</span><span class="p">(</span><span class="k">new</span> <span class="nb">Map</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">Resolver</span><span class="o">&lt;</span><span class="nx">VariantMap</span><span class="o">&gt;</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="kd">const</span> <span class="nx">selectionHandlers</span> <span class="o">=</span> <span class="nf">useRef</span><span class="p">(</span><span class="k">new</span> <span class="nb">Set</span><span class="o">&lt;</span><span class="p">(</span><span class="nx">paths</span><span class="p">:</span> <span class="kr">string</span><span class="p">[])</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="o">&gt;</span><span class="p">());</span>
+<span class="kd">const</span> <span class="nx">treeCache</span> <span class="o">=</span> <span class="nf">useRef</span><span class="p">(</span><span class="k">new</span> <span class="nb">Map</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">PrimNode</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">());</span>
+
+<span class="k">case</span> <span class="dl">'</span><span class="s1">getChildrenResult</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span> <span class="kd">as </span><span class="p">{</span> <span class="nl">prim_path</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">children</span><span class="p">?:</span> <span class="nx">PrimNode</span><span class="p">[]</span> <span class="p">};</span>
+  <span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">prim_path</span> <span class="o">||</span> <span class="nx">rootPrimPathRef</span><span class="p">.</span><span class="nx">current</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">children</span> <span class="o">=</span> <span class="nf">normalizeChildren</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">children</span> <span class="o">||</span> <span class="p">[]);</span>
+  <span class="nx">treeCache</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">children</span><span class="p">);</span>
+  <span class="nf">resolveBucket</span><span class="p">(</span><span class="nx">childResolvers</span><span class="p">.</span><span class="nx">current</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">children</span><span class="p">);</span>
+  <span class="nf">sendMessage</span><span class="p">({</span> <span class="na">event_type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">makePrimsSelectable</span><span class="dl">'</span><span class="p">,</span> <span class="na">payload</span><span class="p">:</span> <span class="p">{</span> <span class="na">paths</span><span class="p">:</span> <span class="nx">children</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">c</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">path</span><span class="p">)</span> <span class="p">}</span> <span class="p">});</span>
+  <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">case</span> <span class="dl">'</span><span class="s1">getPropertiesResponse</span><span class="dl">'</span><span class="p">:</span>
+<span class="k">case</span> <span class="dl">'</span><span class="s1">getPropertiesResult</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span> <span class="kd">as </span><span class="p">{</span> <span class="nl">prim_path</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">properties</span><span class="p">?:</span> <span class="nb">Record</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">unknown</span><span class="o">&gt;</span> <span class="p">};</span>
+  <span class="nf">resolveBucket</span><span class="p">(</span><span class="nx">propertyResolvers</span><span class="p">.</span><span class="nx">current</span><span class="p">,</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">prim_path</span> <span class="o">||</span> <span class="dl">''</span><span class="p">,</span> <span class="nf">toPrimProperties</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">properties</span> <span class="o">||</span> <span class="p">{}));</span>
+  <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">case</span> <span class="dl">'</span><span class="s1">getVariantsResponse</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span> <span class="kd">as </span><span class="p">{</span> <span class="nl">prim_path</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">variants</span><span class="p">?:</span> <span class="nx">VariantMap</span> <span class="p">};</span>
+  <span class="nf">resolveBucket</span><span class="p">(</span><span class="nx">variantResolvers</span><span class="p">.</span><span class="nx">current</span><span class="p">,</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">prim_path</span> <span class="o">||</span> <span class="dl">''</span><span class="p">,</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">variants</span> <span class="o">||</span> <span class="p">{});</span>
+  <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Track the server-provided root path. <code class="language-plaintext highlighter-rouge">openStageResult</code> includes <code class="language-plaintext highlighter-rouge">root_prim_path</code>; use it for the initial hierarchy query, top-level <code class="language-plaintext highlighter-rouge">makePrimsSelectable</code>, and shared backend <code class="language-plaintext highlighter-rouge">getStageTree()</code> defaults.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">rootPrimPathRef</span> <span class="o">=</span> <span class="nf">useRef</span><span class="p">(</span><span class="dl">'</span><span class="s1">/World</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="k">case</span> <span class="dl">'</span><span class="s1">openStageResult</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span> <span class="kd">as </span><span class="p">{</span> <span class="nl">result</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">url</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">root_prim_path</span><span class="p">?:</span> <span class="kr">string</span> <span class="p">};</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">result</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">success</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">root</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">root_prim_path</span> <span class="o">||</span> <span class="dl">'</span><span class="s1">/World</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nx">rootPrimPathRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="nx">root</span><span class="p">;</span>
+    <span class="nf">sendMessage</span><span class="p">({</span> <span class="na">event_type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">getChildrenRequest</span><span class="dl">'</span><span class="p">,</span> <span class="na">payload</span><span class="p">:</span> <span class="p">{</span> <span class="na">prim_path</span><span class="p">:</span> <span class="nx">root</span> <span class="p">}</span> <span class="p">});</span>
+    <span class="nf">sendMessage</span><span class="p">({</span> <span class="na">event_type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">getPrimCountRequest</span><span class="dl">'</span><span class="p">,</span> <span class="na">payload</span><span class="p">:</span> <span class="p">{}</span> <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">case</span> <span class="dl">'</span><span class="s1">getChildrenResult</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span> <span class="kd">as </span><span class="p">{</span> <span class="nl">prim_path</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">children</span><span class="p">:</span> <span class="nx">ServerPrim</span><span class="p">[]</span> <span class="p">};</span>
+  <span class="kd">const</span> <span class="nx">children</span> <span class="o">=</span> <span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">children</span> <span class="o">||</span> <span class="p">[]).</span><span class="nf">map</span><span class="p">(</span><span class="nx">normalizePrim</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">prim_path</span> <span class="o">===</span> <span class="nx">rootPrimPathRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="nf">setPrims</span><span class="p">(</span><span class="nx">children</span><span class="p">);</span>
+  <span class="k">else</span> <span class="nf">setPrims</span><span class="p">(</span><span class="nx">prev</span> <span class="o">=&gt;</span> <span class="nf">updatePrimChildren</span><span class="p">(</span><span class="nx">prev</span><span class="p">,</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">prim_path</span><span class="p">,</span> <span class="nx">children</span><span class="p">));</span>
+  <span class="kd">const</span> <span class="nx">paths</span> <span class="o">=</span> <span class="nx">children</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">child</span> <span class="o">=&gt;</span> <span class="nx">child</span><span class="p">.</span><span class="nx">path</span><span class="p">).</span><span class="nf">filter</span><span class="p">(</span><span class="nb">Boolean</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">paths</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">sendMessage</span><span class="p">({</span> <span class="na">event_type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">makePrimsSelectable</span><span class="dl">'</span><span class="p">,</span> <span class="na">payload</span><span class="p">:</span> <span class="p">{</span> <span class="nx">paths</span> <span class="p">}</span> <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>If using the shared UI adapter, route property responses by the current event name:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">case</span> <span class="dl">'</span><span class="s1">getPropertiesResponse</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span> <span class="kd">as </span><span class="p">{</span> <span class="nl">prim_path</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">properties</span><span class="p">?:</span> <span class="nb">Record</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">unknown</span><span class="o">&gt;</span> <span class="p">};</span>
+  <span class="kd">const</span> <span class="nx">properties</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">entries</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">properties</span> <span class="o">||</span> <span class="p">{}).</span><span class="nf">map</span><span class="p">(([</span><span class="nx">name</span><span class="p">,</span> <span class="nx">value</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="p">({</span>
+    <span class="nx">name</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="k">typeof</span> <span class="nx">value</span><span class="p">,</span>
+    <span class="na">value</span><span class="p">:</span> <span class="nc">String</span><span class="p">(</span><span class="nx">value</span><span class="p">),</span>
+  <span class="p">}));</span>
+  <span class="nf">resolveBucket</span><span class="p">(</span><span class="nx">propertyResolvers</span><span class="p">.</span><span class="nx">current</span><span class="p">,</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">prim_path</span> <span class="o">||</span> <span class="dl">''</span><span class="p">,</span> <span class="nx">properties</span><span class="p">);</span>
+  <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Do not listen only for the stale <code class="language-plaintext highlighter-rouge">getPropertiesResult</code> name.</p>
+
+<p>For direct React inspectors without a full <code class="language-plaintext highlighter-rouge">ViewerBackend</code>, correlate property
+responses through a ref-backed selected path:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">[</span><span class="nx">selectedPath</span><span class="p">,</span> <span class="nx">setSelectedPath</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">selectedPathRef</span> <span class="o">=</span> <span class="nf">useRef</span><span class="p">(</span><span class="dl">''</span><span class="p">);</span>
+
+<span class="k">case</span> <span class="dl">'</span><span class="s1">stageSelectionChanged</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">next</span> <span class="o">=</span> <span class="nx">payload</span><span class="p">.</span><span class="nx">prims</span><span class="p">?.[</span><span class="mi">0</span><span class="p">]</span> <span class="o">||</span> <span class="dl">''</span><span class="p">;</span>
+  <span class="nx">selectedPathRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="nx">next</span><span class="p">;</span>
+  <span class="nf">setSelectedPath</span><span class="p">(</span><span class="nx">next</span><span class="p">);</span>
+  <span class="nf">setProperties</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">sendMessage</span><span class="p">({</span> <span class="na">event_type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">getPropertiesRequest</span><span class="dl">'</span><span class="p">,</span> <span class="na">payload</span><span class="p">:</span> <span class="p">{</span> <span class="na">prim_path</span><span class="p">:</span> <span class="nx">next</span> <span class="p">}</span> <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">case</span> <span class="dl">'</span><span class="s1">getPropertiesResponse</span><span class="dl">'</span><span class="p">:</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span> <span class="kd">as </span><span class="p">{</span> <span class="nl">prim_path</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="nl">properties</span><span class="p">?:</span> <span class="nb">Record</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">unknown</span><span class="o">&gt;</span> <span class="p">};</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">prim_path</span> <span class="o">===</span> <span class="nx">selectedPathRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">setProperties</span><span class="p">(</span><span class="nx">payload</span><span class="p">.</span><span class="nx">properties</span> <span class="o">||</span> <span class="p">{});</span>
+  <span class="p">}</span>
+  <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="frontend-ui-expectations">Frontend UI Expectations</h2>
+
+<p>A full browser client should be a usable Omniverse Realtime Viewer UI, not just
+a video tag. Include these pieces when generating a full browser-streamed
+Omniverse Realtime Viewer:</p>
+
+<ul>
+  <li>Auto-open the first sample stage once the stream connects when the server has not already pushed a loaded stage.</li>
+  <li>Honor server <code class="language-plaintext highlighter-rouge">push_initial_state</code> on reconnect: do not require a fresh user action to leave loading state.</li>
+  <li>Populate the AOV <code class="language-plaintext highlighter-rouge">&lt;select&gt;</code> from <code class="language-plaintext highlighter-rouge">availableAOVsResult</code> or <code class="language-plaintext highlighter-rouge">activeAOVState.available</code>; do not hardcode only <code class="language-plaintext highlighter-rouge">LdrColor</code>, <code class="language-plaintext highlighter-rouge">NormalSD</code>, and <code class="language-plaintext highlighter-rouge">DepthSD</code>.</li>
+  <li>Display prim count from <code class="language-plaintext highlighter-rouge">getPrimCountResult</code>.</li>
+  <li>Display connection status, FPS from video playback quality when available, and latency when WebRTC stats expose it.</li>
+  <li>Stage tree supports lazy expansion, search/filter, selected-row state, and prim type icons.</li>
+  <li>Use icon sprites or equivalent symbols for <code class="language-plaintext highlighter-rouge">mesh/geom</code>, <code class="language-plaintext highlighter-rouge">camera</code>, <code class="language-plaintext highlighter-rouge">light</code>, <code class="language-plaintext highlighter-rouge">scope</code>, and <code class="language-plaintext highlighter-rouge">xform</code>.</li>
+  <li>Inspector tracks selected prims from <code class="language-plaintext highlighter-rouge">stageSelectionChanged</code> and fetches properties with <code class="language-plaintext highlighter-rouge">getPropertiesRequest</code>.</li>
+  <li>Inspector ignores stale property responses by matching <code class="language-plaintext highlighter-rouge">prim_path</code> to a
+ref-backed current selection, not to closure-captured React state.</li>
+  <li>Keep <code class="language-plaintext highlighter-rouge">#remote-video { object-fit: contain; }</code>, pin it inside a stable viewport container, and put DOM controls above the video with explicit <code class="language-plaintext highlighter-rouge">z-index</code>.</li>
+  <li>DOM controls disable viewport input with <code class="language-plaintext highlighter-rouge">setViewportInputActive {active:false}</code>;
+the viewport enables it while the pointer is over the stream.</li>
+</ul>
+
+<p>When DOM controls overlay the stream, give them explicit stacking above the <code class="language-plaintext highlighter-rouge">&lt;video&gt;</code> element:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.toolbar</span><span class="o">,</span>
+<span class="nc">.error-banner</span> <span class="p">{</span>
+  <span class="nl">position</span><span class="p">:</span> <span class="nb">absolute</span><span class="p">;</span>
+  <span class="nl">z-index</span><span class="p">:</span> <span class="m">3</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Without explicit stacking, the hardware video layer can visually cover controls once frames arrive, making the app look like it lost the connection UI.</p>
+
+<h2 id="recursive-tree-updates">Recursive Tree Updates</h2>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">updatePrimChildren</span><span class="p">(</span><span class="nx">prims</span><span class="p">:</span> <span class="nx">USDPrim</span><span class="p">[],</span> <span class="nx">targetPath</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span> <span class="nx">children</span><span class="p">:</span> <span class="nx">USDPrim</span><span class="p">[]):</span> <span class="nx">USDPrim</span><span class="p">[]</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">prims</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">prim</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">prim</span><span class="p">.</span><span class="nx">path</span> <span class="o">===</span> <span class="nx">targetPath</span><span class="p">)</span> <span class="k">return</span> <span class="p">{</span> <span class="p">...</span><span class="nx">prim</span><span class="p">,</span> <span class="nx">children</span> <span class="p">};</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">prim</span><span class="p">.</span><span class="nx">children</span> <span class="o">&amp;&amp;</span> <span class="nb">Array</span><span class="p">.</span><span class="nf">isArray</span><span class="p">(</span><span class="nx">prim</span><span class="p">.</span><span class="nx">children</span><span class="p">))</span>
+      <span class="k">return</span> <span class="p">{</span> <span class="p">...</span><span class="nx">prim</span><span class="p">,</span> <span class="na">children</span><span class="p">:</span> <span class="nf">updatePrimChildren</span><span class="p">(</span><span class="nx">prim</span><span class="p">.</span><span class="nx">children</span><span class="p">,</span> <span class="nx">targetPath</span><span class="p">,</span> <span class="nx">children</span><span class="p">)</span> <span class="p">};</span>
+    <span class="k">return</span> <span class="nx">prim</span><span class="p">;</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Children semantics: truthy non-array means expandable/not loaded, <code class="language-plaintext highlighter-rouge">null</code> or absent means leaf, array means loaded children.</p>
+
+<p>The current server worker returns <code class="language-plaintext highlighter-rouge">children: boolean</code> as expandability metadata, while <code class="language-plaintext highlighter-rouge">StageTree</code> reads <code class="language-plaintext highlighter-rouge">hasChildren</code>. Normalize at the boundary:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">ServerPrim</span> <span class="o">=</span> <span class="nb">Omit</span><span class="o">&lt;</span><span class="nx">USDPrim</span><span class="p">,</span> <span class="dl">'</span><span class="s1">children</span><span class="dl">'</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="p">{</span>
+  <span class="nx">children</span><span class="p">?:</span> <span class="nx">ServerPrim</span><span class="p">[]</span> <span class="o">|</span> <span class="nx">boolean</span> <span class="o">|</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="nl">has_children</span><span class="p">?:</span> <span class="nx">boolean</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nf">normalizePrim</span><span class="p">(</span><span class="nx">prim</span><span class="p">:</span> <span class="nx">ServerPrim</span><span class="p">):</span> <span class="nx">USDPrim</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">childArray</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nf">isArray</span><span class="p">(</span><span class="nx">prim</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span> <span class="p">?</span> <span class="nx">prim</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">normalizePrim</span><span class="p">)</span> <span class="p">:</span> <span class="kc">undefined</span><span class="p">;</span>
+  <span class="kd">const</span> <span class="nx">hasChildren</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="nf">isArray</span><span class="p">(</span><span class="nx">prim</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span>
+    <span class="p">?</span> <span class="nx">prim</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nc">Boolean</span><span class="p">(</span><span class="nx">prim</span><span class="p">.</span><span class="nx">hasChildren</span> <span class="o">??</span> <span class="nx">prim</span><span class="p">.</span><span class="nx">has_children</span><span class="p">)</span>
+    <span class="p">:</span> <span class="nc">Boolean</span><span class="p">(</span><span class="nx">prim</span><span class="p">.</span><span class="nx">hasChildren</span> <span class="o">??</span> <span class="nx">prim</span><span class="p">.</span><span class="nx">has_children</span> <span class="o">??</span> <span class="nx">prim</span><span class="p">.</span><span class="nx">children</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">{</span> <span class="p">...</span><span class="nx">prim</span><span class="p">,</span> <span class="nx">hasChildren</span><span class="p">,</span> <span class="na">children</span><span class="p">:</span> <span class="nx">childArray</span> <span class="o">??</span> <span class="kc">null</span> <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>See also: <code class="language-plaintext highlighter-rouge">streaming-server</code>, <code class="language-plaintext highlighter-rouge">streaming-messages</code>, <code class="language-plaintext highlighter-rouge">streaming-lifecycle</code>, <code class="language-plaintext highlighter-rouge">stage-management</code>, <code class="language-plaintext highlighter-rouge">stage-hierarchy</code>.</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>
