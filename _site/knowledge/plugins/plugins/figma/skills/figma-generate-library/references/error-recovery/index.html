@@ -1,0 +1,1933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Error Recovery · A developer journey</title>
+<meta name="description" content="Part of the figma-generate-library skill.">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/figma/skills/figma-generate-library/references/error-recovery/">
+
+<meta property="og:title" content="Error Recovery · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/figma/skills/figma-generate-library/references/error-recovery/">
+<meta property="og:description" content="Part of the figma-generate-library skill.">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Error Recovery</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <blockquote>
+  <p>Part of the <a href="../SKILL.md">figma-generate-library skill</a>.</p>
+</blockquote>
+
+<h1 id="error-recovery-reference">Error Recovery Reference</h1>
+
+<p>Protocol for handling failures and incomplete runs across a 20–100+ call design system build.</p>
+
+<blockquote>
+  <p><strong>Design files only.</strong> Every snippet here (including <code class="language-plaintext highlighter-rouge">figma.createPage()</code>) targets Figma Design files (<code class="language-plaintext highlighter-rouge">figma.com/design/...</code>). <code class="language-plaintext highlighter-rouge">figma.createPage()</code> throws in both FigJam (<code class="language-plaintext highlighter-rouge">figma.com/board/...</code>) and Slides (<code class="language-plaintext highlighter-rouge">figma.com/slides/...</code>).</p>
+</blockquote>
+
+<hr />
+
+<h2 id="1-core-protocol-stop--inspect--fix--retry">1. Core Protocol: STOP → Inspect → Fix → Retry</h2>
+
+<p><strong><code class="language-plaintext highlighter-rouge">use_figma</code> is atomic — a failed script does not execute.</strong> If a script errors, no changes are made to the file. There are no partial nodes or half-built state from the failed call itself. Retrying after a fix is safe.</p>
+
+<p>However, in multi-step workflows (20–100+ calls), <strong>previously successful calls</strong> will have created state that persists. If a workflow is abandoned mid-way, nodes from earlier successful calls remain in the file. The cleanup and idempotency patterns in this document handle that scenario.</p>
+
+<p>The recovery sequence for a failed script:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. STOP    — Do not run any more use_figma writes.
+2. INSPECT — Read the error message carefully. Optionally call get_metadata or get_screenshot to understand the current file state.
+3. FIX     — Correct the script that failed.
+4. RETRY   — Re-run the corrected script.
+5. PERSIST — Update the state ledger with the outcome.
+</code></pre></div></div>
+
+<p>For <strong>abandoned multi-step workflows</strong> (where you need to roll back nodes from previous <em>successful</em> calls), use the cleanup protocol in Section 2.</p>
+
+<hr />
+
+<h2 id="2-sharedplugindata-based-cleanup-why-name-matching-is-dangerous">2. <code class="language-plaintext highlighter-rouge">sharedPluginData</code>-Based Cleanup: Why Name Matching is Dangerous</h2>
+
+<h3 id="why-name-prefix-matching-fails">Why name-prefix matching fails</h3>
+
+<p>A cleanup script that deletes “all nodes whose name starts with <code class="language-plaintext highlighter-rouge">Button</code>” will also delete nodes the user may have created manually with that name, or nodes from a previous approved phase. Name-based cleanup has no way to distinguish “orphan from a failed attempt” from “intentional user node.”</p>
+
+<p>Furthermore, variant names (<code class="language-plaintext highlighter-rouge">Size=Medium, Style=Primary, State=Default</code>) do not have consistent prefixes that are safe to target without also hitting legitimate nodes.</p>
+
+<h3 id="how-setsharedplugindata--getsharedplugindata-works">How <code class="language-plaintext highlighter-rouge">setSharedPluginData</code> / <code class="language-plaintext highlighter-rouge">getSharedPluginData</code> works</h3>
+
+<p><code class="language-plaintext highlighter-rouge">sharedPluginData</code> is a key-value store attached to individual nodes. It persists across sessions and is invisible to the user in the Figma UI. Data is scoped by namespace — we use <code class="language-plaintext highlighter-rouge">'dsb'</code>. Use three keys:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">node</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">ds-build-2024-001</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// identifies the build run</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">phase</span><span class="dl">'</span><span class="p">,</span>  <span class="dl">'</span><span class="s1">phase3</span><span class="dl">'</span><span class="p">);</span>             <span class="c1">// which phase created this node</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">,</span>    <span class="dl">'</span><span class="s1">componentset/button</span><span class="dl">'</span><span class="p">);</span><span class="c1">// unique logical key</span>
+
+<span class="c1">// Reading:</span>
+<span class="kd">const</span> <span class="nx">runId</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">);</span> <span class="c1">// returns '' if never set</span>
+<span class="kd">const</span> <span class="nx">key</span>   <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">getSharedPluginData</code> returns <code class="language-plaintext highlighter-rouge">''</code> (empty string, not null) for unset keys. Always check for <code class="language-plaintext highlighter-rouge">!== ''</code>.</p>
+
+<p><strong>Tag every created node immediately after creation</strong> — this enables safe cleanup if the multi-step workflow is abandoned later. Tag in the same statement sequence as creation:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">comp</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createComponent</span><span class="p">();</span>
+<span class="nx">comp</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">,</span> <span class="nx">RUN_ID</span><span class="p">);</span>  <span class="c1">// tag immediately</span>
+<span class="nx">comp</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">,</span> <span class="nx">key</span><span class="p">);</span>         <span class="c1">// tag immediately</span>
+<span class="c1">// ... then do the rest of the setup</span>
+</code></pre></div></div>
+
+<h3 id="complete-cleanuporphans-script-using-run_id">Complete <code class="language-plaintext highlighter-rouge">cleanupOrphans</code> script using <code class="language-plaintext highlighter-rouge">run_id</code></h3>
+
+<p>This script finds all nodes tagged with a given <code class="language-plaintext highlighter-rouge">run_id</code> and optionally a <code class="language-plaintext highlighter-rouge">phase</code> filter, then removes them. Run it on the specific page where the failure occurred.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">TARGET_RUN_ID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ds-build-2024-001</span><span class="dl">'</span><span class="p">;</span> <span class="c1">// run ID to clean</span>
+<span class="kd">const</span> <span class="nx">TARGET_PHASE</span>  <span class="o">=</span> <span class="dl">'</span><span class="s1">phase3</span><span class="dl">'</span><span class="p">;</span>            <span class="c1">// optionally filter by phase ('' = all phases)</span>
+<span class="kd">const</span> <span class="nx">PAGE_NAME</span>     <span class="o">=</span> <span class="dl">'</span><span class="s1">Button</span><span class="dl">'</span><span class="p">;</span>            <span class="c1">// page to clean (or null for all pages)</span>
+
+<span class="kd">const</span> <span class="nx">pagesToSearch</span> <span class="o">=</span> <span class="nx">PAGE_NAME</span>
+  <span class="p">?</span> <span class="p">[</span><span class="nx">figma</span><span class="p">.</span><span class="nx">root</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="nx">PAGE_NAME</span><span class="p">)].</span><span class="nf">filter</span><span class="p">(</span><span class="nb">Boolean</span><span class="p">)</span>
+  <span class="p">:</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">root</span><span class="p">.</span><span class="nx">children</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">removed</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="kd">const</span> <span class="nx">skipped</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">page</span> <span class="k">of</span> <span class="nx">pagesToSearch</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">setCurrentPageAsync</span><span class="p">(</span><span class="nx">page</span><span class="p">);</span>
+
+  <span class="c1">// Use the sharedPluginData index instead of findAll + getSharedPluginData</span>
+  <span class="c1">// on every node. The engine narrows to nodes that actually carry the</span>
+  <span class="c1">// namespace/keys before any JS callback runs.</span>
+  <span class="kd">const</span> <span class="nx">candidates</span> <span class="o">=</span> <span class="nx">page</span><span class="p">.</span><span class="nf">findAllWithCriteria</span><span class="p">({</span>
+    <span class="na">sharedPluginData</span><span class="p">:</span> <span class="p">{</span> <span class="na">namespace</span><span class="p">:</span> <span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="na">keys</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">]</span> <span class="p">},</span>
+  <span class="p">});</span>
+  <span class="kd">const</span> <span class="nx">orphans</span> <span class="o">=</span> <span class="nx">candidates</span><span class="p">.</span><span class="nf">filter</span><span class="p">(</span><span class="nx">node</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">)</span> <span class="o">!==</span> <span class="nx">TARGET_RUN_ID</span><span class="p">)</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">TARGET_PHASE</span> <span class="o">&amp;&amp;</span> <span class="nx">node</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">phase</span><span class="dl">'</span><span class="p">)</span> <span class="o">!==</span> <span class="nx">TARGET_PHASE</span><span class="p">)</span> <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="c1">// Remove leaf-first to avoid removing parents before children</span>
+  <span class="c1">// Sort by depth (deepest first) to avoid double-remove errors</span>
+  <span class="kd">const</span> <span class="nx">sorted</span> <span class="o">=</span> <span class="nx">orphans</span><span class="p">.</span><span class="nf">slice</span><span class="p">().</span><span class="nf">sort</span><span class="p">((</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">depthA</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">depthB</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">let</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">a</span><span class="p">;</span> <span class="k">while </span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span> <span class="nx">depthA</span><span class="o">++</span><span class="p">;</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">parent</span><span class="p">;</span> <span class="p">}</span>
+    <span class="nx">n</span> <span class="o">=</span> <span class="nx">b</span><span class="p">;</span> <span class="k">while </span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span> <span class="nx">depthB</span><span class="o">++</span><span class="p">;</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">parent</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">depthB</span> <span class="o">-</span> <span class="nx">depthA</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">node</span> <span class="k">of</span> <span class="nx">sorted</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">removed</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span> <span class="c1">// already removed (was a child of removed parent)</span>
+      <span class="nx">node</span><span class="p">.</span><span class="nf">remove</span><span class="p">();</span>
+      <span class="nx">removed</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="nx">node</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="nx">node</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">key</span><span class="p">:</span> <span class="nx">node</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">)</span> <span class="p">});</span>
+    <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">skipped</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="nx">node</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="nx">node</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">error</span><span class="p">:</span> <span class="nx">e</span><span class="p">.</span><span class="nx">message</span> <span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="p">{</span> <span class="na">removed</span><span class="p">:</span> <span class="nx">removed</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="na">skipped</span><span class="p">:</span> <span class="nx">skipped</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="na">details</span><span class="p">:</span> <span class="nx">removed</span> <span class="p">};</span>
+</code></pre></div></div>
+
+<p>After running cleanup, call <code class="language-plaintext highlighter-rouge">get_metadata</code> on the target page to confirm the orphaned nodes are gone before retrying.</p>
+
+<hr />
+
+<h2 id="3-idempotency-patterns-check-before-create">3. Idempotency Patterns: Check-Before-Create</h2>
+
+<p>Run an idempotency check at the start of every create operation. If the entity already exists (tagged with the expected <code class="language-plaintext highlighter-rouge">key</code>), skip creation and return the existing ID.</p>
+
+<h3 id="check-before-create-for-a-variable-collection">Check-before-create for a variable collection</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">KEY</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">collection/color</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">RUN_ID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ds-build-2024-001</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">COLLECTION_NAME</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Color</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// Check: does a collection tagged with this key already exist?</span>
+<span class="kd">const</span> <span class="nx">allCollections</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getLocalVariableCollectionsAsync</span><span class="p">();</span>
+<span class="c1">// Variables/collections support sharedPluginData too — check by name as fallback</span>
+<span class="c1">// Note: VariableCollection sharedPluginData is set via collection.setSharedPluginData(...)</span>
+<span class="kd">const</span> <span class="nx">existing</span> <span class="o">=</span> <span class="nx">allCollections</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="nx">c</span> <span class="o">=&gt;</span>
+  <span class="nx">c</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">)</span> <span class="o">===</span> <span class="nx">KEY</span>
+<span class="p">);</span>
+
+<span class="k">if </span><span class="p">(</span><span class="nx">existing</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">collectionId</span><span class="p">:</span> <span class="nx">existing</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+    <span class="na">modeIds</span><span class="p">:</span> <span class="nx">existing</span><span class="p">.</span><span class="nx">modes</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="nx">m</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="nx">m</span><span class="p">.</span><span class="nx">modeId</span> <span class="p">})),</span>
+    <span class="na">alreadyExisted</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// Create fresh</span>
+<span class="kd">const</span> <span class="nx">collection</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">createVariableCollection</span><span class="p">(</span><span class="nx">COLLECTION_NAME</span><span class="p">);</span>
+<span class="nx">collection</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">,</span> <span class="nx">RUN_ID</span><span class="p">);</span>
+<span class="nx">collection</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">,</span> <span class="nx">KEY</span><span class="p">);</span>
+
+<span class="c1">// Rename default mode, add second mode</span>
+<span class="nx">collection</span><span class="p">.</span><span class="nf">renameMode</span><span class="p">(</span><span class="nx">collection</span><span class="p">.</span><span class="nx">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">modeId</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Light</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">darkModeId</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nf">addMode</span><span class="p">(</span><span class="dl">'</span><span class="s1">Dark</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="k">return</span> <span class="p">{</span>
+  <span class="na">collectionId</span><span class="p">:</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+  <span class="na">modeIds</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Light</span><span class="dl">'</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">modeId</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Dark</span><span class="dl">'</span><span class="p">,</span>  <span class="na">id</span><span class="p">:</span> <span class="nx">darkModeId</span> <span class="p">},</span>
+  <span class="p">],</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="check-before-create-for-a-page">Check-before-create for a page</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">KEY</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">page/button</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">PAGE_NAME</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Button</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">RUN_ID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ds-build-2024-001</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="c1">// Check by sharedPluginData key first, then by name as fallback</span>
+<span class="kd">let</span> <span class="nx">page</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">root</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">)</span> <span class="o">===</span> <span class="nx">KEY</span><span class="p">);</span>
+<span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">page</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">page</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">root</span><span class="p">.</span><span class="nx">children</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="nx">p</span> <span class="o">=&gt;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">name</span> <span class="o">===</span> <span class="nx">PAGE_NAME</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">if </span><span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Ensure it's tagged if it was found by name only</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">page</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">page</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">,</span> <span class="nx">RUN_ID</span><span class="p">);</span>
+    <span class="nx">page</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">,</span> <span class="nx">KEY</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="p">{</span> <span class="na">pageId</span><span class="p">:</span> <span class="nx">page</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">alreadyExisted</span><span class="p">:</span> <span class="kc">true</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="nx">page</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createPage</span><span class="p">();</span>
+<span class="nx">page</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">PAGE_NAME</span><span class="p">;</span>
+<span class="nx">page</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">,</span> <span class="nx">RUN_ID</span><span class="p">);</span>
+<span class="nx">page</span><span class="p">.</span><span class="nf">setSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">,</span> <span class="nx">KEY</span><span class="p">);</span>
+
+<span class="k">return</span> <span class="p">{</span> <span class="na">pageId</span><span class="p">:</span> <span class="nx">page</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">alreadyExisted</span><span class="p">:</span> <span class="kc">false</span> <span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="check-before-create-for-a-component-set">Check-before-create for a component set</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">KEY</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">componentset/button</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">PAGE_ID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">PAGE_ID_FROM_STATE</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">RUN_ID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ds-build-2024-001</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">page</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">getNodeByIdAsync</span><span class="p">(</span><span class="nx">PAGE_ID</span><span class="p">);</span>
+<span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">setCurrentPageAsync</span><span class="p">(</span><span class="nx">page</span><span class="p">);</span>
+
+<span class="c1">// Indexed lookup: only COMPONENT_SET nodes with the dsb namespace + key.</span>
+<span class="kd">const</span> <span class="nx">existing</span> <span class="o">=</span> <span class="nx">page</span>
+  <span class="p">.</span><span class="nf">findAllWithCriteria</span><span class="p">({</span>
+    <span class="na">types</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">COMPONENT_SET</span><span class="dl">'</span><span class="p">],</span>
+    <span class="na">sharedPluginData</span><span class="p">:</span> <span class="p">{</span> <span class="na">namespace</span><span class="p">:</span> <span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="na">keys</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">]</span> <span class="p">},</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nf">filter</span><span class="p">(</span><span class="nx">n</span> <span class="o">=&gt;</span> <span class="nx">n</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">)</span> <span class="o">===</span> <span class="nx">KEY</span><span class="p">);</span>
+
+<span class="k">if </span><span class="p">(</span><span class="nx">existing</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="na">componentSetId</span><span class="p">:</span> <span class="nx">existing</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">id</span><span class="p">,</span>
+    <span class="na">alreadyExisted</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="c1">// ... proceed with creation</span>
+<span class="k">return</span> <span class="p">{</span> <span class="na">componentSetId</span><span class="p">:</span> <span class="kc">null</span><span class="p">,</span> <span class="na">alreadyExisted</span><span class="p">:</span> <span class="kc">false</span> <span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="4-state-ledger">4. State Ledger</h2>
+
+<h3 id="json-schema">JSON Schema</h3>
+
+<p>Maintain a state ledger in your context (not in the Figma file) across calls. This is your source of truth for node IDs, completed steps, and pending validations.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"runId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ds-build-2024-001"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"phase"</span><span class="p">:</span><span class="w"> </span><span class="s2">"phase3"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"step"</span><span class="p">:</span><span class="w"> </span><span class="s2">"component-button/combine-variants"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"completedSteps"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"phase0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phase1/collections"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phase1/primitives"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phase1/semantics"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phase2/pages"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phase2/foundations-docs"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phase3/component-avatar"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"phase3/component-icon"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"entities"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"collections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"primitives"</span><span class="p">:</span><span class="w"> </span><span class="s2">"VariableCollectionId:1234:5678"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"color"</span><span class="p">:</span><span class="w">      </span><span class="s2">"VariableCollectionId:1234:5679"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spacing"</span><span class="p">:</span><span class="w">    </span><span class="s2">"VariableCollectionId:1234:5680"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"variables"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"color/bg/primary"</span><span class="p">:</span><span class="w">         </span><span class="s2">"VariableId:2345:1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"color/bg/secondary"</span><span class="p">:</span><span class="w">       </span><span class="s2">"VariableId:2345:2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"color/bg/disabled"</span><span class="p">:</span><span class="w">        </span><span class="s2">"VariableId:2345:3"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"color/text/on-primary"</span><span class="p">:</span><span class="w">    </span><span class="s2">"VariableId:2345:4"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"color/text/on-secondary"</span><span class="p">:</span><span class="w">  </span><span class="s2">"VariableId:2345:5"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"color/text/disabled"</span><span class="p">:</span><span class="w">      </span><span class="s2">"VariableId:2345:6"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spacing/sm"</span><span class="p">:</span><span class="w">               </span><span class="s2">"VariableId:2345:7"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spacing/md"</span><span class="p">:</span><span class="w">               </span><span class="s2">"VariableId:2345:8"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"spacing/lg"</span><span class="p">:</span><span class="w">               </span><span class="s2">"VariableId:2345:9"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"radius/md"</span><span class="p">:</span><span class="w">                </span><span class="s2">"VariableId:2345:10"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"modes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"color/light"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2345:1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"color/dark"</span><span class="p">:</span><span class="w">  </span><span class="s2">"2345:2"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"pages"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Cover"</span><span class="p">:</span><span class="w">       </span><span class="s2">"0:1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Foundations"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0:2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Button"</span><span class="p">:</span><span class="w">      </span><span class="s2">"0:3"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"components"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Icon"</span><span class="p">:</span><span class="w">        </span><span class="s2">"3456:1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Avatar"</span><span class="p">:</span><span class="w">      </span><span class="s2">"3456:2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"Button"</span><span class="p">:</span><span class="w">      </span><span class="s2">"3456:3"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"componentSets"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"Button"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4567:1"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"pendingValidations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"Button:metadata"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Button:screenshot"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"userCheckpoints"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"phase0"</span><span class="p">:</span><span class="w"> </span><span class="s2">"approved-2024-01-15"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phase1"</span><span class="p">:</span><span class="w"> </span><span class="s2">"approved-2024-01-15"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"phase2"</span><span class="p">:</span><span class="w"> </span><span class="s2">"approved-2024-01-15"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"component-avatar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"approved-2024-01-15"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="persisting-between-calls">Persisting between calls</h3>
+
+<p>After every successful <code class="language-plaintext highlighter-rouge">use_figma</code> call:</p>
+<ol>
+  <li>Extract all IDs from the return value</li>
+  <li>Add them to the appropriate <code class="language-plaintext highlighter-rouge">entities</code> section of the ledger</li>
+  <li>Add the completed step to <code class="language-plaintext highlighter-rouge">completedSteps</code></li>
+  <li>Remove from <code class="language-plaintext highlighter-rouge">pendingValidations</code> if this call validated something</li>
+  <li>Update <code class="language-plaintext highlighter-rouge">phase</code> and <code class="language-plaintext highlighter-rouge">step</code> to the current position</li>
+</ol>
+
+<h3 id="rehydrating-at-session-start">Rehydrating at session start</h3>
+
+<p>If a conversation is interrupted and resumed, read the state ledger and verify key entities still exist:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Verify that critical nodes from the ledger still exist</span>
+<span class="kd">const</span> <span class="nx">toVerify</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="dl">'</span><span class="s1">color-collection</span><span class="dl">'</span><span class="p">:</span>  <span class="dl">'</span><span class="s1">VariableCollectionId:1234:5679</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">button-page</span><span class="dl">'</span><span class="p">:</span>       <span class="dl">'</span><span class="s1">0:3</span><span class="dl">'</span><span class="p">,</span>
+  <span class="dl">'</span><span class="s1">button-componentset</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">4567:1</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="c1">// Batch the lookups — awaiting getNodeByIdAsync per entry serializes the</span>
+<span class="c1">// round-trips. Resolve them all in parallel with Promise.all, then walk the</span>
+<span class="c1">// results.</span>
+<span class="kd">const</span> <span class="nx">entries</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">entries</span><span class="p">(</span><span class="nx">toVerify</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="k">await</span> <span class="nb">Promise</span><span class="p">.</span><span class="nf">all</span><span class="p">(</span>
+  <span class="nx">entries</span><span class="p">.</span><span class="nf">map</span><span class="p">(([,</span> <span class="nx">id</span><span class="p">])</span> <span class="o">=&gt;</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">getNodeByIdAsync</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="k">catch</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="kc">null</span><span class="p">))</span>
+<span class="p">);</span>
+<span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">entries</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">label</span><span class="p">]</span> <span class="o">=</span> <span class="nx">entries</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+  <span class="kd">const</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+  <span class="nx">results</span><span class="p">[</span><span class="nx">label</span><span class="p">]</span> <span class="o">=</span> <span class="nx">node</span> <span class="p">?</span> <span class="p">{</span> <span class="na">found</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="nx">node</span><span class="p">.</span><span class="nx">name</span> <span class="p">}</span> <span class="p">:</span> <span class="p">{</span> <span class="na">found</span><span class="p">:</span> <span class="kc">false</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="nx">results</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>If any entity is missing, treat the phase that created it as incomplete and re-run from that checkpoint.</p>
+
+<hr />
+
+<h2 id="5-resume-protocol">5. Resume Protocol</h2>
+
+<h3 id="step-1-inspect-the-file-for-run_id-tags">Step 1: Inspect the file for <code class="language-plaintext highlighter-rouge">run_id</code> tags</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">TARGET_RUN_ID</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">ds-build-2024-001</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">inventory</span> <span class="o">=</span> <span class="p">{</span> <span class="na">pages</span><span class="p">:</span> <span class="p">[],</span> <span class="na">variables</span><span class="p">:</span> <span class="p">[],</span> <span class="na">componentSets</span><span class="p">:</span> <span class="p">[],</span> <span class="na">frames</span><span class="p">:</span> <span class="p">[]</span> <span class="p">};</span>
+
+<span class="c1">// Scan pages</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">page</span> <span class="k">of</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">root</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">page</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">)</span> <span class="o">===</span> <span class="nx">TARGET_RUN_ID</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">inventory</span><span class="p">.</span><span class="nx">pages</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="nx">page</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="nx">page</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">key</span><span class="p">:</span> <span class="nx">page</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">)</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Scan variables</span>
+<span class="kd">const</span> <span class="nx">allVars</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getLocalVariablesAsync</span><span class="p">();</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">v</span> <span class="k">of</span> <span class="nx">allVars</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">)</span> <span class="o">===</span> <span class="nx">TARGET_RUN_ID</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">inventory</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="nx">v</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="nx">v</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">key</span><span class="p">:</span> <span class="nx">v</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">)</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Scan all component sets and frames on each page</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">page</span> <span class="k">of</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">root</span><span class="p">.</span><span class="nx">children</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">setCurrentPageAsync</span><span class="p">(</span><span class="nx">page</span><span class="p">);</span>
+  <span class="c1">// Indexed sharedPluginData lookup — much faster than findAll + getSharedPluginData per node.</span>
+  <span class="kd">const</span> <span class="nx">candidates</span> <span class="o">=</span> <span class="nx">page</span><span class="p">.</span><span class="nf">findAllWithCriteria</span><span class="p">({</span>
+    <span class="na">sharedPluginData</span><span class="p">:</span> <span class="p">{</span> <span class="na">namespace</span><span class="p">:</span> <span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="na">keys</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">]</span> <span class="p">},</span>
+  <span class="p">});</span>
+  <span class="kd">const</span> <span class="nx">nodes</span> <span class="o">=</span> <span class="nx">candidates</span><span class="p">.</span><span class="nf">filter</span><span class="p">(</span><span class="nx">n</span> <span class="o">=&gt;</span> <span class="nx">n</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">run_id</span><span class="dl">'</span><span class="p">)</span> <span class="o">===</span> <span class="nx">TARGET_RUN_ID</span><span class="p">);</span>
+  <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">n</span> <span class="k">of</span> <span class="nx">nodes</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">COMPONENT_SET</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">inventory</span><span class="p">.</span><span class="nx">componentSets</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="nx">n</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="nx">n</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">key</span><span class="p">:</span> <span class="nx">n</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">)</span> <span class="p">});</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if </span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">FRAME</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">inventory</span><span class="p">.</span><span class="nx">frames</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span> <span class="na">id</span><span class="p">:</span> <span class="nx">n</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="nx">n</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">key</span><span class="p">:</span> <span class="nx">n</span><span class="p">.</span><span class="nf">getSharedPluginData</span><span class="p">(</span><span class="dl">'</span><span class="s1">dsb</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">key</span><span class="dl">'</span><span class="p">)</span> <span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">return</span> <span class="nx">inventory</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="step-2-reconstruct-state-from-inventory">Step 2: Reconstruct state from inventory</h3>
+
+<p>Map the inventory keys back to the state ledger schema. For each entity found with a <code class="language-plaintext highlighter-rouge">key</code>, add its ID to the appropriate section. Mark the corresponding step as <code class="language-plaintext highlighter-rouge">completedSteps</code>.</p>
+
+<p>Example mapping:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>key: 'collection/color'        → entities.collections.color
+key: 'variable/color/bg/primary' → entities.variables['color/bg/primary']
+key: 'page/button'             → entities.pages.Button
+key: 'componentset/button'     → entities.componentSets.Button
+</code></pre></div></div>
+
+<h3 id="step-3-identify-the-resume-point">Step 3: Identify the resume point</h3>
+
+<p>The resume point is the first step in the workflow that is NOT in <code class="language-plaintext highlighter-rouge">completedSteps</code>. If the inventory shows the Button component set exists but the pending validations list shows <code class="language-plaintext highlighter-rouge">'Button:screenshot'</code>, the resume point is the screenshot validation call, not re-creation.</p>
+
+<p>Use the checkpoint table from the workflow to determine which phase to continue from:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Phase 0 complete: all planned pages listed in entities.pages
+Phase 1 complete: all planned variables listed in entities.variables with correct scopes
+Phase 2 complete: all structural pages + foundations doc frames present
+Phase 3 complete (per component): componentSet exists + no pending validations + user checkpoint recorded
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="6-failure-taxonomy">6. Failure Taxonomy</h2>
+
+<h3 id="recoverable-errors">Recoverable Errors</h3>
+
+<p>These can be fixed and retried without affecting already-created entities:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Examples</th>
+      <th>Recovery</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Layout errors</td>
+      <td>Variants stacked at (0,0), wrong padding values</td>
+      <td>Re-run the positioning step only</td>
+    </tr>
+    <tr>
+      <td>Naming issues</td>
+      <td>Typo in variant name, wrong casing</td>
+      <td>Find nodes by <code class="language-plaintext highlighter-rouge">dsb_key</code>, update <code class="language-plaintext highlighter-rouge">name</code> property</td>
+    </tr>
+    <tr>
+      <td>Missing property wiring</td>
+      <td><code class="language-plaintext highlighter-rouge">componentPropertyReferences</code> not set</td>
+      <td>Find component set by ID, re-run the property wiring step</td>
+    </tr>
+    <tr>
+      <td>Variable binding omission</td>
+      <td>A fill was hardcoded instead of bound</td>
+      <td>Find nodes by <code class="language-plaintext highlighter-rouge">dsb_key</code>, re-bind the fill</td>
+    </tr>
+    <tr>
+      <td>Wrong variable bound</td>
+      <td>Bound to wrong variable ID</td>
+      <td>Re-bind with correct variable ID</td>
+    </tr>
+    <tr>
+      <td>Text not visible</td>
+      <td>Font not loaded before text write</td>
+      <td>Call <code class="language-plaintext highlighter-rouge">listAvailableFontsAsync()</code> to verify the font exists, then re-run text creation with <code class="language-plaintext highlighter-rouge">loadFontAsync</code></td>
+    </tr>
+    <tr>
+      <td>Script timeout</td>
+      <td>Script exceeded time limit before completing</td>
+      <td>Script is atomic — nothing was created. Reduce scope (fewer nodes per call) and retry</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="structural-corruption-requires-rollback-or-restart">Structural Corruption (Requires Rollback or Restart)</h3>
+
+<p>These errors leave the file in a state where continuing forward is unreliable:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Examples</th>
+      <th>Recovery</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Component cycle</td>
+      <td>A component instance was accidentally nested inside itself</td>
+      <td>Full cleanup of the affected component, restart that component from Call 1</td>
+    </tr>
+    <tr>
+      <td>combineAsVariants with non-components</td>
+      <td>Mixed node types passed to combineAsVariants, causing unexpected merges</td>
+      <td>Remove the malformed component set, re-run from variant creation</td>
+    </tr>
+    <tr>
+      <td>Variable collection ID drift</td>
+      <td>Collection was deleted and re-created, old IDs in state ledger are stale</td>
+      <td>Re-run Phase 1 completely; update all IDs in state ledger</td>
+    </tr>
+    <tr>
+      <td>Page deletion</td>
+      <td>A page was deleted after component sets were created on it</td>
+      <td>Treat as Phase 2 incomplete; re-create the page + re-run affected component creations</td>
+    </tr>
+    <tr>
+      <td>Mode limit exceeded</td>
+      <td><code class="language-plaintext highlighter-rouge">addMode</code> threw because the plan is Starter or Professional</td>
+      <td>Redesign variable collection architecture to fit mode limits, restart Phase 1</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Recovery from structural corruption</strong>: run <code class="language-plaintext highlighter-rouge">cleanupOrphans</code> for the entire run ID, then restart from the affected phase. Do NOT attempt to patch corrupted structure in-place.</p>
+
+<hr />
+
+<h2 id="7-common-error-table">7. Common Error Table</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Error message</th>
+      <th>Likely cause</th>
+      <th>Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"Cannot create component from node"</code></td>
+      <td>Tried to call <code class="language-plaintext highlighter-rouge">createComponentFromNode</code> on a node inside a component</td>
+      <td>Create a fresh component instead: <code class="language-plaintext highlighter-rouge">figma.createComponent()</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"in addMode: Limited to N modes only"</code></td>
+      <td>Plan mode limit hit (Starter=1, Professional=4)</td>
+      <td>Redesign to use fewer modes or upgrade plan</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"setCurrentPageAsync: page does not exist"</code></td>
+      <td>Page was deleted or wrong ID</td>
+      <td>Re-create the page using the idempotency pattern</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"Cannot read properties of null"</code></td>
+      <td><code class="language-plaintext highlighter-rouge">getNodeByIdAsync</code> returned null — node was deleted</td>
+      <td>Run the resume protocol to find what exists, update state ledger</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"Expected nodes to be component nodes"</code></td>
+      <td>Passed a non-ComponentNode to <code class="language-plaintext highlighter-rouge">combineAsVariants</code></td>
+      <td>Filter the array: <code class="language-plaintext highlighter-rouge">nodes.filter(n =&gt; n.type === 'COMPONENT')</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"in createVariable: Cannot create variable"</code></td>
+      <td>Collection was deleted or ID is wrong</td>
+      <td>Verify collection exists with <code class="language-plaintext highlighter-rouge">getVariableCollectionByIdAsync</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"font not loaded"</code></td>
+      <td>Called a text property setter without <code class="language-plaintext highlighter-rouge">loadFontAsync</code> first</td>
+      <td>Call <code class="language-plaintext highlighter-rouge">await figma.listAvailableFontsAsync()</code> to discover available fonts and verify the font name, then <code class="language-plaintext highlighter-rouge">await figma.loadFontAsync({ family, style })</code> before the text operation</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"Cannot set properties of a read-only array"</code></td>
+      <td>Tried to mutate fills/strokes in-place</td>
+      <td>Clone first: <code class="language-plaintext highlighter-rouge">const fills = JSON.parse(JSON.stringify(node.fills))</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"Expected RGBA color"</code></td>
+      <td>Color value out of 0–1 range</td>
+      <td>Divide RGB 0–255 values by 255: <code class="language-plaintext highlighter-rouge">{ r: 65/255, g: 85/255, b: 143/255 }</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"Cannot add children to a non-parent node"</code></td>
+      <td>Tried to append a child to a leaf node (text, rect)</td>
+      <td>Ensure the parent is a FrameNode, ComponentNode, or GroupNode</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"in combineAsVariants: nodes must be in the same parent"</code></td>
+      <td>Components are on different pages</td>
+      <td>Move all components to the same page before combining</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">"Script exceeded time limit"</code></td>
+      <td>Loop creating too many nodes in one call</td>
+      <td>Split the work: create N/2 variants per call</td>
+    </tr>
+    <tr>
+      <td>Component set deletes itself</td>
+      <td>Tried to create a component set with no children</td>
+      <td><code class="language-plaintext highlighter-rouge">combineAsVariants</code> requires at least 1 node — always pass 1+</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">addComponentProperty</code> returns unexpected name</td>
+      <td>This is normal — <code class="language-plaintext highlighter-rouge">BOOLEAN</code>/<code class="language-plaintext highlighter-rouge">TEXT</code>/<code class="language-plaintext highlighter-rouge">INSTANCE_SWAP</code> get <code class="language-plaintext highlighter-rouge">#id:id</code> suffix</td>
+      <td>Save the returned key immediately and use that, not the input name</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="8-per-phase-recovery-guidance">8. Per-Phase Recovery Guidance</h2>
+
+<h3 id="phase-1-fails-variable-creation">Phase 1 fails (variable creation)</h3>
+
+<p>Since <code class="language-plaintext highlighter-rouge">use_figma</code> is atomic, a failed call creates nothing. The most common scenario is that some calls in Phase 1 succeeded (creating some variables) while a later call failed.</p>
+
+<p>Recovery steps:</p>
+<ol>
+  <li>Run inspection script to find all variables tagged with your <code class="language-plaintext highlighter-rouge">run_id</code></li>
+  <li>Compare against the plan to identify which variables were successfully created and which are still missing</li>
+  <li>If a successfully created variable has wrong values, call <code class="language-plaintext highlighter-rouge">variable.remove()</code> and recreate it</li>
+  <li>Fix the failed script and retry — it’s safe since the failed call created nothing</li>
+  <li>Do NOT proceed to Phase 2 until ALL planned variables exist with correct scopes and code syntax</li>
+</ol>
+
+<p><strong>The most common Phase 1 failure:</strong> script timeout when creating many variables. Fix: batch variable creation — create at most 20–30 variables per call.</p>
+
+<h3 id="phase-2-fails-mid-execution-pagefile-structure">Phase 2 fails mid-execution (page/file structure)</h3>
+
+<p>Symptoms: some pages exist, others are missing; foundations doc frames are incomplete.</p>
+
+<p>Recovery steps:</p>
+<ol>
+  <li>Identify which pages were successfully created (check for <code class="language-plaintext highlighter-rouge">key</code> tags)</li>
+  <li>Mark remaining pages as pending and create them in subsequent calls</li>
+  <li>If a foundations doc frame is malformed, run <code class="language-plaintext highlighter-rouge">cleanupOrphans</code> for <code class="language-plaintext highlighter-rouge">dsb_phase: 'phase2'</code> on that page, then recreate</li>
+</ol>
+
+<p>Phase 2 failures rarely require Phase 1 rollback unless the page structure itself is corrupted (which is unusual).</p>
+
+<h3 id="phase-3-fails-component-creation">Phase 3 fails (component creation)</h3>
+
+<p>This is the most common failure mode in long builds. Since <code class="language-plaintext highlighter-rouge">use_figma</code> is atomic, a failed call creates nothing — but previous successful calls in the component creation sequence will have created state. Handle by which call in the sequence failed:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>If failure in Call 1 (page creation):
+  → Nothing was created. Fix the script and retry.
+
+If failure in Call 2 (doc frame):
+  → Call 1's page exists. Fix Call 2 and retry — idempotency check handles it.
+
+If failure in Call 3 (base component):
+  → Calls 1-2 succeeded. Fix Call 3 and retry.
+
+If failure in Call 4 (variant creation):
+  → Call 3's base component exists. Fix Call 4 and retry.
+  → If you need to restart from Call 3, clean up Call 3's nodes first
+    using cleanupOrphans scoped to the component page.
+
+If failure in Call 5 (combineAsVariants + layout):
+  → Variant ComponentNodes from Call 4 exist but aren't combined yet.
+  → Fix Call 5 and retry.
+  → If the component set was already created by a prior attempt of Call 5
+    that succeeded, remove it first, then re-run.
+
+If failure in Call 6 (component properties):
+  → The component set already exists and is structurally sound.
+  → Fix Call 6 and retry — addComponentProperty is safe to retry if
+    you first check componentPropertyDefinitions for existing properties.
+  → Idempotency check: if 'Label' property already exists, skip addComponentProperty.
+</code></pre></div></div>
+
+<p><strong>Idempotency for component properties (Call 6 retry):</strong></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">existingDefs</span> <span class="o">=</span> <span class="nx">cs</span><span class="p">.</span><span class="nx">componentPropertyDefinitions</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">labelKey</span> <span class="o">=</span> <span class="nx">existingDefs</span><span class="p">[</span><span class="dl">'</span><span class="s1">Label</span><span class="dl">'</span><span class="p">]</span>
+  <span class="p">?</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">keys</span><span class="p">(</span><span class="nx">existingDefs</span><span class="p">).</span><span class="nf">find</span><span class="p">(</span><span class="nx">k</span> <span class="o">=&gt;</span> <span class="nx">k</span><span class="p">.</span><span class="nf">startsWith</span><span class="p">(</span><span class="dl">'</span><span class="s1">Label</span><span class="dl">'</span><span class="p">))</span>
+  <span class="p">:</span> <span class="nx">cs</span><span class="p">.</span><span class="nf">addComponentProperty</span><span class="p">(</span><span class="dl">'</span><span class="s1">Label</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">TEXT</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Button</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="phase-4-fails-mid-execution-qa--code-connect">Phase 4 fails mid-execution (QA / Code Connect)</h3>
+
+<p>Phase 4 is non-destructive. Failures here do not corrupt Phase 3 work. Common failures:</p>
+
+<ul>
+  <li><strong>Accessibility audit finds contrast failures:</strong> do not attempt auto-fix. Report the specific variable IDs and token names that fail, then ask the user which value to update.</li>
+  <li><strong>Naming audit finds duplicates:</strong> list all duplicates with their <code class="language-plaintext highlighter-rouge">key</code> values, ask user which to keep, then remove the duplicates.</li>
+  <li><strong>Code Connect mapping fails:</strong> treat as incomplete, not broken. Continue and leave as pending.</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

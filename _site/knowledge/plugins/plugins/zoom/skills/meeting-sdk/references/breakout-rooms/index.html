@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Breakout Rooms · A developer journey</title>
+<meta name="description" content="Breakout Rooms">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/zoom/skills/meeting-sdk/references/breakout-rooms/">
+
+<meta property="og:title" content="Breakout Rooms · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/zoom/skills/meeting-sdk/references/breakout-rooms/">
+<meta property="og:description" content="Breakout Rooms">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Breakout Rooms</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="breakout-rooms">Breakout Rooms</h1>
+
+<p>Programmatically manage breakout rooms in Zoom meetings across all platforms.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>Breakout rooms allow hosts to split meeting participants into smaller groups. This guide covers SDK APIs for creating, managing, and controlling breakout rooms.</p>
+
+<h2 id="platform-support">Platform Support</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Platform</th>
+      <th>Support Level</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Web SDK</strong></td>
+      <td>Full</td>
+      <td>Complete API</td>
+    </tr>
+    <tr>
+      <td><strong>iOS SDK</strong></td>
+      <td>Full</td>
+      <td>Creator + Admin helpers</td>
+    </tr>
+    <tr>
+      <td><strong>Android SDK</strong></td>
+      <td>Full</td>
+      <td>Creator + Admin helpers</td>
+    </tr>
+    <tr>
+      <td><strong>Windows SDK</strong></td>
+      <td>Full</td>
+      <td>Controller interface</td>
+    </tr>
+    <tr>
+      <td><strong>macOS SDK</strong></td>
+      <td>Full</td>
+      <td>Controller interface</td>
+    </tr>
+    <tr>
+      <td><strong>Linux SDK</strong></td>
+      <td>Limited</td>
+      <td>Basic functionality only</td>
+    </tr>
+    <tr>
+      <td><strong>Video SDK</strong></td>
+      <td>Different</td>
+      <td>Uses “Subsessions” - not native breakout rooms</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Important:</strong> Video SDK does NOT have native breakout rooms. It uses a “Subsessions” concept requiring manual session management.</p>
+
+<h2 id="rest-api-pre-assigned-rooms">REST API: Pre-assigned Rooms</h2>
+
+<p>Create meetings with pre-assigned breakout rooms:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST /v2/users/<span class="o">{</span>userId<span class="o">}</span>/meetings
+</code></pre></div></div>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"topic"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Team Workshop"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"breakout_room"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"enable"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"rooms"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Team Alpha"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"user1@example.com"</span><span class="p">,</span><span class="w"> </span><span class="s2">"user2@example.com"</span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Team Beta"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"participants"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"user3@example.com"</span><span class="p">,</span><span class="w"> </span><span class="s2">"user4@example.com"</span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Limitation:</strong> Pre-assigned rooms are NOT auto-opened. The host must manually open breakout rooms when the meeting starts. There is NO REST API to auto-open rooms.</p>
+
+<hr />
+
+<h2 id="web-sdk-implementation">Web SDK Implementation</h2>
+
+<h3 id="create-breakout-rooms">Create Breakout Rooms</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create 5 rooms with auto-generated names (Room 1, Room 2, etc.)</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">createBreakoutRoom</span><span class="p">({</span>
+  <span class="na">data</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Rooms created:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">response</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+
+<span class="c1">// Create named rooms</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">createBreakoutRoom</span><span class="p">({</span>
+  <span class="na">data</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Engineering</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Design</span><span class="dl">'</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Product</span><span class="dl">'</span> <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Rooms created:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">response</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="get-breakout-rooms">Get Breakout Rooms</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">getBreakoutRooms</span><span class="p">({</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">rooms</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">rooms</span><span class="p">;</span>
+    <span class="nx">rooms</span><span class="p">.</span><span class="nf">forEach</span><span class="p">(</span><span class="nx">room</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Room ID: </span><span class="p">${</span><span class="nx">room</span><span class="p">.</span><span class="nx">boId</span><span class="p">}</span><span class="s2">, Name: </span><span class="p">${</span><span class="nx">room</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">},</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="assign-participants">Assign Participants</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Get unassigned attendees first</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">getUnassignedAttendeeList</span><span class="p">({</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">unassigned</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">unassignedAttendeeList</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Unassigned:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">unassigned</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// Assign user to a room</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">assignUserToBreakoutRoom</span><span class="p">({</span>
+  <span class="na">targetRoomId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">room-id-here</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">userId</span><span class="p">:</span> <span class="mi">12345678</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Assigned:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">response</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="move-participants-between-rooms">Move Participants Between Rooms</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">moveUserToBreakoutRoom</span><span class="p">({</span>
+  <span class="na">targetRoomId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">destination-room-id</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">userId</span><span class="p">:</span> <span class="mi">12345678</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Moved:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">response</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="open-breakout-rooms">Open Breakout Rooms</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">openBreakoutRooms</span><span class="p">({</span>
+  <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">isAutoJoinRoom</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>              <span class="c1">// Let participants choose</span>
+    <span class="na">isBackToMainSessionEnabled</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>   <span class="c1">// Allow returning to main</span>
+    <span class="na">isTimerEnabled</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>               <span class="c1">// Enable countdown</span>
+    <span class="na">timerDuration</span><span class="p">:</span> <span class="mi">1800</span><span class="p">,</span>                <span class="c1">// 30 minutes (seconds)</span>
+    <span class="na">needCountDown</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>                <span class="c1">// Show countdown</span>
+    <span class="na">waitSeconds</span><span class="p">:</span> <span class="mi">60</span>                     <span class="c1">// Wait before auto-join</span>
+  <span class="p">},</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Rooms opened:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">response</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="close-breakout-rooms">Close Breakout Rooms</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">closeBreakoutRooms</span><span class="p">({</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Rooms closed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">response</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="broadcast-message">Broadcast Message</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">({</span>
+  <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Please return to the main room in 2 minutes</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Broadcast sent:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">response</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="check-user-status">Check User Status</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Get current user's breakout room</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">getCurrentBreakoutRoom</span><span class="p">({</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="p">{</span> <span class="nx">roomId</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">attendeeStatus</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Current room: </span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">, Status: </span><span class="p">${</span><span class="nx">attendeeStatus</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="c1">// attendeeStatus values:</span>
+<span class="c1">// 1: UNASSIGNED - Not assigned to any room</span>
+<span class="c1">// 2: ASSIGNED_NOT_JOIN - Assigned but hasn't joined yet</span>
+<span class="c1">// 3: IN_BO - Currently in breakout room</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="ios-sdk-implementation">iOS SDK Implementation</h2>
+
+<h3 id="get-helpers">Get Helpers</h3>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#import &lt;MobileRTC/MobileRTC.h&gt;
+</span>
+<span class="c1">// Get meeting service</span>
+<span class="n">MobileRTCMeetingService</span> <span class="o">*</span><span class="n">meetingService</span> <span class="o">=</span> <span class="p">[[</span><span class="n">MobileRTC</span> <span class="nf">sharedRTC</span><span class="p">]</span> <span class="nf">getMeetingService</span><span class="p">];</span>
+
+<span class="c1">// Get breakout room creator (for creating rooms)</span>
+<span class="n">MobileRTCBOCreator</span> <span class="o">*</span><span class="n">boCreator</span> <span class="o">=</span> <span class="p">[</span><span class="n">meetingService</span> <span class="nf">getCreatorHelper</span><span class="p">];</span>
+
+<span class="c1">// Get breakout room admin (for managing rooms)</span>
+<span class="n">MobileRTCBOAdmin</span> <span class="o">*</span><span class="n">boAdmin</span> <span class="o">=</span> <span class="p">[</span><span class="n">meetingService</span> <span class="nf">getAdminHelper</span><span class="p">];</span>
+</code></pre></div></div>
+
+<h3 id="create-rooms">Create Rooms</h3>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create 3 breakout rooms</span>
+<span class="p">[</span><span class="n">boCreator</span> <span class="nf">createBreakoutRoom</span><span class="p">:</span><span class="mi">3</span> <span class="nf">completion</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Error: %@"</span><span class="p">,</span> <span class="n">error</span><span class="p">.</span><span class="n">localizedDescription</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Rooms created"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}];</span>
+
+<span class="c1">// Create room with specific name</span>
+<span class="p">[</span><span class="n">boCreator</span> <span class="nf">createBreakoutRoomWithName</span><span class="p">:</span><span class="s">@"Engineering"</span> <span class="nf">completion</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Handle result</span>
+<span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="manage-rooms">Manage Rooms</h3>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Open all rooms</span>
+<span class="p">[</span><span class="n">boAdmin</span> <span class="nf">openAllRoomsCompletion</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Rooms opened"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}];</span>
+
+<span class="c1">// Assign user to room</span>
+<span class="p">[</span><span class="n">boAdmin</span> <span class="nf">assignUser</span><span class="p">:</span><span class="n">userId</span> <span class="nf">toRoom</span><span class="p">:</span><span class="n">roomId</span> <span class="n">completion</span><span class="o">:^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"User assigned"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}];</span>
+
+<span class="c1">// Close all rooms</span>
+<span class="p">[</span><span class="n">boAdmin</span> <span class="nf">closeAllRoomsCompletion</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Rooms closed"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}];</span>
+</code></pre></div></div>
+
+<h3 id="event-handling">Event Handling</h3>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">@interface</span> <span class="nc">MyDelegate</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">MobileRTCMeetingServiceDelegate</span><span class="o">&gt;</span>
+<span class="k">@end</span>
+
+<span class="k">@implementation</span> <span class="nc">MyDelegate</span>
+
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">onMeetingBreakoutRoomStatusChanged</span><span class="p">:(</span><span class="n">MobileRTCBreakoutRoomStatus</span><span class="p">)</span><span class="nv">status</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">MobileRTCBreakoutRoomStatusNotStarted</span><span class="p">:</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Breakout rooms not started"</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">MobileRTCBreakoutRoomStatusStarted</span><span class="p">:</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Breakout rooms started"</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="k">case</span> <span class="n">MobileRTCBreakoutRoomStatusClosed</span><span class="p">:</span>
+            <span class="n">NSLog</span><span class="p">(</span><span class="s">@"Breakout rooms closed"</span><span class="p">);</span>
+            <span class="k">break</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="android-sdk-implementation">Android SDK Implementation</h2>
+
+<h3 id="get-helpers-1">Get Helpers</h3>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">us.zoom.sdk.ZoomSDK</span>
+
+<span class="kd">val</span> <span class="py">zoomSDK</span> <span class="p">=</span> <span class="nc">ZoomSDK</span><span class="p">.</span><span class="nf">getInstance</span><span class="p">()</span>
+<span class="kd">val</span> <span class="py">meetingService</span> <span class="p">=</span> <span class="n">zoomSDK</span><span class="p">.</span><span class="n">meetingService</span>
+<span class="kd">val</span> <span class="py">boController</span> <span class="p">=</span> <span class="n">meetingService</span><span class="o">?.</span><span class="n">inMeetingBreakoutRoomController</span>
+
+<span class="c1">// Get creator (for creating rooms)</span>
+<span class="kd">val</span> <span class="py">creator</span> <span class="p">=</span> <span class="n">boController</span><span class="o">?.</span><span class="nf">getCreatorHelper</span><span class="p">()</span>
+
+<span class="c1">// Get admin (for managing rooms)</span>
+<span class="kd">val</span> <span class="py">admin</span> <span class="p">=</span> <span class="n">boController</span><span class="o">?.</span><span class="nf">getAdminHelper</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="create-rooms-1">Create Rooms</h3>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create breakout rooms</span>
+<span class="kd">val</span> <span class="py">error</span> <span class="p">=</span> <span class="n">creator</span><span class="o">?.</span><span class="nf">createBreakoutRoom</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1">// Create 5 rooms</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">error</span> <span class="p">==</span> <span class="nc">SDKError</span><span class="p">.</span><span class="nc">SDKERR_SUCCESS</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nc">Log</span><span class="p">.</span><span class="nf">d</span><span class="p">(</span><span class="s">"Breakout"</span><span class="p">,</span> <span class="s">"Rooms created"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// Create room with name</span>
+<span class="n">creator</span><span class="o">?.</span><span class="nf">createBreakoutRoomWithName</span><span class="p">(</span><span class="s">"Engineering"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="manage-rooms-1">Manage Rooms</h3>
+
+<div class="language-kotlin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Open all rooms</span>
+<span class="n">admin</span><span class="o">?.</span><span class="nf">openAllRooms</span><span class="p">()</span>
+
+<span class="c1">// Assign user to room</span>
+<span class="n">admin</span><span class="o">?.</span><span class="nf">assignUser</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="n">roomId</span><span class="p">)</span>
+
+<span class="c1">// Move user between rooms</span>
+<span class="n">admin</span><span class="o">?.</span><span class="nf">assignUser</span><span class="p">(</span><span class="n">userId</span><span class="p">,</span> <span class="n">newRoomId</span><span class="p">)</span>  <span class="c1">// Removes from old room</span>
+
+<span class="c1">// Broadcast message</span>
+<span class="n">admin</span><span class="o">?.</span><span class="nf">broadcastToAll</span><span class="p">(</span><span class="s">"Please return in 2 minutes"</span><span class="p">)</span>
+
+<span class="c1">// Close all rooms</span>
+<span class="n">admin</span><span class="o">?.</span><span class="nf">closeAllRooms</span><span class="p">()</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="windowsmacos-sdk-implementation">Windows/macOS SDK Implementation</h2>
+
+<h3 id="windows-c">Windows (C++)</h3>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">"meeting_breakout_rooms_interface.h"</span><span class="cp">
+</span>
+<span class="k">class</span> <span class="nc">MyBreakoutRoomsEvent</span> <span class="o">:</span> <span class="k">public</span> <span class="n">IMeetingBreakoutRoomsEvent</span> <span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="kt">void</span> <span class="n">OnBreakoutRoomsStartedNotification</span><span class="p">(</span><span class="k">const</span> <span class="kt">wchar_t</span><span class="o">*</span> <span class="n">stBID</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span>
+        <span class="c1">// Handle breakout rooms started</span>
+        <span class="n">wprintf</span><span class="p">(</span><span class="s">L"Breakout rooms started: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">stBID</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Get controller</span>
+<span class="n">IMeetingBreakoutRoomsController</span><span class="o">*</span> <span class="n">pController</span> <span class="o">=</span>
+    <span class="n">pMeetingService</span><span class="o">-&gt;</span><span class="n">GetBreakoutRoomsController</span><span class="p">(</span><span class="nb">nullptr</span><span class="p">);</span>
+
+<span class="c1">// Set event handler</span>
+<span class="n">pController</span><span class="o">-&gt;</span><span class="n">SetEvent</span><span class="p">(</span><span class="k">new</span> <span class="nf">MyBreakoutRoomsEvent</span><span class="p">());</span>
+
+<span class="c1">// Get list of rooms</span>
+<span class="n">IList</span><span class="o">&lt;</span><span class="n">IBreakoutRoomsInfo</span><span class="o">*&gt;*</span> <span class="n">pRoomList</span> <span class="o">=</span> <span class="n">pController</span><span class="o">-&gt;</span><span class="n">GetBreakoutRoomsInfoList</span><span class="p">();</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">pRoomList</span><span class="o">-&gt;</span><span class="n">GetItemCount</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">IBreakoutRoomsInfo</span><span class="o">*</span> <span class="n">pRoom</span> <span class="o">=</span> <span class="n">pRoomList</span><span class="o">-&gt;</span><span class="n">GetItem</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+    <span class="n">wprintf</span><span class="p">(</span><span class="s">L"Room: %s (ID: %s)</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span>
+            <span class="n">pRoom</span><span class="o">-&gt;</span><span class="n">GetBreakoutRoomName</span><span class="p">(),</span>
+            <span class="n">pRoom</span><span class="o">-&gt;</span><span class="n">GetBID</span><span class="p">());</span>
+<span class="p">}</span>
+
+<span class="c1">// Join a breakout room</span>
+<span class="n">pController</span><span class="o">-&gt;</span><span class="n">JoinBreakoutRoom</span><span class="p">(</span><span class="s">L"room-id"</span><span class="p">);</span>
+
+<span class="c1">// Leave breakout room</span>
+<span class="n">pController</span><span class="o">-&gt;</span><span class="n">LeaveBreakoutRoom</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="macos-objective-c">macOS (Objective-C)</h3>
+
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#import &lt;ZoomSDK/ZoomSDK.h&gt;
+</span>
+<span class="c1">// Get controller</span>
+<span class="n">ZoomSDKBreakoutRoomsController</span> <span class="o">*</span><span class="n">boController</span> <span class="o">=</span>
+    <span class="p">[[</span><span class="n">ZoomSDK</span> <span class="nf">sharedSDK</span><span class="p">]</span> <span class="nf">getMeetingService</span><span class="p">]</span> <span class="n">getBreakoutRoomsController</span><span class="p">];</span>
+
+<span class="c1">// Join breakout room</span>
+<span class="p">[</span><span class="n">boController</span> <span class="nf">requestJoinBreakoutRoom</span><span class="p">:</span><span class="s">@"room-id"</span><span class="p">];</span>
+
+<span class="c1">// Leave breakout room</span>
+<span class="p">[</span><span class="n">boController</span> <span class="nf">requestLeaveBreakoutRoom</span><span class="p">];</span>
+
+<span class="c1">// Close all rooms (host only)</span>
+<span class="p">[</span><span class="n">boController</span> <span class="nf">requestCloseAllBreakoutRooms</span><span class="p">];</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="permissions">Permissions</h2>
+
+<h3 id="hostco-host-restrictions">Host/Co-Host Restrictions</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+      <th>Host</th>
+      <th>Co-Host</th>
+      <th>Participant</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Create breakout rooms</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Open breakout rooms</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Close breakout rooms</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Assign participants</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Move participants</td>
+      <td>✅</td>
+      <td>❌</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Broadcast messages</td>
+      <td>✅</td>
+      <td>✅</td>
+      <td>❌</td>
+    </tr>
+    <tr>
+      <td>Join any room</td>
+      <td>✅</td>
+      <td>✅*</td>
+      <td>❌</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>*Co-hosts can only join rooms assigned by host.</p>
+
+<hr />
+
+<h2 id="limitations">Limitations</h2>
+
+<h3 id="capacity-limits">Capacity Limits</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Account Type</th>
+      <th>Max Rooms</th>
+      <th>Max Participants</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Standard</td>
+      <td>50 rooms</td>
+      <td>500 total</td>
+    </tr>
+    <tr>
+      <td>Large Meeting Add-on</td>
+      <td>100 rooms</td>
+      <td>1,000 total</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="recording-limitations">Recording Limitations</h3>
+
+<ul>
+  <li><strong>Cloud Recording</strong>: Only records the <strong>main session</strong></li>
+  <li><strong>Local Recording</strong>: Records only the room the recorder is in</li>
+  <li><strong>Host cannot record</strong> breakout rooms they’re not in</li>
+</ul>
+
+<h3 id="cannot-auto-open-pre-assigned-rooms">Cannot Auto-Open Pre-Assigned Rooms</h3>
+
+<p><strong>Critical:</strong> There is NO API to auto-open pre-assigned breakout rooms. The host MUST manually open rooms when the meeting starts.</p>
+
+<h3 id="session-timeout">Session Timeout</h3>
+
+<p>If no participant remains in the main session during breakout rooms, the main session may close after timeout. Ensure at least one participant (host or bot) stays in main session.</p>
+
+<hr />
+
+<h2 id="best-practices">Best Practices</h2>
+
+<h3 id="1-check-support-before-creating">1. Check Support Before Creating</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">getBreakoutRoomOptions</span><span class="p">({</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">response</span><span class="p">.</span><span class="nx">result</span><span class="p">.</span><span class="nx">isSupportBreakoutRoom</span><span class="p">)</span> <span class="p">{</span>
+      <span class="c1">// Proceed to create rooms</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="2-handle-user-status">2. Handle User Status</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Check before assigning</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nx">BreakoutRoom</span><span class="p">.</span><span class="nf">getUserStatus</span><span class="p">({</span>
+  <span class="na">userId</span><span class="p">:</span> <span class="nx">userId</span><span class="p">,</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="p">{</span> <span class="nx">attendeeStatus</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">response</span><span class="p">.</span><span class="nx">result</span><span class="p">;</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">attendeeStatus</span> <span class="o">===</span> <span class="mi">3</span><span class="p">)</span> <span class="p">{</span>  <span class="c1">// IN_BO</span>
+      <span class="c1">// User already in a room - move instead of assign</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="3-error-handling">3. Error Handling</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">handleBreakoutError</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">method</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="dl">'</span><span class="s1">createBreakoutRoom</span><span class="dl">'</span><span class="p">:</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="dl">'</span><span class="s1">not support</span><span class="dl">'</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nf">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Breakout rooms not enabled for this meeting</span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">case</span> <span class="dl">'</span><span class="s1">assignUserToBreakoutRoom</span><span class="dl">'</span><span class="p">:</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">errorMessage</span><span class="p">.</span><span class="nf">includes</span><span class="p">(</span><span class="dl">'</span><span class="s1">not host</span><span class="dl">'</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nf">alert</span><span class="p">(</span><span class="dl">'</span><span class="s1">Only host/co-host can assign participants</span><span class="dl">'</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="video-sdk-note">Video SDK Note</h2>
+
+<p>Video SDK does <strong>NOT</strong> have native breakout rooms. Instead, use “Subsessions”:</p>
+
+<ol>
+  <li>Create separate Video SDK sessions</li>
+  <li>Move participants between sessions programmatically</li>
+  <li>Implement your own room management logic</li>
+</ol>
+
+<p>See: https://developers.zoom.us/blog/build-breakout-rooms-for-video-sdk/</p>
+
+<hr />
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><strong>Web SDK Docs</strong>: https://developers.zoom.us/docs/meeting-sdk/web/</li>
+  <li><strong>iOS SDK Docs</strong>: https://developers.zoom.us/docs/meeting-sdk/ios/</li>
+  <li><strong>Android SDK Docs</strong>: https://developers.zoom.us/docs/meeting-sdk/android/</li>
+  <li><strong>REST API - Meetings</strong>: https://developers.zoom.us/docs/api/rest/reference/zoom-api/methods/#tag/Meetings</li>
+  <li><strong>Developer Forum</strong>: https://devforum.zoom.us/</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

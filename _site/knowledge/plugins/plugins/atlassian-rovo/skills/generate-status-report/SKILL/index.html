@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Generate project status reports from Jira issues and publish to Confluence. When an agent needs to: (1) Create a status report for a project, (2) Summarize p...">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/atlassian-rovo/skills/generate-status-report/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/atlassian-rovo/skills/generate-status-report/SKILL/">
+<meta property="og:description" content="Generate project status reports from Jira issues and publish to Confluence. When an agent needs to: (1) Create a status report for a project, (2) Summarize p...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Generate project status reports from Jira issues and publish to Confluence. When an agent needs to: (1) Create a status report for a project, (2) Summarize project progress or updates, (3) Generate weekly/daily reports from Jira, (4) Publish status summaries to Confluence, or (5) Analyze project blockers and completion. Queries Jira issues, categorizes by status/priority, and creates formatted reports for delivery managers and executives.</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="generate-status-report">Generate Status Report</h1>
+
+<h2 id="keywords">Keywords</h2>
+<p>status report, project status, weekly update, daily standup, Jira report, project summary, blockers, progress update, Confluence report, sprint report, project update, publish to Confluence, write to Confluence, post report</p>
+
+<p>Automatically query Jira for project status, analyze issues, and generate formatted status reports published to Confluence.</p>
+
+<p><strong>CRITICAL</strong>: This skill should be <strong>interactive</strong>. Always clarify scope (time period, audience, Confluence destination) with the user before or after generating the report. Do not silently skip Confluence publishing—always offer it.</p>
+
+<h2 id="workflow">Workflow</h2>
+
+<p>Generating a status report follows these steps:</p>
+
+<ol>
+  <li><strong>Identify scope</strong> - Determine project, time period, and target audience</li>
+  <li><strong>Query Jira</strong> - Fetch relevant issues using JQL queries</li>
+  <li><strong>Analyze data</strong> - Categorize issues and identify key insights</li>
+  <li><strong>Format report</strong> - Structure content based on audience and purpose</li>
+  <li><strong>Publish to Confluence</strong> - Create or update a page with the report</li>
+</ol>
+
+<h2 id="step-1-identify-scope">Step 1: Identify Scope</h2>
+
+<p><strong>IMPORTANT</strong>: If the user’s request is missing key information, ASK before proceeding with queries. Do not assume defaults without confirmation for Confluence publishing.</p>
+
+<p>Clarify these details:</p>
+
+<p><strong>Project identification:</strong></p>
+<ul>
+  <li>Which Jira project key? (e.g., “PROJ”, “ENG”, “MKTG”)</li>
+  <li>If the user mentions a project by name but not key, search Jira to find the project key</li>
+</ul>
+
+<p><strong>Time period:</strong></p>
+<ul>
+  <li>If not specified, ask: “What time period should this report cover? (default: last 7 days)”</li>
+  <li>Options: Weekly (7 days), Daily (24 hours), Sprint-based (2 weeks), Custom period</li>
+</ul>
+
+<p><strong>Target audience:</strong></p>
+<ul>
+  <li>If not specified, ask: “Who is this report for? (Executives/Delivery Managers, Team-level, or Daily standup)”</li>
+  <li><strong>Executives/Delivery Managers</strong>: High-level summary with key metrics and blockers</li>
+  <li><strong>Team-level</strong>: Detailed breakdown with issue-by-issue status</li>
+  <li><strong>Daily standup</strong>: Brief update on yesterday/today/blockers</li>
+</ul>
+
+<p><strong>Report destination:</strong></p>
+<ul>
+  <li><strong>ALWAYS ASK</strong> if not specified: “Would you like me to publish this report to Confluence? If so, which space should I use?”</li>
+  <li>If user says yes: Ask for space name or offer to list available spaces</li>
+  <li>Determine: New page or update existing page?</li>
+  <li>Ask about parent page if creating under a specific section</li>
+</ul>
+
+<h2 id="step-2-query-jira">Step 2: Query Jira</h2>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">searchJiraIssuesUsingJql</code> tool to fetch issues. Build JQL queries based on report needs.</p>
+
+<h3 id="common-query-patterns">Common Query Patterns</h3>
+
+<p>For comprehensive queries, use the <code class="language-plaintext highlighter-rouge">scripts/jql_builder.py</code> utility to programmatically build JQL strings. For quick queries, reference <code class="language-plaintext highlighter-rouge">references/jql-patterns.md</code> for examples.</p>
+
+<p><strong>All open issues in project:</strong></p>
+<pre><code class="language-jql">project = "PROJECT_KEY" AND status != Done ORDER BY priority DESC, updated DESC
+</code></pre>
+
+<p><strong>Issues updated in last week:</strong></p>
+<pre><code class="language-jql">project = "PROJECT_KEY" AND updated &gt;= -7d ORDER BY priority DESC
+</code></pre>
+
+<p><strong>High priority and blocked issues:</strong></p>
+<pre><code class="language-jql">project = "PROJECT_KEY" AND (priority IN (Highest, High) OR status = Blocked) AND status != Done ORDER BY priority DESC
+</code></pre>
+
+<p><strong>Completed in reporting period:</strong></p>
+<pre><code class="language-jql">project = "PROJECT_KEY" AND status = Done AND resolved &gt;= -7d ORDER BY resolved DESC
+</code></pre>
+
+<h3 id="query-strategy">Query Strategy</h3>
+
+<p>For most reports, execute multiple targeted queries rather than one large query:</p>
+
+<ol>
+  <li><strong>Completed issues</strong>: Get recently resolved tickets</li>
+  <li><strong>In-progress issues</strong>: Get active work items</li>
+  <li><strong>Blocked issues</strong>: Get blockers requiring attention</li>
+  <li><strong>High priority open</strong>: Get critical upcoming work</li>
+</ol>
+
+<p>Use <code class="language-plaintext highlighter-rouge">maxResults: 100</code> for initial queries. If pagination is needed, use <code class="language-plaintext highlighter-rouge">nextPageToken</code> from results.</p>
+
+<h3 id="data-to-extract">Data to Extract</h3>
+
+<p>For each issue, capture:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">key</code> (e.g., “PROJ-123”)</li>
+  <li><code class="language-plaintext highlighter-rouge">summary</code> (issue title)</li>
+  <li><code class="language-plaintext highlighter-rouge">status</code> (current state)</li>
+  <li><code class="language-plaintext highlighter-rouge">priority</code> (importance level)</li>
+  <li><code class="language-plaintext highlighter-rouge">assignee</code> (who’s working on it)</li>
+  <li><code class="language-plaintext highlighter-rouge">created</code> / <code class="language-plaintext highlighter-rouge">updated</code> / <code class="language-plaintext highlighter-rouge">resolved</code> dates</li>
+  <li><code class="language-plaintext highlighter-rouge">description</code> (if needed for context on blockers)</li>
+</ul>
+
+<h2 id="step-3-analyze-data">Step 3: Analyze Data</h2>
+
+<p>Process the retrieved issues to identify:</p>
+
+<p><strong>Metrics:</strong></p>
+<ul>
+  <li>Total issues by status (Done, In Progress, Blocked, etc.)</li>
+  <li>Completion rate (if historical data available)</li>
+  <li>Number of high priority items</li>
+  <li>Unassigned issue count</li>
+</ul>
+
+<p><strong>Key insights:</strong></p>
+<ul>
+  <li>Major accomplishments (recently completed high-value items)</li>
+  <li>Critical blockers (blocked high priority issues)</li>
+  <li>At-risk items (overdue or stuck in progress)</li>
+  <li>Resource bottlenecks (one assignee with many issues)</li>
+</ul>
+
+<p><strong>Categorization:</strong>
+Group issues logically:</p>
+<ul>
+  <li>By status (Done, In Progress, Blocked)</li>
+  <li>By priority (Highest → Low)</li>
+  <li>By assignee or team</li>
+  <li>By component or epic (if relevant)</li>
+</ul>
+
+<h2 id="step-4-format-report">Step 4: Format Report</h2>
+
+<p>Select the appropriate template based on audience. Templates are in <code class="language-plaintext highlighter-rouge">references/report-templates.md</code>.</p>
+
+<h3 id="for-executives-and-delivery-managers">For Executives and Delivery Managers</h3>
+
+<p>Use <strong>Executive Summary Format</strong>:</p>
+<ul>
+  <li>Brief overall status (🟢 On Track / 🟡 At Risk / 🔴 Blocked)</li>
+  <li>Key metrics (total, completed, in progress, blocked)</li>
+  <li>Top 3 highlights (major accomplishments)</li>
+  <li>Critical blockers with impact</li>
+  <li>Upcoming priorities</li>
+</ul>
+
+<p><strong>Keep it concise</strong> - 1-2 pages maximum. Focus on what matters to decision-makers.</p>
+
+<h3 id="for-team-level-reports">For Team-Level Reports</h3>
+
+<p>Use <strong>Detailed Technical Format</strong>:</p>
+<ul>
+  <li>Completed issues listed with keys</li>
+  <li>In-progress issues with assignee and priority</li>
+  <li>Blocked issues with blocker description and action needed</li>
+  <li>Risks and dependencies</li>
+  <li>Next period priorities</li>
+</ul>
+
+<p><strong>Include more detail</strong> - Team needs issue-level visibility.</p>
+
+<h3 id="for-daily-updates">For Daily Updates</h3>
+
+<p>Use <strong>Daily Standup Format</strong>:</p>
+<ul>
+  <li>What was completed yesterday</li>
+  <li>What’s planned for today</li>
+  <li>Current blockers</li>
+  <li>Brief notes</li>
+</ul>
+
+<p><strong>Keep it brief</strong> - This is a quick sync, not comprehensive analysis.</p>
+
+<h2 id="step-5-publish-to-confluence">Step 5: Publish to Confluence</h2>
+
+<p><strong>After generating the report, ALWAYS offer to publish to Confluence</strong> (unless user explicitly said not to).</p>
+
+<p>If user hasn’t specified Confluence details yet, ask:</p>
+<ul>
+  <li>“Would you like me to publish this report to Confluence?”</li>
+  <li>“Which Confluence space should I use?”</li>
+  <li>“Should this be nested under a specific parent page?”</li>
+</ul>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">createConfluencePage</code> tool to publish the report.</p>
+
+<p><strong>Page creation:</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>createConfluencePage(
+    cloudId="[obtained from getConfluenceSpaces or URL]",
+    spaceId="[numerical space ID]",
+    title="[Project Name] - Status Report - [Date]",
+    body="[formatted report in Markdown]",
+    contentFormat="markdown",
+    parentId="[optional - parent page ID if nesting under another page]"
+)
+</code></pre></div></div>
+
+<p><strong>Title format examples:</strong></p>
+<ul>
+  <li>“Project Phoenix - Weekly Status - Dec 3, 2025”</li>
+  <li>“Engineering Sprint 23 - Status Report”</li>
+  <li>“Q4 Initiatives - Status Update - Week 49”</li>
+</ul>
+
+<p><strong>Body formatting:</strong>
+Write the report content in Markdown. The tool will convert it to Confluence format. Use:</p>
+<ul>
+  <li>Headers (<code class="language-plaintext highlighter-rouge">#</code>, <code class="language-plaintext highlighter-rouge">##</code>, <code class="language-plaintext highlighter-rouge">###</code>) for structure</li>
+  <li>Bullet points for lists</li>
+  <li>Bold (<code class="language-plaintext highlighter-rouge">**text**</code>) for emphasis</li>
+  <li>Tables for metrics if needed</li>
+  <li>Links to Jira issues: <code class="language-plaintext highlighter-rouge">[PROJ-123](https://yourinstance.atlassian.net/browse/PROJ-123)</code></li>
+</ul>
+
+<p><strong>Best practices:</strong></p>
+<ul>
+  <li>Include the report date prominently</li>
+  <li>Link directly to relevant Jira issues</li>
+  <li>Use consistent naming conventions for recurring reports</li>
+  <li>Consider creating under a “Status Reports” parent page for organization</li>
+</ul>
+
+<h3 id="finding-the-right-space">Finding the Right Space</h3>
+
+<p>If the user doesn’t specify a Confluence space:</p>
+
+<ol>
+  <li>Use <code class="language-plaintext highlighter-rouge">getConfluenceSpaces</code> to list available spaces</li>
+  <li>Look for spaces related to the project (matching project name or key)</li>
+  <li>If unsure, ask the user which space to use</li>
+  <li>Default to creating in the most relevant team or project space</li>
+</ol>
+
+<h3 id="updating-existing-reports">Updating Existing Reports</h3>
+
+<p>If updating an existing page instead of creating new:</p>
+
+<ol>
+  <li>Get the current page content:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>getConfluencePage(
+ cloudId="...",
+ pageId="123456",
+ contentFormat="markdown"
+)
+</code></pre></div>    </div>
+  </li>
+  <li>Update the page with new content:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>updateConfluencePage(
+ cloudId="...",
+ pageId="123456",
+ body="[updated report content]",
+ contentFormat="markdown",
+ versionMessage="Updated with latest status - Dec 8, 2025"
+)
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="complete-example-workflow">Complete Example Workflow</h2>
+
+<p><strong>User request:</strong> “Generate a status report for Project Phoenix and publish it to Confluence”</p>
+
+<p><strong>Step 1 - Identify scope:</strong></p>
+<ul>
+  <li>Project: Phoenix (need to find project key)</li>
+  <li>Time period: Last week (default)</li>
+  <li>Audience: Not specified, assume executive level</li>
+  <li>Destination: Confluence, need to find appropriate space</li>
+</ul>
+
+<p><strong>Step 2 - Query Jira:</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Find project key first
+</span><span class="nf">searchJiraIssuesUsingJql</span><span class="p">(</span>
+    <span class="n">cloudId</span><span class="o">=</span><span class="sh">"</span><span class="s">...</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">jql</span><span class="o">=</span><span class="sh">'</span><span class="s">project = </span><span class="sh">"</span><span class="s">PHOENIX</span><span class="sh">"</span><span class="s"> OR project = </span><span class="sh">"</span><span class="s">PHX</span><span class="sh">"'</span><span class="p">,</span>
+    <span class="n">maxResults</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+
+<span class="c1"># Query completed issues
+</span><span class="nf">searchJiraIssuesUsingJql</span><span class="p">(</span>
+    <span class="n">cloudId</span><span class="o">=</span><span class="sh">"</span><span class="s">...</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">jql</span><span class="o">=</span><span class="sh">'</span><span class="s">project = </span><span class="sh">"</span><span class="s">PHX</span><span class="sh">"</span><span class="s"> AND status = Done AND resolved &gt;= -7d</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">maxResults</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>
+
+<span class="c1"># Query blocked issues
+</span><span class="nf">searchJiraIssuesUsingJql</span><span class="p">(</span>
+    <span class="n">cloudId</span><span class="o">=</span><span class="sh">"</span><span class="s">...</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">jql</span><span class="o">=</span><span class="sh">'</span><span class="s">project = </span><span class="sh">"</span><span class="s">PHX</span><span class="sh">"</span><span class="s"> AND status = Blocked</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">maxResults</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>
+
+<span class="c1"># Query in-progress high priority
+</span><span class="nf">searchJiraIssuesUsingJql</span><span class="p">(</span>
+    <span class="n">cloudId</span><span class="o">=</span><span class="sh">"</span><span class="s">...</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">jql</span><span class="o">=</span><span class="sh">'</span><span class="s">project = </span><span class="sh">"</span><span class="s">PHX</span><span class="sh">"</span><span class="s"> AND status IN (</span><span class="sh">"</span><span class="s">In Progress</span><span class="sh">"</span><span class="s">, </span><span class="sh">"</span><span class="s">In Review</span><span class="sh">"</span><span class="s">) AND priority IN (Highest, High)</span><span class="sh">'</span><span class="p">,</span>
+    <span class="n">maxResults</span><span class="o">=</span><span class="mi">50</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Step 3 - Analyze:</strong></p>
+<ul>
+  <li>15 issues completed (metrics)</li>
+  <li>3 critical blockers (key insight)</li>
+  <li>Major accomplishment: API integration completed (highlight)</li>
+</ul>
+
+<p><strong>Step 4 - Format:</strong>
+Use Executive Summary Format from templates. Create concise report with metrics, highlights, and blockers.</p>
+
+<p><strong>Step 5 - Publish:</strong></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Find appropriate space
+</span><span class="nf">getConfluenceSpaces</span><span class="p">(</span><span class="n">cloudId</span><span class="o">=</span><span class="sh">"</span><span class="s">...</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="c1"># Create page
+</span><span class="nf">createConfluencePage</span><span class="p">(</span>
+    <span class="n">cloudId</span><span class="o">=</span><span class="sh">"</span><span class="s">...</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">spaceId</span><span class="o">=</span><span class="sh">"</span><span class="s">12345</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="sh">"</span><span class="s">Project Phoenix - Weekly Status - Dec 3, 2025</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">body</span><span class="o">=</span><span class="sh">"</span><span class="s">[formatted markdown report]</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">contentFormat</span><span class="o">=</span><span class="sh">"</span><span class="s">markdown</span><span class="sh">"</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="tips-for-quality-reports">Tips for Quality Reports</h2>
+
+<p><strong>Be data-driven:</strong></p>
+<ul>
+  <li>Include specific numbers and metrics</li>
+  <li>Reference issue keys directly</li>
+  <li>Show trends when possible (e.g., “completed 15 vs 12 last week”)</li>
+</ul>
+
+<p><strong>Highlight what matters:</strong></p>
+<ul>
+  <li>Lead with the most important information</li>
+  <li>Flag blockers prominently</li>
+  <li>Celebrate significant wins</li>
+</ul>
+
+<p><strong>Make it actionable:</strong></p>
+<ul>
+  <li>For blockers, state what action is needed and from whom</li>
+  <li>For risks, provide mitigation options</li>
+  <li>For priorities, be specific about next steps</li>
+</ul>
+
+<p><strong>Keep it consistent:</strong></p>
+<ul>
+  <li>Use the same format for recurring reports</li>
+  <li>Maintain predictable structure</li>
+  <li>Include comparable metrics week-over-week</li>
+</ul>
+
+<p><strong>Provide context:</strong></p>
+<ul>
+  <li>Link to Jira for details</li>
+  <li>Explain the impact of blockers</li>
+  <li>Connect work to business objectives when possible</li>
+</ul>
+
+<h2 id="resources">Resources</h2>
+
+<h3 id="scriptsjql_builderpy">scripts/jql_builder.py</h3>
+<p>Python utility for programmatically building JQL queries. Use this when you need to construct complex or dynamic queries. Import and use the helper functions rather than manually concatenating JQL strings.</p>
+
+<h3 id="referencesjql-patternsmd">references/jql-patterns.md</h3>
+<p>Quick reference of common JQL query patterns for status reports. Use this for standard queries or as a starting point for custom queries.</p>
+
+<h3 id="referencesreport-templatesmd">references/report-templates.md</h3>
+<p>Detailed templates for different report types and audiences. Reference this to select the appropriate format and structure for your report.</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

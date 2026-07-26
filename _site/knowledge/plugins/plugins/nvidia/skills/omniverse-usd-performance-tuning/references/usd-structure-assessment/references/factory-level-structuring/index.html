@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Factory Level Structuring · A developer journey</title>
+<meta name="description" content="">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/references/factory-level-structuring/">
+
+<meta property="og:title" content="Factory Level Structuring · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/references/factory-level-structuring/">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Factory Level Structuring</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<h1 id="factory-level-usd-structuring">Factory-Level USD Structuring</h1>
+
+<blockquote>
+  <p><strong>Canonical URL:</strong> https://docs.omniverse.nvidia.com/vfi/latest/guide/factory-level-structuring.html</p>
+
+  <p>If you have network access, read the live URL — it may be more current than this local copy.</p>
+</blockquote>
+
+<hr />
+
+<p>Note</p>
+
+<p>This guide presents <strong>opinionated recommendations</strong> for structuring USD content at factory scale. The patterns described here prioritize scalability, multi-domain reuse, and lifecycle management—requirements common to large industrial digital twins. Individual projects may warrant different approaches based on specific constraints and use cases. Please also read <a href="optimization-tradeoffs.md">Asset Structure Performance Optimizations and Tradeoffs</a> for more information on structural optimization choices.</p>
+
+<p>This guide builds on OpenUSD fundamentals covered in the <a href="https://learn.nvidia.com/courses/course-detail?course_id=course-v1:DLI+S-OV-07+V1">OpenUSD Developer certification</a>.</p>
+
+<p>This guide explains how to structure factory-scale USD content so you can scale reuse, maintain clear ownership boundaries, and support downstream simulation workflows. You learn a progressive, seven-step pattern that transforms monolithic exports into modular, instancing-friendly assemblies.</p>
+
+<h2 id="three-pillars-of-factory-scale-usd">Three Pillars of Factory-Scale USD</h2>
+<p>Digital twin projects often succeed in pilot phases but encounter challenges at scale. When data arrives from multiple tools, suppliers, and continuous updates, unstructured content becomes ungovernable. Factory-scale USD structuring rests on three fundamental pillars:</p>
+
+<p><strong>Assets</strong></p>
+
+<p>Structuring content as discrete, reusable assets enables lifecycle management—equipment revisions, supplier updates, and engineering changes propagate through the system without forcing full re-export. Assets become the unit of versioning, validation, and optimization. Domain-specific data (physics, semantics, sensors) layers onto assets non-destructively, transforming them into <a href="https://docs.omniverse.nvidia.com/kit/docs/asset-requirements/1.7.1/index.html">SimReady</a> components.</p>
+
+<p><strong>Aggregation</strong></p>
+
+<p>Assets compose into assemblies—work cells, production lines, and complete factories. Aggregation leverages USD’s composition engine to reference and instance assets without duplication. Aggregates themselves can become assets with their own lifecycles, enabling hierarchical management from individual equipment to entire facilities.</p>
+
+<p><strong>Animation and Simulation</strong></p>
+
+<p>Proper structure enables animation and simulation workflows to interact with digital twin data through clearly defined interfaces. Animation separates from geometry, allowing scenario switching and timeline manipulation. Physics simulators, robotics environments, and AI training pipelines rely on stable prim paths and composition patterns—structure creates the contracts these tools require.</p>
+
+<p><em>The three pillars: Assets compose into Aggregates and Assemblies, which expose interfaces for Animation and Simulation.</em></p>
+
+<h2 id="zooming-in-applying-usd-structuring-concepts">Zooming In: Applying USD Structuring Concepts</h2>
+<p>The following sections walk through a progressive structuring approach that implements these pillars. Starting from an assumed “monolithic export” (a single USD layer representing an entire factory), each step transforms the content into a composition-driven assembly—built from reusable component assets, shared material libraries, and externalized animation layers.</p>
+
+<p><em>The target: a structured factory assembly composed from reusable component assets, material libraries, and animation layers.</em></p>
+
+<p><strong>Diagram Legend:</strong> The diagrams in this guide use the following notation for USD composition arcs:</p>
+
+<ul>
+  <li>
+    <p><strong>R</strong> — Reference</p>
+  </li>
+  <li>
+    <p><strong>P</strong> — Payload</p>
+  </li>
+  <li>
+    <p><strong>VC</strong> — <a href="https://docs.nvidia.com/learn-openusd/latest/glossary.html#term-Value-Clips">Value Clips</a> (metadata)</p>
+  </li>
+  <li>
+    <p><strong>L</strong> — Sublayer</p>
+  </li>
+</ul>
+
+<h3 id="step-1-separate-animation">Step 1: Separate Animation</h3>
+
+<p><em>Animation layered on top of geometry as value clips, enabling reuse and timeline manipulation.</em></p>
+
+<p>See also</p>
+
+<p><a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html#usd-structure-example-animation-sublayer">USDA Sample: Animation Sublayer and Clips</a></p>
+
+<p>The first step is to separate animation from the main stage. Animation should be authored separately from geometry and assembly structure.</p>
+
+<p><strong>Key practices</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Value clips</strong> — Separate baked animation into <a href="https://docs.nvidia.com/learn-openusd/latest/glossary.html#term-Value-Clips">value clips</a>.</p>
+  </li>
+  <li>
+    <p><strong>External authoring</strong> — Author animation in external processes and bind at assembly time.</p>
+  </li>
+  <li>
+    <p><strong>Targeted binding</strong> — Apply clips to individual references or payloads rather than the entire stage.</p>
+  </li>
+</ul>
+
+<p><strong>Why It Matters</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Scenario switching</strong> — Swap clips to visualize different production scenarios without modifying geometry.</p>
+  </li>
+  <li>
+    <p><strong>Timeline control</strong> — Loop, reverse, or time-stretch animations independently of the scene.</p>
+  </li>
+  <li>
+    <p><strong>Independent optimization</strong> — Tune animation and geometry detail levels separately.</p>
+  </li>
+  <li>
+    <p><strong>Asset replacement</strong> — Upgrade assets without re-authoring motion data (provided hierarchies match).</p>
+  </li>
+</ul>
+
+<p>For more information on animation workflows, see the <a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/animation.html">VFI Animation Workflow and Supporting Scripts</a> section.</p>
+
+<h3 id="step-2-identify-asset-boundaries">Step 2: Identify Asset Boundaries</h3>
+
+<p><em>Component asset referenced into a factory assembly stage.</em></p>
+
+<p>See also</p>
+
+<p><a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html#usd-structure-example-assembly-stage">USDA Sample: Assembly Stage</a></p>
+
+<p>With animation separated, the next step is identifying where to draw asset boundaries. Assets should align with real-world units that are versioned, sourced, or updated independently.</p>
+
+<p><strong>Key factors for drawing boundaries</strong></p>
+
+<ul>
+  <li><strong>Lifecycle and Ownership</strong></li>
+</ul>
+
+<p>Content with different update cycles or ownership should be separate assets. Consider: <em>Who updates this content, and how often?</em></p>
+
+<ul>
+  <li><strong>Equipment</strong></li>
+</ul>
+
+<p>Robots, conveyors, machines, and fixtures typically map to individual component assets. Each can be versioned and replaced without affecting the rest of the factory.</p>
+
+<ul>
+  <li><strong>Facility Sections</strong></li>
+</ul>
+
+<p>Work cells, production lines, or building zones can be grouped as assembly assets that reference equipment components.</p>
+
+<ul>
+  <li><strong>Shared Resources</strong></li>
+</ul>
+
+<p>Material libraries, animation clips, and sensor configurations are assets in their own right—referenced by multiple equipment or facility assets.</p>
+
+<ul>
+  <li><strong>Instancing Potential</strong></li>
+</ul>
+
+<p>Repeated elements (identical robots, racks, fixtures) benefit from being defined as discrete assets that can be instanced. Assets that appear multiple times should share a common definition.</p>
+
+<ul>
+  <li><strong>Validation and Optimization Scope</strong></li>
+</ul>
+
+<p>Structure defines the granularity at which validation and optimization can operate. Assets that require independent geometry repair, decimation, or material consolidation should be separated. Once assetized, these operations can run in parallel across the asset library.</p>
+
+<ul>
+  <li><strong>Selective Loading</strong></li>
+</ul>
+
+<p>Large facility sections or heavy equipment benefit from payload boundaries that enable selective loading. Content that users may want to load or unload independently should be a separate asset.</p>
+
+<p>Tip</p>
+
+<p><strong>For Pipeline and Converter Developers</strong></p>
+
+<p>Effective structuring begins upstream. Work with content authors to define asset boundaries in the source application—converters cannot infer boundaries that do not exist in the source data.</p>
+
+<p>Converters and export pipelines should preserve metadata that enables downstream structuring—even when full assetization is not performed at conversion time. Useful breadcrumbs include:</p>
+
+<ul>
+  <li><strong>Meaningful Kind Hierarchy</strong></li>
+</ul>
+
+<p>Assign USD <code class="language-plaintext highlighter-rouge">kind</code> values (<code class="language-plaintext highlighter-rouge">component</code>, <code class="language-plaintext highlighter-rouge">subcomponent</code>, <code class="language-plaintext highlighter-rouge">assembly</code>) to reflect the logical structure of the source data. See <a href="https://docs.nvidia.com/learn-openusd/latest/asset-structure/model-hierarchy/index.html">Model Hierarchy</a> and <a href="https://docs.nvidia.com/learn-openusd/latest/asset-structure/asset-structure-principles/organizing-prim-hierarchy.html">Organizing Prim Hierarchy</a>.</p>
+
+<ul>
+  <li><strong>Asset Info Attributes</strong></li>
+</ul>
+
+<p>Populate <code class="language-plaintext highlighter-rouge">assetInfo</code> with identifiers, version strings, or PLM tracking data that link USD prims back to their source definitions.</p>
+
+<ul>
+  <li><strong>Custom Attributes for Unmapped Data</strong></li>
+</ul>
+
+<p>Data that cannot be mapped to existing OpenUSD schemas (part numbers, supplier codes, classification tags) should be authored as custom attributes with clear vendor prefixes (e.g. <code class="language-plaintext highlighter-rouge">myCompany:partNumber</code>) rather than discarded.</p>
+
+<ul>
+  <li><strong>Deduplication and assetization granularity</strong></li>
+</ul>
+
+<p>When identifying asset boundaries, detect and eliminate duplicate geometry, materials or textures during or after export. Deduplication directly informs the right level of granularity—assets that share identical geometry and materials should reference the same subcomponent rather than carrying redundant copies. This is often the highest-impact cleanup step before instancing can take effect.</p>
+
+<p>This metadata enables automated restructuring tools to identify asset boundaries, match repeated geometry for instancing, and trace content back to authoritative sources.</p>
+
+<p>For more on building export pipelines, see <a href="https://docs.nvidia.com/learn-openusd/latest/data-exchange/index.html">Data Exchange</a>, <a href="https://docs.omniverse.nvidia.com/usd/latest/technical_reference/conceptual_data_mapping/index.html">Conceptual Data Mapping</a>, and the <a href="https://docs.omniverse.nvidia.com/usd/code-docs/usd-exchange-sdk/latest/index.html">USD Exchange SDK</a>.</p>
+
+<p><strong>Why It Matters</strong></p>
+
+<p>Asset boundaries define the units of change management in your digital twin. Well-drawn boundaries transform a static export into a living asset library that evolves with your facility—enabling independent versioning, parallel team workflows, granular validation, and instancing.</p>
+
+<h3 id="step-3-optional-interfacepayload-layering">Step 3 (Optional): Interface/Payload Layering</h3>
+
+<p><em>Component asset structure: Robot.inter.usda (interface layer) references Robot.pay.usdc (payload with geometry).</em></p>
+
+<p>See also</p>
+
+<p><a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html#usd-structure-example-component-interface">USDA Sample: Asset Interface and Payload</a></p>
+
+<p>This pattern is optional and is most useful in larger assemblies that benefit from selective loading and stable public composition targets.</p>
+
+<p>Once asset boundaries are identified, assets can be structured with a clear separation between public interface data and heavier content. A <strong>component asset</strong> is a reusable unit (for example, a robot or conveyor).</p>
+
+<p><strong>Key practices</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Interface Layer</strong> — Defines the public surface of the asset (<code class="language-plaintext highlighter-rouge">kind</code>, <code class="language-plaintext highlighter-rouge">assetInfo</code>, <code class="language-plaintext highlighter-rouge">extent hints</code>, <code class="language-plaintext highlighter-rouge">variant sets</code>). It remains available when payloads are unloaded.</p>
+  </li>
+  <li>
+    <p><strong>Payload</strong> — Contains heavy geometry and internal hierarchy. Enables selective loading.</p>
+  </li>
+  <li>
+    <p><strong>Granularity tradeoff</strong> — Finer asset/layer boundaries can improve lifecycle and selective-loading control, but they can also increase layer count and open/stat latency. For deployment-time tradeoffs, see <a href="optimization-tradeoffs.md">Asset Structure Performance Optimizations and Tradeoffs</a>.</p>
+  </li>
+</ul>
+
+<p>For detailed guidance, see <a href="https://docs.nvidia.com/learn-openusd/latest/asset-structure/asset-structure-principles/asset-interface-pt1.html">Asset Interface</a> and <a href="https://docs.nvidia.com/learn-openusd/latest/asset-structure/reference-payload-pattern/index.html">Reference/Payload Pattern</a>.</p>
+
+<p>Tip</p>
+
+<p>Pre-structured assets—such as a <a href="https://docs.omniverse.nvidia.com/kit/docs/asset-requirements/1.7.1/index.html">SimReady Prop asset</a> or an <a href="https://docs.isaacsim.omniverse.nvidia.com/6.0.0/robot_setup/asset_structure.html">Isaac Sim Robot asset</a>—can be referenced directly at component boundaries without further restructuring.</p>
+
+<p><strong>Why It Matters</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Selective loading</strong> — Navigate entire facilities while keeping heavy geometry unloaded.</p>
+  </li>
+  <li>
+    <p><strong>Stable composition targets</strong> — Interface provides consistent prim paths even as payload internals evolve.</p>
+  </li>
+  <li>
+    <p><strong>Memory efficiency</strong> — Load only what you need; unload distant assets without losing scene graph presence.</p>
+  </li>
+  <li>
+    <p><strong>Faster iteration</strong> — Modify asset internals without invalidating upstream references.</p>
+  </li>
+</ul>
+
+<h3 id="step-4-enable-instancing">Step 4: Enable Instancing</h3>
+
+<p><em>Robot component composed from instanced rigid subcomponents (x.usdc, y.usdc, z.usdc) assembled through the payload layer.</em></p>
+
+<p>See also</p>
+
+<p><a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html#usd-structure-example-subcomponent-asset">USDA Sample: Subcomponent Asset</a></p>
+
+<p>With assets structured as discrete references, instancing can now be applied. Instancing is a core requirement for scalable factory scenes, but it must be applied with care. For background, see <a href="https://docs.nvidia.com/learn-openusd/latest/asset-modularity-instancing/what-is-instancing.html">What is Instancing?</a></p>
+
+<p>In OpenUSD, <strong>instances are immutable</strong>—attribute opinions (including animation) cannot be applied on prims inside an instance. As a result, <strong>instancing granularity must follow opinion authoring granularity</strong>.</p>
+
+<p><strong>Key practices</strong></p>
+
+<ul>
+  <li>
+    <p><strong>No whole-asset instancing for articulated objects</strong> — The entire robot cannot be instanced if its parts need animation.</p>
+  </li>
+  <li>
+    <p><strong>Instance at rigid-body level</strong> — Instance each animatable rigid body (individual links), including geometry and materials.</p>
+  </li>
+  <li>
+    <p><strong>Reassemble through references</strong> — Combine instanced subcomponents into the full component.</p>
+  </li>
+  <li>
+    <p><strong>Choose internal vs external referencing</strong> — External referencing allows for maximum reuse of subcomponents across components, but it can substantially increase layer count. Internal referencing keeps layer count low, but doesn’t facilitate sharing of subcomponents between components.</p>
+  </li>
+</ul>
+
+<p>For implementation details, see <a href="https://docs.nvidia.com/learn-openusd/latest/asset-modularity-instancing/authoring-scenegraph-instancing/index.html">Authoring Scene Graph Instancing</a>.</p>
+
+<p><strong>Why It Matters</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Memory reduction</strong> — Hundreds of identical robots share geometry in GPU memory.</p>
+  </li>
+  <li>
+    <p><strong>Render performance</strong> — Instanced draws are orders of magnitude faster than unique submissions.</p>
+  </li>
+  <li>
+    <p><strong>Animation compatibility</strong> — Instancing at rigid-body level preserves joint animation while sharing geometry.</p>
+  </li>
+  <li>
+    <p><strong>Consistent updates</strong> — Fix a mesh defect one time, and every instance reflects the change.</p>
+  </li>
+</ul>
+
+<h3 id="step-5-organize-materials-into-libraries">Step 5: Organize Materials into Libraries</h3>
+
+<p><em>Canonical material libraries referenced and instanced across factory components.</em></p>
+
+<p>See also</p>
+
+<p><a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html#usd-structure-example-material-library">USDA Sample: Material Library</a></p>
+
+<p>Materials should be treated as reusable assets in the same way as geometry.</p>
+
+<p><strong>Key practices</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Shared libraries</strong> — Define canonical materials in shared material libraries.</p>
+  </li>
+  <li>
+    <p><strong>Interface exposure</strong> — Lift shader attributes into material interfaces.</p>
+  </li>
+  <li>
+    <p><strong>Reference, do not duplicate</strong> — Reference and instance materials rather than duplicating them.</p>
+  </li>
+  <li>
+    <p><strong>Binding with geometry</strong> — Let material bindings travel with subcomponents where appropriate.</p>
+  </li>
+</ul>
+
+<p><strong>Why It Matters</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Consistency</strong> — All “safety yellow” surfaces match across equipment from different suppliers.</p>
+  </li>
+  <li>
+    <p><strong>Efficient updates</strong> — Adjust a prototype one time, and the change propagates everywhere.</p>
+  </li>
+  <li>
+    <p><strong>Reduced shader compilation</strong> — Shared materials compile one time, improving load times.</p>
+  </li>
+  <li>
+    <p><strong>Design iteration</strong> — Swap material libraries without touching asset files.</p>
+  </li>
+</ul>
+
+<h3 id="step-6-layer-domain-specific-data">Step 6: Layer Domain-Specific Data</h3>
+
+<p><em>Domain-specific layers (here: material specialization) applied as edit layers on top of structured assets.</em></p>
+
+<p>See also</p>
+
+<p><a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html#usd-structure-example-domain-specific-layer">USDA Sample: Domain-Specific Layering</a></p>
+
+<p>Well-structured assets enable downstream <a href="https://docs.nvidia.com/learn-openusd/latest/asset-structure/workstreams/modeling-workstreams.html">workstreams</a> to layer domain-specific data through USD composition—without modifying source assets.</p>
+
+<p><strong>Key practices</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Dedicated layers per domain</strong> — Each team authors in their own layer file.</p>
+  </li>
+  <li>
+    <p><strong>Target stable prim paths</strong> — Layer onto interface prims that will not change as payloads evolve.</p>
+  </li>
+  <li>
+    <p><strong>Non-destructive composition</strong> — Override attributes, and do not modify source assets.</p>
+  </li>
+</ul>
+
+<p>Common examples include material specialization, <a href="https://docs.omniverse.nvidia.com/kit/docs/asset-requirements/1.7.1/capabilities/physics_bodies/physics_bodies.html">physics properties</a>, sensor definitions, and <a href="https://docs.omniverse.nvidia.com/kit/docs/asset-requirements/1.7.1/capabilities/semantic_labels/capability-semantic_labels.html">semantic labels</a>.</p>
+
+<p>Tip</p>
+
+<p>This layering step is where structured assets become simulation-ready. By adding physics properties, semantic labels, and sensor definitions, assets meet <a href="https://docs.omniverse.nvidia.com/kit/docs/asset-requirements/1.7.1/index.html">SimReady specifications</a>.</p>
+
+<p><strong>Why It Matters</strong></p>
+
+<ul>
+  <li>
+    <p><strong>Parallel team workflows</strong> — Simulation, perception, and visualization teams work independently.</p>
+  </li>
+  <li>
+    <p><strong>Non-destructive iteration</strong> — Experiment without risk to base geometry.</p>
+  </li>
+  <li>
+    <p><strong>Clear ownership</strong> — Each layer has a responsible team; changes are traceable.</p>
+  </li>
+  <li>
+    <p><strong>SimReady transformation</strong> — Progressively enrich assets to meet simulation requirements.</p>
+  </li>
+</ul>
+
+<h3 id="step-7-object-handling">Step 7: Object Handling</h3>
+
+<p><em>Object handling structure: Objects.usda contains the Point Instancer referencing Object.inter.usda (interface) which payloads Object.pay.usdc (prototype geometry). Animation is driven through value clips (clip.usd).</em></p>
+
+<p>See also</p>
+
+<p><a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html#usd-structure-example-point-instancer-material-flow">USDA Sample: Point Instancer (Object Handling)</a></p>
+
+<p>Object handling—also called movable objects or material flow—addresses how production parts move through a factory over time. OpenUSD has no native mechanism for dynamic re-parenting, making this a data modeling challenge.</p>
+
+<p><strong>Why It Matters</strong></p>
+
+<p>Object handling is often what stakeholders want to see first—products moving through the line proves the digital twin is alive. Point Instancers handle millions of products with minimal overhead, can be driven by simulation or recorded data, and decouple flow animation from equipment assets.</p>
+
+<h4 id="point-instancers-for-object-handling">Point Instancers for Object Handling</h4>
+<p>A factory may handle thousands or millions of identical objects simultaneously. In OpenUSD, this repetition is modeled most effectively with Point Instancers.</p>
+
+<p><strong>Recommendation:</strong> Represent large populations of movable products with Point Instancers and drive motion over time, rather than duplicating product prims, swapping visibility, or attempting to dynamically restructure the prim hierarchy.</p>
+
+<p>A Point Instancer is a USD prim that efficiently renders many copies of prototype geometry at different positions, orientations, and scales. Instead of creating thousands of individual prims, a single Point Instancer holds arrays of transforms and references one or more prototype prims. The renderer draws the prototype at each transform location, achieving massive scene populations with minimal scene graph overhead. Transforms can be animated per-frame, enabling object handling visualization without hierarchy changes. For implementation details, see <a href="https://docs.nvidia.com/learn-openusd/latest/asset-modularity-instancing/authoring-point-instancing/index.html">Authoring Point Instancing</a>.</p>
+
+<p><strong>Key Attributes</strong></p>
+
+<ul>
+  <li><strong>Positions, Orientations, Scales</strong></li>
+</ul>
+
+<p>Arrays with one entry per instance slot, time-sampled to animate movement. Products flow through the factory as these values change each frame.</p>
+
+<ul>
+  <li><strong>InvisibleIds</strong></li>
+</ul>
+
+<p>Array of instance indices hidden at each frame. This handles products entering and exiting the scene.</p>
+
+<ul>
+  <li><strong>Instance Pooling</strong></li>
+</ul>
+
+<p>The number of instance slots can be less than the total number of products over time. When one product exits and another enters nearby, they share the same slot—reducing instance count while maintaining visual continuity.</p>
+
+<h4 id="alternative-approaches">Alternative Approaches</h4>
+<p>Different scenarios call for different representations.</p>
+
+<p><strong>Physics Joints and Constraints</strong></p>
+
+<p>Use when the carried/attached relationship must be physically simulated (gripping with contact constraints, physically meaningful coupling). Tradeoff: heavier runtime semantics, not appropriate for millions of kinematically moving flow items.</p>
+
+<p><strong>Referenced Prims</strong></p>
+
+<p>Use when each movable object needs richer authored structure, individual identity, or unique overrides (annotations, per-object variations). Tradeoff: for high counts, becomes expensive (scene graph size, load time, memory). Handoff logic may tempt fragile re-parenting or visibility tricks.</p>
+
+<h2 id="common-pitfalls">Common Pitfalls</h2>
+
+<p>Warning</p>
+
+<p><strong>Over-Structuring Beyond Useful Granularity</strong></p>
+
+<p>Very fine-grained structure increases the number of layer files and references to resolve, which can hurt startup latency. Fine-grained authoring structure is valuable for lifecycle management but may require a packaging step to consolidate layers for runtime. See <a href="optimization-tradeoffs.md">Asset Structure Performance Optimizations and Tradeoffs</a> for that packaging step.</p>
+
+<p><strong>Treating Instancing as Optional Optimization</strong></p>
+
+<p>At factory scale, repetition dominates scene size. Design instancing into asset structure from the start rather than attempting to add it later.</p>
+
+<p><strong>Expecting Instancing Without Composition Boundaries</strong></p>
+
+<p>OpenUSD instancing requires composition arcs. First create repeatable references and payloads through modular asset structure, then apply instancing at those boundaries.</p>
+
+<p><strong>Discovering Instance Immutability Too Late</strong></p>
+
+<p>Descendants of instanced prims become read-only. Choose instance boundaries based on where edits (animation) must land. When edits target sub-parts, instance at deeper granularity or use refinement patterns.</p>
+
+<p><strong>Mapping CAD Structure Directly to Instance Boundaries</strong></p>
+
+<p>USD instancing differs from CAD instancing. Instancing an entire articulated asset blocks edits to joints, visibility, or annotations. Instance rigid subcomponents and reassemble through references.</p>
+
+<p><strong>Baking Animation Into the Main Stage</strong></p>
+
+<p>Coupling motion with structure amplifies edit targeting problems. Externalize time-varying data into clips and layers, binding through composition at valid authoring targets.</p>
+
+<p><strong>Choose Suitable USD Formats</strong></p>
+
+<p>USDZ packaging and ASCII for USD data with large arrays kills performance. Use binary USD files for layers with geometry and other “heavy data”. ASCII layers are acceptable for sparse layers such as asset interfaces. For extra performance benefits, use the corresponding USD file extension over the generic .usd extension as this will save an extra file “stat” by USD before layers are opened for composition.</p>
+
+<p><strong>Expecting Exporters to Produce Structured USD</strong></p>
+
+<p>Exporters may produce output that does not map to factory scale structuring requirements. Plan for a shared cleanup stage (validation, optimization, restructuring).</p>
+
+<p>More fundamentally, <strong>assetization must begin upstream</strong>—in the source application—not just at export time. If the source tool does not distinguish assets from arbitrary geometry groups, the exporter cannot infer asset boundaries. Work with content authors to define assets in the source environment, then ensure the export pipeline preserves those definitions.</p>
+
+<p><strong>Duplicating Materials at Scale</strong></p>
+
+<p>Authoring materials per mesh or per instance creates massive material counts. Canonicalize materials into libraries and reference them as reusable assets.</p>
+
+<p><strong>Duplicating Product Assets for Object Handling</strong></p>
+
+<p>Creating multiple copies of the same part and switching visibility to fake movement. This approach does not scale and creates maintenance burden. Use Point Instancers instead.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>You have applied a factory-scale USD structuring pattern that separates animation, defines asset boundaries, enables instancing, and supports layered simulation workflows. This structure helps you scale updates and performance without sacrificing maintainability.</p>
+
+<p>Downloadable sample assets that conform to this guide are planned. For now, the USDA snippets in <a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html">VFI Asset Structure Examples</a> serve as the reference implementation.</p>
+
+<p>For concrete layer snippets that map to each step, see <a href="https://docs.omniverse.nvidia.com/vfi/latest/guide/usd-structure-example.html">VFI Asset Structure Examples</a>. For deployment-time packaging tradeoffs, see <a href="optimization-tradeoffs.md">Asset Structure Performance Optimizations and Tradeoffs</a>.</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

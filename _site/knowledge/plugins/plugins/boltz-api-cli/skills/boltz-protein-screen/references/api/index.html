@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Api · A developer journey</title>
+<meta name="description" content="Protein Screen — Payload Reference">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/boltz-api-cli/skills/boltz-protein-screen/references/api/">
+
+<meta property="og:title" content="Api · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/boltz-api-cli/skills/boltz-protein-screen/references/api/">
+<meta property="og:description" content="Protein Screen — Payload Reference">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Api</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="protein-screen--payload-reference">Protein Screen — Payload Reference</h1>
+
+<p>Covers the <code class="language-plaintext highlighter-rouge">protein:library-screen</code> endpoint. Prefer a single merged top-level <code class="language-plaintext highlighter-rouge">--input</code> payload. Field names are <strong>API body field names</strong>.</p>
+
+<p>Minimal CLI pattern:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boltz-api protein:library-screen estimate-cost <span class="nt">--input</span> @yaml:///absolute/path/payload.yaml
+boltz-api protein:library-screen start <span class="nt">--idempotency-key</span> <span class="s2">"&lt;run-name&gt;"</span> <span class="nt">--input</span> @yaml:///absolute/path/payload.yaml <span class="nt">--raw-output</span> <span class="nt">--transform</span> <span class="nb">id</span>
+</code></pre></div></div>
+
+<p>In permission-gated agents, keep the submit command as a top-level <code class="language-plaintext highlighter-rouge">boltz-api ... start</code> invocation. Read the printed job ID from stdout and paste it into the later <code class="language-plaintext highlighter-rouge">download-results</code> command.</p>
+
+<p>Keep <code class="language-plaintext highlighter-rouge">--idempotency-key</code> and <code class="language-plaintext highlighter-rouge">--workspace-id</code> top-level; if they also appear inside <code class="language-plaintext highlighter-rouge">--input</code>, the top-level flags win. Direct object flags still work as overrides, such as <code class="language-plaintext highlighter-rouge">--target @yaml:///absolute/path/target.yaml</code> or repeated <code class="language-plaintext highlighter-rouge">--protein @json:///absolute/path/protein-1.json</code> entries. Piped YAML / JSON on stdin remains supported when you need it, but the body must use API field names.</p>
+
+<h2 id="contents">Contents</h2>
+
+<ul>
+  <li><a href="#top-level-request">Top-level request</a></li>
+  <li><a href="#proteins-candidate-library"><code class="language-plaintext highlighter-rouge">proteins</code> (candidate library)</a></li>
+  <li><a href="#target--variant-1-structure_template"><code class="language-plaintext highlighter-rouge">target</code> — variant 1: <code class="language-plaintext highlighter-rouge">structure_template</code></a></li>
+  <li><a href="#target--variant-2-no_template"><code class="language-plaintext highlighter-rouge">target</code> — variant 2: <code class="language-plaintext highlighter-rouge">no_template</code></a></li>
+  <li><a href="#bonds-and-constraints"><code class="language-plaintext highlighter-rouge">bonds</code> and <code class="language-plaintext highlighter-rouge">constraints</code></a></li>
+  <li><a href="#cost">Cost</a></li>
+  <li><a href="#outputs-after-download-results">Outputs (after <code class="language-plaintext highlighter-rouge">download-results</code>)</a></li>
+  <li><a href="#escape-hatch">Escape hatch</a></li>
+</ul>
+
+<h2 id="top-level-request">Top-level request</h2>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># payload.yaml</span>
+<span class="na">proteins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">entities</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">protein</span>
+        <span class="na">chain_ids</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">B</span><span class="pi">]</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">MKTAYIAKQRQISFVKSHFSRQ"</span>
+  <span class="pi">-</span> <span class="na">entities</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">protein</span>
+        <span class="na">chain_ids</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">B</span><span class="pi">]</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">AVGRHEAVGTYCR"</span>
+<span class="na">target</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">no_template</span>
+  <span class="na">entities</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">protein</span>
+      <span class="na">chain_ids</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">A</span><span class="pi">]</span>
+      <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">QRTVEKATLLPNMPGQVLGHSSVLA"</span>
+  <span class="na">epitope_residues</span><span class="pi">:</span>
+    <span class="na">A</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">42</span><span class="pi">,</span> <span class="nv">43</span><span class="pi">,</span> <span class="nv">44</span><span class="pi">]</span>
+</code></pre></div></div>
+
+<p>Top-level fields:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">proteins</code> (required) — list of candidate binder complexes. Each entry is a mini-complex with its own <code class="language-plaintext highlighter-rouge">entities</code> list.</li>
+  <li><code class="language-plaintext highlighter-rouge">target</code> (required) — discriminated union: <code class="language-plaintext highlighter-rouge">structure_template</code> or <code class="language-plaintext highlighter-rouge">no_template</code>.</li>
+</ul>
+
+<p>Also passed as separate <code class="language-plaintext highlighter-rouge">start</code> flags:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--idempotency-key &lt;slug&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">--workspace-id &lt;id&gt;</code> (admin keys only)</li>
+</ul>
+
+<h2 id="proteins-candidate-library"><code class="language-plaintext highlighter-rouge">proteins</code> (candidate library)</h2>
+
+<p>Each entry represents one candidate binder complex to score against the target. For a simple sequence library each entry contains one protein entity:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">proteins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">entities</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">protein</span>
+        <span class="na">chain_ids</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">B</span><span class="pi">]</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">MKTAYIAKQRQISFVKSHFSRQ"</span>
+    <span class="na">id</span><span class="pi">:</span> <span class="s">binder-001</span>                 <span class="c1"># optional; returned as external_id</span>
+</code></pre></div></div>
+
+<p>Multi-chain candidates (e.g. antibody heavy + light) put multiple entities in one entry:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">proteins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">entities</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">protein</span>
+        <span class="na">chain_ids</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">H</span><span class="pi">]</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">EVQLVES...QVTVSS"</span>
+      <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">protein</span>
+        <span class="na">chain_ids</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">L</span><span class="pi">]</span>
+        <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">DIQMTQ...VEIKR"</span>
+</code></pre></div></div>
+
+<p>Supported entity types inside <code class="language-plaintext highlighter-rouge">proteins[].entities</code>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">protein</code></li>
+  <li><code class="language-plaintext highlighter-rouge">rna</code></li>
+  <li><code class="language-plaintext highlighter-rouge">dna</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ligand_smiles</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ligand_ccd</code></li>
+</ul>
+
+<p>Entity fields: <code class="language-plaintext highlighter-rouge">type</code>, <code class="language-plaintext highlighter-rouge">value</code>, <code class="language-plaintext highlighter-rouge">chain_ids</code>, <code class="language-plaintext highlighter-rouge">modifications</code> (optional), <code class="language-plaintext highlighter-rouge">cyclic</code> (optional bool).</p>
+
+<p>Each <code class="language-plaintext highlighter-rouge">proteins[]</code> entry may also include an optional client-side <code class="language-plaintext highlighter-rouge">id</code>. The server echoes it as <code class="language-plaintext highlighter-rouge">external_id</code> on the corresponding result; use it to map ranked hits back to FASTA records, CSV rows, or library IDs.</p>
+
+<h2 id="target--variant-1-structure_template"><code class="language-plaintext highlighter-rouge">target</code> — variant 1: <code class="language-plaintext highlighter-rouge">structure_template</code></h2>
+
+<p>Use when the user has a 3D structure (CIF/PDB file or URL).</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">target</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">structure_template</span>
+  <span class="na">structure</span><span class="pi">:</span>
+    <span class="na">type</span><span class="pi">:</span> <span class="s">url</span>
+    <span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://example.com/target.cif"</span>
+  <span class="na">chain_selection</span><span class="pi">:</span>
+    <span class="na">A</span><span class="pi">:</span>
+      <span class="na">chain_type</span><span class="pi">:</span> <span class="s">polymer</span>
+      <span class="na">crop_residues</span><span class="pi">:</span> <span class="s">all</span>                <span class="c1"># or [0, 1, 2, ...] for specific 0-based indices</span>
+      <span class="na">epitope_residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">42</span><span class="pi">,</span> <span class="nv">43</span><span class="pi">,</span> <span class="nv">44</span><span class="pi">]</span>    <span class="c1"># optional; subset of crop_residues</span>
+      <span class="na">flexible_residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">40</span><span class="pi">,</span> <span class="nv">41</span><span class="pi">,</span> <span class="nv">42</span><span class="pi">]</span>   <span class="c1"># optional; subset of crop_residues</span>
+    <span class="na">B</span><span class="pi">:</span>
+      <span class="na">chain_type</span><span class="pi">:</span> <span class="s">ligand</span>
+</code></pre></div></div>
+
+<h3 id="structure-source-variants"><code class="language-plaintext highlighter-rouge">structure</code> source variants</h3>
+
+<p>URL:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">structure</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">url</span>
+  <span class="na">url</span><span class="pi">:</span> <span class="s2">"</span><span class="s">https://example.com/target.cif"</span>
+</code></pre></div></div>
+
+<p>Base64 (for a local file — use <code class="language-plaintext highlighter-rouge">@data://</code> in the CLI, which detects binary and encodes):</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">structure</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">base64</span>
+  <span class="na">media_type</span><span class="pi">:</span> <span class="s">chemical/x-cif</span>
+  <span class="na">data</span><span class="pi">:</span> <span class="s2">"</span><span class="s">@data:///abs/path/to/target.cif"</span>
+</code></pre></div></div>
+
+<p><strong>Do not</strong> use bare <code class="language-plaintext highlighter-rouge">@path/to/file.cif</code> here — automatic file-type detection has historically miscategorized CIF as plain text and broken the server parser. Prefer <code class="language-plaintext highlighter-rouge">@data://</code> explicitly.</p>
+
+<h3 id="chain_selection-values"><code class="language-plaintext highlighter-rouge">chain_selection</code> values</h3>
+
+<p>Polymer chain:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">A</span><span class="pi">:</span>
+  <span class="na">chain_type</span><span class="pi">:</span> <span class="s">polymer</span>
+  <span class="na">crop_residues</span><span class="pi">:</span> <span class="s">all</span>                  <span class="c1"># or [int, ...]</span>
+  <span class="na">epitope_residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">int</span><span class="pi">,</span> <span class="nv">...</span><span class="pi">]</span>        <span class="c1"># optional; must be subset of crop_residues</span>
+  <span class="na">flexible_residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">int</span><span class="pi">,</span> <span class="nv">...</span><span class="pi">]</span>       <span class="c1"># optional; must be subset of crop_residues</span>
+  <span class="na">non_binding_residues</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">int</span><span class="pi">,</span> <span class="nv">...</span><span class="pi">]</span>    <span class="c1"># optional; subset of crop_residues, must NOT overlap epitope_residues</span>
+</code></pre></div></div>
+
+<p>Ligand chain:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">B</span><span class="pi">:</span>
+  <span class="na">chain_type</span><span class="pi">:</span> <span class="s">ligand</span>
+</code></pre></div></div>
+
+<p>All residue indices are 0-based.</p>
+
+<h2 id="target--variant-2-no_template"><code class="language-plaintext highlighter-rouge">target</code> — variant 2: <code class="language-plaintext highlighter-rouge">no_template</code></h2>
+
+<p>Use when the user has only sequences.</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">target</span><span class="pi">:</span>
+  <span class="na">type</span><span class="pi">:</span> <span class="s">no_template</span>
+  <span class="na">entities</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">protein</span>
+      <span class="na">chain_ids</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">A</span><span class="pi">]</span>
+      <span class="na">value</span><span class="pi">:</span> <span class="s2">"</span><span class="s">QRTVEKATLLPNMPGQVLGHSSVLA"</span>
+      <span class="na">modifications</span><span class="pi">:</span> <span class="pi">[]</span>               <span class="c1"># optional</span>
+  <span class="na">epitope_residues</span><span class="pi">:</span>
+    <span class="na">A</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">42</span><span class="pi">,</span> <span class="nv">43</span><span class="pi">,</span> <span class="nv">44</span><span class="pi">]</span>                   <span class="c1"># optional; 0-based</span>
+  <span class="na">epitope_ligand_chains</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">C</span><span class="pi">]</span>          <span class="c1"># optional</span>
+  <span class="na">bonds</span><span class="pi">:</span> <span class="pi">[]</span>                           <span class="c1"># optional</span>
+  <span class="na">constraints</span><span class="pi">:</span> <span class="pi">[]</span>                     <span class="c1"># optional</span>
+</code></pre></div></div>
+
+<p>Optional fields:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">epitope_residues</code> — <code class="language-plaintext highlighter-rouge">{chain_id: [0-based residue_index, ...]}</code>. Hints the binding epitope.</li>
+  <li><code class="language-plaintext highlighter-rouge">non_binding_residues</code> — <code class="language-plaintext highlighter-rouge">{chain_id: [0-based residue_index, ...]}</code>. Residues where binder contact is discouraged; must <strong>not</strong> overlap <code class="language-plaintext highlighter-rouge">epitope_residues</code> on the same chain.</li>
+  <li><code class="language-plaintext highlighter-rouge">epitope_ligand_chains</code> — list of ligand chain IDs if the epitope includes a ligand.</li>
+  <li><code class="language-plaintext highlighter-rouge">bonds</code>, <code class="language-plaintext highlighter-rouge">constraints</code> — same shapes as the structure-and-binding skill (see below).</li>
+</ul>
+
+<h2 id="bonds-and-constraints"><code class="language-plaintext highlighter-rouge">bonds</code> and <code class="language-plaintext highlighter-rouge">constraints</code></h2>
+
+<p>Only include when the user explicitly asks for geometry constraints.</p>
+
+<h3 id="bond-shape">Bond shape</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">bonds</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">atom1</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">polymer_atom</span>
+      <span class="na">chain_id</span><span class="pi">:</span> <span class="s">A</span>
+      <span class="na">residue_index</span><span class="pi">:</span> <span class="m">12</span>       <span class="c1"># 0-based</span>
+      <span class="na">atom_name</span><span class="pi">:</span> <span class="s">SG</span>
+    <span class="na">atom2</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">ligand_atom</span>
+      <span class="na">chain_id</span><span class="pi">:</span> <span class="s">D</span>
+      <span class="na">atom_name</span><span class="pi">:</span> <span class="s">C1</span>
+</code></pre></div></div>
+
+<h3 id="pocket-constraint">Pocket constraint</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">constraints</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">pocket</span>
+    <span class="na">binder_chain_id</span><span class="pi">:</span> <span class="s">B</span>
+    <span class="na">contact_residues</span><span class="pi">:</span>
+      <span class="na">A</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">42</span><span class="pi">]</span>                 <span class="c1"># 0-based</span>
+    <span class="na">max_distance_angstrom</span><span class="pi">:</span> <span class="m">6.0</span>
+    <span class="na">force</span><span class="pi">:</span> <span class="kc">false</span>              <span class="c1"># optional</span>
+</code></pre></div></div>
+
+<h3 id="contact-constraint">Contact constraint</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">constraints</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">type</span><span class="pi">:</span> <span class="s">contact</span>
+    <span class="na">max_distance_angstrom</span><span class="pi">:</span> <span class="m">5.0</span>
+    <span class="na">token1</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">polymer_contact</span>
+      <span class="na">chain_id</span><span class="pi">:</span> <span class="s">A</span>
+      <span class="na">residue_index</span><span class="pi">:</span> <span class="m">42</span>       <span class="c1"># 0-based</span>
+    <span class="na">token2</span><span class="pi">:</span>
+      <span class="na">type</span><span class="pi">:</span> <span class="s">polymer_contact</span>
+      <span class="na">chain_id</span><span class="pi">:</span> <span class="s">B</span>
+      <span class="na">residue_index</span><span class="pi">:</span> <span class="m">10</span>
+    <span class="na">force</span><span class="pi">:</span> <span class="kc">false</span>
+</code></pre></div></div>
+
+<p>Token variants: <code class="language-plaintext highlighter-rouge">polymer_contact {chain_id, residue_index}</code> or <code class="language-plaintext highlighter-rouge">ligand_contact {chain_id, atom_name}</code>.</p>
+
+<p><strong>Atom-level ligand references (bonds and <code class="language-plaintext highlighter-rouge">ligand_contact</code>) support <code class="language-plaintext highlighter-rouge">ligand_ccd</code> only</strong> — a <code class="language-plaintext highlighter-rouge">ligand_smiles</code> chain referenced by atom is rejected; use a <code class="language-plaintext highlighter-rouge">ligand_ccd</code> entity instead.</p>
+
+<h2 id="cost">Cost</h2>
+
+<p>Cost is tiered by <strong>total complex length</strong> (target + candidate), so there is no flat per-candidate rate to cite — it changes with size. Run <code class="language-plaintext highlighter-rouge">estimate-cost</code> on the full payload and quote only the <code class="language-plaintext highlighter-rouge">estimated_cost_usd</code> it returns; do not state or estimate a dollar figure yourself.</p>
+
+<h2 id="outputs-after-download-results">Outputs (after <code class="language-plaintext highlighter-rouge">download-results</code>)</h2>
+
+<p>Under <code class="language-plaintext highlighter-rouge">&lt;output-root&gt;/&lt;run-name&gt;/</code>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">.boltz-run.json</code></li>
+  <li><code class="language-plaintext highlighter-rouge">run.json</code> — sanitized remote run record</li>
+  <li><code class="language-plaintext highlighter-rouge">results/index.jsonl</code> — one scored candidate per line, copied from list-results metadata plus local artifact paths</li>
+  <li><code class="language-plaintext highlighter-rouge">results/&lt;pres_*&gt;/metadata.json</code> — per-result metadata copied from the list-results record</li>
+  <li><code class="language-plaintext highlighter-rouge">results/&lt;pres_*&gt;/archive.tar.gz</code> — one dir per scored candidate</li>
+  <li><code class="language-plaintext highlighter-rouge">results/&lt;pres_*&gt;/files/result/{metrics.json, &lt;result-id&gt;_predicted.cif, pae.npz}</code> (the CIF is named <code class="language-plaintext highlighter-rouge">&lt;pres_*&gt;_predicted.cif</code> — prefer the <code class="language-plaintext highlighter-rouge">paths.structure</code> field from <code class="language-plaintext highlighter-rouge">index.jsonl</code> over hard-coding the filename)</li>
+</ul>
+
+<p>Per-result fields (available in <code class="language-plaintext highlighter-rouge">results/index.jsonl</code>, <code class="language-plaintext highlighter-rouge">results/&lt;pres_*&gt;/metadata.json</code>, and the <code class="language-plaintext highlighter-rouge">list-results</code> stream):</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">id</code> — server-assigned <code class="language-plaintext highlighter-rouge">pres_*</code> ID</li>
+  <li><code class="language-plaintext highlighter-rouge">external_id</code> — echoed from the optional <code class="language-plaintext highlighter-rouge">id</code> on your input <code class="language-plaintext highlighter-rouge">proteins[]</code> entry</li>
+  <li><code class="language-plaintext highlighter-rouge">entities</code> — echoed input entities for this candidate</li>
+  <li><code class="language-plaintext highlighter-rouge">metrics.binding_confidence</code> — <strong>primary ranking metric</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">metrics.structure_confidence</code></li>
+  <li><code class="language-plaintext highlighter-rouge">metrics.iptm</code> (higher is better)</li>
+  <li><code class="language-plaintext highlighter-rouge">metrics.min_interaction_pae</code> (lower is better)</li>
+  <li><code class="language-plaintext highlighter-rouge">metrics.helix_fraction</code>, <code class="language-plaintext highlighter-rouge">metrics.sheet_fraction</code>, <code class="language-plaintext highlighter-rouge">metrics.loop_fraction</code></li>
+  <li><code class="language-plaintext highlighter-rouge">artifacts.structure.url</code>, <code class="language-plaintext highlighter-rouge">artifacts.archive.url</code> (presigned, short-lived)</li>
+  <li><code class="language-plaintext highlighter-rouge">warnings</code> — optional array of <code class="language-plaintext highlighter-rouge">{code, message}</code> quality flags (e.g. <code class="language-plaintext highlighter-rouge">low_confidence</code>, <code class="language-plaintext highlighter-rouge">unusual_geometry</code>); empty or absent on clean results. Surface them when presenting top hits.</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">optimization_score</code> is <strong>not emitted</strong> for <code class="language-plaintext highlighter-rouge">protein:library-screen</code>. Sorting by it returns an empty list.</p>
+
+<p>Rank from <code class="language-plaintext highlighter-rouge">results/index.jsonl</code> after <code class="language-plaintext highlighter-rouge">download-results</code> by <code class="language-plaintext highlighter-rouge">binding_confidence</code> descending. Use <code class="language-plaintext highlighter-rouge">iptm</code> (higher better) and <code class="language-plaintext highlighter-rouge">min_interaction_pae</code> (lower better) as tiebreakers.</p>
+
+<h2 id="escape-hatch">Escape hatch</h2>
+
+<ul>
+  <li><a href="https://api.boltz.bio/docs/api/python/resources/protein/subresources/library_screen/methods/start">https://api.boltz.bio/docs/api/python/resources/protein/subresources/library_screen/methods/start</a></li>
+  <li><code class="language-plaintext highlighter-rouge">boltz-api protein:library-screen start --help</code></li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

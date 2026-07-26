@@ -1,0 +1,2116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Instance Candidate Finder Spec · A developer journey</title>
+<meta name="description" content="">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/references/usd-hierarchy-dedupe-candidates/references/instance-candidate-finder-spec/">
+
+<meta property="og:title" content="Instance Candidate Finder Spec · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/references/usd-hierarchy-dedupe-candidates/references/instance-candidate-finder-spec/">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Instance Candidate Finder Spec</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<h1 id="instance-candidate-finder--behavioral-specification">Instance-Candidate Finder — Behavioral Specification</h1>
+
+<p>Status: draft (revision 3 - pairs the read-only finder with a rewrite-tool spec)
+Audience: a coding agent (or human) re-implementing the tool from scratch
+Style: behavior-only. Do not infer function names, class layout, or module
+structure from this document. Any implementation that satisfies every clause
+in <a href="#13-acceptance-criteria">§13 Acceptance Criteria</a> is correct.</p>
+
+<hr />
+
+<h2 id="1-purpose">1. Purpose</h2>
+
+<p>A read-only analysis tool that scans a USD sub-hierarchy and reports
+sub-hierarchies that occur multiple times and could be made <code class="language-plaintext highlighter-rouge">instanceable</code>.
+For each reported group it also classifies how cleanly that group could be
+turned into a shared prototype, based on outgoing references from inside the
+subtree.</p>
+
+<p>The tool <strong>does not modify the stage</strong>. The actual de-duplication step
+(rewriting the stage to use shared prototypes) is a separate tool described in
+<code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/usd-structure-assessment/references/apply-restructure/references/hierarchy-dedupe-rewrite-tool-spec.md</code>.</p>
+
+<p>Treat the finder output as the input packet for a USD authoring rewrite that
+creates prototype assets or internal prototype prims and then rewrites
+duplicates as references.</p>
+
+<p>Related prior art in this repository (informational, not a dependency):
+<code class="language-plaintext highlighter-rouge">source/tests/test.pythonBindings/test_validators_duplicate_geometry.py</code>,
+<code class="language-plaintext highlighter-rouge">test_validators_fuzzy_duplicate_geometry.py</code>, and
+<code class="language-plaintext highlighter-rouge">test_operation_organize_prototypes.py</code>. This spec describes a
+hierarchy-level analyzer, not a per-mesh dedup or a prototype-organizer.</p>
+
+<h2 id="2-runtime-context">2. Runtime context</h2>
+
+<ul>
+  <li>Single self-contained Python script.</li>
+  <li>Designed to be pasted into the Omniverse Kit Script Editor and run once.</li>
+  <li>Operates on the currently-open USD stage retrieved from the Kit USD context.</li>
+  <li>Uses only <code class="language-plaintext highlighter-rouge">pxr</code> and the Python standard library.</li>
+  <li>Output is plain text written to stdout / the script editor console.</li>
+  <li>No file I/O, no UI, no asynchronous work.</li>
+</ul>
+
+<h2 id="3-inputs">3. Inputs</h2>
+
+<p>A single configuration block at the top of the script. All values must be
+trivially editable by a user before they paste-and-run, as literal Python
+assignments (not nested dicts).</p>
+
+<h3 id="31-knobs">3.1 Knobs</h3>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">ROOT</code></strong> <em>(string, USD path)</em> — the prim under which to search. The
+tool considers <code class="language-plaintext highlighter-rouge">ROOT</code> itself and all of its descendants. <code class="language-plaintext highlighter-rouge">ROOT = "/"</code>
+is permitted; the pseudo-root is treated like any other prim and walked
+normally.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">HASH_LEVEL</code></strong> <em>(integer, 1..4)</em> — fidelity of the duplicate-detection
+hash. See <a href="#5-hash-levels">§5 Hash levels</a> for exact semantics.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">MIN_SUBTREE_PRIMS</code></strong> <em>(integer ≥ 1)</em> — exclude any candidate whose
+subtree (root + descendants) has fewer than this many prims. Subtree
+size is the count of prims that would be hashed for that subtree, with
+the instance-skipping rule from §4 applied (see §9 for the formula).</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">MIN_DUPLICATE_COUNT</code></strong> <em>(integer ≥ 2)</em> — only report groups with at
+least this many copies.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">TOP_N</code></strong> <em>(integer ≥ 1)</em> — only print the top N groups, ranked by
+estimated prim savings. All other groups are still counted in totals.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">SHOW_PATHS_PER_GROUP</code></strong> <em>(integer ≥ 1)</em> — per group, print at most
+this many candidate paths; overflow is summarized as “… and K more”.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES</code></strong> <em>(bool)</em> — see §4.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">COLLAPSE_NESTED</code></strong> <em>(bool)</em> — see §6.4.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">CHECK_INSTANCEABILITY</code></strong> <em>(bool)</em> — when true, run the analysis in §7
+and include verdicts and findings in the report.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">MAX_FINDINGS_PER_GROUP</code></strong> <em>(integer ≥ 1)</em> — max number of finding
+lines printed per group when <code class="language-plaintext highlighter-rouge">CHECK_INSTANCEABILITY</code> is true.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">INCLUDE_ATTRIBUTE_CONNECTIONS</code></strong> <em>(bool)</em> — when true, attribute
+<code class="language-plaintext highlighter-rouge">.GetConnections()</code> are checked alongside relationships in §7. When
+false, only relationships are checked.</li>
+</ul>
+
+<h3 id="32-defaults">3.2 Defaults</h3>
+
+<p>The tool must run with no edits and produce a meaningful report. The
+mandatory defaults are:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Knob</th>
+      <th>Default</th>
+      <th>Rationale</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ROOT</code></td>
+      <td><code class="language-plaintext highlighter-rouge">"/"</code></td>
+      <td>Whole stage; user almost always narrows it.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">HASH_LEVEL</code></td>
+      <td><code class="language-plaintext highlighter-rouge">3</code></td>
+      <td>Values matter for real dedup; samples don’t usually distinguish identical assets.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MIN_SUBTREE_PRIMS</code></td>
+      <td><code class="language-plaintext highlighter-rouge">3</code></td>
+      <td>Single-prim “groups” are noise.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MIN_DUPLICATE_COUNT</code></td>
+      <td><code class="language-plaintext highlighter-rouge">2</code></td>
+      <td>The minimum that “duplicate” can mean.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">TOP_N</code></td>
+      <td><code class="language-plaintext highlighter-rouge">25</code></td>
+      <td>Fits in one screen of console output.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SHOW_PATHS_PER_GROUP</code></td>
+      <td><code class="language-plaintext highlighter-rouge">8</code></td>
+      <td>Enough paths to spot patterns; overflow trails.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES</code></td>
+      <td><code class="language-plaintext highlighter-rouge">True</code></td>
+      <td>Already-instanced prims are noise for this analysis.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">COLLAPSE_NESTED</code></td>
+      <td><code class="language-plaintext highlighter-rouge">True</code></td>
+      <td>Reporting parent + child duplicate groups is redundant.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">CHECK_INSTANCEABILITY</code></td>
+      <td><code class="language-plaintext highlighter-rouge">True</code></td>
+      <td>Verdicts are usually wanted; cheap to compute.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">MAX_FINDINGS_PER_GROUP</code></td>
+      <td><code class="language-plaintext highlighter-rouge">6</code></td>
+      <td>Enough to diagnose; not enough to drown the report.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">INCLUDE_ATTRIBUTE_CONNECTIONS</code></td>
+      <td><code class="language-plaintext highlighter-rouge">False</code></td>
+      <td>Shade-graph traffic is noisy; opt-in keeps the default report focused.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="33-validation">3.3 Validation</h3>
+
+<p>If any knob is set to a value outside its declared range or type, the tool
+must print a single error line naming the offending knob and exit cleanly
+without producing any other report content. The error path is the same as
+the missing-<code class="language-plaintext highlighter-rouge">ROOT</code> path in §8.1.</p>
+
+<h2 id="4-stage-traversal-rules">4. Stage traversal rules</h2>
+
+<ul>
+  <li>The traversal universe is <code class="language-plaintext highlighter-rouge">ROOT</code> and all of its descendants on the
+composed stage.</li>
+  <li>If <code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES</code> is true:
+    <ul>
+      <li>Any prim where <code class="language-plaintext highlighter-rouge">IsInstance()</code> returns true is treated as an opaque
+leaf for hashing purposes (its descendants are not walked).</li>
+      <li>Such a prim is also ineligible to appear as a candidate root in the
+duplicate report (its prototype is already shared, so reporting it
+would be misleading).</li>
+      <li>For hashing, an instance contributes a <strong>stable identifier derived
+from its prototype path and its prim type</strong>, used identically in
+both the full hash and the candidate hash. Any local opinions at the
+instance site (xformOps, metadata, locally-authored attributes) are
+intentionally ignored when the instance is acting as an opaque leaf.
+Two instances of the same prototype must therefore hash equal.</li>
+    </ul>
+  </li>
+  <li>If <code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES</code> is false:
+    <ul>
+      <li>The tool descends into instance-proxy children using
+<code class="language-plaintext highlighter-rouge">Usd.TraverseInstanceProxies</code>. Behavior on proxies is otherwise the
+same as for normal prims, except that proxies are read-only (the
+tool never writes anyway).</li>
+      <li>Authored properties on proxies are consulted via composition (i.e.
+<code class="language-plaintext highlighter-rouge">prim.GetAuthoredAttributes()</code> returns the prototype’s authored
+attributes). No special handling distinguishes proxies from
+natively-authored prims for the purpose of hashing.</li>
+    </ul>
+  </li>
+  <li>Inactive prims (<code class="language-plaintext highlighter-rouge">prim.IsActive()</code> false) are skipped entirely. They
+do not contribute to any ancestor’s hash and they never appear as a
+candidate root.</li>
+  <li>Abstract prims (<code class="language-plaintext highlighter-rouge">prim.IsAbstract()</code> true) are skipped entirely.</li>
+  <li>Class prims (<code class="language-plaintext highlighter-rouge">Sdf.SpecifierClass</code>) are skipped entirely.</li>
+</ul>
+
+<h2 id="5-hash-levels">5. Hash levels</h2>
+
+<p>For every prim in the traversal universe the tool computes a <strong>full hash</strong>
+that uniquely identifies the composed content of that prim’s subtree at
+the chosen fidelity level. Two subtrees with equal full hashes must be
+treated as content-equal at that fidelity.</p>
+
+<p>The tool also computes a <strong>candidate hash</strong> per prim (see §6.2) which is
+what cross-prim grouping is performed on.</p>
+
+<p>Fidelity levels are cumulative — each level includes everything from the
+levels below it.</p>
+
+<h3 id="level-1--topology">Level 1 — Topology</h3>
+<p>Captures, for every prim in the subtree:</p>
+
+<ul>
+  <li>the prim type name</li>
+  <li>the prim’s name (relative within the subtree — see §6.2 for treatment of
+the candidate-root’s own name)</li>
+  <li>the ordered list of children’s hashes (children must be enumerated in
+USD authored order, never reordered)</li>
+</ul>
+
+<h3 id="level-2--topology--authored-attribute-schema">Level 2 — Topology + authored attribute schema</h3>
+<p>Adds, per prim, the sorted list of <code class="language-plaintext highlighter-rouge">(attribute_name, attribute_type_name)</code>
+for every attribute that has an authored value at the current edit target /
+composed view. The sort makes hash output insensitive to the author-order
+of attribute declarations.</p>
+
+<h3 id="level-3--topology--attribute-schema--values">Level 3 — Topology + attribute schema + values</h3>
+<p>Adds, per prim, the actual default values of every attribute that has an
+authored value. Time samples are <em>not</em> included at this level; only the
+default value is.</p>
+
+<h3 id="level-4--full">Level 4 — Full</h3>
+<p>Adds, per prim:</p>
+
+<ul>
+  <li>For every attribute with an authored value: the <strong>sorted list of sample
+times AND the value at each sample time</strong>. (Sample times alone would
+not be enough to call two subtrees observably interchangeable; this
+level captures both.)</li>
+  <li>Every authored relationship’s name and the ordered list of its targets
+as composed paths.</li>
+</ul>
+
+<p>Level 4 is the strictest level the tool offers. If two subtrees hash equal
+at level 4 they are observably interchangeable for the purposes of
+instancing.</p>
+
+<h3 id="51-long-value-digesting-mandatory">5.1 Long-value digesting (mandatory)</h3>
+
+<p>Any value that would otherwise be embedded in a hash input as a long string
+<strong>must</strong> be substituted with a digest first. The thresholds are:</p>
+
+<ul>
+  <li>Any value whose Python <code class="language-plaintext highlighter-rouge">repr()</code> exceeds <strong>256 bytes</strong>, OR</li>
+  <li>Any array-typed value of length ≥ <strong>16</strong></li>
+</ul>
+
+<p>Substitution form: the literal value is replaced in the hash input by the
+string <code class="language-plaintext highlighter-rouge">"&lt;digest:HEX&gt;"</code> where <code class="language-plaintext highlighter-rouge">HEX</code> is the lowercase hex digest of a
+deterministic canonical serialization of the value (sha256 of the value’s
+raw bytes, or of <code class="language-plaintext highlighter-rouge">repr(value)</code> for non-array values, is acceptable). The
+substitution function must be:</p>
+
+<ul>
+  <li>Deterministic: equal values map to equal digests in the same process and
+across processes on the same Python interpreter version.</li>
+  <li>Injective enough: collisions must be cryptographically negligible for
+realistic USD content (sha256 or stronger).</li>
+</ul>
+
+<h2 id="6-duplicate-detection">6. Duplicate detection</h2>
+
+<h3 id="61-full-hash">6.1 Full hash</h3>
+<p>Computed once per prim, post-order (children-first), and memoized so each
+prim’s subtree is hashed exactly once. The full hash of <code class="language-plaintext highlighter-rouge">ROOT</code> is computed
+and discarded — <code class="language-plaintext highlighter-rouge">ROOT</code> itself is never reported as a candidate.</p>
+
+<h3 id="62-candidate-hash">6.2 Candidate hash</h3>
+<p>For each prim P (other than <code class="language-plaintext highlighter-rouge">ROOT</code>), derive a candidate hash that
+represents “the prototype P would become”. The candidate hash differs
+from the full hash in exactly two ways:</p>
+
+<ul>
+  <li>P’s own prim <strong>name</strong> is excluded. (Two equivalent subtrees may live
+under different parent paths with different leaf names.)</li>
+  <li>P’s own <code class="language-plaintext highlighter-rouge">xformOpOrder</code> and any attribute whose name begins with
+<code class="language-plaintext highlighter-rouge">xformOp:</code> are excluded. (Those represent placement, which is per-instance,
+not part of the prototype.)</li>
+</ul>
+
+<p>Everything else about P — its prim type, its other authored attributes,
+and the full hashes of all its children — is included.</p>
+
+<p><code class="language-plaintext highlighter-rouge">xformOp:*</code> and <code class="language-plaintext highlighter-rouge">xformOpOrder</code> on <strong>descendants</strong> of P are <em>not</em> excluded;
+they are part of the prototype. Only the candidate-root’s own placement
+is excluded. Two subtrees that differ only in a descendant’s local xform
+are different prototypes and therefore different groups.</p>
+
+<p>Descendant prim names are likewise <em>not</em> excluded. Two subtrees that
+differ only in the names of their internal prims are not equivalent
+prototypes.</p>
+
+<h3 id="63-grouping-and-ranking">6.3 Grouping and ranking</h3>
+<ul>
+  <li>Group all eligible prims by candidate hash.</li>
+  <li>A group is reported if it has at least <code class="language-plaintext highlighter-rouge">MIN_DUPLICATE_COUNT</code> members and
+every member’s subtree has at least <code class="language-plaintext highlighter-rouge">MIN_SUBTREE_PRIMS</code> prims. (Members
+of the same group always have the same subtree size by construction;
+the check is one comparison per group.)</li>
+  <li>A group’s <strong>estimated prim savings</strong> is <code class="language-plaintext highlighter-rouge">subtree_prims * (copies - 1)</code>.</li>
+  <li>Groups are sorted in descending order of estimated prim savings. Ties
+are broken first by larger <code class="language-plaintext highlighter-rouge">subtree_prims</code>, then by ascending candidate
+hash string. (Any deterministic tie-break is acceptable as long as it
+does not depend on Python’s hash randomization or insertion order of
+unrelated dicts.)</li>
+</ul>
+
+<h3 id="64-nested-group-collapse">6.4 Nested-group collapse</h3>
+<p>When <code class="language-plaintext highlighter-rouge">COLLAPSE_NESTED</code> is true, after sorting:</p>
+
+<ul>
+  <li>Walk groups in order, keeping a running set of “kept root paths”.</li>
+  <li>A group is <em>dropped</em> if every one of its candidate root paths is a
+strict descendant of some path already in the kept set.</li>
+  <li>A group is <em>kept</em> otherwise; its candidate root paths are added to the
+kept set.</li>
+</ul>
+
+<p>The intent: making the parent group instanceable absorbs the child group;
+reporting both is redundant.</p>
+
+<p>When <code class="language-plaintext highlighter-rouge">COLLAPSE_NESTED</code> is false, no such filtering is applied.</p>
+
+<h2 id="7-instanceability-check-when-check_instanceability-is-true">7. Instanceability check (when <code class="language-plaintext highlighter-rouge">CHECK_INSTANCEABILITY</code> is true)</h2>
+
+<p>Run after grouping (and after collapse, if applicable). For each
+<em>reported</em> group, classify the group’s instanceability based on outgoing
+references from inside the subtree.</p>
+
+<h3 id="71-what-is-collected">7.1 What is collected</h3>
+<p>For each candidate root R in the group, walk R and all descendants and
+collect, per visited prim D (which may be R itself):</p>
+
+<ul>
+  <li>Every authored relationship on D, as <code class="language-plaintext highlighter-rouge">(D, rel_name, [target, ...])</code>.</li>
+  <li>If <code class="language-plaintext highlighter-rouge">INCLUDE_ATTRIBUTE_CONNECTIONS</code> is true: every authored attribute on
+D whose <code class="language-plaintext highlighter-rouge">.GetConnections()</code> is non-empty, as <code class="language-plaintext highlighter-rouge">(D, attr_name, [target, ...])</code>.</li>
+</ul>
+
+<p>A reference is keyed by its <strong>relative property key</strong> within R, formed
+as follows:</p>
+
+<ul>
+  <li>Let <code class="language-plaintext highlighter-rouge">rel_path</code> = the path from R to D, with R itself stripped. If D == R,
+<code class="language-plaintext highlighter-rouge">rel_path</code> is the empty string.</li>
+  <li>The key is <code class="language-plaintext highlighter-rouge">rel_path + "." + property_name</code>.</li>
+</ul>
+
+<p>Worked examples (R rendered for clarity; not part of the key):</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Where the property lives</th>
+      <th>Property name</th>
+      <th>Key</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>R itself, relationship</td>
+      <td><code class="language-plaintext highlighter-rouge">material:binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">.material:binding</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">R/Geom</code>, relationship</td>
+      <td><code class="language-plaintext highlighter-rouge">material:binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/Geom.material:binding</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">R/Mat</code>, attribute connection (when enabled)</td>
+      <td><code class="language-plaintext highlighter-rouge">inputs:diffuse</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/Mat.inputs:diffuse</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">R/A/B/C</code>, relationship</td>
+      <td><code class="language-plaintext highlighter-rouge">proxyPrim</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/A/B/C.proxyPrim</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>USD prim properties share a single namespace (a relationship and an
+attribute on the same prim cannot share a name), so the key namespace
+needs no <code class="language-plaintext highlighter-rouge">rel:</code> / <code class="language-plaintext highlighter-rouge">conn:</code> prefix.</p>
+
+<p>A target is normalized to one of:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">INTERNAL</code> if the target’s prim portion is at or below R, with the
+<strong>relative-to-R form of the target path</strong> stored alongside (the
+property suffix on the target, if any, is preserved verbatim).</li>
+  <li><code class="language-plaintext highlighter-rouge">EXTERNAL</code> otherwise, with the <strong>absolute composed path</strong> stored
+alongside (again, property suffix preserved).</li>
+</ul>
+
+<p>Targets returned by <code class="language-plaintext highlighter-rouge">Usd.Attribute.GetConnections()</code> may include a
+property segment (e.g. <code class="language-plaintext highlighter-rouge">/A/B.diffuse</code>). Such targets are classified by
+their prim portion (<code class="language-plaintext highlighter-rouge">/A/B</code>); the property suffix is preserved as part
+of the stored target value for evidence reporting only.</p>
+
+<p>Empty target lists are not collected (they carry no information for this
+analysis).</p>
+
+<h3 id="72-per-key-classification">7.2 Per-key classification</h3>
+
+<p>For each relative property key that appears on at least one copy:</p>
+
+<ul>
+  <li><strong>INTERNAL</strong> — <em>all</em> of the following hold:
+    <ul>
+      <li>The property is authored on every copy in the group.</li>
+      <li>Every target on every copy is <code class="language-plaintext highlighter-rouge">INTERNAL</code> (kind).</li>
+      <li>The full sequence of relative-to-R target paths (and any preserved
+property suffixes) is identical across all copies. Order matters —
+a target list of <code class="language-plaintext highlighter-rouge">[A, B]</code> on one copy and <code class="language-plaintext highlighter-rouge">[B, A]</code> on another is
+<em>not</em> identical.</li>
+    </ul>
+  </li>
+  <li><strong>CONSISTENT_EXTERNAL</strong> — <em>all</em> of the following hold:
+    <ul>
+      <li>The property is authored on every copy in the group.</li>
+      <li>Every target on every copy is <code class="language-plaintext highlighter-rouge">EXTERNAL</code> (kind).</li>
+      <li>The full sequence of (kind, target_value) tuples is identical across
+all copies. Order matters, as above.</li>
+    </ul>
+  </li>
+  <li><strong>INCONSISTENT</strong> — any other situation, including:
+    <ul>
+      <li>The property is authored on only some copies.</li>
+      <li>Different copies have differing target sequences.</li>
+      <li>A mix of <code class="language-plaintext highlighter-rouge">INTERNAL</code> and <code class="language-plaintext highlighter-rouge">EXTERNAL</code> targets across copies.</li>
+      <li>A mix of <code class="language-plaintext highlighter-rouge">INTERNAL</code> and <code class="language-plaintext highlighter-rouge">EXTERNAL</code> targets within a single copy.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="73-group-verdict">7.3 Group verdict</h3>
+<p>Roll up the per-key classifications:</p>
+
+<ul>
+  <li><strong>GREEN</strong> if every key is <code class="language-plaintext highlighter-rouge">INTERNAL</code> (or there are no outgoing
+references at all).</li>
+  <li><strong>YELLOW</strong> if at least one key is <code class="language-plaintext highlighter-rouge">CONSISTENT_EXTERNAL</code> and no key is
+<code class="language-plaintext highlighter-rouge">INCONSISTENT</code>.</li>
+  <li><strong>RED</strong> if any key is <code class="language-plaintext highlighter-rouge">INCONSISTENT</code>.</li>
+</ul>
+
+<h3 id="74-material-boundary-hints">7.4 Material-boundary hints</h3>
+
+<p>Material bindings and UsdShade shader connections that cross the candidate
+root are common and should be surfaced distinctly in findings. A group with
+otherwise matching subtrees and <code class="language-plaintext highlighter-rouge">CONSISTENT_EXTERNAL</code> material targets is still
+reported as YELLOW, but the finding should say that the rewrite can usually
+inline the local material network into the prototype.</p>
+
+<p>The finder is read-only, so it does not decide whether two external material
+paths are visually equivalent. It should provide enough evidence for the
+rewrite tool to make that decision:</p>
+
+<ul>
+  <li>the relative property key, such as <code class="language-plaintext highlighter-rouge">.material:binding</code> or
+<code class="language-plaintext highlighter-rouge">/Geom.material:binding</code></li>
+  <li>the absolute material target path on each copy</li>
+  <li>whether all copies target the same path</li>
+  <li>if available without expensive traversal, the root material prim type and
+material prim name</li>
+</ul>
+
+<p>If different copies bind to different material paths, keep the finding RED at
+the current hash level. The user or rewrite tool may split the group, raise the
+hash level, or compare material-network closures before rewriting.</p>
+
+<h3 id="75-findings">7.5 Findings</h3>
+<p>Per group, produce up to <code class="language-plaintext highlighter-rouge">MAX_FINDINGS_PER_GROUP</code> finding lines, prioritized
+in this order:</p>
+
+<ol>
+  <li>All <code class="language-plaintext highlighter-rouge">INCONSISTENT</code> keys (most important to surface).</li>
+  <li>All <code class="language-plaintext highlighter-rouge">CONSISTENT_EXTERNAL</code> material keys, labeled as inline candidates.</li>
+  <li>Other <code class="language-plaintext highlighter-rouge">CONSISTENT_EXTERNAL</code> keys.</li>
+  <li>A representative subset of <code class="language-plaintext highlighter-rouge">INTERNAL</code> keys, only if space remains.</li>
+</ol>
+
+<p>Within each priority bucket, findings must be emitted in <strong>ascending
+lexicographic order of the relative property key</strong> (for I1 determinism).</p>
+
+<p>Each finding line must include:</p>
+
+<ul>
+  <li>The relative property key.</li>
+  <li>The classification.</li>
+  <li>A short evidence summary:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">INTERNAL</code>: the relative-to-R target (the same on every copy).</li>
+      <li><code class="language-plaintext highlighter-rouge">CONSISTENT_EXTERNAL</code>: the absolute external target shared by all copies.</li>
+      <li><code class="language-plaintext highlighter-rouge">INCONSISTENT</code>: a brief description such as “K of N copies authored,
+M distinct targets” with up to a couple of example targets.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>If the number of findings exceeds <code class="language-plaintext highlighter-rouge">MAX_FINDINGS_PER_GROUP</code>, an “… and K
+more findings” trailer must be printed.</p>
+
+<h2 id="8-output-format">8. Output format</h2>
+
+<p>The tool writes plain text to stdout.</p>
+
+<h3 id="81-error-path">8.1 Error path</h3>
+<p><strong>If <code class="language-plaintext highlighter-rouge">ROOT</code> is missing or invalid, OR any knob in §3.1 is out of range,
+print exactly one error line naming the problem and exit. No other
+content is produced — no startup line, no headers, no footers.</strong></p>
+
+<h3 id="82-normal-path">8.2 Normal path</h3>
+<p>Otherwise, the report <strong>must</strong> present, in this order:</p>
+
+<ol>
+  <li>A startup line indicating the root being scanned and the active
+<code class="language-plaintext highlighter-rouge">HASH_LEVEL</code>.</li>
+  <li>A line indicating how many prims were hashed and that grouping has begun.</li>
+  <li>A header line stating the total number of duplicate groups reported,
+with the active filter values (<code class="language-plaintext highlighter-rouge">MIN_SUBTREE_PRIMS</code>,
+<code class="language-plaintext highlighter-rouge">MIN_DUPLICATE_COUNT</code>, <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code>).</li>
+  <li>The top <code class="language-plaintext highlighter-rouge">TOP_N</code> groups, each rendered as:
+    <ul>
+      <li>A header line containing: an index, the candidate hash, the subtree
+prim count, the number of copies, and the estimated prim savings.</li>
+      <li>When <code class="language-plaintext highlighter-rouge">CHECK_INSTANCEABILITY</code> is true: a verdict line and up to
+<code class="language-plaintext highlighter-rouge">MAX_FINDINGS_PER_GROUP</code> finding lines as defined in §7.5.</li>
+      <li>Up to <code class="language-plaintext highlighter-rouge">SHOW_PATHS_PER_GROUP</code> candidate root paths, sorted in
+<strong>ascending lexicographic order of the composed path string</strong> (for
+I1 determinism).</li>
+      <li>If more copies exist than were shown, an “… and K more” trailer line.</li>
+    </ul>
+  </li>
+  <li>A summary block at the end containing:
+    <ul>
+      <li><strong><code class="language-plaintext highlighter-rouge">Total potential prim savings (all groups, after collapse)</code></strong> —
+sum of <code class="language-plaintext highlighter-rouge">subtree_prims * (copies - 1)</code> across every reported group.</li>
+      <li>When <code class="language-plaintext highlighter-rouge">CHECK_INSTANCEABILITY</code> is true, additionally:
+        <ul>
+          <li><strong><code class="language-plaintext highlighter-rouge">Clean savings (GREEN+YELLOW)</code></strong> — sum of savings of
+non-<code class="language-plaintext highlighter-rouge">RED</code> groups.</li>
+          <li><strong><code class="language-plaintext highlighter-rouge">Blocked savings (RED)</code></strong> — sum of savings of <code class="language-plaintext highlighter-rouge">RED</code> groups, with
+a note recommending the user re-run at <code class="language-plaintext highlighter-rouge">HASH_LEVEL=4</code> to split
+those groups.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>A footer with caveats. The footer must explicitly state:
+    <ul>
+      <li>The tool is advisory only and does not modify the stage.</li>
+      <li>Outgoing references that point outside a candidate subtree may
+prevent clean instancing.</li>
+      <li>Material bindings that point outside a candidate subtree are common;
+matching local material networks should usually be inlined during the
+rewrite.</li>
+      <li>To distinguish two near-duplicate subtrees, the user can decrease
+<code class="language-plaintext highlighter-rouge">HASH_LEVEL</code> and observe at which level they merge into one group.</li>
+      <li>When verdicts are reported: GREEN means cleanly instanceable; YELLOW
+means instanceable after reviewing or inlining external dependencies;
+RED means the group as-formed is not actually one prototype and should
+either be split (raise <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code> to 4) or not be instanced.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="83-whitespace">8.3 Whitespace</h3>
+<p>The exact wording of headers and delimiters is not prescribed. Blank
+lines between sections (and between groups) are permitted and recommended
+for readability, but are not required. I1 determinism (§10) only
+requires byte-identical output across runs of the <em>same</em> implementation;
+it does not require parity across different implementations.</p>
+
+<h2 id="9-definitions">9. Definitions</h2>
+
+<ul>
+  <li><strong>Subtree of P</strong> — P and the set of prims reached from P by recursive
+descent under the traversal rules in §4.</li>
+  <li><strong>Subtree size</strong> — the number of prims in P’s subtree, computed as
+follows:
+    <ul>
+      <li>When <code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES = True</code>: each instance encountered
+counts as 1 (its descendants are not walked).</li>
+      <li>When <code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES = False</code>: each instance counts as
+1 + the sum of its proxy children’s subtree sizes.</li>
+      <li>Inactive / abstract / class prims do not contribute.</li>
+    </ul>
+  </li>
+  <li><strong>Candidate root</strong> — a prim under <code class="language-plaintext highlighter-rouge">ROOT</code> (excluding <code class="language-plaintext highlighter-rouge">ROOT</code> itself) that
+is eligible to appear in a group: its subtree size is at least
+<code class="language-plaintext highlighter-rouge">MIN_SUBTREE_PRIMS</code> and, when <code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES</code> is true, it is
+not itself an instance.</li>
+  <li><strong>Group</strong> — the set of candidate roots that share a candidate hash.</li>
+  <li><strong>Estimated prim savings</strong> — <code class="language-plaintext highlighter-rouge">subtree_prims * (copies - 1)</code> for a group.
+This represents the count of prims that would no longer need to be
+composed if all copies in the group shared a single prototype. This is a
+useful proxy for stage-load and memory savings; it is not a guaranteed
+performance number.</li>
+</ul>
+
+<h2 id="10-invariants">10. Invariants</h2>
+
+<p>The implementation must preserve all of these. Acceptance tests in §13
+exercise them.</p>
+
+<ul>
+  <li><strong>I1 — Determinism (single implementation, single host).</strong> Running the
+tool twice on the same stage with the same configuration, in the same
+Python process or in two processes on the same machine running the
+same implementation and Python interpreter version, must produce
+byte-identical output (excluding any wall-clock timestamps the
+implementation chooses to print — none are mandated). This invariant
+does NOT extend to byte parity across different implementations of
+this spec.</li>
+  <li><strong>I2 — Hash equality implies behavioral equality at level.</strong> Two
+subtrees with the same full hash at level L must be indistinguishable
+with respect to everything that level L is supposed to capture. (At
+level 4 this means observably interchangeable for instancing.)</li>
+  <li><strong>I3 — Membership monotonicity in level.</strong> If two subtrees fall into
+the same group at level L, they fall into the same group at every
+level less than L. Equivalently, raising <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code> can only split
+groups, never merge them.</li>
+  <li><strong>I4 — Savings monotonicity in level.</strong> Raising <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code> can only
+decrease (or hold) the total reported savings.</li>
+  <li><strong>I5 — Linear hashing cost.</strong> The hashing pass is O(N) in the number
+of prims under <code class="language-plaintext highlighter-rouge">ROOT</code> (each prim’s full hash computed exactly once).
+An implementation that recomputes child subtree hashes per ancestor
+visit is non-conforming.</li>
+  <li><strong>I6 — Read-only.</strong> No layer is opened for write, no prim is created
+or modified, no metadata is authored, no <code class="language-plaintext highlighter-rouge">Sdf.ChangeBlock</code> is needed.</li>
+  <li><strong>I7 — Verdict monotonicity in <code class="language-plaintext highlighter-rouge">INCLUDE_ATTRIBUTE_CONNECTIONS</code>.</strong>
+Turning the flag on can only worsen verdicts (GREEN→YELLOW→RED) and
+add findings; it cannot improve them.</li>
+  <li><strong>I8 — Hash invariance under attribute author-order.</strong> At <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code>
+≥ 2, the hash must depend only on the <em>set</em> of authored attribute
+schemas (and at level ≥ 3, their values), not on the order in which
+they were authored.</li>
+</ul>
+
+<h2 id="11-edge-cases">11. Edge cases</h2>
+
+<p>The implementation must handle each of these correctly. None of these
+should raise an exception or produce malformed output.</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">ROOT</code> does not exist.</strong> Print a single error line naming the missing
+path; produce no other report content; exit cleanly. (See §8.1.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">ROOT</code> exists but has no descendants.</strong> Print the standard headers
+and a “Duplicate groups: 0” line. Do not error.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">ROOT</code> is itself an existing instance</strong> (with <code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES
+= True</code>). The traversal universe contains only <code class="language-plaintext highlighter-rouge">ROOT</code>; no prim under it
+is walked; no candidate roots exist; the report shows zero duplicate
+groups. This is a valid silent-zero case, not an error.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">ROOT == "/"</code></strong> is permitted. The pseudo-root is walked as any other
+prim. Implementations must take care that relative-path computation
+handles the empty-prefix case correctly.</li>
+  <li><strong>Subtree contains only existing instances.</strong> With
+<code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES</code> true, those instances are leaves and won’t
+themselves be reported, but they may participate in their ancestors’
+hashes (as opaque leaves keyed on prototype identity).</li>
+  <li><strong>Attribute value is unreadable</strong> (<code class="language-plaintext highlighter-rouge">.Get()</code> raises). The hash for
+level ≥ 3 must record the attribute name with an <code class="language-plaintext highlighter-rouge">&lt;unreadable&gt;</code>
+marker rather than aborting the run; this marker counts as a value
+and contributes to hashes deterministically.</li>
+  <li><strong>Attribute connections targeting paths inside an existing instance
+prototype</strong> (<code class="language-plaintext highlighter-rouge">/__Prototype_*</code> paths) are treated as <code class="language-plaintext highlighter-rouge">EXTERNAL</code>. They
+will typically classify as <code class="language-plaintext highlighter-rouge">CONSISTENT_EXTERNAL</code> if all copies share
+the same prototype.</li>
+  <li><strong>Relationship authored with no targets.</strong> Skip; not informative for
+this analysis.</li>
+  <li><strong>A single candidate root with N=1 copy.</strong> Never reported (filtered
+by <code class="language-plaintext highlighter-rouge">MIN_DUPLICATE_COUNT ≥ 2</code>).</li>
+  <li><strong>A group of N≥2 but with subtree size below <code class="language-plaintext highlighter-rouge">MIN_SUBTREE_PRIMS</code>.</strong>
+Never reported.</li>
+  <li><strong>A group whose every member is a strict descendant of some larger
+kept group.</strong> Dropped when <code class="language-plaintext highlighter-rouge">COLLAPSE_NESTED</code> is true; kept otherwise.</li>
+  <li><strong>Long array attribute values</strong> (e.g. mesh point arrays). Must be
+digested per §5.1 before being included in any hash.</li>
+  <li><strong>Variant selections.</strong> The tool reads the composed stage; whatever
+variant is currently selected on each prim is what gets hashed. No
+attempt is made to enumerate variants or vary selections.</li>
+</ul>
+
+<h2 id="12-performance-expectations">12. Performance expectations</h2>
+
+<ul>
+  <li><strong>Hashing pass:</strong> O(N) where N is the prim count under <code class="language-plaintext highlighter-rouge">ROOT</code>. Memory
+proportional to N (one digest plus subtree size per prim).</li>
+  <li><strong>Grouping pass:</strong> O(N) average time, O(G) memory where G is the
+number of distinct candidate hashes.</li>
+  <li><strong>Instanceability pass:</strong> scoped to <em>reported</em> groups only (i.e. the
+filtered, sorted, possibly-collapsed list, then trimmed by <code class="language-plaintext highlighter-rouge">TOP_N</code> for
+printed findings; full totals may compute over all reported groups).
+Cost is bounded by <code class="language-plaintext highlighter-rouge">(groups_reported × avg_copies × avg_subtree_size)</code>.</li>
+  <li>The tool must remain interactive (single-digit seconds) on stages of
+~10⁵ prims with default settings on commodity hardware. Stages of
+~10⁶ prims should complete in tens of seconds at level 3.</li>
+</ul>
+
+<h2 id="13-acceptance-criteria">13. Acceptance criteria</h2>
+
+<p>A reimplementation is correct if it passes all of these. The tests are
+described in plain language; an implementer is free to author them in
+any framework.</p>
+
+<ol>
+  <li><strong>Trivial empty case.</strong> A stage where <code class="language-plaintext highlighter-rouge">ROOT</code> exists and has zero
+descendants produces a report with <code class="language-plaintext highlighter-rouge">Duplicate groups: 0</code> and exits
+cleanly.</li>
+  <li><strong>Single duplicate.</strong> A stage with two structurally identical
+subtrees of size S under <code class="language-plaintext highlighter-rouge">ROOT</code>, with no other prims, produces
+exactly one reported group of size 2 with subtree prim count S and
+estimated savings S. With <code class="language-plaintext highlighter-rouge">CHECK_INSTANCEABILITY=True</code> and no
+relationships in the subtree, the verdict is GREEN.</li>
+  <li><strong>Different placements still match.</strong> Two subtrees that are
+identical except for the candidate root’s own <code class="language-plaintext highlighter-rouge">xformOp:translate</code>
+value must be reported as the same group at every <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code>.</li>
+  <li><strong>Different leaf names do NOT match.</strong> Two subtrees that are
+identical in type and structure but have at least one descendant
+with a different prim name must not be reported as the same group
+at any <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code>.</li>
+  <li><strong>Different attribute values match at level 2 but not 3.</strong> Two
+subtrees identical in structure and authored attribute schema but
+with different attribute values must merge into the same group at
+level 2 and split at level 3.</li>
+  <li><strong>Different time samples match at level 3 but not 4.</strong> Two subtrees
+identical at level 3 but with different time-sample sets (or
+different per-sample values) on at least one attribute must merge
+at level 3 and split at level 4.</li>
+  <li><strong>Existing instance shielding.</strong> With <code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES=True</code>,
+prims that are already instances are not themselves reported as
+candidates, and their descendants are not walked.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES=False</code> traversal.</strong> A stage with a single
+existing instance whose prototype has 5 prims, scanned with
+<code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES=False</code>, when copied twice (so two instances
+point at the same prototype), reports a duplicate group of size 2
+with <code class="language-plaintext highlighter-rouge">subtree_prims = 5</code>.</li>
+  <li><strong>Nested collapse.</strong> Given an outer group of two subtrees of size 10
+and the inner subtrees of size 3 within them (which trivially also
+form a duplicate group), with <code class="language-plaintext highlighter-rouge">COLLAPSE_NESTED=True</code> the inner group
+is not reported. With <code class="language-plaintext highlighter-rouge">COLLAPSE_NESTED=False</code> both are reported.</li>
+  <li><strong>Inactive child omission.</strong> A subtree containing an inactive child
+must hash equal to the same subtree without that child. Two
+subtrees that differ only in whether an inner prim is inactive
+must group together at every <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code>.</li>
+  <li><strong>Attribute author-order invariance.</strong> Two subtrees identical in
+structure and in the <em>set</em> of authored attribute (name, type, value)
+triples but differing in the order those attributes were authored
+must merge into the same group at every <code class="language-plaintext highlighter-rouge">HASH_LEVEL</code> ≥ 2.</li>
+  <li><strong>Instanceability — GREEN.</strong> A group whose subtrees contain only
+internal relationships (or no outgoing references at all) gets
+verdict GREEN.</li>
+  <li><strong>Instanceability — YELLOW.</strong> A group whose subtrees all bind to
+<code class="language-plaintext highlighter-rouge">/World/Materials/SharedMat</code> via <code class="language-plaintext highlighter-rouge">material:binding</code> (with no
+inconsistent or other-external references) gets verdict YELLOW
+and one <code class="language-plaintext highlighter-rouge">CONSISTENT_EXTERNAL</code> inline-candidate finding for
+<code class="language-plaintext highlighter-rouge">material:binding</code>.</li>
+  <li><strong>Instanceability — RED with split.</strong> A stage where four subtrees
+are otherwise identical but bind to two distinct external materials
+(two copies bind to <code class="language-plaintext highlighter-rouge">/World/Materials/A</code>, two bind to <code class="language-plaintext highlighter-rouge">/Materials/B</code>),
+scanned at <code class="language-plaintext highlighter-rouge">HASH_LEVEL=3</code>, reports one RED group of size 4 with one
+<code class="language-plaintext highlighter-rouge">INCONSISTENT</code> finding for <code class="language-plaintext highlighter-rouge">material:binding</code>. Re-running at
+<code class="language-plaintext highlighter-rouge">HASH_LEVEL=4</code> splits the group into two YELLOW groups of size 2 each.
+(Stages with fewer than <code class="language-plaintext highlighter-rouge">2 * MIN_DUPLICATE_COUNT</code> source copies will
+have one or both splits filtered out by <code class="language-plaintext highlighter-rouge">MIN_DUPLICATE_COUNT</code> — that
+is correct behavior, not a regression.)</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">INCLUDE_ATTRIBUTE_CONNECTIONS</code> monotonicity (I7).</strong> A group whose
+subtrees contain only <code class="language-plaintext highlighter-rouge">INTERNAL</code> relationships (verdict GREEN with
+<code class="language-plaintext highlighter-rouge">INCLUDE_ATTRIBUTE_CONNECTIONS=False</code>) but which also contain
+attribute connections to a shared external shader: turning
+<code class="language-plaintext highlighter-rouge">INCLUDE_ATTRIBUTE_CONNECTIONS</code> from <code class="language-plaintext highlighter-rouge">False</code> to <code class="language-plaintext highlighter-rouge">True</code> must change
+the verdict to YELLOW or RED, and must not change verdicts in the
+opposite direction on any group.</li>
+  <li><strong>Unreadable attribute does not abort the run.</strong> A stage where one
+attribute’s <code class="language-plaintext highlighter-rouge">.Get()</code> raises must still produce a complete report;
+that attribute contributes the <code class="language-plaintext highlighter-rouge">&lt;unreadable&gt;</code> marker to its prim’s
+hash and the run continues deterministically.</li>
+  <li><strong>Determinism (I1).</strong> Running the same implementation with the same
+configuration twice on an unchanged stage produces byte-identical
+output.</li>
+  <li><strong>No mutation (I6).</strong> Stage modification timestamps and authored
+layer contents are unchanged after a run.</li>
+  <li><strong>Reasonable scaling.</strong> A stage with 10⁵ prims completes at level 3
+in single-digit seconds; at level 4, in tens of seconds. (Numbers
+are guidance, not strict gates — but an implementation that is
+asymptotically worse than O(N) for the hashing pass is non-conforming.)</li>
+  <li><strong>Out-of-range config rejection.</strong> Setting <code class="language-plaintext highlighter-rouge">HASH_LEVEL = 5</code> or
+<code class="language-plaintext highlighter-rouge">MIN_DUPLICATE_COUNT = 1</code> causes the tool to print one error line
+and produce no other output.</li>
+</ol>
+
+<h2 id="14-non-goals">14. Non-goals</h2>
+
+<ul>
+  <li>Modifying the stage in any way.</li>
+  <li>Suggesting a <em>placement</em> for the shared prototype (i.e. where in
+namespace the new shared prim should live).</li>
+  <li>Detecting near-duplicates with tolerances (e.g. mesh point clouds
+that differ by ε). That is fuzzy duplicate detection — a separate
+concern.</li>
+  <li>Cross-stage analysis. The tool operates on one stage at a time.</li>
+  <li>Materials network analysis beyond connection presence/equality (the
+tool does not normalize Shade graphs).</li>
+  <li>Hash stability across stages with semantically identical content.
+Two stages authored differently but composing to the same content
+are not guaranteed to produce identical hash digests; only their
+<em>grouping outcomes</em> on a single stage are guaranteed.</li>
+  <li>Any kind of cost model beyond “prim count savings”. Memory and load
+time are correlated with prim count but not equal to it.</li>
+</ul>
+
+<hr />
+
+<h2 id="changelog">Changelog</h2>
+
+<ul>
+  <li><strong>rev 2</strong> — Incorporates feedback from a clean-room re-implementation.
+Fixes §8/§11 ordering contradiction; tightens §5 Level 4 to include
+sample values; tightens §7.2 INTERNAL classification to require
+matching relative target sequences; adds §3.2 Defaults; promotes long-
+value digesting to mandatory with concrete thresholds (§5.1); adds
+worked example block to §7.1; mandates ascending sort within finding
+buckets and within printed candidate-path lists; clarifies §10 I1
+determinism scope; adds I8; adds §9 subtree-size formula for the
+<code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES=False</code> case; adds §11 entries for <code class="language-plaintext highlighter-rouge">ROOT == "/"</code>,
+<code class="language-plaintext highlighter-rouge">ROOT</code>-as-instance, and inactive prim handling; adds §13 acceptance
+tests for <code class="language-plaintext highlighter-rouge">SKIP_EXISTING_INSTANCES=False</code>, inactive-child omission,
+attribute author-order invariance, <code class="language-plaintext highlighter-rouge">INCLUDE_ATTRIBUTE_CONNECTIONS</code>
+monotonicity, unreadable attribute, and out-of-range config rejection.</li>
+  <li><strong>rev 1</strong> — Initial draft.</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

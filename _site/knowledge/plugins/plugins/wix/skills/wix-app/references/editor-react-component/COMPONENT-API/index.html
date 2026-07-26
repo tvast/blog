@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>COMPONENT API · A developer journey</title>
+<meta name="description" content="Component API">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/wix/skills/wix-app/references/editor-react-component/COMPONENT-API/">
+
+<meta property="og:title" content="COMPONENT API · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/wix/skills/wix-app/references/editor-react-component/COMPONENT-API/">
+<meta property="og:description" content="Component API">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>COMPONENT API</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="component-api">Component API</h1>
+
+<p>Rules and patterns for props structure, elementProps, data types, file structure, containers, data-driven components, and array props.</p>
+
+<hr />
+
+<h2 id="should-this-use-elementprops-or-css">Should This Use elementProps or CSS?</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Does this element need:
+- Configuration/data beyond styling
+- Direction override
+- State management
+- Event handlers
+
+│
+├─ YES
+│   └─ ✅ Use elementProps
+│
+└─ NO → Is it purely visual/decorative (including conditionally displayed)?
+    │
+    ├─ YES (icons, separators, decorations, elements only hidden/shown via CSS)
+    │   └─ ❌ CSS class only (no elementProps)
+    │
+    └─ NO
+        └─ Re-evaluate: likely needs elementProps
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="rules">Rules</h2>
+
+<h3 id="component-props-structure">Component Props Structure</h3>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">ComponentProps</span> <span class="p">{</span>
+  <span class="c1">// Identity</span>
+  <span class="nl">id</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">className</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span>
+
+  <span class="c1">// Mandatory features (from @wix/editor-react-types)</span>
+  <span class="nl">direction</span><span class="p">?:</span> <span class="nx">Direction</span><span class="p">;</span>
+  <span class="nl">a11y</span><span class="p">?:</span> <span class="nx">A11y</span><span class="p">;</span> <span class="c1">// ALL ARIA attributes come through this (ariaLabel, role, etc.)</span>
+
+  <span class="c1">// Component-specific props (NO children unless container-type - see container rules below)</span>
+  <span class="nl">label</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">items</span><span class="p">?:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">ItemType</span><span class="o">&gt;</span><span class="p">;</span>
+  <span class="c1">// ... from specification</span>
+  <span class="c1">// NEVER add: ariaLabel, ariaDescribedBy, role, etc. - use a11y prop instead</span>
+
+  <span class="c1">// Sub-component configuration (only if needed - see elementProps rules)</span>
+  <span class="nl">elementProps</span><span class="p">?:</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nx">partName</span><span class="p">]?:</span> <span class="p">{</span>
+      <span class="p">[</span><span class="nx">configProp</span><span class="p">]?:</span> <span class="kr">string</span> <span class="o">|</span> <span class="nx">boolean</span> <span class="o">|</span> <span class="kr">number</span><span class="p">;</span> <span class="c1">// Only include if element needs config beyond className</span>
+      <span class="nl">direction</span><span class="p">?:</span> <span class="nx">Direction</span><span class="p">;</span>
+    <span class="p">};</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="when-to-use-elementprops">When to Use elementProps</h3>
+
+<p><strong>Use <code class="language-plaintext highlighter-rouge">elementProps</code></strong> for parts that need:</p>
+
+<ul>
+  <li>Configuration/data beyond just styling</li>
+  <li>Direction override</li>
+  <li>State management</li>
+  <li>Event handlers</li>
+</ul>
+
+<p><strong>DO NOT use <code class="language-plaintext highlighter-rouge">elementProps</code></strong> for:</p>
+
+<ul>
+  <li>Elements with only visual styling (use CSS classes)</li>
+  <li>Elements where conditional display is the only requirement (visibility controlled via CSS for per-breakpoint hiding, not React props)</li>
+  <li>Elements that would only have <code class="language-plaintext highlighter-rouge">className</code> — skip them entirely</li>
+  <li>Icons, decorations, separators</li>
+</ul>
+
+<p><strong>Minimal elementProps rule:</strong> If an element would only have <code class="language-plaintext highlighter-rouge">className?: string</code> in elementProps, do NOT include it.</p>
+
+<h3 id="what-qualifies-as-a-part">What Qualifies as a Part</h3>
+
+<p>See <a href="PARTS.md"><code class="language-plaintext highlighter-rouge">PARTS.md</code></a> for the mandatory filter and full rules.</p>
+
+<h3 id="derived-values-are-not-props">Derived values are not props</h3>
+
+<p>If a displayed value can be computed with a simple pure function from
+other props and/or internal state, compute it internally — don’t
+expose it as a prop. Expose only the source inputs (use numeric types
+when arithmetic is needed: <code class="language-plaintext highlighter-rouge">price: number</code>, not <code class="language-plaintext highlighter-rouge">price: string</code>).</p>
+
+<p><strong>Example:</strong> subtotal = <code class="language-plaintext highlighter-rouge">price × quantity</code> → computed inside the component, not a prop.</p>
+
+<h3 id="data-driven-components-no-children-in-exported-props">Data-Driven Components (NO children in exported props)</h3>
+
+<ul>
+  <li>Component’s <strong>exported interface</strong> must NOT accept <code class="language-plaintext highlighter-rouge">children</code> prop</li>
+  <li>ALL content MUST come through explicit named props (see “Derived values” above for what stays internal):
+    <ul>
+      <li>Text (labels, placeholders, messages) → <code class="language-plaintext highlighter-rouge">label</code>, <code class="language-plaintext highlighter-rouge">text</code>, <code class="language-plaintext highlighter-rouge">placeholder</code>, etc.</li>
+      <li>Media (images, videos, icons) → <code class="language-plaintext highlighter-rouge">imageSrc</code>, <code class="language-plaintext highlighter-rouge">videoUrl</code>, <code class="language-plaintext highlighter-rouge">iconName</code>, etc.</li>
+      <li>Links (URLs, hrefs) → <code class="language-plaintext highlighter-rouge">link</code>, <code class="language-plaintext highlighter-rouge">href</code>, <code class="language-plaintext highlighter-rouge">url</code>, etc.</li>
+      <li>Collections (list items, options, menu items) → <code class="language-plaintext highlighter-rouge">items</code>, <code class="language-plaintext highlighter-rouge">options</code>, <code class="language-plaintext highlighter-rouge">menuItems</code>, etc.</li>
+    </ul>
+  </li>
+  <li><strong>Internal implementation</strong> can use children for composition between sub-components</li>
+  <li>Hardcoded values are ONLY for fallback defaults when props are undefined</li>
+</ul>
+
+<p><strong>Exception — Container-type components:</strong> Components whose purpose is to wrap arbitrary child elements (e.g., BoxContainer) MAY accept <code class="language-plaintext highlighter-rouge">children: React.ReactNode</code>. This applies only to structural containers — data-driven leaf components (Button, Tabs, Accordion, etc.) must NOT use <code class="language-plaintext highlighter-rouge">children</code>.</p>
+
+<h3 id="array-props-data-on-parent-only">Array Props: Data on Parent Only</h3>
+
+<p>When the parent component defines an array prop (e.g., <code class="language-plaintext highlighter-rouge">items</code>), child/item components receive a single item directly. They do NOT redeclare the data structure in their own props.</p>
+
+<h3 id="array-element-types-always-objects-with-named-keys">Array Element Types: Always Objects with Named Keys</h3>
+
+<p>Array elements MUST be objects with named keys. This enables stable item identity (each item can carry its own <code class="language-plaintext highlighter-rouge">id</code>/<code class="language-plaintext highlighter-rouge">key</code>), non-breaking extension (new fields can be added later without changing the prop signature), and semantic naming (each value has meaning instead of being an opaque scalar).</p>
+
+<p><strong>Allowed forms:</strong></p>
+
+<ul>
+  <li>Inline object literal: <code class="language-plaintext highlighter-rouge">Array&lt;{ key: ValueType, ... }&gt;</code></li>
+  <li>Named interface where the interface itself is an object with named keys (e.g. <code class="language-plaintext highlighter-rouge">Array&lt;AccordionItem&gt;</code> is OK because <code class="language-plaintext highlighter-rouge">AccordionItem</code> is <code class="language-plaintext highlighter-rouge">{ name, content }</code>)</li>
+</ul>
+
+<p><strong>Never allowed as the array element:</strong></p>
+
+<ul>
+  <li>Primitives: <code class="language-plaintext highlighter-rouge">Array&lt;string&gt;</code>, <code class="language-plaintext highlighter-rouge">Array&lt;number&gt;</code>, <code class="language-plaintext highlighter-rouge">Array&lt;boolean&gt;</code></li>
+  <li>Leaf data types from <code class="language-plaintext highlighter-rouge">@wix/editor-react-types</code>: <code class="language-plaintext highlighter-rouge">Array&lt;Image&gt;</code>, <code class="language-plaintext highlighter-rouge">Array&lt;Link&gt;</code>, <code class="language-plaintext highlighter-rouge">Array&lt;Video&gt;</code>, <code class="language-plaintext highlighter-rouge">Array&lt;Audio&gt;</code>, <code class="language-plaintext highlighter-rouge">Array&lt;VectorArt&gt;</code>, <code class="language-plaintext highlighter-rouge">Array&lt;RichText&gt;</code>. Wrap them in an object instead.</li>
+  <li>Nested arrays:  <code class="language-plaintext highlighter-rouge">Array&lt;Array&lt;{cover: image, caption: string}&gt;&gt;</code> <code class="language-plaintext highlighter-rouge">Array&lt;{items: Array&lt;image&gt;, caption: string}&gt;</code></li>
+</ul>
+
+<p><strong>❌ Wrong:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">tags</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="kr">string</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">prices</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="kr">number</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">flags</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">boolean</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">images</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">Image</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">links</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">Link</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">nestedArrays</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nb">Array</span><span class="o">&lt;</span><span class="kr">any</span><span class="o">&gt;&gt;</span>
+</code></pre></div></div>
+
+<p><strong>✅ Correct:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">tags</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">label</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">prices</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">amount</span><span class="p">:</span> <span class="kr">number</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">flags</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">enabled</span><span class="p">:</span> <span class="nx">boolean</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">gallery</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">image</span><span class="p">:</span> <span class="nx">Image</span><span class="p">,</span> <span class="nx">caption</span><span class="p">?:</span> <span class="kr">string</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">links</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">link</span><span class="p">:</span> <span class="nx">Link</span><span class="p">,</span> <span class="na">label</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="nl">items</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">AccordionItem</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// AccordionItem is { name, content }</span>
+</code></pre></div></div>
+
+<h3 id="container-components-blackbox-content">Container Components (Blackbox Content)</h3>
+
+<p>When a component specification indicates a “container” or “slot” area where users can add nested content, use <code class="language-plaintext highlighter-rouge">React.ReactNode</code> for that content prop.</p>
+
+<p><strong>When to use <code class="language-plaintext highlighter-rouge">React.ReactNode</code> for a content prop:</strong></p>
+
+<ul>
+  <li>The specification describes a “container” or “content area”</li>
+  <li>Users should be able to add arbitrary nested components</li>
+  <li>The component doesn’t control what goes inside that area</li>
+</ul>
+
+<p><strong>RTL Support:</strong> Elements that render <code class="language-plaintext highlighter-rouge">React.ReactNode</code> content MUST have <code class="language-plaintext highlighter-rouge">dir="ltr"</code> to prevent RTL inheritance from the parent component. See <a href="DIRECTIONALITY.md"><code class="language-plaintext highlighter-rouge">DIRECTIONALITY.md</code></a>.</p>
+
+<h3 id="component-data-types">Component Data Types</h3>
+
+<p>When creating TypeScript interfaces for component props, use types from <code class="language-plaintext highlighter-rouge">@wix/editor-react-types</code> for more complex types, to see the allowed type from this library, look at the following file <code class="language-plaintext highlighter-rouge">node_modules/@wix/react-component-schema/dist/editor-react-types.d.ts</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="kd">type</span> <span class="p">{</span> <span class="nx">Link</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@wix/editor-react-types</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Reference at node_modules/@wix/react-component-schema/dist/editor-react-types.d.ts</span>
+</code></pre></div></div>
+
+<h3 id="external-resources-are-forbidden">External resources are forbidden</h3>
+
+<p>All resources rendered or fetched by the component (images, icons, fonts,
+videos, audio, JSON data, etc.) MUST come from Wix services. Never reference
+or call external (non-Wix) hosts — no <code class="language-plaintext highlighter-rouge">unsplash.com</code>, <code class="language-plaintext highlighter-rouge">placehold.co</code>,
+<code class="language-plaintext highlighter-rouge">picsum.photos</code>, third-party CDN icon sets, or any custom backend the user
+hasn’t asked for. This rule covers both <code class="language-plaintext highlighter-rouge">src</code>/<code class="language-plaintext highlighter-rouge">href</code> attributes and any
+runtime fetching.</p>
+
+<p>Allowed image hosts: <code class="language-plaintext highlighter-rouge">static.wixstatic.com</code> (and other <code class="language-plaintext highlighter-rouge">*.wixstatic.com</code>
+subdomains). Allowed data: values supplied through props (populated by the
+editor) or imported local assets bundled with the component.</p>
+
+<h3 id="default-values-for-image-props">Default values for <code class="language-plaintext highlighter-rouge">Image</code> props</h3>
+
+<p>Image defaults belong in the component file’s exported <code class="language-plaintext highlighter-rouge">defaultProps</code>
+constant (the one consumed by <code class="language-plaintext highlighter-rouge">withDefaults(Component, defaultProps)</code> in
+<code class="language-plaintext highlighter-rouge">component.tsx</code>). Use a Wix-hosted image from the Free-from-Wix public
+media catalog and populate <strong>only</strong> <code class="language-plaintext highlighter-rouge">uri</code>, <code class="language-plaintext highlighter-rouge">url</code>, and <code class="language-plaintext highlighter-rouge">alt</code> — leave
+<code class="language-plaintext highlighter-rouge">width</code>, <code class="language-plaintext highlighter-rouge">height</code>, <code class="language-plaintext highlighter-rouge">focalPoint</code>, etc. unset so the editor fills them when
+the user picks a real image.</p>
+
+<p>By default, use the canonical fallback URL from the examples below for
+every <code class="language-plaintext highlighter-rouge">Image</code> default (<code class="language-plaintext highlighter-rouge">url</code> and <code class="language-plaintext highlighter-rouge">uri</code> derived from the same <code class="language-plaintext highlighter-rouge">fileName</code>).
+<strong>Only when the user explicitly asks for different/better default images</strong>,
+fetch candidates from the Wix Free-from-Wix catalog:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>GET https://publicmedia.wix.com/public/light_items?guid=bca5cb9f-45d2-4b11-8d6c-c9a7e7bd2873%3Aglobal%3Awix&amp;pageSize=20&amp;pageNumber=1&amp;language=en&amp;tags=free&amp;mediaType=picture
+</code></pre></div></div>
+
+<p>The endpoint is unauthenticated. Pick an item whose <code class="language-plaintext highlighter-rouge">displayTags</code> /
+<code class="language-plaintext highlighter-rouge">title</code> fit the component’s purpose, then build the <code class="language-plaintext highlighter-rouge">Image</code> default from
+its <code class="language-plaintext highlighter-rouge">fileName</code>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">url</code> → <code class="language-plaintext highlighter-rouge">`https://static.wixstatic.com/media/${fileName}`</code></li>
+  <li><code class="language-plaintext highlighter-rouge">uri</code> → <code class="language-plaintext highlighter-rouge">fileName</code></li>
+  <li><code class="language-plaintext highlighter-rouge">alt</code> → a short human description (use the item’s <code class="language-plaintext highlighter-rouge">title</code> or
+<code class="language-plaintext highlighter-rouge">displayTags</code>)</li>
+</ul>
+
+<p>Do not call this endpoint when the user hasn’t asked for it — the
+canonical fallback URL is fine for unattended scaffolds.</p>
+
+<p><strong>Default image pool — use a different image for each slot:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>fileName</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><code class="language-plaintext highlighter-rouge">11062b_2f97b87dcea2446fa48e9ad9c5457ae1~mv2.jpg</code></td>
+      <td>Tropical beach aerial</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><code class="language-plaintext highlighter-rouge">11062b_73f31c7e7d3544c69dc8ecd8d34c5717~mv2.jpg</code></td>
+      <td>Dead Sea landscape</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><code class="language-plaintext highlighter-rouge">11062b_3682ebfcb08e4da5b3168b62819a1e68~mv2.jpg</code></td>
+      <td>Palm tree sunset</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><code class="language-plaintext highlighter-rouge">11062b_45e67783d39c4963ab9e4fc418173233~mv2.jpg</code></td>
+      <td>Abstract pink waves</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><code class="language-plaintext highlighter-rouge">11062b_4c11f014b0d04948b2e6f554076bc40a~mv2.jpg</code></td>
+      <td>Coastal village aerial</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>When a component needs <strong>more than one</strong> image default, cycle through
+the pool above so every slot gets a visually distinct image. For a
+single image, use image #1.</p>
+
+<p><strong>Single <code class="language-plaintext highlighter-rouge">Image</code> prop:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">defaultProps</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">image</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://static.wixstatic.com/media/11062b_2f97b87dcea2446fa48e9ad9c5457ae1~mv2.jpg</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">uri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">11062b_2f97b87dcea2446fa48e9ad9c5457ae1~mv2.jpg</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">alt</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Default image</span><span class="dl">"</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">}</span> <span class="kd">as const</span> <span class="kd">satisfies </span><span class="nb">Omit</span><span class="o">&lt;</span><span class="nx">ExampleComponentProps</span><span class="p">,</span> <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">className</span><span class="dl">"</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Array of objects with an <code class="language-plaintext highlighter-rouge">Image</code> field:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kd">const</span> <span class="nx">defaultProps</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">cards</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">First card</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">image</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://static.wixstatic.com/media/11062b_2f97b87dcea2446fa48e9ad9c5457ae1~mv2.jpg</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">uri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">11062b_2f97b87dcea2446fa48e9ad9c5457ae1~mv2.jpg</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">alt</span><span class="p">:</span> <span class="dl">"</span><span class="s2">First card image</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Second card</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">image</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">url</span><span class="p">:</span> <span class="dl">"</span><span class="s2">https://static.wixstatic.com/media/11062b_73f31c7e7d3544c69dc8ecd8d34c5717~mv2.jpg</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">uri</span><span class="p">:</span> <span class="dl">"</span><span class="s2">11062b_73f31c7e7d3544c69dc8ecd8d34c5717~mv2.jpg</span><span class="dl">"</span><span class="p">,</span>
+        <span class="na">alt</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Second card image</span><span class="dl">"</span><span class="p">,</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">],</span>
+<span class="p">}</span> <span class="kd">as const</span> <span class="kd">satisfies </span><span class="nb">Omit</span><span class="o">&lt;</span><span class="nx">ExampleComponentProps</span><span class="p">,</span> <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span> <span class="o">|</span> <span class="dl">"</span><span class="s2">className</span><span class="dl">"</span><span class="o">&gt;</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Inline fallback for HTML <code class="language-plaintext highlighter-rouge">src</code> / <code class="language-plaintext highlighter-rouge">href</code>:</strong> when rendering a raw HTML
+attribute that takes a URL (<code class="language-plaintext highlighter-rouge">&lt;img src&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;source src&gt;</code>, <code class="language-plaintext highlighter-rouge">&lt;video poster&gt;</code>,
+<code class="language-plaintext highlighter-rouge">&lt;a href&gt;</code> for an image link, etc.) and the value could be empty, fall
+back to the same Wix-hosted URL — never to an external host or a relative
+path that doesn’t exist:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nt">img</span>
+  <span class="na">src</span><span class="p">=</span><span class="si">{</span>
+    <span class="nx">image</span><span class="p">?.</span><span class="nx">url</span> <span class="o">||</span>
+    <span class="dl">"</span><span class="s2">https://static.wixstatic.com/media/11062b_2f97b87dcea2446fa48e9ad9c5457ae1~mv2.jpg</span><span class="dl">"</span>
+  <span class="si">}</span>
+  <span class="na">alt</span><span class="p">=</span><span class="si">{</span><span class="nx">image</span><span class="p">?.</span><span class="nx">alt</span> <span class="o">||</span> <span class="dl">"</span><span class="s2">Default image</span><span class="dl">"</span><span class="si">}</span>
+<span class="p">/&gt;</span>
+</code></pre></div></div>
+
+<h3 id="component-file-splitting">Component File Splitting</h3>
+
+<p>Split logical UI pieces into separate named components. Never write inline JSX blocks for distinct complex UI pieces.</p>
+
+<p><strong>File structure for complex components (many subcomponents):</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ComponentName/
+├── components/                 # Subcomponents folder
+│   ├── SubComponent1/
+│   │   ├── SubComponent1.tsx
+│   │   ├── SubComponent1.module.scss
+│   │   └── index.ts
+│   └── SubComponent2/
+│       ├── SubComponent2.tsx
+│       └── index.ts
+├── hooks/                      # Custom hooks folder
+│   ├── index.ts
+│   └── useCustomHook.ts
+</code></pre></div></div>
+
+<p><strong>When to extract a sub-component:</strong></p>
+
+<ul>
+  <li>JSX block represents a logical complex unit (button, control, section, item)</li>
+  <li>Component has its own props interface</li>
+  <li>Logic is reusable or testable independently</li>
+  <li>Block has more than 15-20 lines of JSX</li>
+</ul>
+
+<hr />
+
+<h2 id="patterns">Patterns</h2>
+
+<h3 id="data-driven-pattern">Data-Driven Pattern</h3>
+
+<p><strong>❌ Wrong:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">ButtonProps</span> <span class="p">{</span>
+  <span class="nl">children</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">ReactNode</span><span class="p">;</span>  <span class="c1">// ❌</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="nx">Button</span><span class="o">&gt;</span><span class="nx">Click</span> <span class="nx">Me</span><span class="o">&lt;</span><span class="sr">/Button</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p><strong>✅ Correct:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">ButtonProps</span> <span class="p">{</span>
+  <span class="nl">label</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">icon</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="nx">Button</span> <span class="nx">label</span><span class="o">=</span><span class="p">{</span><span class="nx">label</span><span class="p">}</span> <span class="nx">icon</span><span class="o">=</span><span class="p">{</span><span class="nx">icon</span><span class="p">}</span> <span class="sr">/</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<p>Component controls rendering internally:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">List</span> <span class="o">=</span> <span class="p">({</span> <span class="nx">items</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="nx">items</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">item</span> <span class="o">=&gt;</span> <span class="p">(</span>
+      <span class="o">&lt;</span><span class="nx">ListItem</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="o">&gt;</span><span class="p">{</span><span class="nx">item</span><span class="p">.</span><span class="nx">label</span><span class="p">}</span><span class="o">&lt;</span><span class="sr">/ListItem</span><span class="err">&gt;
+</span>    <span class="p">))}</span>
+  <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="array-props-pattern">Array Props Pattern</h3>
+
+<p>Parent defines array structure, child receives single item:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Parent</span>
+<span class="kr">interface</span> <span class="nx">ParentProps</span> <span class="p">{</span>
+  <span class="nl">items</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">AccordionItem</span><span class="o">&gt;</span><span class="p">;</span>  <span class="c1">// Array defined here</span>
+<span class="p">}</span>
+
+<span class="kr">interface</span> <span class="nx">AccordionItem</span> <span class="p">{</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">content</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">ReactNode</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Child receives single item</span>
+<span class="kr">interface</span> <span class="nx">ChildProps</span> <span class="p">{</span>
+  <span class="nl">item</span><span class="p">:</span> <span class="nx">AccordionItem</span> <span class="o">&amp;</span> <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="kr">string</span> <span class="p">};</span>  <span class="c1">// Single item</span>
+  <span class="nl">isOpen</span><span class="p">?:</span> <span class="nx">boolean</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Parent maps</span>
+<span class="nx">items</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">Child</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">index</span><span class="p">}</span> <span class="nx">item</span><span class="o">=</span><span class="p">{{</span> <span class="p">...</span><span class="nx">item</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="nx">index</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="p">}}</span> <span class="sr">/</span><span class="err">&gt;
+</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h3 id="container-components-pattern">Container Components Pattern</h3>
+
+<p>For “container” or “slot” areas, use <code class="language-plaintext highlighter-rouge">React.ReactNode</code>:</p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">AccordionItem</span> <span class="p">{</span>
+  <span class="nl">name</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">content</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">ReactNode</span><span class="p">;</span>  <span class="c1">// Users add any content here</span>
+<span class="p">}</span>
+
+<span class="c1">// Render</span>
+<span class="p">{</span><span class="nx">items</span><span class="p">.</span><span class="nf">map</span><span class="p">((</span><span class="nx">item</span><span class="p">,</span> <span class="nx">index</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+  <span class="o">&lt;</span><span class="nx">div</span> <span class="nx">key</span><span class="o">=</span><span class="p">{</span><span class="nx">index</span><span class="p">}</span> <span class="nx">dir</span><span class="o">=</span><span class="dl">"</span><span class="s2">ltr</span><span class="dl">"</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="k">typeof</span> <span class="nx">item</span><span class="p">.</span><span class="nx">content</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">function</span><span class="dl">'</span> <span class="p">?</span> <span class="nx">item</span><span class="p">.</span><span class="nf">content</span><span class="p">({})</span> <span class="p">:</span> <span class="nx">item</span><span class="p">.</span><span class="nx">content</span><span class="p">}</span>
+  <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="p">))}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="common-mistakes">Common Mistakes</h2>
+
+<h3 id="using-children-prop-in-exported-interface">Using children prop in exported interface</h3>
+
+<p><strong>❌ Wrong:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">CardProps</span> <span class="p">{</span>
+  <span class="nl">children</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">ReactNode</span><span class="p">;</span>  <span class="c1">// ❌ children + React.ReactNode both forbidden</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="nx">Card</span><span class="o">&gt;&lt;</span><span class="nx">CardHeader</span><span class="o">&gt;</span><span class="nx">Title</span><span class="o">&lt;</span><span class="sr">/CardHeader&gt;&lt;/</span><span class="nx">Card</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p><strong>✅ Correct:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">export</span> <span class="kr">interface</span> <span class="nx">CardProps</span> <span class="p">{</span>
+  <span class="nl">title</span><span class="p">:</span> <span class="kr">string</span><span class="p">;</span>
+  <span class="nl">content</span><span class="p">:</span> <span class="nx">React</span><span class="p">.</span><span class="nx">ReactNode</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="nx">Card</span> <span class="nx">title</span><span class="o">=</span><span class="dl">"</span><span class="s2">Title</span><span class="dl">"</span> <span class="nx">content</span><span class="o">=</span><span class="p">{</span><span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span><span class="nx">Content</span><span class="o">&lt;</span><span class="sr">/div&gt;} /</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<h3 id="adding-elementprops-for-css-only-elements">Adding elementProps for CSS-only elements</h3>
+
+<p><strong>❌ Wrong:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">elementProps</span><span class="p">?:</span> <span class="p">{</span>
+  <span class="nx">icon</span><span class="p">?:</span> <span class="p">{</span> <span class="nx">className</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="p">}</span>  <span class="c1">// ❌ Only className</span>
+  <span class="nl">separator</span><span class="p">?:</span> <span class="p">{</span> <span class="nx">className</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span> <span class="p">}</span>  <span class="c1">// ❌ Only className</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>✅ Correct:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// No elementProps for purely visual elements (including conditionally displayed)</span>
+<span class="c1">// Style via CSS classes directly</span>
+</code></pre></div></div>
+
+<p><strong>Why:</strong> If element only has <code class="language-plaintext highlighter-rouge">className</code> (even if it can be hidden/shown via CSS), skip elementProps entirely. Conditional display is controlled via CSS, not React props.</p>
+
+<h3 id="using-t-array-syntax">Using T[] array syntax</h3>
+
+<p>Use <code class="language-plaintext highlighter-rouge">Array&lt;T&gt;</code> over <code class="language-plaintext highlighter-rouge">T[]</code>.</p>
+
+<p><strong>❌ Wrong:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">ComponentProps</span> <span class="p">{</span>
+  <span class="nl">items</span><span class="p">:</span> <span class="nx">Item</span><span class="p">[];</span> <span class="c1">// ❌ Wrong syntax</span>
+  <span class="nl">tags</span><span class="p">:</span> <span class="kr">string</span><span class="p">[];</span> <span class="c1">// ❌ Wrong syntax</span>
+  <span class="nl">tags</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="kr">string</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// ❌ Element must be an object with named keys</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>✅ Correct:</strong></p>
+
+<div class="language-typescript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kr">interface</span> <span class="nx">ComponentProps</span> <span class="p">{</span>
+  <span class="nl">items</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">Item</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// ✅ Correct syntax</span>
+  <span class="nl">tags</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">{</span> <span class="na">label</span><span class="p">:</span> <span class="kr">string</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// ✅ Element is an object with named keys</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>See also: <a href="#array-element-types-always-objects-with-named-keys">Array Element Types: Always Objects with Named Keys</a> — items must be objects with named keys.</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

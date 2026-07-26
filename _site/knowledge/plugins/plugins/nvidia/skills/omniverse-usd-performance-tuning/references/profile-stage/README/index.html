@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>README · A developer journey</title>
+<meta name="description" content="Profile Stage">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/profile-stage/README/">
+
+<meta property="og:title" content="README · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-usd-performance-tuning/references/profile-stage/README/">
+<meta property="og:description" content="Profile Stage">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>README</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="profile-stage">Profile Stage</h1>
+
+<!-- SPDX-FileCopyrightText: Copyright (c) 2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved. -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<h2 id="when-to-use">When to Use</h2>
+
+<p>Use when profiling a USD stage before/after optimization; do not use to interpret regressions alone.</p>
+
+<h2 id="instructions">Instructions</h2>
+
+<ol>
+  <li>Confirm the target asset, artifact, or user intent and check the prerequisites listed below.</li>
+  <li>Read only the referenced files needed for the current phase, failure mode, or output contract.</li>
+  <li>Follow the workflow, rules, and safety gates in this reference before invoking downstream references or shell commands.</li>
+  <li>Return the result using the Output Format section and name any blocked prerequisite or unresolved user decision.</li>
+</ol>
+
+<h2 id="pre-flight-checklist">Pre-flight Checklist</h2>
+
+<p>Before running profile measurements, re-read and confirm:</p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" /><code class="language-plaintext highlighter-rouge">references/runtime-artifact-token-budget.md</code> — keep raw profile output
+on disk, read bounded summaries only.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Output workspace policy from <code class="language-plaintext highlighter-rouge">references/output-workspace.md</code>.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Profiling mode (quick vs full) matches what was used for baseline —
+never compare across modes.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />For full mode: multi-sample warm protocol (discard first, average rest).
+    <h2 id="output-format">Output Format</h2>
+  </li>
+</ul>
+
+<p>Return a concise status or report that names the input, selected runtime or evidence source, actions planned or performed, artifacts written, blockers, and the next validation or user-decision step. When a schema or template is referenced below, conform to that contract.</p>
+
+<p>Use this reference to capture measurable performance data. Run it <strong>before</strong>
+optimization to establish a baseline, and <strong>after</strong> to verify improvement.</p>
+
+<h2 id="purpose">Purpose</h2>
+
+<p>Capture repeatable quick or full performance metrics for a USD stage so
+optimization decisions and before/after comparisons are evidence-based.</p>
+
+<h2 id="runtime-artifact-token-budget">Runtime artifact token budget</h2>
+
+<p>Follow
+<code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/runtime-artifact-token-budget.md</code>
+for Kit logs, Tracy captures, and CSV exports. Do not load full <code class="language-plaintext highlighter-rouge">.tracy</code> files,
+Tracy CSVs, or Kit logs into context. Extract compact metrics and keep the raw
+captures on disk.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li>A readable USD stage path.</li>
+  <li><code class="language-plaintext highlighter-rouge">pxr</code> Python API for quick mode.</li>
+  <li>Kit, Isaac Sim, or compatible runtime plus Tracy support for full mode.</li>
+  <li>Same profiling mode and environment for any baseline/after comparison.</li>
+</ul>
+
+<h2 id="examples">Examples</h2>
+
+<ul>
+  <li>“Profile this USD stage in quick mode before optimization.”</li>
+  <li>“Capture a full Kit runtime profile after mesh cleanup.”</li>
+</ul>
+
+<h2 id="quick-mode-usd-level-always-available">Quick Mode (USD-level, always available)</h2>
+
+<p>Requires only the <code class="language-plaintext highlighter-rouge">pxr</code> Python API. No Kit, no GPU needed. Measures:</p>
+
+<ul>
+  <li><strong>Stage open time</strong> (cold + warm) — composition cost.</li>
+  <li><strong>Prim traversal time</strong> — scene graph complexity.</li>
+  <li><strong>Attribute resolution time</strong> — value resolution across composition arcs.</li>
+  <li><strong>Transform computation time</strong> — XformCache world transforms.</li>
+  <li><strong>Material binding resolution time</strong> — ComputeBoundMaterial cost.</li>
+</ul>
+
+<h3 id="usage">Usage</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">pxr</span> <span class="kn">import</span> <span class="n">Usd</span><span class="p">,</span> <span class="n">UsdGeom</span><span class="p">,</span> <span class="n">UsdShade</span><span class="p">,</span> <span class="n">UsdUtils</span>
+<span class="kn">from</span> <span class="n">statistics</span> <span class="kn">import</span> <span class="n">median</span>
+<span class="kn">import</span> <span class="n">gc</span>
+<span class="kn">import</span> <span class="n">time</span>
+
+<span class="n">stage_path</span> <span class="o">=</span> <span class="sh">"</span><span class="s">/path/to/stage.usd</span><span class="sh">"</span>
+
+<span class="k">def</span> <span class="nf">open_once_ms</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+    <span class="n">stage</span> <span class="o">=</span> <span class="n">Usd</span><span class="p">.</span><span class="n">Stage</span><span class="p">.</span><span class="nc">Open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">elapsed_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+    <span class="k">del</span> <span class="n">stage</span>
+    <span class="n">gc</span><span class="p">.</span><span class="nf">collect</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">elapsed_ms</span>
+
+<span class="c1"># Stage-open timing. Prefer running this script in a fresh process for each
+# baseline/after capture. Treat cold_open_ms as the first measured open in this
+# capture process, not a guaranteed OS-cold read.
+</span><span class="n">cold_open_ms</span> <span class="o">=</span> <span class="nf">open_once_ms</span><span class="p">(</span><span class="n">stage_path</span><span class="p">)</span>
+<span class="n">_warmup_open_ms</span> <span class="o">=</span> <span class="nf">open_once_ms</span><span class="p">(</span><span class="n">stage_path</span><span class="p">)</span>
+<span class="n">warm_open_samples_ms</span> <span class="o">=</span> <span class="p">[</span><span class="nf">open_once_ms</span><span class="p">(</span><span class="n">stage_path</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+<span class="n">warm_open_ms</span> <span class="o">=</span> <span class="nf">median</span><span class="p">(</span><span class="n">warm_open_samples_ms</span><span class="p">)</span>
+<span class="n">warm_open_spread_pct</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="p">(</span><span class="nf">max</span><span class="p">(</span><span class="n">warm_open_samples_ms</span><span class="p">)</span> <span class="o">-</span> <span class="nf">min</span><span class="p">(</span><span class="n">warm_open_samples_ms</span><span class="p">))</span> <span class="o">/</span> <span class="n">warm_open_ms</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="k">if</span> <span class="n">warm_open_ms</span>
+    <span class="k">else</span> <span class="mf">0.0</span>
+<span class="p">)</span>
+
+<span class="n">stage</span> <span class="o">=</span> <span class="n">Usd</span><span class="p">.</span><span class="n">Stage</span><span class="p">.</span><span class="nc">Open</span><span class="p">(</span><span class="n">stage_path</span><span class="p">)</span>
+
+<span class="c1"># Traversal — measure only the default-prim hierarchy (authored scene graph),
+# excluding prototype prims (/__Prototype_*). Prototypes are internal to USD
+# instancing and their traversal cost is a composition-setup cost, not a
+# scene-graph complexity cost. Comparing before/after traversal is only
+# meaningful when both measurements cover the same logical scope.
+</span><span class="n">all_prims</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">stage</span><span class="p">.</span><span class="nc">Traverse</span><span class="p">())</span>
+
+<span class="c1"># Filter out prototype prims for the traversal measurement.
+# stage.Traverse() DOES visit /__Prototype_* prims when prototype_count &gt; 0,
+# so we must exclude them to measure authored scene-graph complexity only.
+</span><span class="k">def</span> <span class="nf">is_prototype_prim</span><span class="p">(</span><span class="n">prim</span><span class="p">):</span>
+    <span class="sh">"""</span><span class="s">Return True if prim lives under a /__Prototype_* root.</span><span class="sh">"""</span>
+    <span class="n">path_str</span> <span class="o">=</span> <span class="nf">str</span><span class="p">(</span><span class="n">prim</span><span class="p">.</span><span class="nc">GetPath</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">path_str</span><span class="p">.</span><span class="nf">startswith</span><span class="p">(</span><span class="sh">"</span><span class="s">/__Prototype_</span><span class="sh">"</span><span class="p">)</span>
+
+<span class="n">authored_prims</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">all_prims</span> <span class="k">if</span> <span class="ow">not</span> <span class="nf">is_prototype_prim</span><span class="p">(</span><span class="n">p</span><span class="p">)]</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="c1"># Re-traverse but measure only authored scope traversal time
+</span>    <span class="n">prims</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">stage</span><span class="p">.</span><span class="nc">Traverse</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nf">is_prototype_prim</span><span class="p">(</span><span class="n">p</span><span class="p">)]</span>
+<span class="n">traverse_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="c1"># Full traversal including prototypes (for reference / completeness)
+</span><span class="n">traverse_full_ms_t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nf">list</span><span class="p">(</span><span class="n">stage</span><span class="p">.</span><span class="nc">Traverse</span><span class="p">())</span>
+<span class="n">traverse_full_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">traverse_full_ms_t0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="c1"># Instance-proxy traversal (only meaningful when instance_count &gt; 0).
+</span><span class="n">all_prims_with_proxies</span> <span class="o">=</span> <span class="nf">list</span><span class="p">(</span><span class="n">stage</span><span class="p">.</span><span class="nc">Traverse</span><span class="p">(</span><span class="n">Usd</span><span class="p">.</span><span class="nc">TraverseInstanceProxies</span><span class="p">()))</span>
+
+<span class="c1"># Attribute resolution
+</span><span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">prim</span> <span class="ow">in</span> <span class="n">authored_prims</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">prim</span><span class="p">.</span><span class="nc">GetAttributes</span><span class="p">():</span>
+        <span class="n">attr</span><span class="p">.</span><span class="nc">Get</span><span class="p">()</span>
+<span class="n">resolve_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+<span class="c1"># Transform computation
+</span><span class="n">xf_cache</span> <span class="o">=</span> <span class="n">UsdGeom</span><span class="p">.</span><span class="nc">XformCache</span><span class="p">()</span>
+<span class="n">xformable</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">authored_prims</span> <span class="k">if</span> <span class="n">p</span><span class="p">.</span><span class="nc">IsA</span><span class="p">(</span><span class="n">UsdGeom</span><span class="p">.</span><span class="n">Xformable</span><span class="p">)]</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">prim</span> <span class="ow">in</span> <span class="n">xformable</span><span class="p">:</span>
+    <span class="n">xf_cache</span><span class="p">.</span><span class="nc">GetLocalToWorldTransform</span><span class="p">(</span><span class="n">prim</span><span class="p">)</span>
+<span class="n">xform_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="nf">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+<span class="c1"># Stage stats
+</span><span class="n">stats</span> <span class="o">=</span> <span class="n">UsdUtils</span><span class="p">.</span><span class="nc">ComputeUsdStageStats</span><span class="p">(</span><span class="n">stage</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="quick-mode-output">Quick mode output</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"quick"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"stage_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/stage.usd"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"cold_open_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">485.2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"warm_open_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">104.1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"warm_open_samples_ms"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">106.2</span><span class="p">,</span><span class="w"> </span><span class="mf">101.9</span><span class="p">,</span><span class="w"> </span><span class="mf">104.1</span><span class="p">,</span><span class="w"> </span><span class="mf">103.8</span><span class="p">,</span><span class="w"> </span><span class="mf">105.0</span><span class="p">],</span><span class="w">
+  </span><span class="nl">"warm_open_sample_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"warm_open_spread_pct"</span><span class="p">:</span><span class="w"> </span><span class="mf">4.1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"open_timing_context"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fresh_process"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"traverse_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.84</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"traverse_full_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.02</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"attribute_resolution_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">169.9</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"transform_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">10.2</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prim_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2742</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prim_count_authored"</span><span class="p">:</span><span class="w"> </span><span class="mi">2742</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prim_count_with_instance_proxies"</span><span class="p">:</span><span class="w"> </span><span class="mi">2742</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"layer_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">230</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"instance_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"prototype_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"total_attributes"</span><span class="p">:</span><span class="w"> </span><span class="mi">62076</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">traverse_ms</code> measures only authored prims (excludes <code class="language-plaintext highlighter-rouge">/__Prototype_*</code> subtrees);
+<code class="language-plaintext highlighter-rouge">traverse_full_ms</code> measures the full <code class="language-plaintext highlighter-rouge">stage.Traverse()</code> including prototypes.
+Use <code class="language-plaintext highlighter-rouge">traverse_ms</code> for before/after comparisons — it represents the user-visible
+scene graph complexity. <code class="language-plaintext highlighter-rouge">traverse_full_ms</code> is diagnostic-only (composition setup
+cost).</p>
+
+<p><code class="language-plaintext highlighter-rouge">prim_count</code> is the total from <code class="language-plaintext highlighter-rouge">stage.Traverse()</code> (includes prototype prims);
+<code class="language-plaintext highlighter-rouge">prim_count_authored</code> excludes <code class="language-plaintext highlighter-rouge">/__Prototype_*</code> subtrees (the authored scene graph);
+<code class="language-plaintext highlighter-rouge">prim_count_with_instance_proxies</code> is the rendered-geometry footprint (what
+Hydra walks). When <code class="language-plaintext highlighter-rouge">instance_count &gt; 0</code> these three diverge — report all so
+the optimization-report can attribute regressions to the right axis.</p>
+
+<h3 id="stage-open-timing-protocol">Stage-open Timing Protocol</h3>
+
+<p>Use this protocol for <code class="language-plaintext highlighter-rouge">cold_open_ms</code> and <code class="language-plaintext highlighter-rouge">warm_open_ms</code>; do not treat a single
+post-optimization warm open as a verdict.</p>
+
+<ul>
+  <li>Prefer a fresh process for each baseline and after capture. If the capture
+must run inside the same long-running process that performed optimization,
+set <code class="language-plaintext highlighter-rouge">open_timing_context</code> to <code class="language-plaintext highlighter-rouge">same_process_warm</code> and lower confidence.</li>
+  <li>For each stage path, record one first-open timing, run one unreported warmup
+open, then measure at least five warm opens. Set <code class="language-plaintext highlighter-rouge">warm_open_ms</code> to the
+median and include <code class="language-plaintext highlighter-rouge">warm_open_samples_ms</code>, <code class="language-plaintext highlighter-rouge">warm_open_sample_count</code>, and
+<code class="language-plaintext highlighter-rouge">warm_open_spread_pct</code> when possible.</li>
+  <li>If the optimized file was just written, run the same warmup/sample protocol
+before comparing it to the baseline. Do not compare a first after-write open
+to a warmed baseline.</li>
+  <li>If warm samples are noisy (for example, max-min exceeds 15% of median) or the
+before/after delta is within the measured spread, mark warm-load evidence as
+inconclusive in <code class="language-plaintext highlighter-rouge">compare-profiles</code> rather than a regression.</li>
+</ul>
+
+<h2 id="full-mode-kit-runtime-requires-isaac-sim--gpu">Full Mode (Kit runtime, requires Isaac Sim + GPU)</h2>
+
+<p>Captures actual rendering performance via Tracy. Measures everything in
+quick mode plus:</p>
+
+<ul>
+  <li><strong>FPS</strong> (steady-state frame rate).</li>
+  <li><strong>Frame time</strong> (mean, p50, p95, min, max).</li>
+  <li><strong>Hydra sync time</strong> — USD → Hydra scene population.</li>
+  <li><strong>RTX render time</strong> — GPU rendering passes.</li>
+  <li><strong>Shader compilation time</strong> — first-run shader cache cost.</li>
+  <li><strong>Stage load event timing</strong> — from Kit’s internal instrumentation.</li>
+</ul>
+
+<h3 id="prerequisites-1">Prerequisites</h3>
+
+<ul>
+  <li>Isaac Sim or Kit SDK with RTX renderer.</li>
+  <li>Scene Optimizer <code class="language-plaintext highlighter-rouge">omni.kit.profiler.tracy</code> extension.</li>
+  <li>GPU with display (headless with virtual display works).</li>
+</ul>
+
+<h3 id="usage-1">Usage</h3>
+
+<p>Launch Isaac Sim with Tracy profiler:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">isaacsim</span> <span class="kn">import</span> <span class="n">SimulationApp</span>
+<span class="n">app</span> <span class="o">=</span> <span class="nc">SimulationApp</span><span class="p">({</span>
+    <span class="sh">'</span><span class="s">headless</span><span class="sh">'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="sh">'</span><span class="s">extra_args</span><span class="sh">'</span><span class="p">:</span> <span class="p">[</span>
+        <span class="sh">'</span><span class="s">--/app/profilerBackend=tracy</span><span class="sh">'</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">--/app/profileFromStart=true</span><span class="sh">'</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">--/profiler/enabled=true</span><span class="sh">'</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">--/profiler/gpu=true</span><span class="sh">'</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">--/profiler/gpu/tracyInject/enabled=true</span><span class="sh">'</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">--/app/profilerMask=1</span><span class="sh">'</span><span class="p">,</span>
+        <span class="sh">'</span><span class="s">--enable</span><span class="sh">'</span><span class="p">,</span> <span class="sh">'</span><span class="s">omni.kit.profiler.tracy</span><span class="sh">'</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>Capture the trace with the Tracy <code class="language-plaintext highlighter-rouge">capture</code> binary bundled in
+<code class="language-plaintext highlighter-rouge">omni.kit.profiler.tracy</code> extension. Export with <code class="language-plaintext highlighter-rouge">csvexport</code>.</p>
+
+<p>Treat Tracy CSV exports as large artifacts: run an analyzer that emits compact
+startup/runtime summaries, or read only bounded heads/tails and targeted zone
+matches. Never paste the full CSV into the report.</p>
+
+<p>For detailed capture procedure and analysis, refer to the external
+profiling skills at <code class="language-plaintext highlighter-rouge">NVIDIA/omniperf/.agents/skills/profiling/SKILL.md</code>
+and <code class="language-plaintext highlighter-rouge">NVIDIA/omniperf/.agents/skills/nsys-analyze/SKILL.md</code>.</p>
+
+<h3 id="full-mode-output">Full mode output</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"full"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"stage_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/stage.usd"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"quick_metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"...same as quick mode..."</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"kit_metrics"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"fps_mean"</span><span class="p">:</span><span class="w"> </span><span class="mf">43.2</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"frame_time_mean_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">23.1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"frame_time_p95_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">25.8</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"hydra_sync_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">4.4</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"rtx_render_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.1</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"stage_load_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">580</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"shader_compile_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">8200</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"tracy_zone_count"</span><span class="p">:</span><span class="w"> </span><span class="mi">101707</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"trace_file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/trace.tracy"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="full-mode-startup-vs-runtime-separation">Full mode: startup vs runtime separation</h2>
+
+<p>When capturing Tracy data, separate the zone report into two sections:</p>
+
+<ul>
+  <li><strong>Startup zones</strong> — count=1 or proportional to extension/device count.
+Report total startup time.</li>
+  <li><strong>Runtime zones</strong> — count matches frame count. Report per-frame averages.</li>
+</ul>
+
+<p>Classification: if zone count is within ±10% of the rendered frame count,
+it is a runtime zone. Otherwise it is startup.</p>
+
+<p>Output should include:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"startup_zones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"compileShaderGroupForDevice"</span><span class="p">,</span><span class="w"> </span><span class="nl">"total_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">6998</span><span class="p">,</span><span class="w"> </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">178</span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"runtime_zones"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"App Update"</span><span class="p">,</span><span class="w"> </span><span class="nl">"mean_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">15.7</span><span class="p">,</span><span class="w"> </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">139</span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hydraRenderViews"</span><span class="p">,</span><span class="w"> </span><span class="nl">"mean_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.6</span><span class="p">,</span><span class="w"> </span><span class="nl">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">104</span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"startup_total_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">25646</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"runtime_mean_frame_ms"</span><span class="p">:</span><span class="w"> </span><span class="mf">15.7</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This separation enables <code class="language-plaintext highlighter-rouge">compare-profiles</code> to correctly classify tradeoffs
+(startup cost increase + runtime improvement = net positive, not a regression).</p>
+
+<h2 id="when-to-use-which-mode">When to use which mode</h2>
+
+<ul>
+  <li><strong>Quick mode</strong> for structural optimization (instancing, layer packaging,
+reference remapping). Measures composition cost which is what these changes affect.</li>
+  <li><strong>Full mode</strong> for geometry optimization (mesh cleanup, decimation, material
+consolidation). Measures rendering cost which is what these changes affect.</li>
+  <li><strong>Always run the same mode before and after</strong> for a valid comparison.</li>
+</ul>
+
+<h2 id="what-quick-mode-can-and-cannot-prove-standalone-path-caveat">What quick mode can and cannot prove (standalone-path caveat)</h2>
+
+<p>Quick mode is the only available mode when the Phase 0 runtime is
+standalone Scene Optimizer (no Kit). The agent must be explicit in the
+final <code class="language-plaintext highlighter-rouge">optimization-report</code> about which claims quick-mode metrics support
+and which they do not.</p>
+
+<p><strong>Quick mode CAN prove:</strong></p>
+
+<ul>
+  <li>Stage open time (cold + warm) — composition + I/O cost.</li>
+  <li>Prim / layer / instance / prototype counts — structural complexity.</li>
+  <li>Attribute resolution + transform compute — composition-arc evaluation cost.</li>
+  <li>Aggregate disk-size deltas on prototype / sub-asset files (compared
+separately, not part of quick mode itself).</li>
+</ul>
+
+<p><strong>Quick mode CANNOT prove:</strong></p>
+
+<ul>
+  <li>Steady-state FPS or frame time (no renderer).</li>
+  <li>VRAM footprint (no GPU allocator).</li>
+  <li>Hydra sync / RTX render / shader compile costs.</li>
+  <li>Real draw-call count under the renderer (SO analysis-mode
+<code class="language-plaintext highlighter-rouge">rtxMeshCount</code> reports a count, but the renderer’s actual draw-call
+count depends on Hydra batching, instance promotion, and material
+switch grouping that only the runtime sees).</li>
+</ul>
+
+<p>When this reference ran in quick mode only, <strong>the report’s <code class="language-plaintext highlighter-rouge">verdict</code> should
+explicitly note that render-time claims (FPS, frame time, VRAM, draw-call
+count) are unmeasured</strong>. Improvements predicted by <code class="language-plaintext highlighter-rouge">rtxMeshCount</code> or
+prototype sharing are plausible but not verified. See
+<code class="language-plaintext highlighter-rouge">skills/omniverse-usd-performance-tuning/references/optimization-report/references/optimization-report-template.md</code> §”Degraded path (SO
+unavailable)” and §”Quick-mode-only caveat” for the report wording.</p>
+
+<h2 id="rules">Rules</h2>
+
+<ul>
+  <li>Use the Stage-open Timing Protocol above for <code class="language-plaintext highlighter-rouge">cold_open_ms</code> and
+<code class="language-plaintext highlighter-rouge">warm_open_ms</code>.</li>
+  <li>Do not compare quick mode baseline to full mode post-optimization (or vice versa).</li>
+  <li>Store profile results as JSON for the compare-profiles skill.
+    <h2 id="limitations">Limitations</h2>
+  </li>
+  <li>Quick mode measures USD-level structure and composition, not rendered FPS.</li>
+  <li>Full mode requires a compatible Kit runtime, GPU/display setup, and Tracy capture tooling.</li>
+  <li>A single profile cannot determine improvement; compare matching baseline and after results.</li>
+</ul>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<ul>
+  <li>If <code class="language-plaintext highlighter-rouge">pxr</code> imports fail, run setup to choose a Kit or standalone USD Python runtime.</li>
+  <li>If full mode cannot load Tracy, verify <code class="language-plaintext highlighter-rouge">omni.kit.profiler.tracy</code> is enabled in the selected Kit runtime.</li>
+  <li>If warm-open samples vary widely, rerun the protocol in fresh processes; if
+variance persists, mark warm-load evidence inconclusive.</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

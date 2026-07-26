@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Setup Shell Renderer · A developer journey</title>
+<meta name="description" content="ovui Local Setup, Shell, And Renderer">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-realtime-viewer/references/ovui-local-viewer-recipe/setup-shell-renderer/">
+
+<meta property="og:title" content="Setup Shell Renderer · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/nvidia/skills/omniverse-realtime-viewer/references/ovui-local-viewer-recipe/setup-shell-renderer/">
+<meta property="og:description" content="ovui Local Setup, Shell, And Renderer">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Setup Shell Renderer</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="ovui-local-setup-shell-and-renderer">ovui Local Setup, Shell, And Renderer</h1>
+
+<h2 id="2-install-dependencies-and-configure-the-environment">2. Install Dependencies And Configure The Environment</h2>
+
+<p><em>Read <code class="language-plaintext highlighter-rouge">references/dependencies</code> FIRST.</em> Its <code class="language-plaintext highlighter-rouge">references/nvidia-runtime.md</code> file is
+the source of truth for NVIDIA runtime locations. Do not guess or repeat <code class="language-plaintext highlighter-rouge">ovui</code>
+package URLs, wheel names, artifact locations, or fallback install commands in
+this recipe.</p>
+
+<p>Do this:</p>
+
+<ul>
+  <li>Install <code class="language-plaintext highlighter-rouge">ovrtx</code> using the package guidance in <code class="language-plaintext highlighter-rouge">references/dependencies</code>.</li>
+  <li>Install <code class="language-plaintext highlighter-rouge">ovui</code> using the current PyPI package guidance in <code class="language-plaintext highlighter-rouge">references/dependencies</code>.</li>
+  <li>Install any selected local UI companion packages from the same <code class="language-plaintext highlighter-rouge">ovui</code>
+package set as the base UI package.</li>
+  <li>Install <code class="language-plaintext highlighter-rouge">usd-core==24.11</code> when the local app needs <code class="language-plaintext highlighter-rouge">pxr</code> queries. Pin to 24.11 — newer versions cause TfType schema conflicts with ovrtx.</li>
+  <li>Install <code class="language-plaintext highlighter-rouge">numpy</code> for matrices, camera math, and CPU frame handling (<code class="language-plaintext highlighter-rouge">pip install numpy</code>).</li>
+  <li>Install <code class="language-plaintext highlighter-rouge">warp-lang</code> only when the local app needs CUDA-side display or image-processing utilities (<code class="language-plaintext highlighter-rouge">pip install warp-lang</code>).</li>
+  <li>Do not install <code class="language-plaintext highlighter-rouge">ovstream</code> or frontend streaming packages for a local-only viewer.</li>
+</ul>
+
+<p>Set these environment contracts before starting the app:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">OVRTX_SKIP_USD_CHECK=1</code> must be set before ovrtx is imported or the renderer is constructed.</li>
+  <li><code class="language-plaintext highlighter-rouge">OVRTX_BIN_PATH</code> must point at the ovrtx <code class="language-plaintext highlighter-rouge">bin</code> directory when materials or renderer plugins fail to resolve.</li>
+  <li>The ovrtx plugin library path must be first in the dynamic library path if another USD build is present.</li>
+  <li><code class="language-plaintext highlighter-rouge">PYTHONPATH</code> must include any <code class="language-plaintext highlighter-rouge">ovui</code> import paths required by the selected package.</li>
+  <li>A real display must be available. For headless validation, use a configured X display such as Xvfb.</li>
+</ul>
+
+<p>Decision points:</p>
+
+<ul>
+  <li>If the local app imports <code class="language-plaintext highlighter-rouge">pxr</code> in the main process, follow the local import discipline documented in <code class="language-plaintext highlighter-rouge">references/local-viewer</code>.</li>
+  <li>If USD registry or DLL conflicts appear, isolate <code class="language-plaintext highlighter-rouge">pxr</code> queries into a subprocess and keep the main app focused on ovui plus ovrtx.</li>
+  <li>If the user only needs rendering and camera navigation, defer <code class="language-plaintext highlighter-rouge">usd-core</code> until hierarchy or bounds queries are required.</li>
+  <li>If running on Windows, read <code class="language-plaintext highlighter-rouge">references/windows-native-setup</code> before changing import order or subprocess strategy.</li>
+  <li>If local UI imports report missing package metadata or missing
+<code class="language-plaintext highlighter-rouge">VIEWPORT_CAMERA_POSE_SOURCE</code>, read <code class="language-plaintext highlighter-rouge">references/dependencies</code> and use one
+compatible local UI package set.</li>
+</ul>
+
+<p>Common failure modes:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">usd-core detected</code>, duplicate USD debug symbols, <code class="language-plaintext highlighter-rouge">_tf</code> import failures, or MDL resolver crashes usually mean import order or library path is wrong.</li>
+  <li>Magenta materials usually mean <code class="language-plaintext highlighter-rouge">OVRTX_BIN_PATH</code> or plugin library path is missing.</li>
+  <li>ovui import failure usually means the selected package was not installed or
+its required import path is not on <code class="language-plaintext highlighter-rouge">PYTHONPATH</code>.</li>
+  <li>A blank or crashing local window in CI usually means no real display is available.</li>
+</ul>
+
+<p>Read for depth: see <code class="language-plaintext highlighter-rouge">references/dependencies</code>, <code class="language-plaintext highlighter-rouge">references/local-viewer</code>, <code class="language-plaintext highlighter-rouge">references/ovrtx-rendering</code>, and <code class="language-plaintext highlighter-rouge">references/windows-native-setup</code> for the full environment contracts.</p>
+
+<h2 id="3-build-the-ovui-window-shell">3. Build The ovui Window Shell</h2>
+
+<p>Do this in <code class="language-plaintext highlighter-rouge">local_app/app.py</code> and <code class="language-plaintext highlighter-rouge">local_app/viewport.py</code>:</p>
+
+<ul>
+  <li>Initialize ovui once with the requested title, width, height, and target FPS.</li>
+  <li>Create one main window that fills the app window.</li>
+  <li>Use a large central viewport, a compact header or toolbar, an optional scene tree or info sidebar, and an optional render settings panel.</li>
+  <li>Put the rendered image inside a viewport frame that can resize with the window.</li>
+  <li>Add a transparent hit surface above the image for mouse input.</li>
+  <li>Route toolbar actions to runtime commands such as load scene, reload, fit camera, clear selection, toggle tree, and toggle render settings.</li>
+  <li>For lightweight viewers, prefer a path field plus one <code class="language-plaintext highlighter-rouge">LOAD</code> button for scene loading. Add native file dialogs only after they are validated in the same display/session environment as the app.</li>
+  <li>Wrap ovui callbacks so exceptions are logged and do not tear down the app loop.</li>
+</ul>
+
+<p>Critical contracts:</p>
+
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">fill_app_window=True</code> for the main ovui window so the UI frame tracks GLFW window resizes.</li>
+  <li>The viewport widget must report its current size or provide a reliable fallback so letterbox math remains valid.</li>
+  <li>The transparent mouse surface must be above the image and marked as receiving mouse events.</li>
+  <li>Header, tree, info, and settings widgets must not intercept viewport gestures unless the pointer is actually over those controls.</li>
+  <li>The app loop must call runtime tick/update work from one predictable place.</li>
+  <li>If a selected-prim transform gizmo is visible, dragging it must write the selected prim’s live <code class="language-plaintext highlighter-rouge">omni:xform</code> through the serialized renderer runtime; a visual-only handle is not complete.</li>
+</ul>
+
+<p>Decision points:</p>
+
+<ul>
+  <li>If the user wants a compact visual tool, keep a header plus viewport and place advanced panels in collapsible sidebars.</li>
+  <li>If the user wants a dense inspection app, reserve width for a stage tree and prim info panel from the start.</li>
+  <li>If the user wants a context menu, show it on right-button release only when the drag threshold was not exceeded.</li>
+  <li>If the user wants a camera gizmo, build it as a local ovui scene overlay rather than using streaming overlay patterns.</li>
+  <li>If the user wants selected-prim movement in a lightweight shell, either use a proven transform manipulator that emits transform deltas or add an app-owned fallback that treats presses near the selected pivot as transform drags.</li>
+</ul>
+
+<p>Common failure modes:</p>
+
+<ul>
+  <li>Without <code class="language-plaintext highlighter-rouge">fill_app_window=True</code>, the OS window resizes but the UI frame stays at the initial dimensions.</li>
+  <li>If the hit surface is behind the image or not opaque to mouse events, orbit, pan, zoom, and picking never receive input.</li>
+  <li>A separate <code class="language-plaintext highlighter-rouge">OPEN</code> button can be worse than no button if the native dialog is not implemented or cannot appear under the target display stack. Keep the path-field <code class="language-plaintext highlighter-rouge">LOAD</code> path reliable and make dialogs secondary.</li>
+  <li>A selected-prim gizmo that appears but does not move the prim usually means handle input is being consumed by camera/orbit logic or the manipulator is not connected to <code class="language-plaintext highlighter-rouge">renderer.write_attribute</code>.</li>
+  <li>Uncaught callback exceptions can stop the app loop or leave drag state stuck.</li>
+  <li>DOM-style browser assumptions do not apply; input comes from ovui callbacks in the desktop process.</li>
+</ul>
+
+<p>Read for depth: see <code class="language-plaintext highlighter-rouge">references/local-viewer</code>, <code class="language-plaintext highlighter-rouge">references/viewer-input-routing</code>, <code class="language-plaintext highlighter-rouge">references/camera-controls</code>, and <code class="language-plaintext highlighter-rouge">references/viewport-overlays</code> for ovui shell, input routing, context menu, and local overlay guidance.</p>
+
+<h2 id="4-construct-the-ovrtx-renderer-runtime">4. Construct The ovrtx Renderer Runtime</h2>
+
+<p>Do this in <code class="language-plaintext highlighter-rouge">local_app/renderer_runtime.py</code>:</p>
+
+<ul>
+  <li>Create the ovrtx renderer after environment variables are set and import order is settled.</li>
+  <li>Use synchronous rendering first.</li>
+  <li>Store the active render product path, render width, render height, current frame index, and whether a valid stage is loaded.</li>
+  <li>Expose render-loop-only operations for loading a scene, resetting the stage, stepping a frame, mapping render vars, enqueueing and decoding native pick queries, writing native selection outline groups, and writing live attributes.</li>
+  <li>Keep renderer mutations serialized with scene loading, scene reset, settings changes, and camera writes.</li>
+</ul>
+
+<p>Critical contracts:</p>
+
+<ul>
+  <li>The application calls <code class="language-plaintext highlighter-rouge">renderer.step()</code> explicitly. ovrtx does not run a hidden app loop for the viewer.</li>
+  <li>Pass the exact viewer RenderProduct path to every step call.</li>
+  <li>Extract <code class="language-plaintext highlighter-rouge">LdrColor</code> for local image display. It is RGBA8 from ovrtx.</li>
+  <li>For local UI display, copy CPU-mapped pixel data inside the map context before returning it to the widget.</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">write_attribute</code> for live camera transforms and other live state. Write <code class="language-plaintext highlighter-rouge">omni:xform</code>, not authored <code class="language-plaintext highlighter-rouge">xformOp:*</code>, for interactive updates.</li>
+  <li>Use the correct transform semantic and create-new prim mode for attributes that may not already exist in Fabric.</li>
+</ul>
+
+<p>Decision points:</p>
+
+<ul>
+  <li>If the app only needs basic local viewing, start with <code class="language-plaintext highlighter-rouge">LdrColor</code> only.</li>
+  <li>Object selection uses native ovrtx pick queries. Do not add segmentation render vars just to make picking work.</li>
+  <li>If the app needs high-FPS local display, profile CPU readback first before introducing a CUDA-to-UI path.</li>
+  <li>If the renderer reports stale GPU hangs after a crash, inspect running Python GPU processes before changing code.</li>
+</ul>
+
+<p>Common failure modes:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Unable to find RenderProduct prim</code> means scene setup did not create the path used by <code class="language-plaintext highlighter-rouge">renderer.step()</code>.</li>
+  <li>Black frame usually means camera relation, render product resolution, render var source, or camera transform is invalid.</li>
+  <li>Live camera changes doing nothing usually means the app wrote <code class="language-plaintext highlighter-rouge">xformOp:transform</code> instead of <code class="language-plaintext highlighter-rouge">omni:xform</code>, or used existing-only prim mode.</li>
+  <li>Crashes during scene switches usually mean <code class="language-plaintext highlighter-rouge">renderer.step()</code> overlapped a reset, load, or layer mutation.</li>
+</ul>
+
+<p>Read for depth: see <code class="language-plaintext highlighter-rouge">references/ovrtx-rendering</code> for the full renderer construction, frame extraction, and live attribute contract.</p>
+
+<h2 id="5-implement-scene-loading">5. Implement Scene Loading</h2>
+
+<p>Do this in <code class="language-plaintext highlighter-rouge">local_app/scene_loader.py</code> and call it only from the render loop or serialized runtime load path:</p>
+
+<ul>
+  <li>Resolve the requested URL/path against the configured asset root, allowed schemes, and security policy.</li>
+  <li>Create viewer-owned camera, RenderProduct, RenderVar, and RenderSettings data through one inline root/session USDA string when the user stage lacks viewer render config.</li>
+  <li>Load the user stage without modifying it.</li>
+  <li>Store the viewer camera path and render product path in runtime state.</li>
+  <li>Reset selection, native selection outline groups, stage query caches, pending pick queries, and loading status for the new stage.</li>
+  <li>Fit the camera to the stage bounds unless the user requested preserving the current camera or using an authored stage camera.</li>
+</ul>
+
+<p>Critical contracts:</p>
+
+<ul>
+  <li>Every loaded stage needs Camera -&gt; RenderProduct -&gt; RenderVar -&gt; RenderSettings wiring that ovrtx can find.</li>
+  <li>The viewer camera path must be the same path used by camera controls when writing <code class="language-plaintext highlighter-rouge">omni:xform</code>.</li>
+  <li>Do not inject lights unless the user explicitly asks for viewer-controlled lighting.</li>
+  <li>Include segmentation render vars only for explicit debug/AOV display modes, not for picking.</li>
+  <li>Prefer <code class="language-plaintext highlighter-rouge">renderer.open_usd_from_string()</code> for inline roots that sublayer the user USD and author viewer render config.</li>
+  <li>Do not call reference or layer-add APIs after a stage is already loaded unless the renderer has been reset to an empty stage and the operation is part of the serialized load path.</li>
+</ul>
+
+<p>Decision points:</p>
+
+<ul>
+  <li>Use a single inline root USDA string with <code class="language-plaintext highlighter-rouge">subLayers = [@user_scene@]</code> when the user file needs viewer camera/render-product/render-var data.</li>
+  <li>If the user stage has an authored camera and the requested policy is <code class="language-plaintext highlighter-rouge">stage-camera</code>, copy its focal length, apertures, clipping range, and transform into the viewer camera.</li>
+  <li>If the user requests persistent camera across scene switches, keep camera state but sanitize and refit only when the old state is invalid for the new bounds.</li>
+  <li>If the user requests viewer lighting controls, add explicit viewer-owned light prims only with a verified live apply path or an explicit reload/profile workflow; otherwise leave lighting untouched and omit live lighting controls.</li>
+</ul>
+
+<p>Common failure modes:</p>
+
+<ul>
+  <li>Inline roots that omit or misquote the user sublayer path fail composition or break relative asset resolution.</li>
+  <li>Camera path mismatch makes input appear connected but the view never moves.</li>
+  <li>A stage-load operation that reports an error must not be treated as a successful load just because the enqueue call returned.</li>
+</ul>
+
+<p>Read for depth: see <code class="language-plaintext highlighter-rouge">references/stage-loading</code>, <code class="language-plaintext highlighter-rouge">references/render-settings</code>, <code class="language-plaintext highlighter-rouge">references/selection-feedback</code>, and <code class="language-plaintext highlighter-rouge">references/stage-hierarchy</code> for the full scene setup contract.</p>
+
+<h2 id="6-display-the-rendered-image">6. Display The Rendered Image</h2>
+
+<p>Do this in <code class="language-plaintext highlighter-rouge">local_app/viewport.py</code>:</p>
+
+<ul>
+  <li>Create an <code class="language-plaintext highlighter-rouge">ImageBridge</code> with the render width and height.</li>
+  <li>Display the bridge provider through an ovui image widget using preserve-aspect fit.</li>
+  <li>Before connecting ovrtx output, push a synthetic RGBA gradient through the
+same provider path and capture a window screenshot proving the native widget
+paints nonblank, non-solid pixels.</li>
+  <li>On each rendered frame, update the bridge with copied RGBA pixels from <code class="language-plaintext highlighter-rouge">LdrColor</code>.</li>
+  <li>Compute the visible image rectangle inside the viewport widget after every resize.</li>
+  <li>Store the current widget size, visible image offset, visible image size, render width, and render height for input mapping.</li>
+  <li>Show explicit idle, loading, and error states when no frame should be displayed.</li>
+</ul>
+
+<p>Critical contracts:</p>
+
+<ul>
+  <li>The ovrtx <code class="language-plaintext highlighter-rouge">LdrColor</code> buffer is RGBA8 and is suitable for local image display through <code class="language-plaintext highlighter-rouge">ImageBridge</code>.</li>
+  <li>Copy CPU-mapped pixel data while the render var map context is still open.</li>
+  <li>Preserve-aspect display creates letterboxing. All pick and camera coordinates must pass through the same letterbox transform.</li>
+  <li>If render resolution changes, recreate or resize all dependent state: render product, <code class="language-plaintext highlighter-rouge">ImageBridge</code>, letterbox math, pending pick coordinate state, and viewport overlays.</li>
+  <li>Do not run scene load/reset work while the image update is reading render output.</li>
+  <li>A nonblank direct <code class="language-plaintext highlighter-rouge">LdrColor</code> artifact plus a blank ovui window points at
+presentation, not scene setup. Fix or switch the ovui presentation path before
+changing camera, render product, or USD composition.</li>
+  <li>If <code class="language-plaintext highlighter-rouge">ImageBridge</code> or <code class="language-plaintext highlighter-rouge">ByteImageProvider</code> updates do not paint in the active
+ovui runtime, validate with another ovui-native presentation path such as a
+<code class="language-plaintext highlighter-rouge">RasterImageProvider</code> screenshot/frame fallback instead of continuing to
+debug renderer state.</li>
+</ul>
+
+<p>Decision points:</p>
+
+<ul>
+  <li>If the target is a simple viewer, keep render resolution fixed and let the image widget scale with letterboxing.</li>
+  <li>If the target requires pixel-perfect viewport resolution, treat resize as an explicit render product reconfiguration path.</li>
+  <li>If the app needs a screenshot command, read from the same copied <code class="language-plaintext highlighter-rouge">LdrColor</code> frame used by display unless a higher-quality render path is requested.</li>
+  <li>If CPU readback is too slow, investigate a GPU-native UI path only after the basic Omniverse Realtime Viewer is correct.</li>
+</ul>
+
+<p>Common failure modes:</p>
+
+<ul>
+  <li>Reading pixels after the map context closes returns invalid or stale data.</li>
+  <li>Ignoring letterboxing makes picks offset and camera drag speed inconsistent.</li>
+  <li>Recreating the image bridge on every frame causes flicker, memory churn, or UI stalls.</li>
+  <li>Changing render resolution without updating viewport math and pick query coordinates causes selection to drift.</li>
+  <li>A solid red, brown, or unexpectedly light background can be a style-color byte
+order problem. ovui integer colors are <code class="language-plaintext highlighter-rouge">0xAARRGGBB</code>.</li>
+</ul>
+
+<p>Read for depth: see <code class="language-plaintext highlighter-rouge">references/local-viewer</code>, <code class="language-plaintext highlighter-rouge">references/ovrtx-rendering</code>, and <code class="language-plaintext highlighter-rouge">references/object-selection</code> for image bridge, frame extraction, and coordinate mapping details.</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

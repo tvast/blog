@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Create And Update Booking Services · A developer journey</title>
+<meta name="description" content="Full CRUD operations for Wix Bookings services using Services API. Covers service types (APPOINTMENT, CLASS, COURSE), pricing configuration, location setup, ...">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/wix/skills/wix-manage/references/bookings/create-and-update-booking-services/">
+
+<meta property="og:title" content="Create And Update Booking Services · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/wix/skills/wix-manage/references/bookings/create-and-update-booking-services/">
+<meta property="og:description" content="Full CRUD operations for Wix Bookings services using Services API. Covers service types (APPOINTMENT, CLASS, COURSE), pricing configuration, location setup, ...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Create And Update Booking Services</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Full CRUD operations for Wix Bookings services using Services API. Covers service types (APPOINTMENT, CLASS, COURSE), pricing configuration, location setup, and schedule management.</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="technical-step-by-step-instructions-creating-or-updating-a-wix-bookings-service-real-world-api-first">Technical Step-by-Step Instructions: Creating or Updating a Wix Bookings Service (Real-World, API-First)</h1>
+
+<h2 id="description">Description</h2>
+
+<p>Below are the recommended steps to successfully create or update a Wix Bookings service (or several at once) on Wix, with real-world troubleshooting and fixes for common API issues.</p>
+
+<hr />
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<ul>
+  <li><strong>Wix Bookings app installed</strong> (App ID: <code class="language-plaintext highlighter-rouge">13d21c63-b5ec-5912-8397-c3a5ddb27a97</code>)</li>
+</ul>
+
+<blockquote>
+  <p><strong>Note:</strong> If you receive errors from Bookings APIs, the Wix Bookings app may not be installed on the site. Use <a href="../app-installation/list-installed-apps.md">List Installed Apps</a> to verify, and <a href="../app-installation/install-wix-apps.md">Install Wix Apps</a> to install it if missing.</p>
+</blockquote>
+
+<h2 id="overview">Overview</h2>
+
+<p>A Bookings service defines a time based offering and includes the following considerations:</p>
+
+<ul>
+  <li>type - for detailed information about service type - refer to the <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/about-service-types">article</a></li>
+  <li><code class="language-plaintext highlighter-rouge">APPOINTMENT</code> - Appointments allow customers to book services at their preferred time during the business hours. For example, a hair salon might offer different appointment-based hair cutting and styling services. Appointments appear in the booking calendar once they’re booked by a customer. Not-yet-booked times during the business hours are displayed as available slots to potential customers while booking. The availability of the service is based on the availability of the staff member providing it</li>
+  <li><code class="language-plaintext highlighter-rouge">CLASS</code> - A class is a single event or a series of recurring events that multiple customers can book. For example, a yoga studio might offer a twice-weekly vinyasa flow class. Classes may have a set end date or continue indefinitely. If a class includes more than a single event, customers can sign up for 1, several, or all of the events. Upon creation, classes are listed immediately in the booking calendar.</li>
+  <li><code class="language-plaintext highlighter-rouge">COURSE</code> - A course starts and ends on pre-defined dates with a limited number of events that multiple customers can book. For example, a yoga studio might offer a teacher training course with 5 events. In contrast to classes, customers must book the entire course. Upon creation, courses are displayed immediately in the booking calendar.</li>
+  <li>Staff Member - a resource required in order to provide a service. <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/staff-members/create-staff-member">REST</a> A staff member availability is defined by the schedule associated with the staff member, by default it is the main business schedule and cannot be modified by schedule APIs, but a staff member can have its own schedule by calling <code class="language-plaintext highlighter-rouge">assignWorkingHoursSchedule</code> which allows the staff member to have its own availability. The property <code class="language-plaintext highlighter-rouge">staffMember.usesDefaultWorkingHours</code> defines whether the default hours (business hours) are used.</li>
+  <li>Schedule (availability) - availability is defined by <code class="language-plaintext highlighter-rouge">Events</code> (<a href="https://dev.wix.com/docs/api-reference/business-management/calendar/events-v3/introduction">REST</a>) defined on a schedule.</li>
+  <li>The schedule which defines the service availability is based on the service type.</li>
+  <li>For appointment service, it is based on the schedule of staff members which provides it (<code class="language-plaintext highlighter-rouge">service.staffMemberIds</code> which is mapped to <code class="language-plaintext highlighter-rouge">staffMember.resourceId</code>). In order to fetch the staff schedule you should retrieve the staff member with <code class="language-plaintext highlighter-rouge">RESOURCE_DETAILS</code> fieldmask and read the schedule id from the <code class="language-plaintext highlighter-rouge">staffMember.resource.eventsSchedule.id</code> - This is needed if you wish to define the staff member’s availability as part of the process</li>
+  <li>For classes and courses it is based on the schedule of the service itself (<code class="language-plaintext highlighter-rouge">service.schedule</code>)</li>
+  <li>When creating an APPOINTMENT service and specifying <code class="language-plaintext highlighter-rouge">staffMemberIds</code>, ensure you are using the staff member’s resourceId, not their primary staff member id.</li>
+  <li>Service Images - the service may have several images - <code class="language-plaintext highlighter-rouge">service.media.mainMedia</code> - presented in the services list, <code class="language-plaintext highlighter-rouge">service.media.coverMedia</code> - presented in the service page and <code class="language-plaintext highlighter-rouge">service.media.items</code> - array of images presented as a gallery in the service page for site visitors.</li>
+  <li>In order to add a media (image) to a service, it should first be defined in Wix Media Manager - search existing (<a href="https://dev.wix.com/docs/api-reference/assets/media/media-manager/files/search-files">REST</a>) or new (<a href="https://dev.wix.com/docs/api-reference/assets/media/media-manager/files/bulk-import-file">REST</a>)</li>
+  <li>You should only set the image id (for example <code class="language-plaintext highlighter-rouge">item.id</code> -&gt; <code class="language-plaintext highlighter-rouge">service.media.mainMedia.id</code>) there is no need to set the entire object.</li>
+</ul>
+
+<h3 id="service-type-selection-guide">Service Type Selection Guide</h3>
+
+<p>Choose based on these documented behaviors:</p>
+
+<ul>
+  <li><strong>APPOINTMENT</strong>: Customer picks available time slot. Availability based on staff schedules. One customer (or dedicated group) per booking.</li>
+  <li><strong>CLASS</strong>: Business sets recurring times. Multiple customers book same session. Customers can book 1, some, or all sessions in series.</li>
+  <li><strong>COURSE</strong>: Business sets fixed series. Multiple customers book. Customers must book entire course (all sessions).</li>
+</ul>
+
+<p>When unsure, refer to <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/about-service-types">About Service Types</a>.</p>
+
+<h3 id="critical-staff-assignment-behavior-by-service-type">CRITICAL: Staff Assignment Behavior by Service Type</h3>
+
+<p><strong>APPOINTMENT Services:</strong></p>
+
+<ul>
+  <li><strong>Staff assignment WORKS</strong>: Can specify <code class="language-plaintext highlighter-rouge">staffMemberIds</code> array with staff member <code class="language-plaintext highlighter-rouge">resourceId</code> values</li>
+  <li><strong>Behavior</strong>: Service availability based on assigned staff schedules</li>
+  <li><strong>Example</strong>: Personal training session assigned to specific trainer</li>
+</ul>
+
+<p><strong>CLASS and COURSE Services:</strong></p>
+
+<ul>
+  <li><strong>Staff assignment IGNORED</strong>: Setting <code class="language-plaintext highlighter-rouge">staffMemberIds</code> has no effect on service creation</li>
+  <li><strong>Behavior</strong>: Service uses its own schedule (<code class="language-plaintext highlighter-rouge">service.schedule</code>), not staff schedules</li>
+  <li><strong>Workaround</strong>: Staff association must be handled separately through calendar events or other mechanisms</li>
+  <li><strong>Example</strong>: Yoga class where any qualified instructor can teach</li>
+</ul>
+
+<p>This is a critical API limitation that affects service planning and staff resource management.</p>
+
+<h3 id="important-notes">IMPORTANT NOTES</h3>
+
+<ul>
+  <li>I MUST read the full articles about <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/about-service-types">service types</a>, <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/about-service-payments">service payments</a>, <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/about-service-locations">service location</a> in order to fully understand how to set the service properties</li>
+  <li>If the service type is <code class="language-plaintext highlighter-rouge">CLASS</code> or <code class="language-plaintext highlighter-rouge">COURSE</code> I MUST read the full articles service’s <em>schedule</em> and <em>events</em> mentioned before</li>
+  <li>If the service type is <code class="language-plaintext highlighter-rouge">APPOINTMENT</code> I MUST read the relevant full article about staff members (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/introduction">REST</a>) in order to determine whether I should create a new staff member (or members)</li>
+  <li>For free service I MUST set <code class="language-plaintext highlighter-rouge">service.payment.rateType</code> as <code class="language-plaintext highlighter-rouge">"NO_FEE"</code> and <code class="language-plaintext highlighter-rouge">service.payment.options.inPerson</code> as <code class="language-plaintext highlighter-rouge">true</code> (at least one payment option must be true)</li>
+  <li>For paid service I MUST set the <code class="language-plaintext highlighter-rouge">service.payment.fixed.price.value</code> (must be above 0) as well as <code class="language-plaintext highlighter-rouge">service.payment.fixed.price.currency</code></li>
+  <li>When changing a free service to a paid service, I MUST update <code class="language-plaintext highlighter-rouge">service.payment.rateType</code> from <code class="language-plaintext highlighter-rouge">"NO_FEE"</code> to <code class="language-plaintext highlighter-rouge">"FIXED"</code> in the same request where I set <code class="language-plaintext highlighter-rouge">service.payment.fixed.price</code>; patching only <code class="language-plaintext highlighter-rouge">fixed.price</code> on a <code class="language-plaintext highlighter-rouge">NO_FEE</code> service fails validation.</li>
+</ul>
+
+<h3 id="payment-options-validation-rules">Payment Options Validation Rules</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>rateType</th>
+      <th><code class="language-plaintext highlighter-rouge">options.online</code></th>
+      <th><code class="language-plaintext highlighter-rouge">options.inPerson</code></th>
+      <th>Valid?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>FIXED</td>
+      <td>true</td>
+      <td>false</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>FIXED</td>
+      <td>false</td>
+      <td>true</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>FIXED</td>
+      <td>true</td>
+      <td>true</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>VARIED</td>
+      <td>true</td>
+      <td>false</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>VARIED</td>
+      <td>false</td>
+      <td>true</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>NO_FEE</td>
+      <td>false</td>
+      <td>true</td>
+      <td>✓</td>
+    </tr>
+    <tr>
+      <td>NO_FEE</td>
+      <td>true</td>
+      <td>false</td>
+      <td>✗ (online not allowed for NO_FEE)</td>
+    </tr>
+    <tr>
+      <td>Any</td>
+      <td>false</td>
+      <td>false</td>
+      <td>✗ (at least one must be true)</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Always Prioritize Reading Full API Method Documentation: this overview article provides a general workflow. However, it repeatedly stresses the importance of reading the full documentation for each specific REST method you intend to use. This is critical for understanding detailed requirements.</li>
+  <li>I should pay close attention to all required fields, data types, enum values, and specific ID types (e.g., resourceId vs. id) as defined in the detailed schema of each API endpoint. The overview article serves as a guide but doesn’t replace the need to consult these specifics.</li>
+</ul>
+
+<h3 id="service-categories---critical-for-ui-visibility">Service Categories - CRITICAL for UI Visibility</h3>
+
+<p><strong>IMPORTANT</strong>: Services without categories may not appear in category-based UI filters, which are commonly used in booking interfaces.</p>
+
+<p><strong>Service Category Considerations:</strong></p>
+
+<ul>
+  <li><strong>Default Behavior</strong>: Services created without explicit category assignment may not be visible in filtered views</li>
+  <li><strong>UI Impact</strong>: Many booking interfaces filter services by <code class="language-plaintext highlighter-rouge">category.id</code>, hiding uncategorized services</li>
+  <li><strong>Best Practice</strong>: Always assign services to appropriate categories during creation</li>
+</ul>
+
+<p><strong>Category Management Steps:</strong></p>
+
+<ol>
+  <li><strong>Query existing categories</strong> using <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/categories-v2/query-categories">Query Categories</a> to see available options</li>
+  <li><strong>Create new category if needed</strong> using <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/categories-v2/create-category">Create Category</a></li>
+  <li><strong>Assign category during service creation</strong> by including <code class="language-plaintext highlighter-rouge">category.id</code> in the service object</li>
+  <li><strong>Update existing services</strong> using <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/update-service">Update Service</a> to add missing categories</li>
+</ol>
+
+<p><strong>Common Category Filter Patterns:</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"filter"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"category.id"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"$exists"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This filter will only show services with assigned categories, making uncategorized services invisible to users.</p>
+
+<h3 id="querying-existing-services">Querying Existing Services</h3>
+
+<p>You can retrieve a list of existing booking services using the <a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/query-services">Query Services</a> endpoint. This allows you to filter, sort, and page through up to 100 services at a time, making it easy to find and manage your current offerings.</p>
+
+<hr />
+
+<h2 id="steps">Steps</h2>
+
+<h3 id="0-query-and-setup-categories-critical-first-step">0. Query and Setup Categories (CRITICAL FIRST STEP)</h3>
+
+<ol>
+  <li><strong>Query existing categories</strong> using <code class="language-plaintext highlighter-rouge">queryCategories</code> API (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/categories-v2/query-categories">REST</a>) to identify available categories</li>
+  <li><strong>Create category if needed</strong> using <code class="language-plaintext highlighter-rouge">createCategory</code> API (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/categories-v2/create-category">REST</a>) if no suitable category exists</li>
+  <li><strong>Record category ID</strong> for use in service creation - this prevents services from being hidden in UI filters</li>
+</ol>
+
+<p><strong>Query Categories:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://www.wixapis.com/bookings/v2/categories/query'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{ "query": {} }'</span>
+</code></pre></div></div>
+
+<p><strong>Create Category (if none exist):</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://www.wixapis.com/bookings/v2/categories'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{ "category": { "name": "General" } }'</span>
+</code></pre></div></div>
+
+<h3 id="1-define-staff-member-to-use-required-for-appointment">1. Define staff member to use (REQUIRED for APPOINTMENT)</h3>
+
+<blockquote>
+  <p><strong>IMPORTANT:</strong> For APPOINTMENT services, <code class="language-plaintext highlighter-rouge">staffMemberIds</code> is <strong>required</strong>. The API will return a 400 error without it. You must query staff members first to obtain a valid <code class="language-plaintext highlighter-rouge">resourceId</code>.</p>
+</blockquote>
+
+<ol>
+  <li><strong>Query existing staff members</strong> to get their <code class="language-plaintext highlighter-rouge">resourceId</code> values</li>
+  <li>For new staff, create using <code class="language-plaintext highlighter-rouge">createStaffMember</code> API (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/staff-members/create-staff-member">REST</a>) and keep the response <code class="language-plaintext highlighter-rouge">staffMember.id</code> and <code class="language-plaintext highlighter-rouge">resourceId</code></li>
+  <li>If you wish to update working hours, call <code class="language-plaintext highlighter-rouge">getStaffMember</code> API (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/staff-members/get-staff-member">REST</a>) to get <code class="language-plaintext highlighter-rouge">resource.eventsSchedule.id</code></li>
+</ol>
+
+<p><strong>Query Staff Members (to get resourceId):</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://www.wixapis.com/bookings/v1/staff-members/query'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "query": {},
+    "fields": ["RESOURCE_DETAILS"]
+  }'</span>
+</code></pre></div></div>
+
+<p>Use the <code class="language-plaintext highlighter-rouge">resourceId</code> from the response (not <code class="language-plaintext highlighter-rouge">id</code>) in <code class="language-plaintext highlighter-rouge">staffMemberIds</code> when creating APPOINTMENT services.</p>
+
+<p><strong>Staff Selection Strategy:</strong></p>
+
+<ul>
+  <li>If a staff member has <code class="language-plaintext highlighter-rouge">default: true</code> → use it</li>
+  <li>If only one staff member exists → use it</li>
+  <li>If multiple exist → pick the first or most appropriate</li>
+  <li>If none exist → create one using the <a href="bookings-staff-setup.md">Staff Setup recipe</a></li>
+</ul>
+
+<p><strong>Service Type Requirements:</strong></p>
+
+<ul>
+  <li><strong>APPOINTMENT</strong>: <code class="language-plaintext highlighter-rouge">staffMemberIds</code> is <strong>required</strong> - API will fail without it</li>
+  <li><strong>CLASS/COURSE</strong>: <code class="language-plaintext highlighter-rouge">staffMemberIds</code> is ignored; use <code class="language-plaintext highlighter-rouge">service.schedule</code> instead</li>
+</ul>
+
+<h3 id="2-creating-or-updating-a-service">2. Creating or Updating a service</h3>
+
+<p>Based on the information gathered above, use the relevant API based on the desired outcome.</p>
+
+<ul>
+  <li><strong>Create services</strong>: <code class="language-plaintext highlighter-rouge">bulkCreateServices</code> endpoint (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/bulk-create-services">REST</a>)</li>
+  <li><strong>Update single service</strong>: <code class="language-plaintext highlighter-rouge">updateService</code> endpoint (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/update-service">REST</a>)</li>
+  <li><strong>Update services (bulk)</strong>: <code class="language-plaintext highlighter-rouge">bulkUpdateServices</code> (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/bulk-update-services">REST</a>)</li>
+  <li><strong>Update by filter</strong>: <code class="language-plaintext highlighter-rouge">bulkUpdateServicesByFilter</code> (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/bulk-update-services-by-filter">REST</a>)</li>
+  <li><strong>Get single service</strong>: <code class="language-plaintext highlighter-rouge">getService</code> endpoint (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/get-service">REST</a>)</li>
+</ul>
+
+<p><strong>Create Service Example (paid APPOINTMENT, 60 minutes):</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://www.wixapis.com/bookings/v2/bulk/services/create'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "services": [{
+      "name": "Consultation",
+      "type": "APPOINTMENT",
+      "onlineBooking": { "enabled": true },
+      "staffMemberIds": ["&lt;RESOURCE_ID_FROM_STEP_1&gt;"],
+      "schedule": {
+        "availabilityConstraints": {
+          "sessionDurations": [60]
+        }
+      },
+      "payment": {
+        "rateType": "FIXED",
+        "options": { "online": true, "inPerson": false },
+        "fixed": {
+          "price": { "value": "50", "currency": "USD" }
+        }
+      },
+      "category": {
+        "id": "&lt;CATEGORY_ID_FROM_STEP_0&gt;"
+      }
+    }]
+  }'</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Note:</strong> Currency may default to the site’s business currency regardless of what you specify. Verify the response if currency is critical.</p>
+</blockquote>
+
+<p><strong>Create Service Example (free APPOINTMENT, 60 minutes):</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://www.wixapis.com/bookings/v2/bulk/services/create'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "services": [{
+      "name": "Free Consultation",
+      "type": "APPOINTMENT",
+      "onlineBooking": { "enabled": true },
+      "staffMemberIds": ["&lt;RESOURCE_ID_FROM_STEP_1&gt;"],
+      "schedule": {
+        "availabilityConstraints": {
+          "sessionDurations": [60]
+        }
+      },
+      "payment": {
+        "rateType": "NO_FEE",
+        "options": { "online": false, "inPerson": true }
+      },
+      "category": {
+        "id": "&lt;CATEGORY_ID_FROM_STEP_0&gt;"
+      }
+    }]
+  }'</span>
+</code></pre></div></div>
+
+<p><strong>Create Service Example (CLASS with capacity):</strong></p>
+
+<blockquote>
+  <p><strong>Note:</strong> CLASS services do not use <code class="language-plaintext highlighter-rouge">staffMemberIds</code> or <code class="language-plaintext highlighter-rouge">sessionDurations</code>. After creation, you must create events via <code class="language-plaintext highlighter-rouge">bulkCreateEvents</code> using the returned <code class="language-plaintext highlighter-rouge">service.schedule.id</code> to define when the class occurs.</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="s1">'https://www.wixapis.com/bookings/v2/bulk/services/create'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "services": [{
+      "name": "Yoga Class",
+      "type": "CLASS",
+      "onlineBooking": { "enabled": true },
+      "defaultCapacity": 20,
+      "payment": {
+        "rateType": "FIXED",
+        "options": { "online": true, "inPerson": false },
+        "fixed": {
+          "price": { "value": "25", "currency": "USD" }
+        }
+      },
+      "category": {
+        "id": "&lt;CATEGORY_ID_FROM_STEP_0&gt;"
+      }
+    }]
+  }'</span>
+</code></pre></div></div>
+
+<p>After creation, use the <code class="language-plaintext highlighter-rouge">service.schedule.id</code> from the response to create class events with <code class="language-plaintext highlighter-rouge">bulkCreateEvents</code> (see Step 3).</p>
+
+<p><strong>Required Fields:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code> - Service name</li>
+  <li><code class="language-plaintext highlighter-rouge">type</code> - <code class="language-plaintext highlighter-rouge">APPOINTMENT</code>, <code class="language-plaintext highlighter-rouge">CLASS</code>, or <code class="language-plaintext highlighter-rouge">COURSE</code></li>
+  <li><code class="language-plaintext highlighter-rouge">onlineBooking: { enabled: true }</code> - Required for all services</li>
+  <li><code class="language-plaintext highlighter-rouge">staffMemberIds</code> - <strong>Required for APPOINTMENT only</strong> (use <code class="language-plaintext highlighter-rouge">resourceId</code> values); ignored for CLASS/COURSE</li>
+  <li><code class="language-plaintext highlighter-rouge">schedule.availabilityConstraints.sessionDurations</code> - Duration in minutes (APPOINTMENT only)</li>
+  <li><code class="language-plaintext highlighter-rouge">defaultCapacity</code> - <strong>Required for CLASS/COURSE</strong> (max participants per session)</li>
+  <li><code class="language-plaintext highlighter-rouge">payment.options</code> - At least one of <code class="language-plaintext highlighter-rouge">online</code> or <code class="language-plaintext highlighter-rouge">inPerson</code> must be <code class="language-plaintext highlighter-rouge">true</code> (required for all services, including free; see validation table above)</li>
+</ul>
+
+<p><strong>Service Type Specific Considerations:</strong></p>
+
+<ul>
+  <li><strong>APPOINTMENT</strong>: Must include <code class="language-plaintext highlighter-rouge">staffMemberIds</code> with staff <code class="language-plaintext highlighter-rouge">resourceId</code> values</li>
+  <li><strong>CLASS/COURSE</strong>: Omit <code class="language-plaintext highlighter-rouge">staffMemberIds</code>; configure <code class="language-plaintext highlighter-rouge">service.schedule</code> instead</li>
+</ul>
+
+<p><strong>Update Service Example (PATCH):</strong></p>
+
+<blockquote>
+  <p><strong>Note:</strong> Updates require the current <code class="language-plaintext highlighter-rouge">revision</code> value (from a GET response) placed <strong>inside</strong> the <code class="language-plaintext highlighter-rouge">service</code> object, not at the top level.</p>
+</blockquote>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># First, get current service to obtain revision</span>
+curl <span class="nt">-X</span> GET <span class="s1">'https://www.wixapis.com/bookings/v2/services/&lt;SERVICE_ID&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span>
+
+<span class="c"># Then update with revision inside service object</span>
+curl <span class="nt">-X</span> PATCH <span class="s1">'https://www.wixapis.com/bookings/v2/services/&lt;SERVICE_ID&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "service": {
+      "revision": "&lt;REVISION_FROM_GET&gt;",
+      "category": {
+        "id": "&lt;CATEGORY_ID&gt;"
+      }
+    }
+  }'</span>
+</code></pre></div></div>
+
+<p><strong>Update free service to fixed price:</strong></p>
+
+<p>When an existing service has <code class="language-plaintext highlighter-rouge">payment.rateType: "NO_FEE"</code> and the user asks to set a price, convert it to <code class="language-plaintext highlighter-rouge">FIXED</code> and set the price in the same update.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># First, get current service to obtain revision and current payment settings</span>
+curl <span class="nt">-X</span> GET <span class="s1">'https://www.wixapis.com/bookings/v2/services/&lt;SERVICE_ID&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span>
+
+curl <span class="nt">-X</span> PATCH <span class="s1">'https://www.wixapis.com/bookings/v2/services/&lt;SERVICE_ID&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Authorization: &lt;AUTH&gt;'</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s1">'Content-Type: application/json'</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s1">'{
+    "service": {
+      "revision": "&lt;REVISION_FROM_GET&gt;",
+      "payment": {
+        "rateType": "FIXED",
+        "options": { "online": false, "inPerson": true },
+        "fixed": {
+          "price": { "value": "200", "currency": "&lt;SITE_CURRENCY&gt;" }
+        }
+      }
+    }
+  }'</span>
+</code></pre></div></div>
+
+<h3 id="3-set-the-availability-of-the-service">3. Set the availability of the service</h3>
+
+<p>Once the service and staff member are available, you can define when the service is available:</p>
+
+<p><strong>3a. Determine the schedule to use</strong> based on the service type:</p>
+
+<ul>
+  <li><strong>APPOINTMENT</strong>: The staff member working hours determine the service availability. If the staff member needs different hours from the business defaults, call <code class="language-plaintext highlighter-rouge">assignWorkingHoursSchedule</code> (<code class="language-plaintext highlighter-rouge">POST https://www.wixapis.com/bookings/v1/staff-members/&lt;STAFF_MEMBER_ID&gt;/assign-working-hours-schedule</code>) (<a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/assign-working-hours-schedule">REST</a>). Use the <code class="language-plaintext highlighter-rouge">resource.eventsSchedule.id</code> as the <code class="language-plaintext highlighter-rouge">scheduleId</code>.</li>
+  <li><strong>CLASS or COURSE</strong>: Use the <code class="language-plaintext highlighter-rouge">service.schedule.id</code> from the service created/updated in Step 2.</li>
+</ul>
+
+<p><strong>3b. Create events</strong> using <code class="language-plaintext highlighter-rouge">bulkCreateEvents</code> (<code class="language-plaintext highlighter-rouge">POST https://www.wixapis.com/calendar/v3/bulk/events/create</code>) (<a href="https://dev.wix.com/docs/api-reference/business-management/calendar/events-v3/bulk-create-event">REST</a>) or update existing ones with <code class="language-plaintext highlighter-rouge">bulkUpdateEvents</code> (<code class="language-plaintext highlighter-rouge">POST https://www.wixapis.com/calendar/v3/bulk/events/update</code>) (<a href="https://dev.wix.com/docs/api-reference/business-management/calendar/events-v3/bulk-update-event">REST</a>).</p>
+
+<p><strong>Event requirements</strong>:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">event.resources</code> array <strong>must include at least one resource</strong> (a staff member/room/etc.) using the <code class="language-plaintext highlighter-rouge">resourceId</code>. CLASS and COURSE events will fail with a 400 error if no resources are provided.</li>
+  <li><code class="language-plaintext highlighter-rouge">event.scheduleId</code> — use the staff member’s events schedule ID for APPOINTMENT availability, or <code class="language-plaintext highlighter-rouge">service.schedule.id</code> for CLASS/COURSE.</li>
+  <li><code class="language-plaintext highlighter-rouge">event.type</code> — set to <code class="language-plaintext highlighter-rouge">WORKING_HOURS</code> for staff availability, <code class="language-plaintext highlighter-rouge">CLASS</code> for class sessions, or <code class="language-plaintext highlighter-rouge">COURSE</code> for course sessions.</li>
+</ul>
+
+<h3 id="troubleshooting-common-issues">Troubleshooting Common Issues</h3>
+
+<p><strong>APPOINTMENT Service Creation Fails (staffMemberIds required):</strong></p>
+
+<ul>
+  <li><strong>Error</strong>: <code class="language-plaintext highlighter-rouge">"service of type appointment requires at least one staff member id"</code></li>
+  <li><strong>Cause</strong>: APPOINTMENT services cannot be created without at least one staff member assigned</li>
+  <li><strong>Solution</strong>: Query staff members first (Step 1) to get a valid <code class="language-plaintext highlighter-rouge">resourceId</code>, then include it in <code class="language-plaintext highlighter-rouge">staffMemberIds</code></li>
+</ul>
+
+<p><strong>Service Creation Fails (payment.options required):</strong></p>
+
+<ul>
+  <li><strong>Error</strong>: <code class="language-plaintext highlighter-rouge">INVALID_PAYMENT_OPTIONS - "It is mandatory to specify either payment.options.online or payment.options.inPerson as true"</code></li>
+  <li><strong>Cause</strong>: All services (including free) require at least one payment option to be <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><strong>Solution</strong>: Add <code class="language-plaintext highlighter-rouge">"options": { "online": true, "inPerson": false }</code> (or <code class="language-plaintext highlighter-rouge">inPerson: true</code> for free services) to the <code class="language-plaintext highlighter-rouge">payment</code> object</li>
+</ul>
+
+<p><strong>Free Service Fails with online=true:</strong></p>
+
+<ul>
+  <li><strong>Error</strong>: <code class="language-plaintext highlighter-rouge">INVALID_PAYMENT_OPTIONS - "Specifying payment.paymentOptions.online as true is applicable only to payments of types FIXED or VARIED"</code></li>
+  <li><strong>Cause</strong>: <code class="language-plaintext highlighter-rouge">payment.options.online: true</code> is only valid for paid services (FIXED or VARIED)</li>
+  <li><strong>Solution</strong>: For free services (NO_FEE), use <code class="language-plaintext highlighter-rouge">"options": { "online": false, "inPerson": true }</code></li>
+</ul>
+
+<p><strong>Changing a free service price fails:</strong></p>
+
+<ul>
+  <li><strong>Error</strong>: <code class="language-plaintext highlighter-rouge">"Payment of type FREE cannot be used with payment.rate"</code></li>
+  <li><strong>Cause</strong>: The service is still <code class="language-plaintext highlighter-rouge">NO_FEE</code> while the update tries to set <code class="language-plaintext highlighter-rouge">fixed.price</code></li>
+  <li><strong>Solution</strong>: Change <code class="language-plaintext highlighter-rouge">payment.rateType</code> to <code class="language-plaintext highlighter-rouge">"FIXED"</code> and include <code class="language-plaintext highlighter-rouge">payment.fixed.price</code> in the same update request</li>
+</ul>
+
+<p><strong>Services Not Appearing in UI Filters:</strong></p>
+
+<ul>
+  <li><strong>Problem</strong>: Services created without category assignment are invisible in category-based filters</li>
+  <li><strong>Root Cause</strong>: Many UI implementations filter by <code class="language-plaintext highlighter-rouge">category.id</code> existence or specific category values</li>
+  <li><strong>Solution</strong>: Query all services, identify those missing categories, and update them using bulk update operations</li>
+  <li><strong>Prevention</strong>: Always assign categories during service creation (Step 0)</li>
+</ul>
+
+<p><strong>Staff Assignment Not Working for CLASS/COURSE Services:</strong></p>
+
+<ul>
+  <li><strong>Problem</strong>: Setting <code class="language-plaintext highlighter-rouge">staffMemberIds</code> in CLASS or COURSE services appears to be ignored</li>
+  <li><strong>Solution</strong>: This is expected behavior; use service schedules instead of staff assignments</li>
+  <li><strong>Alternative</strong>: Manage staff-to-class relationships through calendar events or custom data structures</li>
+</ul>
+
+<p><strong>App Not Installed Errors:</strong></p>
+
+<ul>
+  <li><strong>Problem</strong>: 428 “App not installed” errors when creating services</li>
+  <li><strong>Solution</strong>: Install Wix Bookings app using Apps Installer API before creating services</li>
+  <li><strong>Verification</strong>: Query existing services to confirm app installation</li>
+</ul>
+
+<p><strong>Resource ID vs Staff ID Confusion:</strong></p>
+
+<ul>
+  <li><strong>Problem</strong>: Using wrong ID type for <code class="language-plaintext highlighter-rouge">staffMemberIds</code> array</li>
+  <li><strong>Solution</strong>: Always use <code class="language-plaintext highlighter-rouge">staffMember.resourceId</code>, not <code class="language-plaintext highlighter-rouge">staffMember.id</code></li>
+  <li><strong>Verification</strong>: Query staff with <code class="language-plaintext highlighter-rouge">RESOURCE_DETAILS</code> fieldMask to get correct IDs</li>
+</ul>
+
+<p><strong>Service Schedule vs Staff Schedule Confusion:</strong></p>
+
+<ul>
+  <li><strong>Problem</strong>: Mixing up schedule IDs between service and staff schedules</li>
+  <li><strong>Solution</strong>:
+    <ul>
+      <li>APPOINTMENT: Use staff schedule ID (<code class="language-plaintext highlighter-rouge">staffMember.resource.eventsSchedule.id</code>)</li>
+      <li>CLASS/COURSE: Use service schedule ID (<code class="language-plaintext highlighter-rouge">service.schedule.id</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Update Service Fails with revision error:</strong></p>
+
+<ul>
+  <li><strong>Error</strong>: <code class="language-plaintext highlighter-rouge">revision must not be empty</code> or <code class="language-plaintext highlighter-rouge">service.revision is required</code></li>
+  <li><strong>Cause</strong>: <code class="language-plaintext highlighter-rouge">revision</code> placed at top level of request body instead of inside <code class="language-plaintext highlighter-rouge">service</code> object</li>
+  <li><strong>Solution</strong>: Structure as <code class="language-plaintext highlighter-rouge">{ "service": { "revision": "...", ...fields } }</code> - get revision value from GET response first</li>
+</ul>
+
+<h3 id="important-notes-1">IMPORTANT NOTES</h3>
+
+<ul>
+  <li>I MUST read the full article about the REST method I wish to use</li>
+  <li><code class="language-plaintext highlighter-rouge">onlineBooking</code> Field: The onlineBooking object (e.g., {“enabled”: true}) is a required field when creating services, even if not explicitly highlighted as mandatory in the high-level overview. This is a schema-level requirement.</li>
+  <li>Event Creation (BulkCreateEvents): When specifying recurrenceRule.days, I MUST use full day names (e.g., “TUESDAY”, “FRIDAY”)</li>
+  <li>The recurrenceRule.days field within an event object can only accept a single day of the week (e.g., [“TUESDAY”]).</li>
+  <li>If I need to set up recurring events for multiple days of the week (e.g., a staff member working every Tuesday and Friday), I MUST define a separate event for each day and send them as separate items for BulkCreateEvents.</li>
+  <li>Start Dates for Recurring Events: Recurring events must have a start.localDate that is today or in the future, relative to the server’s current time. If I am not sure what the current date and time are I MUST check it.</li>
+  <li>When setting <code class="language-plaintext highlighter-rouge">event.type</code> as <code class="language-plaintext highlighter-rouge">WORKING_HOURS</code> (APPOINTMENT) I MUST call <code class="language-plaintext highlighter-rouge">assignWorkingHoursSchedule</code> BEFORE CREATING THE EVENTS so that the staff member is no longer linked to the business working hours</li>
+  <li>When setting <code class="language-plaintext highlighter-rouge">event.type</code> as <code class="language-plaintext highlighter-rouge">CLASS</code> or <code class="language-plaintext highlighter-rouge">COURSE</code> I MUST use the service schedule id, so the service has to exist (created/updated) before setting the availability of it</li>
+</ul>
+
+<h2 id="booking-rest-api-documentation-reference">Booking REST API Documentation Reference</h2>
+
+<ul>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/categories-v2/query-categories">Query Categories</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/categories-v2/create-category">Create Category</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/get-service">Get Service</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/update-service">Update Service</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/staff-members/create-staff-member">Create Staff Member</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/staff-members/get-staff-member">Get Staff Member</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/staff-members/query-staff-members">Query Staff Members</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/bulk-create-services">Bulk Create Services</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/bulk-update-services">Bulk Update Services</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/bulk-update-services-by-filter">Bulk Update Services By Filter</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/staff-members/assign-working-hours-schedule">Assign Working Hours Schedule</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-management/calendar/events-v3/bulk-create-event">Bulk Create Events</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-management/calendar/events-v3/bulk-update-event">Bulk Update Events</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/assets/media/media-manager/files/search-files">Media Manager: Search Files</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/assets/media/media-manager/files/bulk-import-file">Media Manager: Bulk Import File</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-solutions/bookings/services/services-v2/query-services">Query Services</a></li>
+  <li><a href="https://dev.wix.com/docs/api-reference/business-management/app-installation/install-app">Apps Installer API</a></li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

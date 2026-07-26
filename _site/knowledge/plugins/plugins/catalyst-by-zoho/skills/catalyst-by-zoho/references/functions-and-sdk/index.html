@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Functions And Sdk · A developer journey</title>
+<meta name="description" content="Functions &amp; SDK Reference">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/catalyst-by-zoho/skills/catalyst-by-zoho/references/functions-and-sdk/">
+
+<meta property="og:title" content="Functions And Sdk · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/catalyst-by-zoho/skills/catalyst-by-zoho/references/functions-and-sdk/">
+<meta property="og:description" content="Functions &amp; SDK Reference">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Functions And Sdk</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="functions--sdk-reference">Functions &amp; SDK Reference</h1>
+
+<blockquote>
+  <p><strong>⚠️ PRE-FLIGHT CHECK:</strong> Before using ANY code from this file, confirm that <code class="language-plaintext highlighter-rouge">.catalystrc</code> and <code class="language-plaintext highlighter-rouge">catalyst.json</code> already exist in the project directory. If they don’t, STOP — do not create files, do not scaffold. Tell the user to run <code class="language-plaintext highlighter-rouge">catalyst init</code> in their terminal first. These files are auto-generated by the CLI and cannot be created manually. See the Pre-flight Gate in SKILL.md.</p>
+</blockquote>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+  <li><a href="#function-types-overview">Function Types Overview</a></li>
+  <li><a href="#function-execution-limits">Function Execution Limits</a></li>
+  <li><a href="#basic-io-functions">Basic I/O Functions</a></li>
+  <li><a href="#advanced-io-functions">Advanced I/O Functions</a></li>
+  <li><a href="#event-functions">Event Functions</a></li>
+  <li><a href="#cron-functions">Cron Functions</a></li>
+  <li><a href="#integration-functions">Integration Functions</a></li>
+  <li><a href="#job-functions">Job Functions</a></li>
+  <li><a href="#browser-logic-functions">Browser Logic Functions</a></li>
+  <li><a href="#nodejs-sdk-setup">Node.js SDK Setup</a></li>
+  <li><a href="#python-sdk-setup">Python SDK Setup</a></li>
+  <li><a href="#java-sdk-setup">Java SDK Setup</a></li>
+  <li><a href="#web-sdk-client-side">Web SDK (Client-Side)</a></li>
+  <li><a href="#sdk-component-access-patterns">SDK Component Access Patterns</a></li>
+  <li><a href="#error-handling-patterns">Error Handling Patterns</a></li>
+  <li><a href="#security-rules">Security Rules</a></li>
+  <li><a href="#retry-behavior">Retry Behavior</a></li>
+  <li><a href="#cold-starts">Cold Starts</a></li>
+  <li><a href="#testing">Testing</a></li>
+</ol>
+
+<hr />
+
+<h2 id="function-types-overview">Function Types Overview</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Invocation</th>
+      <th>Use Case</th>
+      <th>Handler Args (Node.js)</th>
+      <th>SDK Init</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Basic I/O</td>
+      <td>HTTP GET via API/SDK</td>
+      <td>Simple request-response</td>
+      <td><code class="language-plaintext highlighter-rouge">(context, basicIO)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(context)</code></td>
+    </tr>
+    <tr>
+      <td>Advanced I/O</td>
+      <td>HTTP any method</td>
+      <td>REST APIs, webhooks</td>
+      <td><code class="language-plaintext highlighter-rouge">(req, res)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(req)</code></td>
+    </tr>
+    <tr>
+      <td>Event</td>
+      <td>Signals/Event Listeners</td>
+      <td>React to platform events</td>
+      <td><code class="language-plaintext highlighter-rouge">(event, context)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(context)</code></td>
+    </tr>
+    <tr>
+      <td>Cron</td>
+      <td>Scheduled by Cron jobs</td>
+      <td>Periodic tasks</td>
+      <td><code class="language-plaintext highlighter-rouge">(cronDetails, context)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(context)</code></td>
+    </tr>
+    <tr>
+      <td>Integration</td>
+      <td>Zoho service triggers</td>
+      <td>Zoho ecosystem integration</td>
+      <td><code class="language-plaintext highlighter-rouge">(event, context)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(context)</code></td>
+    </tr>
+    <tr>
+      <td>Job</td>
+      <td>Job Scheduling service</td>
+      <td>Background processing</td>
+      <td><code class="language-plaintext highlighter-rouge">(jobData, context)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(context)</code></td>
+    </tr>
+    <tr>
+      <td>Browser Logic</td>
+      <td>SmartBrowz</td>
+      <td>Headless browser scripts</td>
+      <td><code class="language-plaintext highlighter-rouge">(event, context)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(context)</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>Source: https://docs.catalyst.zoho.com/en/sdk/nodejs/v2/overview/ — All function types require
+manual SDK initialization. The SDK is NOT auto-injected as <code class="language-plaintext highlighter-rouge">catalystApp</code>.</p>
+</blockquote>
+
+<p>Critical: never copy code between function types. Each type has different modules initialized in the boilerplate. Always start from the correct template.</p>
+
+<hr />
+
+<h2 id="function-execution-limits">Function Execution Limits</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function Type</th>
+      <th>Timeout</th>
+      <th>Behavior on Timeout</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Basic I/O</td>
+      <td>30 seconds</td>
+      <td>Returns 504 Gateway Timeout</td>
+    </tr>
+    <tr>
+      <td>Advanced I/O</td>
+      <td>30 seconds</td>
+      <td>Returns 504 Gateway Timeout</td>
+    </tr>
+    <tr>
+      <td>Event</td>
+      <td>15 minutes</td>
+      <td>Silently terminated; may auto-retry</td>
+    </tr>
+    <tr>
+      <td>Cron</td>
+      <td>15 minutes</td>
+      <td>Marked as failed; may auto-retry</td>
+    </tr>
+    <tr>
+      <td>Integration</td>
+      <td>30 seconds</td>
+      <td>Returns error to calling Zoho service</td>
+    </tr>
+    <tr>
+      <td>Job</td>
+      <td>15 minutes</td>
+      <td>Marked as failed; may auto-retry</td>
+    </tr>
+    <tr>
+      <td>Browser Logic</td>
+      <td>30 seconds</td>
+      <td>Browser instance terminated</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>For long-running tasks exceeding 30 seconds, use Event, Job, or Cron functions (up to 15 minutes).
+For tasks exceeding 15 minutes, migrate to AppSail which has no function-level timeout.</p>
+
+<hr />
+
+<h2 id="basic-io-functions">Basic I/O Functions</h2>
+
+<p>Simplest function type. Receives a string input, returns a string output. Invoked via GET request.</p>
+
+<h3 id="nodejs-template">Node.js Template</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// functions/my_basic_io/index.js</span>
+<span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">basicIO</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>
+
+    <span class="c1">// Get input data (sent as query parameter)</span>
+    <span class="kd">const</span> <span class="nx">inputData</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nf">getArgument</span><span class="p">();</span>
+
+    <span class="c1">// Access Catalyst components</span>
+    <span class="kd">const</span> <span class="nx">dataStore</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">datastore</span><span class="p">();</span>
+
+    <span class="c1">// Your business logic here</span>
+    <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="s2">`Processed: </span><span class="p">${</span><span class="nx">inputData</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+
+    <span class="c1">// Send response (must be a string)</span>
+    <span class="nx">basicIO</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">basicIO</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span> <span class="na">error</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span> <span class="p">}));</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="packagejson">package.json</h3>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"my_basic_io"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="s2">"index.js"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"zcatalyst-sdk-node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"latest"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Invocation: <code class="language-plaintext highlighter-rouge">GET /server/my_basic_io/execute?args=&lt;input_string&gt;</code></p>
+
+<hr />
+
+<h2 id="advanced-io-functions">Advanced I/O Functions</h2>
+
+<p>Full HTTP support with raw Node.js request/response objects. Best for REST APIs.</p>
+
+<blockquote>
+  <p><strong>node20 runtime — NOT Express.</strong> <code class="language-plaintext highlighter-rouge">req</code> is a raw <code class="language-plaintext highlighter-rouge">http.IncomingMessage</code> and <code class="language-plaintext highlighter-rouge">res</code> is a raw
+<code class="language-plaintext highlighter-rouge">http.ServerResponse</code>. Do <strong>not</strong> use <code class="language-plaintext highlighter-rouge">res.status()</code>, <code class="language-plaintext highlighter-rouge">res.json()</code>, or <code class="language-plaintext highlighter-rouge">req.body</code> directly —
+these are Express methods and will throw <code class="language-plaintext highlighter-rouge">res.status is not a function</code>. Use the helpers below.</p>
+</blockquote>
+
+<h3 id="required-helpers-always-include-in-node20-advanced-io">Required helpers (always include in node20 Advanced I/O)</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Send a JSON response</span>
+<span class="kd">function</span> <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">writeHead</span><span class="p">(</span><span class="nx">statusCode</span><span class="p">,</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// Read and parse the request body (req.body is NOT auto-parsed in node20)</span>
+<span class="kd">function</span> <span class="nf">getBody</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nc">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">)</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">try</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span> <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">({});</span> <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">chunk</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">data</span> <span class="o">+=</span> <span class="nx">chunk</span><span class="p">;</span> <span class="p">});</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">end</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">try</span> <span class="p">{</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">data</span> <span class="p">?</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">:</span> <span class="p">{});</span> <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nf">resolve</span><span class="p">({});</span> <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="nodejs-template-1">Node.js Template</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// functions/my_api/index.js</span>
+<span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">writeHead</span><span class="p">(</span><span class="nx">statusCode</span><span class="p">,</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">getBody</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nc">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">)</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">try</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span> <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">({});</span> <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">chunk</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">data</span> <span class="o">+=</span> <span class="nx">chunk</span><span class="p">;</span> <span class="p">});</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">end</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">try</span> <span class="p">{</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">data</span> <span class="p">?</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">:</span> <span class="p">{});</span> <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nf">resolve</span><span class="p">({});</span> <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">method</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">method</span><span class="p">;</span>
+    <span class="c1">// Parse URL and query params — req.query does NOT exist on http.IncomingMessage</span>
+    <span class="kd">const</span> <span class="nx">parsedUrl</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">url</span><span class="p">,</span> <span class="s2">`https://</span><span class="p">${</span><span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">host</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">query</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nf">fromEntries</span><span class="p">(</span><span class="nx">parsedUrl</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">);</span>
+
+    <span class="k">if </span><span class="p">(</span><span class="nx">method</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">GET</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">queryParam</span> <span class="o">=</span> <span class="nx">query</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+      <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GET request</span><span class="dl">'</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="nx">queryParam</span> <span class="p">});</span>
+
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if </span><span class="p">(</span><span class="nx">method</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getBody</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+      <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">201</span><span class="p">,</span> <span class="p">{</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Created</span><span class="dl">'</span><span class="p">,</span> <span class="na">data</span><span class="p">:</span> <span class="nx">body</span> <span class="p">});</span>
+
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if </span><span class="p">(</span><span class="nx">method</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">PUT</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getBody</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+      <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Updated</span><span class="dl">'</span><span class="p">,</span> <span class="na">data</span><span class="p">:</span> <span class="nx">body</span> <span class="p">});</span>
+
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if </span><span class="p">(</span><span class="nx">method</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">DELETE</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Deleted</span><span class="dl">'</span> <span class="p">});</span>
+
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">405</span><span class="p">,</span> <span class="p">{</span> <span class="na">error</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Method not allowed</span><span class="dl">'</span> <span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="p">{</span> <span class="na">error</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Legacy projects (node14/16/18)</strong> may still use the 4-parameter signature:
+<code class="language-plaintext highlighter-rouge">module.exports = (catalystApp, context, req, res) =&gt; { ... }</code>
+where <code class="language-plaintext highlighter-rouge">catalystApp</code> is pre-initialized. New CLI-initialized projects (node20+)
+use the 2-parameter format shown above.</p>
+</blockquote>
+
+<p>Invocation: Any HTTP method to <code class="language-plaintext highlighter-rouge">/server/my_api/execute</code></p>
+
+<h3 id="user-scope-vs-admin-scope-initialization">User-scope vs admin-scope initialization</h3>
+
+<p>The SDK supports two initialization scopes. Choose based on what the operation needs:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// USER SCOPE (default) — for resolving user identity</span>
+<span class="kd">const</span> <span class="nx">userApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">currentUser</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">userApp</span><span class="p">.</span><span class="nf">userManagement</span><span class="p">().</span><span class="nf">getCurrentUser</span><span class="p">();</span>
+<span class="c1">// getCurrentUser() makes an internal GET to /project-user/current using the user token.</span>
+<span class="c1">// Only works for registered app users (signed up via Catalyst auth), NOT collaborators/admins.</span>
+
+<span class="c1">// ADMIN SCOPE — for all data operations (DataStore, Stratus, ZCQL, Cache, etc.)</span>
+<span class="kd">const</span> <span class="nx">adminApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="p">{</span> <span class="na">scope</span><span class="p">:</span> <span class="dl">'</span><span class="s1">admin</span><span class="dl">'</span> <span class="p">});</span>
+<span class="kd">const</span> <span class="nx">dataStore</span> <span class="o">=</span> <span class="nx">adminApp</span><span class="p">.</span><span class="nf">datastore</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">zcql</span> <span class="o">=</span> <span class="nx">adminApp</span><span class="p">.</span><span class="nf">zcql</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">stratus</span> <span class="o">=</span> <span class="nx">adminApp</span><span class="p">.</span><span class="nf">stratus</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p><strong>Common pattern for apps that need both auth AND data:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// 1. Get user identity (user-scope)</span>
+    <span class="kd">const</span> <span class="nx">userApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">currentUser</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">userApp</span><span class="p">.</span><span class="nf">userManagement</span><span class="p">().</span><span class="nf">getCurrentUser</span><span class="p">();</span>
+    
+    <span class="c1">// 2. Perform data operations (admin-scope)</span>
+    <span class="kd">const</span> <span class="nx">adminApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="p">{</span> <span class="na">scope</span><span class="p">:</span> <span class="dl">'</span><span class="s1">admin</span><span class="dl">'</span> <span class="p">});</span>
+    <span class="kd">const</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">adminApp</span><span class="p">.</span><span class="nf">datastore</span><span class="p">().</span><span class="nf">table</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyTable</span><span class="dl">'</span><span class="p">);</span>
+    
+    <span class="c1">// 3. Use currentUser for ownership/filtering</span>
+    <span class="kd">const</span> <span class="nx">rows</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">adminApp</span><span class="p">.</span><span class="nf">zcql</span><span class="p">().</span><span class="nf">executeZCQLQuery</span><span class="p">(</span>
+      <span class="s2">`SELECT * FROM MyTable WHERE owner_id = '</span><span class="p">${</span><span class="nx">currentUser</span><span class="p">.</span><span class="nx">user_id</span><span class="p">}</span><span class="s2">'`</span>
+    <span class="p">);</span>
+    <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span> <span class="na">user</span><span class="p">:</span> <span class="nx">currentUser</span><span class="p">,</span> <span class="na">data</span><span class="p">:</span> <span class="nx">rows</span> <span class="p">});</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="p">{</span> <span class="na">error</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>⚠️ <strong>Do NOT use admin-scope for <code class="language-plaintext highlighter-rouge">getCurrentUser()</code></strong> — it throws “no user credentials present”.
+Admin scope lacks user identity. Use default (user) scope for identity, admin scope for data.</p>
+</blockquote>
+
+<h3 id="cors-handling-for-slate--function-cross-domain">CORS handling for Slate → Function cross-domain</h3>
+
+<p>When a Slate frontend calls your Advanced I/O function cross-domain, the Catalyst gateway injects
+<code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code> automatically (if the Slate domain is in Authorized Domains in the console).</p>
+
+<p><strong>Critical rule: do NOT set CORS headers in your function for production origins.</strong> If both the
+gateway and your code set <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code>, the browser receives duplicate values
+and rejects the response.</p>
+
+<p>Only set CORS headers for <code class="language-plaintext highlighter-rouge">localhost</code> (local dev, where no gateway exists):</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Place this BEFORE your route handlers</span>
+<span class="nx">app</span><span class="p">.</span><span class="nf">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">origin</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">origin</span> <span class="o">||</span> <span class="dl">''</span><span class="p">;</span>
+  <span class="k">if </span><span class="p">(</span><span class="sr">/^http:</span><span class="se">\/\/</span><span class="sr">localhost</span><span class="se">(</span><span class="sr">:</span><span class="se">\d</span><span class="sr">+</span><span class="se">)?</span><span class="sr">$/</span><span class="p">.</span><span class="nf">test</span><span class="p">(</span><span class="nx">origin</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">,</span> <span class="nx">origin</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Access-Control-Allow-Credentials</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">true</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Access-Control-Allow-Methods</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">GET, POST, PUT, DELETE, OPTIONS</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Content-Type, Authorization</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">OPTIONS</span><span class="dl">'</span><span class="p">)</span> <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">204</span><span class="p">).</span><span class="nf">end</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="nf">next</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>Setup required in the console:</strong>
+Console → Authentication → Whitelisting → Authorized Domains → add your Slate domain → enable CORS toggle.</p>
+
+<blockquote>
+  <p>⚠️ <strong>The <code class="language-plaintext highlighter-rouge">Authorization</code> header your frontend sends is stripped by the gateway.</strong> After
+validation, the gateway replaces it with internal <code class="language-plaintext highlighter-rouge">x-zc-*</code> headers. <code class="language-plaintext highlighter-rouge">req.headers['authorization']</code>
+will be <code class="language-plaintext highlighter-rouge">undefined</code> inside your function. The SDK reads the <code class="language-plaintext highlighter-rouge">x-zc-*</code> headers internally via
+<code class="language-plaintext highlighter-rouge">catalyst.initialize(req)</code> — you don’t need to handle this manually.</p>
+</blockquote>
+
+<h3 id="http-payload-limits">HTTP payload limits</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Limit</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Request body (JSON/form/multipart)</td>
+      <td>250 MB</td>
+    </tr>
+    <tr>
+      <td>Response body</td>
+      <td>250 MB</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Exceeding these limits returns HTTP 413 (Payload Too Large). For very large file transfers,
+use Stratus presigned upload URLs instead of passing data through functions.</p>
+
+<h3 id="handling-request-bodies-and-file-uploads-in-advanced-io">Handling request bodies and file uploads in Advanced I/O</h3>
+
+<blockquote>
+  <p>⚠️ <strong>Advanced I/O functions use raw <code class="language-plaintext highlighter-rouge">http.IncomingMessage</code> — NOT Express.</strong> There is no <code class="language-plaintext highlighter-rouge">req.body</code>,
+no <code class="language-plaintext highlighter-rouge">req.files</code>, no <code class="language-plaintext highlighter-rouge">req.params</code>, and no built-in body parser of any kind. These are Express/multer
+features that do not exist on a raw Node.js request object.</p>
+  <ul>
+    <li><strong>JSON bodies:</strong> Manually accumulate chunks from the request stream (see <code class="language-plaintext highlighter-rouge">getBody()</code> helper above).</li>
+    <li><strong><code class="language-plaintext highlighter-rouge">multipart/form-data</code> file uploads:</strong> Install <code class="language-plaintext highlighter-rouge">busboy</code> (<code class="language-plaintext highlighter-rouge">npm install busboy</code>) and pipe <code class="language-plaintext highlighter-rouge">req</code> through it.</li>
+    <li><strong>Query parameters:</strong> Use <code class="language-plaintext highlighter-rouge">new URL(req.url, ...).searchParams</code> — <code class="language-plaintext highlighter-rouge">req.query</code> does not exist.</li>
+    <li><strong>URL path segments:</strong> Use <code class="language-plaintext highlighter-rouge">new URL(req.url, ...).pathname</code> — <code class="language-plaintext highlighter-rouge">req.params</code> does not exist.</li>
+  </ul>
+</blockquote>
+
+<h4 id="file-upload-with-busboy">File upload with busboy</h4>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">Busboy</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">busboy</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">writeHead</span><span class="p">(</span><span class="nx">statusCode</span><span class="p">,</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="c1">// Parse multipart/form-data from raw http.IncomingMessage</span>
+<span class="kd">function</span> <span class="nf">parseMultipart</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nc">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">bb</span> <span class="o">=</span> <span class="nc">Busboy</span><span class="p">({</span> <span class="na">headers</span><span class="p">:</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span> <span class="p">});</span>
+    <span class="kd">const</span> <span class="nx">fields</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="kd">let</span> <span class="nx">fileInfo</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="kd">const</span> <span class="nx">chunks</span> <span class="o">=</span> <span class="p">[];</span>
+
+    <span class="nx">bb</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">field</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">fields</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">val</span><span class="p">;</span> <span class="p">});</span>
+    <span class="nx">bb</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">file</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">stream</span><span class="p">,</span> <span class="nx">info</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">fileInfo</span> <span class="o">=</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="nx">info</span><span class="p">.</span><span class="nx">filename</span><span class="p">,</span> <span class="na">mimetype</span><span class="p">:</span> <span class="nx">info</span><span class="p">.</span><span class="nx">mimeType</span> <span class="p">};</span>
+      <span class="nx">stream</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">chunk</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">chunks</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">chunk</span><span class="p">));</span>
+      <span class="nx">stream</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">end</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">fileInfo</span><span class="p">.</span><span class="nx">data</span> <span class="o">=</span> <span class="nx">Buffer</span><span class="p">.</span><span class="nf">concat</span><span class="p">(</span><span class="nx">chunks</span><span class="p">);</span>
+        <span class="nx">fileInfo</span><span class="p">.</span><span class="nx">size</span> <span class="o">=</span> <span class="nx">fileInfo</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+    <span class="nx">bb</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">close</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">resolve</span><span class="p">({</span> <span class="nx">fields</span><span class="p">,</span> <span class="na">file</span><span class="p">:</span> <span class="nx">fileInfo</span> <span class="p">}));</span>
+    <span class="nx">bb</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">pipe</span><span class="p">(</span><span class="nx">bb</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+
+  <span class="c1">// Parse the multipart form data using busboy</span>
+  <span class="kd">const</span> <span class="p">{</span> <span class="nx">fields</span><span class="p">,</span> <span class="nx">file</span> <span class="p">}</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">parseMultipart</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">file</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="p">{</span> <span class="na">error</span><span class="p">:</span> <span class="dl">'</span><span class="s1">No file provided. Send file as multipart/form-data.</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">const</span> <span class="nx">stratus</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">stratus</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="nx">bucket</span> <span class="o">=</span> <span class="nx">stratus</span><span class="p">.</span><span class="nf">bucket</span><span class="p">(</span><span class="dl">'</span><span class="s1">my-bucket</span><span class="dl">'</span><span class="p">);</span>
+
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// putObject(key, body) or putObject(key, body, options)</span>
+    <span class="c1">// See: https://docs.catalyst.zoho.com/en/sdk/nodejs/v2/cloud-scale/stratus/upload-object/</span>
+    <span class="k">await</span> <span class="nx">bucket</span><span class="p">.</span><span class="nf">putObject</span><span class="p">(</span><span class="nx">file</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">file</span><span class="p">.</span><span class="nx">data</span><span class="p">,</span> <span class="p">{</span>
+      <span class="na">contentType</span><span class="p">:</span> <span class="nx">file</span><span class="p">.</span><span class="nx">mimetype</span>
+    <span class="p">});</span>
+    <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Uploaded</span><span class="dl">'</span><span class="p">,</span> <span class="na">name</span><span class="p">:</span> <span class="nx">file</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">size</span><span class="p">:</span> <span class="nx">file</span><span class="p">.</span><span class="nx">size</span> <span class="p">});</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="p">{</span> <span class="na">error</span><span class="p">:</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong><code class="language-plaintext highlighter-rouge">busboy</code> must be in your function’s <code class="language-plaintext highlighter-rouge">package.json</code> dependencies.</strong> Run <code class="language-plaintext highlighter-rouge">npm install busboy</code> inside the function directory before deploying.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="event-functions">Event Functions</h2>
+
+<p>Triggered by Signals or Event Listeners. Cannot be invoked directly via HTTP.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// functions/my_event_fn/index.js</span>
+<span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>
+
+    <span class="c1">// Get event data</span>
+    <span class="kd">const</span> <span class="nx">eventData</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nf">getArgument</span><span class="p">();</span>
+    <span class="kd">const</span> <span class="nx">parsedData</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">eventData</span><span class="p">);</span>
+
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Event received:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">parsedData</span><span class="p">);</span>
+
+    <span class="c1">// Process the event</span>
+    <span class="c1">// ...</span>
+
+    <span class="c1">// Must close context when done</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">close</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Event processing error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">close</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Event types that can trigger Event Functions:</p>
+<ul>
+  <li><strong>Component Events</strong>: Data Store row insert/update/delete, File Store upload/delete</li>
+  <li><strong>Custom Events</strong>: User-defined events triggered via SDK/API</li>
+  <li><strong>Zoho Events</strong>: Events from Zoho services (CRM, Books, etc.)</li>
+</ul>
+
+<hr />
+
+<h2 id="cron-functions">Cron Functions</h2>
+
+<p>Invoked by Cron jobs on a schedule. Cannot be invoked directly.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// functions/my_cron_fn/index.js</span>
+<span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">cronDetails</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">cronInfo</span> <span class="o">=</span> <span class="nx">cronDetails</span><span class="p">.</span><span class="nf">getArgument</span><span class="p">();</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Cron job triggered:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">cronInfo</span><span class="p">);</span>
+
+    <span class="c1">// Perform scheduled task</span>
+    <span class="c1">// Example: Clean up old records</span>
+    <span class="kd">const</span> <span class="nx">zcql</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">zcql</span><span class="p">();</span>
+    <span class="kd">const</span> <span class="nx">query</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">DELETE FROM Reports WHERE CREATEDTIME &lt; '2024-01-01 00:00:00'</span><span class="dl">"</span><span class="p">;</span>
+    <span class="k">await</span> <span class="nx">zcql</span><span class="p">.</span><span class="nf">executeZCQLQuery</span><span class="p">(</span><span class="nx">query</span><span class="p">);</span>
+
+    <span class="c1">// Signal success</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">closeWithSuccess</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Cron error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">closeWithFailure</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="integration-functions">Integration Functions</h2>
+
+<p>For integrating with other Zoho services. Note: NOT available in EU, AU, IN, or CA data centers.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// functions/my_integration_fn/index.js</span>
+<span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">integrationData</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nf">getArgument</span><span class="p">();</span>
+    <span class="kd">const</span> <span class="nx">parsedData</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">integrationData</span><span class="p">);</span>
+
+    <span class="c1">// Access the Zoho service data</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Integration data:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">parsedData</span><span class="p">);</span>
+
+    <span class="c1">// Process and respond</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">close</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Integration error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">close</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="job-functions">Job Functions</h2>
+
+<p>Triggered by the Job Scheduling service for background processing.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// functions/my_job_fn/index.js</span>
+<span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">jobData</span><span class="p">,</span> <span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">context</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">jobDetails</span> <span class="o">=</span> <span class="nx">jobData</span><span class="p">.</span><span class="nf">getArgument</span><span class="p">();</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Job started:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">jobDetails</span><span class="p">);</span>
+
+    <span class="c1">// Long-running background task</span>
+    <span class="c1">// ...</span>
+
+    <span class="nx">context</span><span class="p">.</span><span class="nf">closeWithSuccess</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Job error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">closeWithFailure</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="browser-logic-functions">Browser Logic Functions</h2>
+
+<p>Used with SmartBrowz for headless browser automation.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// functions/my_browser_fn/index.js</span>
+<span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">(</span><span class="nx">catalystApp</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">browserData</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">browserData</span><span class="p">.</span><span class="nf">getArgument</span><span class="p">();</span>
+    <span class="c1">// Browser automation logic</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">close</span><span class="p">();</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Browser logic error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+    <span class="nx">context</span><span class="p">.</span><span class="nf">close</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="nodejs-sdk-setup">Node.js SDK Setup</h2>
+
+<blockquote>
+  <p><strong>Runtime support:</strong> node20 is the only actively supported runtime — node14, 16, and 18 still work for legacy projects but receive no upstream security patches. Use node20 for all new functions.</p>
+</blockquote>
+
+<h3 id="in-functions">In Functions</h3>
+<p>The initialization pattern depends on the Node.js runtime version used when the project was created:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// NEW (node20+ / CLI-initialized projects) — SDK must be initialized manually:</span>
+<span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">dataStore</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">datastore</span><span class="p">();</span>
+  <span class="c1">// ...</span>
+<span class="p">};</span>
+
+<span class="c1">// LEGACY (node14/16/18) — catalystApp is pre-initialized as first parameter:</span>
+<span class="c1">// module.exports = (catalystApp, context, req, res) =&gt; {</span>
+<span class="c1">//   const dataStore = catalystApp.datastore();</span>
+<span class="c1">// };</span>
+</code></pre></div></div>
+
+<h3 id="in-appsail-manual-initialization">In AppSail (manual initialization)</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// Initialize with request context (for user-scoped operations)</span>
+<span class="nx">app</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">/api/data</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">dataStore</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">datastore</span><span class="p">();</span>
+  <span class="c1">// ...</span>
+<span class="p">});</span>
+
+<span class="c1">// Initialize as admin (for system-level operations)</span>
+<span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="p">{</span> <span class="na">scope</span><span class="p">:</span> <span class="dl">'</span><span class="s1">admin</span><span class="dl">'</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="npm-package">NPM Package</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>zcatalyst-sdk-node
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="python-sdk-setup">Python SDK Setup</h2>
+
+<h3 id="in-functions-1">In Functions</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># functions/my_function/main.py
+</span><span class="kn">import</span> <span class="n">zcatalyst_sdk</span>
+
+<span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">basicIO</span><span class="p">):</span>
+    <span class="n">catalyst_app</span> <span class="o">=</span> <span class="n">zcatalyst_sdk</span><span class="p">.</span><span class="nf">initialize</span><span class="p">()</span>
+    <span class="n">datastore</span> <span class="o">=</span> <span class="n">catalyst_app</span><span class="p">.</span><span class="nf">datastore</span><span class="p">()</span>
+
+    <span class="c1"># Business logic
+</span>    <span class="n">result</span> <span class="o">=</span> <span class="sh">"</span><span class="s">Processed</span><span class="sh">"</span>
+    <span class="n">basicIO</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="pip-package">pip Package</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>zcatalyst-sdk
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="java-sdk-setup">Java SDK Setup</h2>
+
+<h3 id="in-functions-2">In Functions</h3>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Maven dependency: com.zoho.catalyst:zcatalyst-sdk</span>
+<span class="kn">import</span> <span class="nn">com.zoho.catalyst.api.CatalystApp</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">com.zoho.catalyst.api.beans.*</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainFunction</span> <span class="kd">implements</span> <span class="nc">BasicIO</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">runner</span><span class="o">(</span><span class="nc">CatalystApp</span> <span class="n">catalystApp</span><span class="o">,</span> <span class="nc">Context</span> <span class="n">context</span><span class="o">,</span> <span class="nc">BasicIOObject</span> <span class="n">basicIO</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">input</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getArgument</span><span class="o">();</span>
+            <span class="c1">// Business logic</span>
+            <span class="n">basicIO</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"Result"</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">basicIO</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="s">"Error: "</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="web-sdk-client-side">Web SDK (Client-Side)</h2>
+
+<p>The Web SDK is used in frontend code to interact with Catalyst backend services.</p>
+
+<h3 id="include-via-script-tag">Include via script tag</h3>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Always use v4.6.1+ for full feature support (generateAuthToken, isUserAuthenticated, etc.) --&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://static.zohocdn.com/catalyst/sdk/js/4.6.1/catalystWebSDK.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"/__catalyst/sdk/init.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="c">&lt;!-- init.js auto-initializes the SDK with the current project context. Always load it after catalystWebSDK.js. --&gt;</span>
+</code></pre></div></div>
+
+<h3 id="authentication-flow">Authentication flow</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Sign up a new user</span>
+<span class="nx">catalyst</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nf">signUp</span><span class="p">({</span>
+  <span class="na">email_id</span><span class="p">:</span> <span class="dl">"</span><span class="s2">user@example.com</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">first_name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">John</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">last_name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Doe</span><span class="dl">"</span>
+<span class="p">});</span>
+
+<span class="c1">// Login</span>
+<span class="nx">catalyst</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nf">login</span><span class="p">(</span><span class="dl">"</span><span class="s2">user@example.com</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">password</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// Check if logged in</span>
+<span class="kd">const</span> <span class="nx">isLoggedIn</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nf">isUserAuthenticated</span><span class="p">();</span>
+
+<span class="c1">// Logout</span>
+<span class="nx">catalyst</span><span class="p">.</span><span class="nx">auth</span><span class="p">.</span><span class="nf">signOut</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="calling-functions-from-client">Calling functions from client</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Call a Basic I/O function</span>
+<span class="nx">catalyst</span><span class="p">.</span><span class="nx">server</span><span class="p">.</span><span class="nf">callFunction</span><span class="p">(</span><span class="dl">"</span><span class="s2">my_basic_io</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span> <span class="na">args</span><span class="p">:</span> <span class="dl">"</span><span class="s2">input_data</span><span class="dl">"</span> <span class="p">})</span>
+  <span class="p">.</span><span class="nf">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">response</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="nx">err</span><span class="p">));</span>
+
+<span class="c1">// Call an Advanced I/O function</span>
+<span class="nx">catalyst</span><span class="p">.</span><span class="nx">server</span><span class="p">.</span><span class="nf">callAdvancedIO</span><span class="p">(</span><span class="dl">"</span><span class="s2">my_api</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">"</span><span class="s2">POST</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span> <span class="na">key</span><span class="p">:</span> <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span> <span class="p">}),</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">"</span><span class="s2">Content-Type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">application/json</span><span class="dl">"</span> <span class="p">}</span>
+<span class="p">})</span>
+  <span class="p">.</span><span class="nf">then</span><span class="p">(</span><span class="nx">response</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">response</span><span class="p">))</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">err</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="nx">err</span><span class="p">));</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>Always use <code class="language-plaintext highlighter-rouge">credentials: 'include'</code> when using native <code class="language-plaintext highlighter-rouge">fetch()</code></strong> to call Catalyst functions
+from a Catalyst-hosted web client. Without it, auth cookies are not forwarded and
+<code class="language-plaintext highlighter-rouge">getCurrentUser()</code> in the function will throw a 401 — even when both are on the same domain.</p>
+
+  <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">res</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">/server/my_api/execute</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">credentials</span><span class="p">:</span> <span class="dl">'</span><span class="s1">include</span><span class="dl">'</span><span class="p">,</span>   <span class="c1">// ← required for auth cookies to be sent</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">},</span>
+  <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span> <span class="na">key</span><span class="p">:</span> <span class="dl">'</span><span class="s1">value</span><span class="dl">'</span> <span class="p">})</span>
+<span class="p">});</span>
+</code></pre></div>  </div>
+
+  <p>The <code class="language-plaintext highlighter-rouge">catalyst.server.callAdvancedIO()</code> SDK method handles this automatically.
+Use it when possible to avoid this class of issue.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="sdk-component-access-patterns">SDK Component Access Patterns</h2>
+
+<p>All components are accessed through the initialized <code class="language-plaintext highlighter-rouge">catalystApp</code> object:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Data Store</span>
+<span class="kd">const</span> <span class="nx">dataStore</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">datastore</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">dataStore</span><span class="p">.</span><span class="nf">table</span><span class="p">(</span><span class="dl">'</span><span class="s1">TableName</span><span class="dl">'</span><span class="p">);</span>      <span class="c1">// by name</span>
+<span class="kd">const</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">dataStore</span><span class="p">.</span><span class="nf">table</span><span class="p">(</span><span class="nx">TABLE_ID</span><span class="p">);</span>         <span class="c1">// by ID</span>
+
+<span class="c1">// File Store</span>
+<span class="kd">const</span> <span class="nx">fileStore</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">filestore</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">folder</span> <span class="o">=</span> <span class="nx">fileStore</span><span class="p">.</span><span class="nf">folder</span><span class="p">(</span><span class="nx">FOLDER_ID</span><span class="p">);</span>
+
+<span class="c1">// Cache</span>
+<span class="kd">const</span> <span class="nx">cache</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">cache</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">segment</span> <span class="o">=</span> <span class="nx">cache</span><span class="p">.</span><span class="nf">segment</span><span class="p">(</span><span class="nx">SEGMENT_ID</span><span class="p">);</span>
+
+<span class="c1">// ZCQL</span>
+<span class="kd">const</span> <span class="nx">zcql</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">zcql</span><span class="p">();</span>
+
+<span class="c1">// Email</span>
+<span class="kd">const</span> <span class="nx">email</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">email</span><span class="p">();</span>
+
+<span class="c1">// Search</span>
+<span class="kd">const</span> <span class="nx">search</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">search</span><span class="p">();</span>
+
+<span class="c1">// User Management</span>
+<span class="kd">const</span> <span class="nx">userManagement</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">userManagement</span><span class="p">();</span>
+
+<span class="c1">// Push Notifications</span>
+<span class="kd">const</span> <span class="nx">pushNotification</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">pushNotification</span><span class="p">();</span>
+
+<span class="c1">// Connections (for third-party auth)</span>
+<span class="kd">const</span> <span class="nx">connection</span> <span class="o">=</span> <span class="nx">catalystApp</span><span class="p">.</span><span class="nf">connection</span><span class="p">();</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="error-handling-patterns">Error Handling Patterns</h2>
+
+<h3 id="recommended-pattern-for-advanced-io-functions">Recommended pattern for Advanced I/O functions</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">catalyst</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">writeHead</span><span class="p">(</span><span class="nx">statusCode</span><span class="p">,</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nf">getBody</span><span class="p">(</span><span class="nx">req</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="nc">Promise</span><span class="p">((</span><span class="nx">resolve</span><span class="p">,</span> <span class="nx">reject</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">object</span><span class="dl">'</span><span class="p">)</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">&amp;&amp;</span> <span class="k">typeof</span> <span class="nx">req</span><span class="p">.</span><span class="nx">body</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">string</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">try</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">body</span><span class="p">));</span> <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nf">resolve</span><span class="p">({});</span> <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="dl">''</span><span class="p">;</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">chunk</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="nx">data</span> <span class="o">+=</span> <span class="nx">chunk</span><span class="p">;</span> <span class="p">});</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">end</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="k">try</span> <span class="p">{</span> <span class="nf">resolve</span><span class="p">(</span><span class="nx">data</span> <span class="p">?</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">:</span> <span class="p">{});</span> <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nf">resolve</span><span class="p">({});</span> <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">,</span> <span class="nx">reject</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="k">async </span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">catalystApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+    <span class="kd">const</span> <span class="nx">body</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getBody</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+
+    <span class="c1">// Validate input</span>
+    <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">body</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">,</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Name is required</span><span class="dl">'</span> <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Business logic</span>
+    <span class="kd">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">someOperation</span><span class="p">(</span><span class="nx">catalystApp</span><span class="p">,</span> <span class="nx">body</span><span class="p">);</span>
+
+    <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">success</span><span class="dl">'</span><span class="p">,</span> <span class="na">data</span><span class="p">:</span> <span class="nx">result</span> <span class="p">});</span>
+  <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Function error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
+
+    <span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">INVALID_DATA</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">,</span> <span class="na">message</span><span class="p">:</span> <span class="nx">error</span><span class="p">.</span><span class="nx">message</span> <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="p">{</span> <span class="na">status</span><span class="p">:</span> <span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">,</span> <span class="na">message</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Internal server error</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="security-rules">Security Rules</h2>
+
+<p>Security Rules control who can invoke Basic I/O and Advanced I/O functions.
+See: https://docs.catalyst.zoho.com/en/serverless/help/security-rules/key-concepts/</p>
+
+<p><strong>The only valid values for the <code class="language-plaintext highlighter-rouge">authentication</code> parameter are:</strong></p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">optional</code></strong> — Anyone can invoke the function without authentication (public access). This is the default.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">required</code></strong> — Only authenticated users (Catalyst Users Authentication or OAuth) can invoke the function.</li>
+</ul>
+
+<p>⚠️ <strong>Values like <code class="language-plaintext highlighter-rouge">no_auth</code>, <code class="language-plaintext highlighter-rouge">user_auth</code>, <code class="language-plaintext highlighter-rouge">admin_auth</code> do NOT exist</strong> and will throw <code class="language-plaintext highlighter-rouge">"Invalid input value"</code>.
+Security Rules is a binary gate (public vs. authenticated). For admin-only access or per-route
+auth control, disable Security Rules and enable <strong>API Gateway</strong> instead.</p>
+
+<p>Security rules are configured in the Catalyst console under Serverless → Security Rules. They define
+JSON-based rules that determine HTTP methods and authentication per function.</p>
+
+<p>Default: all functions are set to <code class="language-plaintext highlighter-rouge">optional</code> (public access). Set to <code class="language-plaintext highlighter-rouge">required</code> to enforce authentication,
+or use the API Gateway for more granular control (API keys, per-route auth, throttling).</p>
+
+<hr />
+
+<h2 id="retry-behavior">Retry Behavior</h2>
+
+<p>Background function types (Event, Cron, Job) automatically retry on failure. HTTP-facing
+function types (Basic I/O, Advanced I/O) do not retry — the error is returned to the caller.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function Type</th>
+      <th>Auto-retry on failure?</th>
+      <th>Retry behavior</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Basic I/O</td>
+      <td>No</td>
+      <td>Error returned to caller</td>
+    </tr>
+    <tr>
+      <td>Advanced I/O</td>
+      <td>No</td>
+      <td>Error returned to caller</td>
+    </tr>
+    <tr>
+      <td>Event</td>
+      <td>Yes</td>
+      <td>Retries on failure (developer-configurable)</td>
+    </tr>
+    <tr>
+      <td>Cron</td>
+      <td>Yes</td>
+      <td>Retries on failure (developer-configurable)</td>
+    </tr>
+    <tr>
+      <td>Job</td>
+      <td>Yes</td>
+      <td>Retries on failure (developer-configurable)</td>
+    </tr>
+    <tr>
+      <td>Integration</td>
+      <td>No</td>
+      <td>Error returned to calling Zoho service</td>
+    </tr>
+    <tr>
+      <td>Browser Logic</td>
+      <td>No</td>
+      <td>Error returned to caller</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Retry logic for background functions is controlled by how you write your function and configure
+the triggering service. There is no fixed platform retry count — design your handlers to be
+<strong>idempotent</strong> (safe to run multiple times with the same input) since retries may occur.</p>
+
+<hr />
+
+<h2 id="cold-starts">Cold Starts</h2>
+
+<p>When a function hasn’t been invoked recently, Catalyst provisions a new execution
+environment — this adds latency to the first request (“cold start”).</p>
+
+<p><strong>Typical cold-start latency:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Runtime</th>
+      <th>Cold start</th>
+      <th>Warm invocation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Node.js</td>
+      <td>500ms–2s</td>
+      <td>50–200ms</td>
+    </tr>
+    <tr>
+      <td>Java</td>
+      <td>2–8s</td>
+      <td>50–200ms</td>
+    </tr>
+    <tr>
+      <td>Python</td>
+      <td>500ms–2s</td>
+      <td>50–200ms</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Java has the longest cold starts due to JVM initialization.</p>
+
+<p><strong>Mitigation strategies:</strong></p>
+<ul>
+  <li>Keep function packages small — fewer dependencies = faster init</li>
+  <li>Avoid heavy initialization outside the handler (large file reads, DB pool creation on import)</li>
+  <li>Use a scheduled ping (via Job Scheduling) to keep critical functions warm</li>
+  <li>For latency-sensitive endpoints, consider AppSail — it runs persistently with no cold starts</li>
+</ul>
+
+<hr />
+
+<h2 id="testing">Testing</h2>
+
+<h3 id="unit-testing-function-handlers">Unit testing function handlers</h3>
+
+<p>Mock the SDK and <code class="language-plaintext highlighter-rouge">res</code> (raw <code class="language-plaintext highlighter-rouge">http.ServerResponse</code>) to test handler logic without connecting to Catalyst.</p>
+
+<blockquote>
+  <p><strong>Important (node20):</strong> Advanced I/O functions use raw <code class="language-plaintext highlighter-rouge">http.ServerResponse</code>, NOT Express.
+Your mock must use <code class="language-plaintext highlighter-rouge">writeHead()</code> and <code class="language-plaintext highlighter-rouge">end()</code>, not <code class="language-plaintext highlighter-rouge">status()</code> or <code class="language-plaintext highlighter-rouge">json()</code>.</p>
+</blockquote>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// test/my_function.test.js</span>
+<span class="kd">const</span> <span class="nx">handler</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../functions/my_function/index</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">mockReq</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/tasks</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">headers</span><span class="p">:</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">content-type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Mock raw http.ServerResponse — NOT Express response</span>
+<span class="kd">const</span> <span class="nx">mockRes</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">writeHead</span><span class="p">:</span> <span class="nx">jest</span><span class="p">.</span><span class="nf">fn</span><span class="p">(),</span>
+  <span class="na">end</span><span class="p">:</span> <span class="nx">jest</span><span class="p">.</span><span class="nf">fn</span><span class="p">()</span>
+<span class="p">};</span>
+
+<span class="nx">jest</span><span class="p">.</span><span class="nf">mock</span><span class="p">(</span><span class="dl">'</span><span class="s1">zcatalyst-sdk-node</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="na">initialize</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+    <span class="na">datastore</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="na">table</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+        <span class="na">insertRow</span><span class="p">:</span> <span class="nx">jest</span><span class="p">.</span><span class="nf">fn</span><span class="p">().</span><span class="nf">mockResolvedValue</span><span class="p">({</span> <span class="na">ROWID</span><span class="p">:</span> <span class="dl">'</span><span class="s1">123</span><span class="dl">'</span> <span class="p">})</span>
+      <span class="p">})</span>
+    <span class="p">}),</span>
+    <span class="na">zcql</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="na">executeZCQLQuery</span><span class="p">:</span> <span class="nx">jest</span><span class="p">.</span><span class="nf">fn</span><span class="p">().</span><span class="nf">mockResolvedValue</span><span class="p">([])</span>
+    <span class="p">})</span>
+  <span class="p">})</span>
+<span class="p">}));</span>
+
+<span class="nf">test</span><span class="p">(</span><span class="dl">'</span><span class="s1">POST returns 201</span><span class="dl">'</span><span class="p">,</span> <span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">await</span> <span class="nf">handler</span><span class="p">(</span><span class="nx">mockReq</span><span class="p">,</span> <span class="nx">mockRes</span><span class="p">);</span>
+  <span class="nf">expect</span><span class="p">(</span><span class="nx">mockRes</span><span class="p">.</span><span class="nx">writeHead</span><span class="p">).</span><span class="nf">toHaveBeenCalledWith</span><span class="p">(</span><span class="mi">201</span><span class="p">,</span> <span class="nx">expect</span><span class="p">.</span><span class="nf">any</span><span class="p">(</span><span class="nb">Object</span><span class="p">));</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="integration-testing-with-catalyst-serve">Integration testing with <code class="language-plaintext highlighter-rouge">catalyst serve</code></h3>
+
+<p><code class="language-plaintext highlighter-rouge">catalyst serve</code> runs Basic I/O and Advanced I/O functions locally, connecting to the
+remote Development Data Store. Use it for integration tests:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>catalyst serve &amp;
+curl <span class="nt">-X</span> POST http://localhost:3000/server/my_function/execute <span class="nt">-d</span> <span class="s1">'{"name":"Test"}'</span>
+</code></pre></div></div>
+
+<p>Note: Event, Cron, and Job functions cannot be tested locally via <code class="language-plaintext highlighter-rouge">catalyst serve</code>.
+Deploy to Development and trigger them from the console for integration testing.</p>
+
+<hr />
+
+<h2 id="common-sdk-mistakes-by-language">Common SDK Mistakes by Language</h2>
+
+<p>Agents frequently generate code with these errors. Check this section before finalising any
+function code, especially when switching between function types or languages.</p>
+
+<h3 id="nodejs-zcatalyst-sdk-node">Node.js (<code class="language-plaintext highlighter-rouge">zcatalyst-sdk-node</code>)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mistake</th>
+      <th>What goes wrong</th>
+      <th>Correct approach</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Calling <code class="language-plaintext highlighter-rouge">catalyst.initialize()</code> without <code class="language-plaintext highlighter-rouge">req</code> in Advanced I/O</td>
+      <td>SDK initialization fails; <code class="language-plaintext highlighter-rouge">catalystApp</code> is not correctly scoped to the request</td>
+      <td>Must pass <code class="language-plaintext highlighter-rouge">req</code>: <code class="language-plaintext highlighter-rouge">catalyst.initialize(req)</code></td>
+    </tr>
+    <tr>
+      <td>Calling <code class="language-plaintext highlighter-rouge">basicIO.write()</code> more than once</td>
+      <td>Only the first call is used; subsequent calls are silently ignored or cause errors</td>
+      <td><code class="language-plaintext highlighter-rouge">basicIO.write()</code> can only be called <strong>once</strong> per function execution</td>
+    </tr>
+    <tr>
+      <td>Expecting JSON output from Basic I/O</td>
+      <td>Basic I/O only supports STRING output</td>
+      <td>Basic I/O returns STRING only — use Advanced I/O for JSON responses</td>
+    </tr>
+    <tr>
+      <td>Setting HTTP response headers in Basic I/O</td>
+      <td>Basic I/O does not have a response object</td>
+      <td>Basic I/O does NOT support HTTP headers or status codes — use Advanced I/O</td>
+    </tr>
+    <tr>
+      <td>Using <code class="language-plaintext highlighter-rouge">res.status()</code> or <code class="language-plaintext highlighter-rouge">res.json()</code> in Advanced I/O (node20)</td>
+      <td><code class="language-plaintext highlighter-rouge">res</code> is a raw <code class="language-plaintext highlighter-rouge">http.ServerResponse</code>, not Express — these methods do not exist</td>
+      <td>Use <code class="language-plaintext highlighter-rouge">res.writeHead(statusCode, headers)</code> and <code class="language-plaintext highlighter-rouge">res.end(JSON.stringify(data))</code></td>
+    </tr>
+    <tr>
+      <td>Not handling ZCQL 300-row limit</td>
+      <td>Queries silently return only 300 rows; data appears missing</td>
+      <td>Paginate with <code class="language-plaintext highlighter-rouge">LIMIT offset, count</code> (e.g., <code class="language-plaintext highlighter-rouge">LIMIT 0, 300</code>, <code class="language-plaintext highlighter-rouge">LIMIT 300, 300</code>)</td>
+    </tr>
+    <tr>
+      <td>Using wrong port variable for AppSail</td>
+      <td>App binds to hard-coded port; Catalyst routes to a different port, causing connection failures</td>
+      <td>Always use <code class="language-plaintext highlighter-rouge">process.env.X_ZOHO_CATALYST_LISTEN_PORT \|\| 9000</code></td>
+    </tr>
+    <tr>
+      <td>Not adding <code class="language-plaintext highlighter-rouge">credentials: 'include'</code> to fetch calls from web client</td>
+      <td>Auth cookies not forwarded; <code class="language-plaintext highlighter-rouge">getCurrentUser()</code> throws 401 even for authenticated users</td>
+      <td>Add <code class="language-plaintext highlighter-rouge">credentials: 'include'</code> to all fetch calls from the web client</td>
+    </tr>
+    <tr>
+      <td>Parsing <code class="language-plaintext highlighter-rouge">CREATEDTIME</code> directly with <code class="language-plaintext highlighter-rouge">new Date()</code></td>
+      <td>Catalyst stores CREATEDTIME in the project timezone without an offset marker; <code class="language-plaintext highlighter-rouge">new Date()</code> treats it as UTC → wrong timestamps</td>
+      <td>Append the project timezone offset before parsing the date string</td>
+    </tr>
+    <tr>
+      <td>Using Express <code class="language-plaintext highlighter-rouge">cors()</code> middleware with Slate → Function cross-domain</td>
+      <td>Gateway AND Express both inject <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code> → duplicate header → browser rejects</td>
+      <td>Only set CORS headers for localhost (local dev). Remove <code class="language-plaintext highlighter-rouge">cors()</code> middleware entirely for production origins. The gateway handles it.</td>
+    </tr>
+    <tr>
+      <td>Using admin-scope for <code class="language-plaintext highlighter-rouge">getCurrentUser()</code></td>
+      <td>Throws “no user credentials present” — admin scope has no user identity</td>
+      <td>Use default (user) scope: <code class="language-plaintext highlighter-rouge">catalyst.initialize(req)</code> for <code class="language-plaintext highlighter-rouge">getCurrentUser()</code>. Use admin scope only for data operations.</td>
+    </tr>
+    <tr>
+      <td>Not handling <code class="language-plaintext highlighter-rouge">getCurrentUser()</code> returning <code class="language-plaintext highlighter-rouge">null</code></td>
+      <td>Collaborators/admins are not registered app users → <code class="language-plaintext highlighter-rouge">null</code> return → <code class="language-plaintext highlighter-rouge">Cannot read properties of null</code></td>
+      <td>Add null check. <code class="language-plaintext highlighter-rouge">getCurrentUser()</code> only works for users who signed up through Catalyst’s auth flow, not console collaborators.</td>
+    </tr>
+    <tr>
+      <td>Reading <code class="language-plaintext highlighter-rouge">req.headers['authorization']</code> inside the function</td>
+      <td>Gateway strips the <code class="language-plaintext highlighter-rouge">Authorization</code> header after validation and injects <code class="language-plaintext highlighter-rouge">x-zc-*</code> internal headers instead → <code class="language-plaintext highlighter-rouge">undefined</code></td>
+      <td>Don’t read the Authorization header. Use <code class="language-plaintext highlighter-rouge">catalyst.initialize(req)</code> which reads the <code class="language-plaintext highlighter-rouge">x-zc-*</code> headers internally.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="java">Java</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mistake</th>
+      <th>What goes wrong</th>
+      <th>Correct approach</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Uploading compiled function via console without <code class="language-plaintext highlighter-rouge">.class</code> files</td>
+      <td>Function fails to execute with a missing class reference</td>
+      <td>Use <code class="language-plaintext highlighter-rouge">catalyst deploy</code> from CLI — it auto-compiles and creates missing dependency files</td>
+    </tr>
+    <tr>
+      <td>Using JDK version other than 8, 11, or 17</td>
+      <td>Build or runtime errors; Catalyst only supports these three versions</td>
+      <td>Only JDK 8, 11, and 17 are supported</td>
+    </tr>
+    <tr>
+      <td>Not using context timing methods for long operations</td>
+      <td>Operations may exceed the timeout with no graceful handling</td>
+      <td>Use <code class="language-plaintext highlighter-rouge">context.getMaxExecutionTimeMs()</code> and <code class="language-plaintext highlighter-rouge">context.getRemainingExecutionTimeMs()</code> to manage time-sensitive operations</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="python">Python</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mistake</th>
+      <th>What goes wrong</th>
+      <th>Correct approach</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Not using Flask for Advanced I/O functions</td>
+      <td>Python Advanced I/O functions require Flask; without it, the function cannot handle HTTP requests</td>
+      <td>Python Advanced I/O functions require the Flask framework</td>
+    </tr>
+    <tr>
+      <td>Using wrong handler signature for a function type</td>
+      <td>Function fails to initialize or throws an error on invocation</td>
+      <td>Handler signatures differ per function type — always consult the Function Types Overview table above</td>
+    </tr>
+    <tr>
+      <td>Using <code class="language-plaintext highlighter-rouge">context.getMaxExecutionTimeMs()</code> (camelCase) in Python</td>
+      <td>Method not found error</td>
+      <td>Python uses snake_case: <code class="language-plaintext highlighter-rouge">context.get_max_execution_time_ms()</code> and <code class="language-plaintext highlighter-rouge">context.get_remaining_execution_time_ms()</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="general-all-languages">General (all languages)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mistake</th>
+      <th>What goes wrong</th>
+      <th>Correct approach</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Creating <code class="language-plaintext highlighter-rouge">ROWID</code>, <code class="language-plaintext highlighter-rouge">CREATORID</code>, <code class="language-plaintext highlighter-rouge">CREATEDTIME</code>, or <code class="language-plaintext highlighter-rouge">MODIFIEDTIME</code> columns</td>
+      <td>These system columns are auto-created by Catalyst; attempting to create them causes an error</td>
+      <td>Never create these columns — Catalyst adds them automatically to every table</td>
+    </tr>
+    <tr>
+      <td>Hardcoding Catalyst IDs (Table ID, ZAID, Org ID, Project ID) without explanation</td>
+      <td>Users cannot find the correct values; wrong IDs cause permission errors</td>
+      <td>Always add an inline comment specifying exactly where to find the ID in the Catalyst console</td>
+    </tr>
+    <tr>
+      <td>Using Production environment in dev/test code</td>
+      <td>Production requires separate authorization; mixing environments causes auth failures</td>
+      <td>Always default to <code class="language-plaintext highlighter-rouge">"Development"</code> environment; only use production when explicitly requested</td>
+    </tr>
+    <tr>
+      <td>Checking for <code class="language-plaintext highlighter-rouge">.catalystrc</code> and <code class="language-plaintext highlighter-rouge">catalyst.json</code> before init</td>
+      <td>Re-running init on an already-initialized project overwrites config</td>
+      <td>Always check for existing <code class="language-plaintext highlighter-rouge">.catalystrc</code> and <code class="language-plaintext highlighter-rouge">catalyst.json</code> before scaffolding</td>
+    </tr>
+    <tr>
+      <td>Not serializing JSON before storing in Cache</td>
+      <td>Cache values are strings only; storing objects directly causes type errors</td>
+      <td>Always <code class="language-plaintext highlighter-rouge">JSON.stringify()</code> before storing in Cache and <code class="language-plaintext highlighter-rouge">JSON.parse()</code> when reading</td>
+    </tr>
+    <tr>
+      <td>Inserting emoji or 4-byte UTF-8 into Data Store</td>
+      <td>Silently stored as <code class="language-plaintext highlighter-rouge">?</code>; data is corrupted</td>
+      <td>Store a string key (e.g., <code class="language-plaintext highlighter-rouge">"happy"</code>) and map to emoji in application code</td>
+    </tr>
+  </tbody>
+</table>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

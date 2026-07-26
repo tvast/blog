@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Configuration · A developer journey</title>
+<meta name="description" content="Terraform Configuration Reference">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/skills/skills/.curated/cloudflare-deploy/references/terraform/configuration/">
+
+<meta property="og:title" content="Configuration · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/skills/skills/.curated/cloudflare-deploy/references/terraform/configuration/">
+<meta property="og:description" content="Terraform Configuration Reference">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>skills</span>
+      </nav>
+
+      <h1>Configuration</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="terraform-configuration-reference">Terraform Configuration Reference</h1>
+
+<p>Complete resource configurations for Cloudflare infrastructure.</p>
+
+<h2 id="zone--dns">Zone &amp; DNS</h2>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Zone + settings</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_zone"</span> <span class="s2">"example"</span> <span class="p">{</span> <span class="nx">account</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span> <span class="p">}</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"example.com"</span><span class="err">;</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">"full"</span> <span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_zone_settings_override"</span> <span class="s2">"example"</span> <span class="p">{</span>
+  <span class="nx">zone_id</span> <span class="o">=</span> <span class="nx">cloudflare_zone</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span>
+  <span class="nx">settings</span> <span class="p">{</span> <span class="nx">ssl</span> <span class="o">=</span> <span class="s2">"strict"</span><span class="err">;</span> <span class="nx">always_use_https</span> <span class="o">=</span> <span class="s2">"on"</span><span class="err">;</span> <span class="nx">min_tls_version</span> <span class="o">=</span> <span class="s2">"1.2"</span><span class="err">;</span> <span class="nx">tls_1_3</span> <span class="o">=</span> <span class="s2">"on"</span><span class="err">;</span> <span class="nx">http3</span> <span class="o">=</span> <span class="s2">"on"</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># DNS records (A, CNAME, MX, TXT)</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_dns_record"</span> <span class="s2">"www"</span> <span class="p">{</span>
+  <span class="nx">zone_id</span> <span class="o">=</span> <span class="nx">cloudflare_zone</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"www"</span><span class="err">;</span> <span class="nx">content</span> <span class="o">=</span> <span class="s2">"192.0.2.1"</span><span class="err">;</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">"A"</span><span class="err">;</span> <span class="nx">proxied</span> <span class="o">=</span> <span class="kc">true</span>
+<span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_dns_record"</span> <span class="s2">"mx"</span> <span class="p">{</span>
+  <span class="nx">for_each</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">"10"</span> <span class="p">=</span> <span class="s2">"mail1.example.com"</span><span class="p">,</span> <span class="s2">"20"</span> <span class="p">=</span> <span class="s2">"mail2.example.com"</span> <span class="p">}</span>
+  <span class="nx">zone_id</span> <span class="o">=</span> <span class="nx">cloudflare_zone</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"@"</span><span class="err">;</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">each</span><span class="p">.</span><span class="nx">value</span><span class="err">;</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">"MX"</span><span class="err">;</span> <span class="nx">priority</span> <span class="o">=</span> <span class="nx">each</span><span class="p">.</span><span class="nx">key</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="workers">Workers</h2>
+
+<h3 id="simple-pattern-legacy---still-works">Simple Pattern (Legacy - Still Works)</h3>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"cloudflare_workers_script"</span> <span class="s2">"api"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"api-worker"</span><span class="err">;</span> <span class="nx">content</span> <span class="o">=</span> <span class="nx">file</span><span class="p">(</span><span class="s2">"worker.js"</span><span class="p">)</span>
+  <span class="nx">module</span> <span class="o">=</span> <span class="kc">true</span><span class="err">;</span> <span class="nx">compatibility_date</span> <span class="o">=</span> <span class="s2">"2025-01-01"</span>
+  <span class="nx">kv_namespace_binding</span> <span class="p">{</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"KV"</span><span class="err">;</span> <span class="nx">namespace_id</span> <span class="o">=</span> <span class="nx">cloudflare_workers_kv_namespace</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">id</span> <span class="p">}</span>
+  <span class="nx">r2_bucket_binding</span> <span class="p">{</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"BUCKET"</span><span class="err">;</span> <span class="nx">bucket_name</span> <span class="o">=</span> <span class="nx">cloudflare_r2_bucket</span><span class="p">.</span><span class="nx">assets</span><span class="p">.</span><span class="nx">name</span> <span class="p">}</span>
+  <span class="nx">d1_database_binding</span> <span class="p">{</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"DB"</span><span class="err">;</span> <span class="nx">database_id</span> <span class="o">=</span> <span class="nx">cloudflare_d1_database</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">id</span> <span class="p">}</span>
+  <span class="nx">secret_text_binding</span> <span class="p">{</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"SECRET"</span><span class="err">;</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">secret</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="gradual-rollouts-recommended-for-production">Gradual Rollouts (Recommended for Production)</h3>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"cloudflare_worker"</span> <span class="s2">"api"</span> <span class="p">{</span> <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"api-worker"</span> <span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_worker_version"</span> <span class="s2">"api_v1"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">worker_name</span> <span class="o">=</span> <span class="nx">cloudflare_worker</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">name</span>
+  <span class="nx">content</span> <span class="o">=</span> <span class="nx">file</span><span class="p">(</span><span class="s2">"worker.js"</span><span class="p">)</span><span class="err">;</span> <span class="nx">content_sha256</span> <span class="o">=</span> <span class="nx">filesha256</span><span class="p">(</span><span class="s2">"worker.js"</span><span class="p">)</span>
+  <span class="nx">compatibility_date</span> <span class="o">=</span> <span class="s2">"2025-01-01"</span>
+  <span class="nx">bindings</span> <span class="p">{</span>
+    <span class="nx">kv_namespace</span> <span class="p">{</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"KV"</span><span class="err">;</span> <span class="nx">namespace_id</span> <span class="o">=</span> <span class="nx">cloudflare_workers_kv_namespace</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">id</span> <span class="p">}</span>
+    <span class="nx">r2_bucket</span> <span class="p">{</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"BUCKET"</span><span class="err">;</span> <span class="nx">bucket_name</span> <span class="o">=</span> <span class="nx">cloudflare_r2_bucket</span><span class="p">.</span><span class="nx">assets</span><span class="p">.</span><span class="nx">name</span> <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_workers_deployment"</span> <span class="s2">"api"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">worker_name</span> <span class="o">=</span> <span class="nx">cloudflare_worker</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">name</span>
+  <span class="nx">versions</span> <span class="p">{</span> <span class="nx">version_id</span> <span class="o">=</span> <span class="nx">cloudflare_worker_version</span><span class="p">.</span><span class="nx">api_v1</span><span class="p">.</span><span class="nx">id</span><span class="err">;</span> <span class="nx">percentage</span> <span class="o">=</span> <span class="mi">100</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="worker-binding-types-v5">Worker Binding Types (v5)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Binding</th>
+      <th>Attribute</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>KV</td>
+      <td><code class="language-plaintext highlighter-rouge">kv_namespace_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "KV", namespace_id = "..." }</code></td>
+    </tr>
+    <tr>
+      <td>R2</td>
+      <td><code class="language-plaintext highlighter-rouge">r2_bucket_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "BUCKET", bucket_name = "..." }</code></td>
+    </tr>
+    <tr>
+      <td>D1</td>
+      <td><code class="language-plaintext highlighter-rouge">d1_database_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "DB", database_id = "..." }</code></td>
+    </tr>
+    <tr>
+      <td>Service</td>
+      <td><code class="language-plaintext highlighter-rouge">service_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "AUTH", service = "auth-worker" }</code></td>
+    </tr>
+    <tr>
+      <td>Secret</td>
+      <td><code class="language-plaintext highlighter-rouge">secret_text_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "API_KEY", text = "..." }</code></td>
+    </tr>
+    <tr>
+      <td>Queue</td>
+      <td><code class="language-plaintext highlighter-rouge">queue_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "QUEUE", queue_name = "..." }</code></td>
+    </tr>
+    <tr>
+      <td>Vectorize</td>
+      <td><code class="language-plaintext highlighter-rouge">vectorize_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "INDEX", index_name = "..." }</code></td>
+    </tr>
+    <tr>
+      <td>Hyperdrive</td>
+      <td><code class="language-plaintext highlighter-rouge">hyperdrive_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "DB", id = "..." }</code></td>
+    </tr>
+    <tr>
+      <td>AI</td>
+      <td><code class="language-plaintext highlighter-rouge">ai_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "AI" }</code></td>
+    </tr>
+    <tr>
+      <td>Browser</td>
+      <td><code class="language-plaintext highlighter-rouge">browser_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "BROWSER" }</code></td>
+    </tr>
+    <tr>
+      <td>Analytics</td>
+      <td><code class="language-plaintext highlighter-rouge">analytics_engine_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "ANALYTICS", dataset = "..." }</code></td>
+    </tr>
+    <tr>
+      <td>mTLS</td>
+      <td><code class="language-plaintext highlighter-rouge">mtls_certificate_binding</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{ name = "CERT", certificate_id = "..." }</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="routes--triggers">Routes &amp; Triggers</h3>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"cloudflare_worker_route"</span> <span class="s2">"api"</span> <span class="p">{</span>
+  <span class="nx">zone_id</span> <span class="o">=</span> <span class="nx">cloudflare_zone</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span><span class="err">;</span> <span class="nx">pattern</span> <span class="o">=</span> <span class="s2">"api.example.com/*"</span>
+  <span class="nx">script_name</span> <span class="o">=</span> <span class="nx">cloudflare_workers_script</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">name</span>
+<span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_worker_cron_trigger"</span> <span class="s2">"task"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">script_name</span> <span class="o">=</span> <span class="nx">cloudflare_workers_script</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">name</span>
+  <span class="nx">schedules</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"*/5 * * * *"</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="storage-kv-r2-d1">Storage (KV, R2, D1)</h2>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># KV</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_workers_kv_namespace"</span> <span class="s2">"cache"</span> <span class="p">{</span> <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">title</span> <span class="o">=</span> <span class="s2">"cache"</span> <span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_workers_kv"</span> <span class="s2">"config"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">namespace_id</span> <span class="o">=</span> <span class="nx">cloudflare_workers_kv_namespace</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">id</span>
+  <span class="nx">key_name</span> <span class="o">=</span> <span class="s2">"config"</span><span class="err">;</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">jsonencode</span><span class="p">({</span> <span class="nx">version</span> <span class="o">=</span> <span class="s2">"1.0"</span> <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="c1"># R2</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_r2_bucket"</span> <span class="s2">"assets"</span> <span class="p">{</span> <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"assets"</span><span class="err">;</span> <span class="nx">location</span> <span class="o">=</span> <span class="s2">"WNAM"</span> <span class="p">}</span>
+
+<span class="c1"># D1 (migrations via wrangler) &amp; Queues</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_d1_database"</span> <span class="s2">"app"</span> <span class="p">{</span> <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"app-db"</span> <span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_queue"</span> <span class="s2">"events"</span> <span class="p">{</span> <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"events-queue"</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="pages">Pages</h2>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"cloudflare_pages_project"</span> <span class="s2">"site"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"site"</span><span class="err">;</span> <span class="nx">production_branch</span> <span class="o">=</span> <span class="s2">"main"</span>
+  <span class="nx">deployment_configs</span> <span class="p">{</span>
+    <span class="nx">production</span> <span class="p">{</span>
+      <span class="nx">compatibility_date</span> <span class="o">=</span> <span class="s2">"2025-01-01"</span>
+      <span class="nx">environment_variables</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">NODE_ENV</span> <span class="o">=</span> <span class="s2">"production"</span> <span class="p">}</span>
+      <span class="nx">kv_namespaces</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">KV</span> <span class="o">=</span> <span class="nx">cloudflare_workers_kv_namespace</span><span class="p">.</span><span class="nx">cache</span><span class="p">.</span><span class="nx">id</span> <span class="p">}</span>
+      <span class="nx">d1_databases</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">DB</span> <span class="o">=</span> <span class="nx">cloudflare_d1_database</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">id</span> <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">build_config</span> <span class="p">{</span> <span class="nx">build_command</span> <span class="o">=</span> <span class="s2">"npm run build"</span><span class="err">;</span> <span class="nx">destination_dir</span> <span class="o">=</span> <span class="s2">"dist"</span> <span class="p">}</span>
+  <span class="nx">source</span> <span class="p">{</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">"github"</span><span class="err">;</span> <span class="nx">config</span> <span class="p">{</span> <span class="nx">owner</span> <span class="o">=</span> <span class="s2">"org"</span><span class="err">;</span> <span class="nx">repo_name</span> <span class="o">=</span> <span class="s2">"site"</span><span class="err">;</span> <span class="nx">production_branch</span> <span class="o">=</span> <span class="s2">"main"</span> <span class="p">}}</span>
+<span class="p">}</span>
+
+<span class="nx">resource</span> <span class="s2">"cloudflare_pages_domain"</span> <span class="s2">"custom"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">project_name</span> <span class="o">=</span> <span class="nx">cloudflare_pages_project</span><span class="p">.</span><span class="nx">site</span><span class="p">.</span><span class="nx">name</span><span class="err">;</span> <span class="nx">domain</span> <span class="o">=</span> <span class="s2">"site.example.com"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="rulesets-waf-redirects-cache">Rulesets (WAF, Redirects, Cache)</h2>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># WAF</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_ruleset"</span> <span class="s2">"waf"</span> <span class="p">{</span>
+  <span class="nx">zone_id</span> <span class="o">=</span> <span class="nx">cloudflare_zone</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"WAF"</span><span class="err">;</span> <span class="nx">kind</span> <span class="o">=</span> <span class="s2">"zone"</span><span class="err">;</span> <span class="nx">phase</span> <span class="o">=</span> <span class="s2">"http_request_firewall_custom"</span>
+  <span class="nx">rules</span> <span class="p">{</span> <span class="nx">action</span> <span class="o">=</span> <span class="s2">"block"</span><span class="err">;</span> <span class="nx">enabled</span> <span class="o">=</span> <span class="kc">true</span><span class="err">;</span> <span class="nx">expression</span> <span class="o">=</span> <span class="s2">"(cf.client.bot) and not (cf.verified_bot)"</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Redirects</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_ruleset"</span> <span class="s2">"redirects"</span> <span class="p">{</span>
+  <span class="nx">zone_id</span> <span class="o">=</span> <span class="nx">cloudflare_zone</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"Redirects"</span><span class="err">;</span> <span class="nx">kind</span> <span class="o">=</span> <span class="s2">"zone"</span><span class="err">;</span> <span class="nx">phase</span> <span class="o">=</span> <span class="s2">"http_request_dynamic_redirect"</span>
+  <span class="nx">rules</span> <span class="p">{</span>
+    <span class="nx">action</span> <span class="o">=</span> <span class="s2">"redirect"</span><span class="err">;</span> <span class="nx">enabled</span> <span class="o">=</span> <span class="kc">true</span><span class="err">;</span> <span class="nx">expression</span> <span class="o">=</span> <span class="s2">"(http.request.uri.path eq </span><span class="se">\"</span><span class="s2">/old</span><span class="se">\"</span><span class="s2">)"</span>
+    <span class="nx">action_parameters</span> <span class="p">{</span> <span class="nx">from_value</span> <span class="p">{</span> <span class="nx">status_code</span> <span class="o">=</span> <span class="mi">301</span><span class="err">;</span> <span class="nx">target_url</span> <span class="p">{</span> <span class="nx">value</span> <span class="o">=</span> <span class="s2">"https://example.com/new"</span> <span class="p">}}}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Cache rules</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_ruleset"</span> <span class="s2">"cache"</span> <span class="p">{</span>
+  <span class="nx">zone_id</span> <span class="o">=</span> <span class="nx">cloudflare_zone</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"Cache"</span><span class="err">;</span> <span class="nx">kind</span> <span class="o">=</span> <span class="s2">"zone"</span><span class="err">;</span> <span class="nx">phase</span> <span class="o">=</span> <span class="s2">"http_request_cache_settings"</span>
+  <span class="nx">rules</span> <span class="p">{</span>
+    <span class="nx">action</span> <span class="o">=</span> <span class="s2">"set_cache_settings"</span><span class="err">;</span> <span class="nx">enabled</span> <span class="o">=</span> <span class="kc">true</span><span class="err">;</span> <span class="nx">expression</span> <span class="o">=</span> <span class="s2">"(http.request.uri.path matches </span><span class="se">\"</span><span class="err">\\</span><span class="s2">.(jpg|png|css|js)$</span><span class="se">\"</span><span class="s2">)"</span>
+    <span class="nx">action_parameters</span> <span class="p">{</span> <span class="nx">cache</span> <span class="o">=</span> <span class="kc">true</span><span class="err">;</span> <span class="nx">edge_ttl</span> <span class="p">{</span> <span class="nx">mode</span> <span class="o">=</span> <span class="s2">"override_origin"</span><span class="err">;</span> <span class="nx">default</span> <span class="o">=</span> <span class="mi">86400</span> <span class="p">}}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="load-balancers">Load Balancers</h2>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"cloudflare_load_balancer_monitor"</span> <span class="s2">"http"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">"http"</span><span class="err">;</span> <span class="nx">path</span> <span class="o">=</span> <span class="s2">"/health"</span><span class="err">;</span> <span class="nx">interval</span> <span class="o">=</span> <span class="mi">60</span><span class="err">;</span> <span class="nx">timeout</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_load_balancer_pool"</span> <span class="s2">"api"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"api-pool"</span><span class="err">;</span> <span class="nx">monitor</span> <span class="o">=</span> <span class="nx">cloudflare_load_balancer_monitor</span><span class="p">.</span><span class="nx">http</span><span class="p">.</span><span class="nx">id</span>
+  <span class="nx">origins</span> <span class="p">{</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"api-1"</span><span class="err">;</span> <span class="nx">address</span> <span class="o">=</span> <span class="s2">"192.0.2.1"</span> <span class="p">}</span>
+  <span class="nx">origins</span> <span class="p">{</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"api-2"</span><span class="err">;</span> <span class="nx">address</span> <span class="o">=</span> <span class="s2">"192.0.2.2"</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_load_balancer"</span> <span class="s2">"api"</span> <span class="p">{</span>
+  <span class="nx">zone_id</span> <span class="o">=</span> <span class="nx">cloudflare_zone</span><span class="p">.</span><span class="nx">example</span><span class="p">.</span><span class="nx">id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"api.example.com"</span>
+  <span class="nx">default_pool_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nx">cloudflare_load_balancer_pool</span><span class="p">.</span><span class="nx">api</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span><span class="err">;</span> <span class="nx">steering_policy</span> <span class="o">=</span> <span class="s2">"geo"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="access-zero-trust">Access (Zero Trust)</h2>
+
+<div class="language-hcl highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">resource</span> <span class="s2">"cloudflare_access_application"</span> <span class="s2">"admin"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"Admin"</span><span class="err">;</span> <span class="nx">domain</span> <span class="o">=</span> <span class="s2">"admin.example.com"</span><span class="err">;</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">"self_hosted"</span>
+  <span class="nx">session_duration</span> <span class="o">=</span> <span class="s2">"24h"</span><span class="err">;</span> <span class="nx">allowed_idps</span> <span class="o">=</span> <span class="p">[</span><span class="nx">cloudflare_access_identity_provider</span><span class="p">.</span><span class="nx">github</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_access_policy"</span> <span class="s2">"allow"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">application_id</span> <span class="o">=</span> <span class="nx">cloudflare_access_application</span><span class="p">.</span><span class="nx">admin</span><span class="p">.</span><span class="nx">id</span>
+  <span class="nx">name</span> <span class="o">=</span> <span class="s2">"Allow"</span><span class="err">;</span> <span class="nx">decision</span> <span class="o">=</span> <span class="s2">"allow"</span><span class="err">;</span> <span class="nx">precedence</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="nx">include</span> <span class="p">{</span> <span class="nx">email</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"admin@example.com"</span><span class="p">]</span> <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">resource</span> <span class="s2">"cloudflare_access_identity_provider"</span> <span class="s2">"github"</span> <span class="p">{</span>
+  <span class="nx">account_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">account_id</span><span class="err">;</span> <span class="nx">name</span> <span class="o">=</span> <span class="s2">"GitHub"</span><span class="err">;</span> <span class="nx">type</span> <span class="o">=</span> <span class="s2">"github"</span>
+  <span class="nx">config</span> <span class="p">{</span> <span class="nx">client_id</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">github_id</span><span class="err">;</span> <span class="nx">client_secret</span> <span class="o">=</span> <span class="nx">var</span><span class="p">.</span><span class="nx">github_secret</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="see-also">See Also</h2>
+
+<ul>
+  <li><a href="./README.md">README</a> - Provider setup</li>
+  <li><a href="./api.md">API</a> - Data sources</li>
+  <li><a href="./patterns.md">Patterns</a> - Use cases</li>
+  <li><a href="./gotchas.md">Troubleshooting</a> - Issues</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

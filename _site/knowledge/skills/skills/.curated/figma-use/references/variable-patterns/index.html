@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Variable Patterns · A developer journey</title>
+<meta name="description" content="Variable &amp; Token API Patterns">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/skills/skills/.curated/figma-use/references/variable-patterns/">
+
+<meta property="og:title" content="Variable Patterns · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/skills/skills/.curated/figma-use/references/variable-patterns/">
+<meta property="og:description" content="Variable &amp; Token API Patterns">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>skills</span>
+      </nav>
+
+      <h1>Variable Patterns</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="variable--token-api-patterns">Variable &amp; Token API Patterns</h1>
+
+<blockquote>
+  <p>Part of the <a href="../SKILL.md">use_figma skill</a>. How to correctly create, bind, scope, and alias variables using the Plugin API.</p>
+
+  <p>For design system context (aliasing strategy, mode decisions, code syntax philosophy, grouping conventions), see <a href="working-with-design-systems/wwds-variables.md">wwds-variables</a>.</p>
+</blockquote>
+
+<h2 id="contents">Contents</h2>
+
+<ul>
+  <li>Creating Variable Collections and Modes</li>
+  <li>Creating Variables (All Types)</li>
+  <li>Binding Variables to Node Properties</li>
+  <li>Variable Scopes: What They Are and How to Set Them</li>
+  <li>Variable Aliasing (VARIABLE_ALIAS)</li>
+  <li>Code Syntax (setVariableCodeSyntax)</li>
+  <li>Discovering Existing Variables in the File</li>
+  <li>Effect Styles (For Shadows)</li>
+</ul>
+
+<h2 id="creating-variable-collections-and-modes">Creating Variable Collections and Modes</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">collection</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">createVariableCollection</span><span class="p">(</span><span class="dl">"</span><span class="s2">MyCollection</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// A new collection starts with 1 mode named "Mode 1" — always rename it</span>
+<span class="nx">collection</span><span class="p">.</span><span class="nf">renameMode</span><span class="p">(</span><span class="nx">collection</span><span class="p">.</span><span class="nx">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">modeId</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Light</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// Add additional modes (returns the new modeId)</span>
+<span class="kd">const</span> <span class="nx">darkModeId</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nf">addMode</span><span class="p">(</span><span class="dl">"</span><span class="s2">Dark</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">lightModeId</span> <span class="o">=</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">modes</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">modeId</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><strong>Mode limits are plan-dependent:</strong> Free = 1 mode, Professional = up to 4, Organization/Enterprise = 40+. If you need many modes, split across multiple collections.</p>
+
+<h2 id="creating-variables-all-types">Creating Variables (All Types)</h2>
+
+<p><code class="language-plaintext highlighter-rouge">figma.variables.createVariable(name, collection, resolvedType)</code> — the second argument accepts a collection object or ID string (object preferred).</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// COLOR — values use {r, g, b, a} (all 0–1 range, includes alpha)</span>
+<span class="kd">const</span> <span class="nx">colorVar</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">createVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-color</span><span class="dl">"</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="dl">"</span><span class="s2">COLOR</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">colorVar</span><span class="p">.</span><span class="nf">setValueForMode</span><span class="p">(</span><span class="nx">modeId</span><span class="p">,</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mf">0.36</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mf">0.96</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mi">1</span> <span class="p">});</span>
+
+<span class="c1">// FLOAT — for spacing, radii, sizing, numeric values</span>
+<span class="kd">const</span> <span class="nx">floatVar</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">createVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-spacing</span><span class="dl">"</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="dl">"</span><span class="s2">FLOAT</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">floatVar</span><span class="p">.</span><span class="nf">setValueForMode</span><span class="p">(</span><span class="nx">modeId</span><span class="p">,</span> <span class="mi">16</span><span class="p">);</span>
+
+<span class="c1">// STRING — for font families, font style names, any text value</span>
+<span class="kd">const</span> <span class="nx">stringVar</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">createVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-font</span><span class="dl">"</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="dl">"</span><span class="s2">STRING</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">stringVar</span><span class="p">.</span><span class="nf">setValueForMode</span><span class="p">(</span><span class="nx">modeId</span><span class="p">,</span> <span class="dl">"</span><span class="s2">Inter</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="c1">// BOOLEAN</span>
+<span class="kd">const</span> <span class="nx">boolVar</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">createVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-flag</span><span class="dl">"</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="dl">"</span><span class="s2">BOOLEAN</span><span class="dl">"</span><span class="p">);</span>
+<span class="nx">boolVar</span><span class="p">.</span><span class="nf">setValueForMode</span><span class="p">(</span><span class="nx">modeId</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><strong>Note:</strong> Paint colors use <code class="language-plaintext highlighter-rouge">{r, g, b}</code> (no alpha), but COLOR variable values use <code class="language-plaintext highlighter-rouge">{r, g, b, a}</code> (with alpha). Don’t mix them up.</p>
+
+<h2 id="binding-variables-to-node-properties">Binding Variables to Node Properties</h2>
+
+<h3 id="color-bindings-fills-strokes">Color Bindings (Fills, Strokes)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">setBoundVariableForPaint</code> returns a <strong>NEW paint</strong> — you must capture the return value:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a base paint, bind the variable, assign the result</span>
+<span class="kd">const</span> <span class="nx">basePaint</span> <span class="o">=</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">SOLID</span><span class="dl">'</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">};</span>
+<span class="kd">const</span> <span class="nx">boundPaint</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">setBoundVariableForPaint</span><span class="p">(</span><span class="nx">basePaint</span><span class="p">,</span> <span class="dl">"</span><span class="s2">color</span><span class="dl">"</span><span class="p">,</span> <span class="nx">colorVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[</span><span class="nx">boundPaint</span><span class="p">];</span>
+
+<span class="c1">// Only SOLID paints support color variable binding — gradients/images will throw</span>
+</code></pre></div></div>
+
+<h3 id="numeric-bindings-spacing-radii-sizing">Numeric Bindings (Spacing, Radii, Sizing)</h3>
+
+<p><code class="language-plaintext highlighter-rouge">setBoundVariable</code> binds FLOAT/STRING/BOOLEAN variables to node properties:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Padding</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">paddingTop</span><span class="dl">"</span><span class="p">,</span> <span class="nx">spacingVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">paddingBottom</span><span class="dl">"</span><span class="p">,</span> <span class="nx">spacingVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">paddingLeft</span><span class="dl">"</span><span class="p">,</span> <span class="nx">spacingVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">paddingRight</span><span class="dl">"</span><span class="p">,</span> <span class="nx">spacingVar</span><span class="p">);</span>
+
+<span class="c1">// Gap</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">itemSpacing</span><span class="dl">"</span><span class="p">,</span> <span class="nx">gapVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">counterAxisSpacing</span><span class="dl">"</span><span class="p">,</span> <span class="nx">gapVar</span><span class="p">);</span>
+
+<span class="c1">// Corner radius — use individual corners, NOT cornerRadius</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">topLeftRadius</span><span class="dl">"</span><span class="p">,</span> <span class="nx">radiusVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">topRightRadius</span><span class="dl">"</span><span class="p">,</span> <span class="nx">radiusVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">bottomLeftRadius</span><span class="dl">"</span><span class="p">,</span> <span class="nx">radiusVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">bottomRightRadius</span><span class="dl">"</span><span class="p">,</span> <span class="nx">radiusVar</span><span class="p">);</span>
+
+<span class="c1">// Size</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">width</span><span class="dl">"</span><span class="p">,</span> <span class="nx">sizeVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">height</span><span class="dl">"</span><span class="p">,</span> <span class="nx">sizeVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">minWidth</span><span class="dl">"</span><span class="p">,</span> <span class="nx">sizeVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">maxWidth</span><span class="dl">"</span><span class="p">,</span> <span class="nx">sizeVar</span><span class="p">);</span>
+
+<span class="c1">// Other</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">opacity</span><span class="dl">"</span><span class="p">,</span> <span class="nx">opacityVar</span><span class="p">);</span>
+<span class="nx">node</span><span class="p">.</span><span class="nf">setBoundVariable</span><span class="p">(</span><span class="dl">"</span><span class="s2">strokeWeight</span><span class="dl">"</span><span class="p">,</span> <span class="nx">strokeVar</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><strong>Not bindable via setBoundVariable:</strong> <code class="language-plaintext highlighter-rouge">fontSize</code>, <code class="language-plaintext highlighter-rouge">fontWeight</code>, <code class="language-plaintext highlighter-rouge">lineHeight</code> — set these directly on text nodes.</p>
+
+<h3 id="effect-bindings">Effect Bindings</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">effectCopy</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">effects</span><span class="p">[</span><span class="mi">0</span><span class="p">]));</span>
+<span class="kd">const</span> <span class="nx">newEffect</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">setBoundVariableForEffect</span><span class="p">(</span><span class="nx">effectCopy</span><span class="p">,</span> <span class="dl">"</span><span class="s2">color</span><span class="dl">"</span><span class="p">,</span> <span class="nx">colorVar</span><span class="p">);</span>
+<span class="c1">// ⚠️ Returns a NEW effect — must capture return value!</span>
+<span class="nx">node</span><span class="p">.</span><span class="nx">effects</span> <span class="o">=</span> <span class="p">[</span><span class="nx">newEffect</span><span class="p">];</span>
+<span class="c1">// Valid fields: "color" (COLOR), "radius" | "spread" | "offsetX" | "offsetY" (FLOAT)</span>
+</code></pre></div></div>
+
+<h3 id="applying-a-mode-to-a-frame">Applying a Mode to a Frame</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// All bound children of this frame will resolve to the specified mode's values</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nf">setExplicitVariableModeForCollection</span><span class="p">(</span><span class="nx">collection</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">modeId</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Without this, all nodes use the collection’s default (first) mode.</p>
+
+<h2 id="variable-scopes-what-they-are-and-how-to-set-them">Variable Scopes: What They Are and How to Set Them</h2>
+
+<p><code class="language-plaintext highlighter-rouge">variable.scopes</code> controls which Figma property pickers show the variable. The default is <code class="language-plaintext highlighter-rouge">["ALL_SCOPES"]</code> which shows it everywhere — this is almost never what you want.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span><span class="p">.</span><span class="nx">scopes</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">FRAME_FILL</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">SHAPE_FILL</span><span class="dl">"</span><span class="p">];</span>  <span class="c1">// only fill pickers</span>
+<span class="nx">variable</span><span class="p">.</span><span class="nx">scopes</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">TEXT_FILL</span><span class="dl">"</span><span class="p">];</span>                   <span class="c1">// only text color picker</span>
+<span class="nx">variable</span><span class="p">.</span><span class="nx">scopes</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">GAP</span><span class="dl">"</span><span class="p">];</span>                         <span class="c1">// only gap/spacing pickers</span>
+<span class="nx">variable</span><span class="p">.</span><span class="nx">scopes</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">CORNER_RADIUS</span><span class="dl">"</span><span class="p">];</span>               <span class="c1">// only radius pickers</span>
+<span class="nx">variable</span><span class="p">.</span><span class="nx">scopes</span> <span class="o">=</span> <span class="p">[];</span>                              <span class="c1">// hidden from all pickers</span>
+</code></pre></div></div>
+
+<p><strong>All valid scope values:</strong>
+<code class="language-plaintext highlighter-rouge">ALL_SCOPES</code>, <code class="language-plaintext highlighter-rouge">TEXT_CONTENT</code>, <code class="language-plaintext highlighter-rouge">CORNER_RADIUS</code>, <code class="language-plaintext highlighter-rouge">WIDTH_HEIGHT</code>, <code class="language-plaintext highlighter-rouge">GAP</code>, <code class="language-plaintext highlighter-rouge">ALL_FILLS</code>, <code class="language-plaintext highlighter-rouge">FRAME_FILL</code>, <code class="language-plaintext highlighter-rouge">SHAPE_FILL</code>, <code class="language-plaintext highlighter-rouge">TEXT_FILL</code>, <code class="language-plaintext highlighter-rouge">STROKE_COLOR</code>, <code class="language-plaintext highlighter-rouge">STROKE_FLOAT</code>, <code class="language-plaintext highlighter-rouge">EFFECT_FLOAT</code>, <code class="language-plaintext highlighter-rouge">EFFECT_COLOR</code>, <code class="language-plaintext highlighter-rouge">OPACITY</code>, <code class="language-plaintext highlighter-rouge">FONT_FAMILY</code>, <code class="language-plaintext highlighter-rouge">FONT_STYLE</code>, <code class="language-plaintext highlighter-rouge">FONT_WEIGHT</code>, <code class="language-plaintext highlighter-rouge">FONT_SIZE</code>, <code class="language-plaintext highlighter-rouge">LINE_HEIGHT</code>, <code class="language-plaintext highlighter-rouge">LETTER_SPACING</code>, <code class="language-plaintext highlighter-rouge">PARAGRAPH_SPACING</code>, <code class="language-plaintext highlighter-rouge">PARAGRAPH_INDENT</code></p>
+
+<p><strong>Always check the existing file’s scope patterns before creating variables</strong> — match whatever convention is already in use. See “Discovering Existing Variables” below.</p>
+
+<h2 id="variable-aliasing-variable_alias">Variable Aliasing (VARIABLE_ALIAS)</h2>
+
+<p>A variable’s value can reference another variable via alias. This is how semantic tokens reference primitive tokens:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Set a variable's value as an alias to another variable</span>
+<span class="nx">semanticVar</span><span class="p">.</span><span class="nf">setValueForMode</span><span class="p">(</span><span class="nx">modeId</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">VARIABLE_ALIAS</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">id</span><span class="p">:</span> <span class="nx">primitiveVar</span><span class="p">.</span><span class="nx">id</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>When the primitive changes, the semantic variable updates automatically across all modes.</p>
+
+<h2 id="code-syntax-setvariablecodesyntax">Code Syntax (setVariableCodeSyntax)</h2>
+
+<p>Links a Figma variable back to its code counterpart. Call once per platform:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">variable</span><span class="p">.</span><span class="nf">setVariableCodeSyntax</span><span class="p">(</span><span class="dl">'</span><span class="s1">WEB</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">var(--color-bg-default)</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">variable</span><span class="p">.</span><span class="nf">setVariableCodeSyntax</span><span class="p">(</span><span class="dl">'</span><span class="s1">ANDROID</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">colorBgDefault</span><span class="dl">'</span><span class="p">);</span>
+<span class="nx">variable</span><span class="p">.</span><span class="nf">setVariableCodeSyntax</span><span class="p">(</span><span class="dl">'</span><span class="s1">iOS</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Color.bgDefault</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="c1">// Read back: variable.codeSyntax → { WEB: '...', ANDROID: '...', iOS: '...' }</span>
+</code></pre></div></div>
+
+<p><strong>When deriving CSS names from Figma names</strong>, replace both slashes AND spaces with hyphens:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// WRONG — leaves spaces in CSS variable name</span>
+<span class="s2">`var(--</span><span class="p">${</span><span class="nx">figmaName</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sr">/</span><span class="se">\/</span><span class="sr">/g</span><span class="p">,</span> <span class="dl">'</span><span class="s1">-</span><span class="dl">'</span><span class="p">).</span><span class="nf">toLowerCase</span><span class="p">()}</span><span class="s2">)`</span>
+
+<span class="c1">// CORRECT — replace all whitespace and slashes</span>
+<span class="s2">`var(--</span><span class="p">${</span><span class="nx">figmaName</span><span class="p">.</span><span class="nf">replace</span><span class="p">(</span><span class="sr">/</span><span class="se">[\s\/]</span><span class="sr">+/g</span><span class="p">,</span> <span class="dl">'</span><span class="s1">-</span><span class="dl">'</span><span class="p">).</span><span class="nf">toLowerCase</span><span class="p">()}</span><span class="s2">)`</span>
+
+<span class="c1">// BEST — use the original CSS variable name from the source, not a derived one</span>
+<span class="s2">`var(</span><span class="p">${</span><span class="nx">token</span><span class="p">.</span><span class="nx">cssVar</span><span class="p">}</span><span class="s2">)`</span>
+</code></pre></div></div>
+
+<h2 id="discovering-existing-variables-in-the-file">Discovering Existing Variables in the File</h2>
+
+<p><strong>Always inspect the file’s existing variables before creating new ones.</strong> Different files use different naming conventions, scope patterns, and collection structures. Match what’s already there.</p>
+
+<h3 id="list-collections-with-mode-info">List collections with mode info</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">collections</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getLocalVariableCollections</span><span class="p">();</span>
+    <span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="nx">collections</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">c</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="na">name</span><span class="p">:</span> <span class="nx">c</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
+      <span class="na">id</span><span class="p">:</span> <span class="nx">c</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+      <span class="na">varCount</span><span class="p">:</span> <span class="nx">c</span><span class="p">.</span><span class="nx">variableIds</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span>
+      <span class="na">modes</span><span class="p">:</span> <span class="nx">c</span><span class="p">.</span><span class="nx">modes</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="na">name</span><span class="p">:</span> <span class="nx">m</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="na">id</span><span class="p">:</span> <span class="nx">m</span><span class="p">.</span><span class="nx">modeId</span> <span class="p">}))</span>
+    <span class="p">}));</span>
+    <span class="nx">figma</span><span class="p">.</span><span class="nf">closePlugin</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">results</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">closePluginWithFailure</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nf">toString</span><span class="p">());</span> <span class="p">}</span>
+<span class="p">})()</span>
+</code></pre></div></div>
+
+<h3 id="inspect-scope-patterns-used-in-existing-variables">Inspect scope patterns used in existing variables</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">collections</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getLocalVariableCollections</span><span class="p">();</span>
+    <span class="kd">const</span> <span class="nx">scopeGroups</span> <span class="o">=</span> <span class="p">{};</span>
+    <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">c</span> <span class="k">of</span> <span class="nx">collections</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">id</span> <span class="k">of</span> <span class="nx">c</span><span class="p">.</span><span class="nx">variableIds</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">const</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getVariableById</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+        <span class="kd">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">scopes</span><span class="p">);</span>
+        <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">scopeGroups</span><span class="p">[</span><span class="nx">key</span><span class="p">])</span> <span class="nx">scopeGroups</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[];</span>
+        <span class="nx">scopeGroups</span><span class="p">[</span><span class="nx">key</span><span class="p">].</span><span class="nf">push</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">figma</span><span class="p">.</span><span class="nf">closePlugin</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">scopeGroups</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">closePluginWithFailure</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nf">toString</span><span class="p">());</span> <span class="p">}</span>
+<span class="p">})()</span>
+</code></pre></div></div>
+
+<h3 id="build-a-namevariable-lookup-for-reuse">Build a name→variable lookup for reuse</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">varByName</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">v</span> <span class="k">of</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getLocalVariables</span><span class="p">())</span> <span class="p">{</span>
+  <span class="nx">varByName</span><span class="p">[</span><span class="nx">v</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">v</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Bind to existing variable by name — no hex values needed</span>
+<span class="kd">function</span> <span class="nf">bindFill</span><span class="p">(</span><span class="nx">node</span><span class="p">,</span> <span class="nx">varName</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">varByName</span><span class="p">[</span><span class="nx">varName</span><span class="p">];</span>
+  <span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">v</span><span class="p">)</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="s2">`Variable not found: </span><span class="p">${</span><span class="nx">varName</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="kd">const</span> <span class="nx">paint</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">setBoundVariableForPaint</span><span class="p">(</span>
+    <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">SOLID</span><span class="dl">'</span><span class="p">,</span> <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span> <span class="p">}</span> <span class="p">},</span> <span class="dl">'</span><span class="s1">color</span><span class="dl">'</span><span class="p">,</span> <span class="nx">v</span>
+  <span class="p">);</span>
+  <span class="nx">node</span><span class="p">.</span><span class="nx">fills</span> <span class="o">=</span> <span class="p">[</span><span class="nx">paint</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>Only create new variables for tokens that have no match in the file.</strong> After building the lookup, compare against the needed tokens and create variables only for the delta.</p>
+
+<h2 id="listing-collections-with-full-variable-details">Listing Collections with Full Variable Details</h2>
+
+<p>The async API returns richer data including code syntax and scopes per variable:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Lists all local variable collections defined in the current Figma file,
+ * including metadata for their modes and variables.
+ *
+ * @returns {Promise&lt;Array&lt;{
+ *   name: string,
+ *   id: string,
+ *   modes: Array&lt;[name: string, modeId: string]&gt;,
+ *   variables: Array&lt;[name: string, id: string, codeSyntax: object, scopes: string[]]&gt;
+ * }&gt;&gt;}
+ */</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">listVariableCollectionsAndVariables</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">collections</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getLocalVariableCollectionsAsync</span><span class="p">();</span>
+  <span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">collection</span> <span class="k">of</span> <span class="nx">collections</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">vars</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">id</span> <span class="k">of</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">variableIds</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">v</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getVariableByIdAsync</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+      <span class="nx">vars</span><span class="p">.</span><span class="nf">push</span><span class="p">([</span><span class="nx">v</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">codeSyntax</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">scopes</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="nx">results</span><span class="p">.</span><span class="nf">push</span><span class="p">({</span>
+      <span class="na">name</span><span class="p">:</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
+      <span class="na">id</span><span class="p">:</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+      <span class="na">modes</span><span class="p">:</span> <span class="nx">collection</span><span class="p">.</span><span class="nx">modes</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">m</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">m</span><span class="p">.</span><span class="nx">modeId</span><span class="p">]),</span>
+      <span class="na">variables</span><span class="p">:</span> <span class="nx">vars</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">results</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Full runnable script:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="k">async </span><span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">listVariableCollectionsAndVariables</span><span class="p">();</span>
+    <span class="nx">figma</span><span class="p">.</span><span class="nf">closePlugin</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">results</span><span class="p">));</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">closePluginWithFailure</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nf">toString</span><span class="p">());</span> <span class="p">}</span>
+<span class="p">})()</span>
+</code></pre></div></div>
+
+<h2 id="setting-and-removing-code-syntax">Setting and Removing Code Syntax</h2>
+
+<p>Must be executed in the file the variable is defined in:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Set the code syntax for a variable for a specific platform.
+ *
+ * @param {string} variableId
+ * @param {'WEB'|'ANDROID'|'iOS'} platform
+ * @param {string} syntax
+ */</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">setVariableCodeSyntax</span><span class="p">(</span><span class="nx">variableId</span><span class="p">,</span> <span class="nx">platform</span><span class="p">,</span> <span class="nx">syntax</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">variable</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getVariableByIdAsync</span><span class="p">(</span><span class="nx">variableId</span><span class="p">);</span>
+  <span class="nx">variable</span><span class="p">.</span><span class="nf">setVariableCodeSyntax</span><span class="p">(</span><span class="nx">platform</span><span class="p">,</span> <span class="nx">syntax</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * Remove code syntax for a variable for one or more platforms.
+ *
+ * @param {string} variableId
+ * @param {Array&lt;'WEB'|'ANDROID'|'iOS'&gt;} platforms — defaults to all three
+ */</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">removeVariableCodeSyntax</span><span class="p">(</span><span class="nx">variableId</span><span class="p">,</span> <span class="nx">platforms</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">WEB</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">ANDROID</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">iOS</span><span class="dl">"</span><span class="p">])</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">variable</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getVariableByIdAsync</span><span class="p">(</span><span class="nx">variableId</span><span class="p">);</span>
+  <span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">platform</span> <span class="k">of</span> <span class="nx">platforms</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">variable</span><span class="p">.</span><span class="nf">removeVariableCodeSyntax</span><span class="p">(</span><span class="nx">platform</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/**
+ * Set a value for a variable in a specific mode.
+ * For aliases, value must be: { type: 'VARIABLE_ALIAS', id: '&lt;variableId&gt;' }
+ *
+ * @param {string} variableId
+ * @param {string} modeId
+ * @param {string|number|boolean|RGB|RGBA|{type: 'VARIABLE_ALIAS', id: string}} value
+ */</span>
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">setVariableValueForMode</span><span class="p">(</span><span class="nx">variableId</span><span class="p">,</span> <span class="nx">modeId</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">variable</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">figma</span><span class="p">.</span><span class="nx">variables</span><span class="p">.</span><span class="nf">getVariableByIdAsync</span><span class="p">(</span><span class="nx">variableId</span><span class="p">);</span>
+  <span class="nx">variable</span><span class="p">.</span><span class="nf">setValueForMode</span><span class="p">(</span><span class="nx">modeId</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="effect-styles-for-shadows">Effect Styles (For Shadows)</h2>
+
+<p>Shadows can’t be stored as variables. Use effect styles. For comprehensive patterns, see <a href="effect-style-patterns.md">effect-style-patterns.md</a>.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">shadow</span> <span class="o">=</span> <span class="nx">figma</span><span class="p">.</span><span class="nf">createEffectStyle</span><span class="p">();</span>
+<span class="nx">shadow</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Shadow/Subtle</span><span class="dl">"</span><span class="p">;</span>
+<span class="nx">shadow</span><span class="p">.</span><span class="nx">effects</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">DROP_SHADOW</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">color</span><span class="p">:</span> <span class="p">{</span> <span class="na">r</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">g</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">b</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">a</span><span class="p">:</span> <span class="mf">0.06</span> <span class="p">},</span>
+  <span class="na">offset</span><span class="p">:</span> <span class="p">{</span> <span class="na">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="na">y</span><span class="p">:</span> <span class="mi">2</span> <span class="p">},</span>
+  <span class="na">radius</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+  <span class="na">spread</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="na">visible</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="na">blendMode</span><span class="p">:</span> <span class="dl">"</span><span class="s2">NORMAL</span><span class="dl">"</span>
+<span class="p">}];</span>
+
+<span class="c1">// Apply to a node</span>
+<span class="nx">frame</span><span class="p">.</span><span class="nx">effectStyleId</span> <span class="o">=</span> <span class="nx">shadow</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+</code></pre></div></div>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

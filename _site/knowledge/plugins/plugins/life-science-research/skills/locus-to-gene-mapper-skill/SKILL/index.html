@@ -1,0 +1,1700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Map GWAS loci to ranked candidate genes using a deterministic multi-skill chain (EFO -> GWAS -> coordinates -> Open Targets L2G/coloc -> eQTL -> burden/codin...">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/life-science-research/skills/locus-to-gene-mapper-skill/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/life-science-research/skills/locus-to-gene-mapper-skill/SKILL/">
+<meta property="og:description" content="Map GWAS loci to ranked candidate genes using a deterministic multi-skill chain (EFO -> GWAS -> coordinates -> Open Targets L2G/coloc -> eQTL -> burden/codin...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Map GWAS loci to ranked candidate genes using a deterministic multi-skill chain (EFO -> GWAS -> coordinates -> Open Targets L2G/coloc -> eQTL -> burden/coding context), with reproducible tables and optional figures. Use when a user provides a trait/EFO term and/or lead variants and needs locus-to-gene prioritization for downstream biology decisions.</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h2 id="locus-to-gene-mapper">Locus-to-Gene Mapper</h2>
+
+<p>Generate a reproducible locus-to-gene mapping for one trait (or a seed set of lead variants), with explicit evidence attribution and conservative confidence labels.</p>
+
+<p>This skill is optimized for bioinformaticians who need executable, traceable mapping from variant signals to plausible causal genes.</p>
+
+<h2 id="required-inputs">Required Inputs</h2>
+
+<p>Provide at least one anchor source:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">trait_query</code> (string), for example <code class="language-plaintext highlighter-rouge">chronic obstructive pulmonary disease</code></li>
+  <li><code class="language-plaintext highlighter-rouge">efo_id</code> (string), for example <code class="language-plaintext highlighter-rouge">EFO_0000341</code></li>
+  <li><code class="language-plaintext highlighter-rouge">seed_rsids</code> (list[string]), for example <code class="language-plaintext highlighter-rouge">["rs1873625", "rs7903146"]</code></li>
+</ul>
+
+<h2 id="optional-inputs">Optional Inputs</h2>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">target_gene</code> (string), optional gene of interest for highlighting in output</li>
+  <li><code class="language-plaintext highlighter-rouge">show_child_traits</code> (bool), default <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><code class="language-plaintext highlighter-rouge">phenotype_terms</code> (list[string]), optional additional terms to include when finding anchors</li>
+  <li><code class="language-plaintext highlighter-rouge">max_anchor_associations</code> (int), default <code class="language-plaintext highlighter-rouge">1200</code></li>
+  <li><code class="language-plaintext highlighter-rouge">max_loci</code> (int), default <code class="language-plaintext highlighter-rouge">25</code></li>
+  <li><code class="language-plaintext highlighter-rouge">max_genes_per_locus</code> (int), default <code class="language-plaintext highlighter-rouge">10</code></li>
+  <li><code class="language-plaintext highlighter-rouge">max_coloc_rows_per_locus</code> (int), default <code class="language-plaintext highlighter-rouge">100</code></li>
+  <li><code class="language-plaintext highlighter-rouge">max_eqtl_rows_per_variant</code> (int), default <code class="language-plaintext highlighter-rouge">200</code></li>
+  <li><code class="language-plaintext highlighter-rouge">genebass_burden_sets</code> (list[string]), default <code class="language-plaintext highlighter-rouge">["pLoF", "missense|LC"]</code></li>
+  <li><code class="language-plaintext highlighter-rouge">include_clinvar</code> (bool), default <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><code class="language-plaintext highlighter-rouge">include_gnomad_context</code> (bool), default <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><code class="language-plaintext highlighter-rouge">include_hpa_tissue_context</code> (bool), default <code class="language-plaintext highlighter-rouge">true</code></li>
+  <li><code class="language-plaintext highlighter-rouge">include_figures</code> (bool), default <code class="language-plaintext highlighter-rouge">false</code></li>
+  <li><code class="language-plaintext highlighter-rouge">disable_default_seeds</code> (bool), default <code class="language-plaintext highlighter-rouge">false</code>; if <code class="language-plaintext highlighter-rouge">false</code>, common traits automatically get built-in seed rsIDs</li>
+  <li><code class="language-plaintext highlighter-rouge">figure_output_dir</code> (string), default <code class="language-plaintext highlighter-rouge">./output/figures</code></li>
+  <li><code class="language-plaintext highlighter-rouge">mapping_output_path</code> (string), default <code class="language-plaintext highlighter-rouge">./output/locus_to_gene_mapping.json</code></li>
+  <li><code class="language-plaintext highlighter-rouge">summary_output_path</code> (string), default <code class="language-plaintext highlighter-rouge">./output/locus_to_gene_summary.md</code></li>
+</ul>
+
+<h2 id="runtime-requirements">Runtime Requirements</h2>
+
+<ul>
+  <li>Python <code class="language-plaintext highlighter-rouge">3.11+</code></li>
+  <li><code class="language-plaintext highlighter-rouge">requests</code></li>
+  <li>Optional for figure generation: <code class="language-plaintext highlighter-rouge">matplotlib</code>, <code class="language-plaintext highlighter-rouge">seaborn</code>, <code class="language-plaintext highlighter-rouge">pandas</code></li>
+</ul>
+
+<h2 id="bundled-script-deterministic-runner">Bundled Script (Deterministic Runner)</h2>
+
+<ul>
+  <li>Primary entrypoint: <code class="language-plaintext highlighter-rouge">scripts/map_locus_to_gene.py</code></li>
+  <li>This script:
+    <ul>
+      <li>resolves trait/EFO and anchor variants,</li>
+      <li>resolves seed and anchor rsID coordinates directly through NCBI RefSNP/dbSNP placements,</li>
+      <li>gathers locus-to-gene evidence through the chained skills,</li>
+      <li>writes mapping JSON and summary markdown,</li>
+      <li>optionally renders figures when plotting deps are available.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Run:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python locus-to-gene-mapper-skill/scripts/map_locus_to_gene.py <span class="se">\</span>
+  <span class="nt">--input-json</span> /path/to/input.json <span class="se">\</span>
+  <span class="nt">--print-result</span>
+</code></pre></div></div>
+
+<p>Quick start (no input JSON file):</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python locus-to-gene-mapper-skill/scripts/map_locus_to_gene.py <span class="se">\</span>
+  <span class="nt">--trait-query</span> <span class="s2">"type 2 diabetes"</span> <span class="se">\</span>
+  <span class="nt">--print-result</span>
+</code></pre></div></div>
+
+<p>Trait-only runs default to <code class="language-plaintext highlighter-rouge">include_figures=true</code> unless explicitly disabled with <code class="language-plaintext highlighter-rouge">--no-include-figures</code>.</p>
+
+<p>Minimal input JSON:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"trait_query"</span><span class="p">:</span><span class="w"> </span><span class="s2">"type 2 diabetes"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Built-in default seeds (when <code class="language-plaintext highlighter-rouge">disable_default_seeds=false</code>):</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">type 2 diabetes</code> / <code class="language-plaintext highlighter-rouge">t2d</code> -&gt; <code class="language-plaintext highlighter-rouge">rs7903146</code>, <code class="language-plaintext highlighter-rouge">rs13266634</code>, <code class="language-plaintext highlighter-rouge">rs7756992</code>, <code class="language-plaintext highlighter-rouge">rs5219</code>, <code class="language-plaintext highlighter-rouge">rs1801282</code>, <code class="language-plaintext highlighter-rouge">rs4402960</code></li>
+  <li><code class="language-plaintext highlighter-rouge">coronary artery disease</code> / <code class="language-plaintext highlighter-rouge">cad</code> -&gt; <code class="language-plaintext highlighter-rouge">rs1333049</code>, <code class="language-plaintext highlighter-rouge">rs4977574</code>, <code class="language-plaintext highlighter-rouge">rs9349379</code>, <code class="language-plaintext highlighter-rouge">rs6725887</code>, <code class="language-plaintext highlighter-rouge">rs1746048</code>, <code class="language-plaintext highlighter-rouge">rs3184504</code></li>
+  <li><code class="language-plaintext highlighter-rouge">body mass index</code> / <code class="language-plaintext highlighter-rouge">bmi</code> -&gt; <code class="language-plaintext highlighter-rouge">rs9939609</code>, <code class="language-plaintext highlighter-rouge">rs17782313</code>, <code class="language-plaintext highlighter-rouge">rs6548238</code>, <code class="language-plaintext highlighter-rouge">rs10938397</code>, <code class="language-plaintext highlighter-rouge">rs7498665</code>, <code class="language-plaintext highlighter-rouge">rs7138803</code></li>
+  <li><code class="language-plaintext highlighter-rouge">asthma</code> -&gt; <code class="language-plaintext highlighter-rouge">rs7216389</code>, <code class="language-plaintext highlighter-rouge">rs2305480</code>, <code class="language-plaintext highlighter-rouge">rs9273349</code></li>
+  <li><code class="language-plaintext highlighter-rouge">rheumatoid arthritis</code> -&gt; <code class="language-plaintext highlighter-rouge">rs2476601</code>, <code class="language-plaintext highlighter-rouge">rs3761847</code>, <code class="language-plaintext highlighter-rouge">rs660895</code></li>
+  <li><code class="language-plaintext highlighter-rouge">alzheimer disease</code> -&gt; <code class="language-plaintext highlighter-rouge">rs429358</code>, <code class="language-plaintext highlighter-rouge">rs7412</code>, <code class="language-plaintext highlighter-rouge">rs6733839</code>, <code class="language-plaintext highlighter-rouge">rs11136000</code>, <code class="language-plaintext highlighter-rouge">rs3851179</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ldl cholesterol</code> / <code class="language-plaintext highlighter-rouge">total cholesterol</code> -&gt; <code class="language-plaintext highlighter-rouge">rs7412</code>, <code class="language-plaintext highlighter-rouge">rs429358</code>, <code class="language-plaintext highlighter-rouge">rs6511720</code>, <code class="language-plaintext highlighter-rouge">rs629301</code>, <code class="language-plaintext highlighter-rouge">rs12740374</code>, <code class="language-plaintext highlighter-rouge">rs11591147</code></li>
+</ul>
+
+<h2 id="autonomous-execution-contract-embedded-behavior">Autonomous Execution Contract (Embedded Behavior)</h2>
+
+<p>When a user asks for locus-to-gene mapping and gives only a trait (for example, <code class="language-plaintext highlighter-rouge">type 2 diabetes</code>), do the following automatically:</p>
+
+<ol>
+  <li>Run the bundled script with <code class="language-plaintext highlighter-rouge">--trait-query "&lt;user_trait&gt;" --print-result</code> (no manual JSON required).</li>
+  <li>If it returns <code class="language-plaintext highlighter-rouge">No anchors remained</code>, rerun once with a built-in default seed rsID for that trait (unless <code class="language-plaintext highlighter-rouge">disable_default_seeds=true</code>).</li>
+  <li>Read the generated <code class="language-plaintext highlighter-rouge">mapping_output_path</code> and <code class="language-plaintext highlighter-rouge">summary_output_path</code>.</li>
+  <li>Return this concise response structure:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Top 5 cross-locus prioritized genes</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Per-locus top gene (score, confidence)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">Visualization artifact</code> (figure path(s) or Mermaid fallback block)</li>
+      <li><code class="language-plaintext highlighter-rouge">Warnings and limitations</code></li>
+    </ul>
+  </li>
+  <li>For inline image rendering in chat:
+    <ul>
+      <li>read <code class="language-plaintext highlighter-rouge">inline_image_markdown</code> from script result</li>
+      <li>emit those lines exactly as plain markdown (no code fences)</li>
+      <li>if inline rendering still fails, instruct user to upload PNG files into the chat</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Do not ask the user to run python manually unless execution is actually blocked.</p>
+
+<h2 id="skill-chaining-order-mandatory">Skill Chaining Order (Mandatory)</h2>
+
+<p>Use these skills in order. Skip only when an earlier step is not needed by provided inputs.</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">efo-ontology-skill</code>
+    <ul>
+      <li>Resolve <code class="language-plaintext highlighter-rouge">trait_query</code> to canonical EFO term and synonyms.</li>
+      <li>Expand descendants when <code class="language-plaintext highlighter-rouge">show_child_traits=true</code>.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">gwas-catalog-skill</code>
+    <ul>
+      <li>Discover anchor variants for the trait/EFO scope.</li>
+      <li>Pull association/study metadata for locus context.</li>
+    </ul>
+  </li>
+  <li>Built-in NCBI RefSNP coordinate resolution
+    <ul>
+      <li>Normalize each anchor rsID to GRCh37/GRCh38 top-level chromosome placements.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">opentargets-skill</code>
+    <ul>
+      <li>Retrieve credible set context, L2G predictions, and colocalisation evidence per locus.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">gtex-eqtl-skill</code>
+    <ul>
+      <li>Retrieve single-tissue eQTL support for anchor variants.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">genebass-gene-burden-skill</code>
+    <ul>
+      <li>Retrieve rare-variant burden support for candidate genes.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">clinvar-variation-skill</code> (when <code class="language-plaintext highlighter-rouge">include_clinvar=true</code>)
+    <ul>
+      <li>Add variant clinical/coding annotations.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">gnomad-graphql-skill</code> (when <code class="language-plaintext highlighter-rouge">include_gnomad_context=true</code>)
+    <ul>
+      <li>Add frequency and gene-level constraint context.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">human-protein-atlas-skill</code> (when <code class="language-plaintext highlighter-rouge">include_hpa_tissue_context=true</code>)
+    <ul>
+      <li>Add tissue plausibility context for top genes.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Never perform additional retrieval after final candidate-gene scoring starts.</p>
+
+<h2 id="output-contract-required">Output Contract (Required)</h2>
+
+<p>Always return:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">locus_to_gene_mapping.json</code></li>
+  <li><code class="language-plaintext highlighter-rouge">locus_to_gene_summary.md</code></li>
+</ol>
+
+<h3 id="json-contract">JSON contract</h3>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"trait_query"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"efo_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EFO_..."</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"generated_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ISO-8601"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"sources_queried"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"anchors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"rsid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rs..."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"grch38"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nl">"chr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3"</span><span class="p">,</span><span class="w"> </span><span class="nl">"pos"</span><span class="p">:</span><span class="w"> </span><span class="mi">49629531</span><span class="p">,</span><span class="w"> </span><span class="nl">"ref"</span><span class="p">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">,</span><span class="w"> </span><span class="nl">"alt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C"</span><span class="p">},</span><span class="w">
+      </span><span class="nl">"lead_trait"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"p_value"</span><span class="p">:</span><span class="w"> </span><span class="mi">2e-11</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cohort"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"loci"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"locus_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"chr3:49000000-50200000"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"lead_rsid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"rs..."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"candidate_genes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"MST1"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"ensembl_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ENSG..."</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"overall_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.71</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"confidence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"High|Medium|Low|VeryLow"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"l2g_max"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.83</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"coloc_max_h4"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.84</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"eqtl_tissues"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Lung"</span><span class="p">],</span><span class="w">
+            </span><span class="nl">"rare_variant_support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none|nominal|strong"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"coding_support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none|noncoding|coding"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"clinvar_support"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none|present"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"gnomad_context"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"hpa_tissue_support"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"lung"</span><span class="p">]</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"rationale"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"..."</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"limitations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"..."</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"cross_locus_ranked_genes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"supporting_loci"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mean_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.62</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"max_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.81</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"warnings"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"limitations"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="markdown-summary-contract">Markdown summary contract</h3>
+
+<p>The summary must include sections in this exact order:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">Objective</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Inputs and scope</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Anchor variant summary</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Per-locus top genes</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Cross-locus prioritized genes</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Key caveats</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Recommended next analyses</code></li>
+</ol>
+
+<h2 id="optional-figure-contract">Optional Figure Contract</h2>
+
+<p>Only produce figures when <code class="language-plaintext highlighter-rouge">include_figures=true</code>.</p>
+
+<p>If figures are generated, append this block to JSON:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"figures"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"locus_gene_heatmap"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./output/figures/locus_gene_heatmap.png"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"caption"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Top candidate genes by evidence component across loci"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Recommended figure set:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">locus_gene_heatmap.png</code>
+    <ul>
+      <li>Rows: top genes, columns: evidence components (<code class="language-plaintext highlighter-rouge">L2G</code>, <code class="language-plaintext highlighter-rouge">coloc</code>, <code class="language-plaintext highlighter-rouge">eQTL</code>, <code class="language-plaintext highlighter-rouge">burden</code>, <code class="language-plaintext highlighter-rouge">coding</code>).</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">locus_score_decomposition.png</code>
+    <ul>
+      <li>Stacked bars per locus for top 3 genes.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">tissue_support_dotplot.png</code>
+    <ul>
+      <li>Gene-by-tissue evidence dots from GTEx/HPA context.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>If plotting dependencies are unavailable, skip PNG generation and output Mermaid diagrams in markdown as fallback.
+The script also returns <code class="language-plaintext highlighter-rouge">inline_image_markdown</code> and <code class="language-plaintext highlighter-rouge">render_instructions</code> fields to support inline chat rendering.</p>
+
+<h2 id="scoring-rules-deterministic">Scoring Rules (Deterministic)</h2>
+
+<p>For each candidate gene per locus, compute:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">l2g_component</code>: max L2G score for the gene in locus (<code class="language-plaintext highlighter-rouge">0..1</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">coloc_component</code>: max <code class="language-plaintext highlighter-rouge">h4</code> (or <code class="language-plaintext highlighter-rouge">clpp</code> when only CLPP is available), clipped to <code class="language-plaintext highlighter-rouge">0..1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">eqtl_component</code>: <code class="language-plaintext highlighter-rouge">min(1, relevant_tissue_hits / 3)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">burden_component</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">1.0</code> if burden <code class="language-plaintext highlighter-rouge">p &lt; 2.5e-6</code></li>
+      <li><code class="language-plaintext highlighter-rouge">0.6</code> if <code class="language-plaintext highlighter-rouge">2.5e-6 &lt;= p &lt; 0.05</code></li>
+      <li><code class="language-plaintext highlighter-rouge">0.0</code> otherwise</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">coding_component</code>:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">1.0</code> for coding consequence in target gene with supportive ClinVar annotation</li>
+      <li><code class="language-plaintext highlighter-rouge">0.6</code> for coding consequence in target gene without supportive ClinVar annotation</li>
+      <li><code class="language-plaintext highlighter-rouge">0.3</code> for noncoding-in-gene support only</li>
+      <li><code class="language-plaintext highlighter-rouge">0.0</code> otherwise</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Overall score:</p>
+
+<p><code class="language-plaintext highlighter-rouge">overall_score = 0.40*l2g + 0.25*coloc + 0.15*eqtl + 0.10*burden + 0.10*coding</code></p>
+
+<p>Confidence label:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">High</code> if score <code class="language-plaintext highlighter-rouge">&gt;= 0.75</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Medium</code> if <code class="language-plaintext highlighter-rouge">0.55 &lt;= score &lt; 0.75</code></li>
+  <li><code class="language-plaintext highlighter-rouge">Low</code> if <code class="language-plaintext highlighter-rouge">0.35 &lt;= score &lt; 0.55</code></li>
+  <li><code class="language-plaintext highlighter-rouge">VeryLow</code> if score <code class="language-plaintext highlighter-rouge">&lt; 0.35</code></li>
+</ul>
+
+<h2 id="pipeline-contract">Pipeline Contract</h2>
+
+<h3 id="phase-0-validate-and-normalize-input">Phase 0: Validate and normalize input</h3>
+
+<ul>
+  <li>Enforce that at least one of <code class="language-plaintext highlighter-rouge">trait_query</code>, <code class="language-plaintext highlighter-rouge">efo_id</code>, <code class="language-plaintext highlighter-rouge">seed_rsids</code> is present.</li>
+  <li>Normalize rsID formatting and deduplicate seed variants.</li>
+  <li>Resolve free-text trait to one canonical EFO term when needed.</li>
+</ul>
+
+<h3 id="phase-1-build-anchor-set">Phase 1: Build anchor set</h3>
+
+<ul>
+  <li>If trait/EFO input is provided, pull associations and rank anchors by p-value and effect availability.</li>
+  <li>Merge trait-derived anchors with user-supplied <code class="language-plaintext highlighter-rouge">seed_rsids</code>.</li>
+  <li>Cap anchors using <code class="language-plaintext highlighter-rouge">max_loci</code> and log dropped anchors in <code class="language-plaintext highlighter-rouge">warnings</code>.</li>
+</ul>
+
+<h3 id="phase-2-gather-locus-to-gene-evidence">Phase 2: Gather locus-to-gene evidence</h3>
+
+<ul>
+  <li>Normalize anchor coordinates (both builds when possible).</li>
+  <li>Pull Open Targets locus evidence (credible set/L2G/coloc).</li>
+  <li>Pull GTEx variant-level eQTL rows.</li>
+  <li>Pull gene-level burden results for mapped candidate genes.</li>
+  <li>Pull ClinVar and gnomAD context when enabled.</li>
+</ul>
+
+<h3 id="phase-3-harmonize-and-score">Phase 3: Harmonize and score</h3>
+
+<ul>
+  <li>Build a per-locus candidate-gene table.</li>
+  <li>Compute deterministic component scores and overall score.</li>
+  <li>Create cross-locus aggregate rankings.</li>
+</ul>
+
+<h3 id="phase-4-synthesize-outputs">Phase 4: Synthesize outputs</h3>
+
+<ul>
+  <li>Write JSON mapping file.</li>
+  <li>Write markdown summary in exact section order.</li>
+  <li>Optionally generate figures and append <code class="language-plaintext highlighter-rouge">figures</code> metadata.</li>
+</ul>
+
+<h3 id="phase-5-qc-gates">Phase 5: QC gates</h3>
+
+<p>Fail the run when any of the following occurs:</p>
+
+<ul>
+  <li>No anchors after normalization.</li>
+  <li>Unresolved GRCh38 coordinates should be surfaced as <code class="language-plaintext highlighter-rouge">status=degraded</code>, not treated as an analytically clean pass.</li>
+  <li>Any locus has candidate genes without score fields.</li>
+  <li><code class="language-plaintext highlighter-rouge">overall_score</code> outside <code class="language-plaintext highlighter-rouge">0..1</code>.</li>
+  <li>Summary section order mismatch.</li>
+  <li>Claim of causality without explicit evidence support in rationale text.</li>
+</ul>
+
+<h2 id="public-interface">Public Interface</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">map_locus_to_gene</span><span class="p">(</span><span class="n">input_json</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="bp">...</span>
+</code></pre></div></div>
+
+<p>Return:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"mapping_output_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./output/locus_to_gene_mapping.json"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"summary_output_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"./output/locus_to_gene_summary.md"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"figure_paths"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"warnings"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"limitations"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="non-invention-rules">Non-Invention Rules</h2>
+
+<ul>
+  <li>Never invent rsIDs, p-values, scores, cohort labels, tissues, or gene links.</li>
+  <li>Never silently impute missing evidence as positive support.</li>
+  <li>When evidence is missing, record it as a limitation and reduce confidence.</li>
+  <li>Keep evidence provenance explicit (<code class="language-plaintext highlighter-rouge">source skill</code> + endpoint family) in rationale lines.</li>
+</ul>
+
+<h2 id="non-goals">Non-Goals</h2>
+
+<ul>
+  <li>Do not claim definitive causal genes from association evidence alone.</li>
+  <li>Do not run fine-mapping methods not directly provided by upstream sources.</li>
+  <li>Do not collapse multiple independent signals into one without stating assumptions.</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

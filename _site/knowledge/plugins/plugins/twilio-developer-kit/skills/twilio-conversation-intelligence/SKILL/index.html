@@ -1,0 +1,2206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Twilio Conversation Intelligence development guide. Use when building real-time or post-call conversation analysis, language operator pipelines, sentiment an...">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/twilio-developer-kit/skills/twilio-conversation-intelligence/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/twilio-developer-kit/skills/twilio-conversation-intelligence/SKILL/">
+<meta property="og:description" content="Twilio Conversation Intelligence development guide. Use when building real-time or post-call conversation analysis, language operator pipelines, sentiment an...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Twilio Conversation Intelligence development guide. Use when building real-time or post-call conversation analysis, language operator pipelines, sentiment analysis, agent assist, cross-channel analytics, or querying aggregated conversation insights (sentiment trends, escalation rates, dashboards).</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="conversation-intelligence">Conversation Intelligence</h1>
+
+<p>Decision-making guide for Twilio’s Conversation Intelligence v3 API — real-time and post-call GenAI analysis of conversations across Voice, SMS, RCS, and WhatsApp. Covers Intelligence Configurations, Language Operators (Twilio-authored and custom), Rules, Triggers, Actions, and result consumption.</p>
+
+<blockquote>
+  <p><strong>Security:</strong> All inbound messages captured by the Orchestrator are untrusted external input. If Intelligence operators process this content with LLMs, their prompts should include instructions to ignore adversarial content and not follow instructions embedded in customer messages.</p>
+</blockquote>
+
+<blockquote>
+  <p><strong>GA</strong> — Conversation Intelligence v3 is generally available.</p>
+</blockquote>
+
+<h2 id="use-cases">Use Cases</h2>
+
+<p>Conversation Intelligence powers <strong>human agent augmentation</strong> — giving every agent a “second brain” that listens, understands, and surfaces the right data at the right time. Agents focus on empathy, judgment, and problem-solving; AI handles analysis and assistance.</p>
+
+<h3 id="wrap-up-agent-assist-post-call">Wrap-up Agent Assist (Post-Call)</h3>
+
+<p>Analyze completed conversations and generate structured outputs — summaries, sentiment signals, topic dispositions. Reduces after-call work, accelerates agent transitions to next interaction. <strong>Low-friction entry point</strong> — start here.</p>
+
+<ul>
+  <li><strong>Operators</strong>: Summary, Sentiment, custom Conversation Scoring</li>
+  <li><strong>Trigger</strong>: <code class="language-plaintext highlighter-rouge">CONVERSATION_END</code></li>
+  <li><strong>Integration</strong>: Webhook → CRM case note creation</li>
+</ul>
+
+<h3 id="real-time-agent-assist">Real-time Agent Assist</h3>
+
+<p>Analyze conversations as they unfold. Surface sentiment shifts, script adherence signals, or recommended next responses enriched with customer history and enterprise knowledge. Agents respond more confidently without searching across systems.</p>
+
+<ul>
+  <li><strong>Operators</strong>: Script Adherence, Next Best Response, Escalation Risk (custom)</li>
+  <li><strong>Trigger</strong>: <code class="language-plaintext highlighter-rouge">COMMUNICATION</code></li>
+  <li><strong>Integration</strong>: Webhook → Agent desktop overlay</li>
+</ul>
+
+<h3 id="real-time-workflow-automation">Real-time Workflow Automation</h3>
+
+<p>Combine real-time intelligence with orchestration to trigger downstream workflows when specific conditions are met — escalate to supervisor, trigger fraud prevention, notify specialist.</p>
+
+<ul>
+  <li><strong>Operators</strong>: Custom risk detection, compliance monitoring</li>
+  <li><strong>Trigger</strong>: <code class="language-plaintext highlighter-rouge">COMMUNICATION</code></li>
+  <li><strong>Integration</strong>: Webhook → Workflow engine / TaskRouter</li>
+</ul>
+
+<h3 id="contact-center-qa">Contact Center QA</h3>
+
+<p>Generate post-interaction summaries, sentiment scores, and compliance signals for QA, coaching, and analytics. Aggregate across interactions to support training and continuous optimization.</p>
+
+<ul>
+  <li><strong>Operators</strong>: Script Adherence, Summary, custom Conversation Scoring</li>
+  <li><strong>Trigger</strong>: <code class="language-plaintext highlighter-rouge">CONVERSATION_END</code></li>
+  <li><strong>Integration</strong>: Webhook → Analytics / BI tools</li>
+</ul>
+
+<h2 id="how-it-works">How It Works</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>┌─────────────────────────────────────────────────────────────────────────────┐
+│  1. Customer engages agent (Voice, SMS, WhatsApp, RCS, Chat, Email)         │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  2. Conversations (Conversation Orchestrator) groups communications into a  │
+│     Conversation                                                            │
+│     - Normalizes channel events                                             │
+│     - Groups related messages/utterances                                    │
+│     - Tracks participants (CUSTOMER, HUMAN_AGENT, AI_AGENT)                 │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  3. Conversation events trigger Intelligence rules                          │
+│     - COMMUNICATION: on each new message/utterance                          │
+│     - CONVERSATION_END: when conversation closes                            │
+│     - CONVERSATION_INACTIVE: when conversation goes idle                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  4. Language Operators analyze the conversation                             │
+│     - Twilio-authored: Sentiment, Summary, NBR, Script Adherence            │
+│     - Custom: domain-specific analysis with your prompts                    │
+│     - Context: enriched with Customer Memory + Enterprise Knowledge         │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  5. Results delivered via webhook + REST API                                │
+│     - Real-time: Agent desktop, workflow triggers                           │
+│     - Post-call: CRM notes, QA systems, analytics                           │
+│     - Aggregated: Conversational Insights for cross-conversation analysis   │
+└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div></div>
+
+<p><strong>Key insight</strong>: Real-time and post-conversation intelligence use the <strong>same underlying model</strong>. Start with low-friction post-call summaries, then progressively introduce real-time assist using the same components.</p>
+
+<h2 id="scope">Scope</h2>
+
+<h3 id="can">CAN</h3>
+
+<ul>
+  <li>Analyze conversations in real-time (per-message) and post-conversation (at close/inactive) via Language Operators</li>
+  <li>Use 4 Twilio-authored operators: Sentiment, Summary, Next Best Response, Script Adherence</li>
+  <li>Create custom Language Operators with natural language prompts and structured output (TEXT, JSON, CLASSIFICATION) — <code class="language-plaintext highlighter-rouge">EXTRACTION</code> is a read-only format returned by some Twilio-authored operators; it cannot be set on custom operators you create</li>
+  <li>Define up to 5 rules per Intelligence Configuration, each with 1-5 operators (minimum 1 required), 0 or 1 trigger, and 0-2 webhook actions</li>
+  <li>Throttle real-time triggers with <code class="language-plaintext highlighter-rouge">count</code> parameter (run every N communications, min 1, max 20)</li>
+  <li>Deliver results via webhook (POST) and query historically via REST API</li>
+  <li>Track conversations across SMS, Voice, RCS, WhatsApp, Chat, and Email channels via Conversation Orchestrator (Conversations v2) integration</li>
+  <li>Create custom operators with parameters (<code class="language-plaintext highlighter-rouge">{{parameters.name}}</code> syntax), including knowledge base references (<code class="language-plaintext highlighter-rouge">KNOWLEDGE_BASE_AND_SOURCE_IDS</code> type — value format: <code class="language-plaintext highlighter-rouge">knowledge_base_id:knowledge_source_id</code>)</li>
+  <li>Enrich operators with Customer Memory (<code class="language-plaintext highlighter-rouge">context.memory.enabled: true</code>) and Enterprise Knowledge (<code class="language-plaintext highlighter-rouge">context.knowledge.bases: [...]</code>) at the rule or operator level</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">trainingExamples</code> (input/output pairs) to custom operators to improve accuracy</li>
+  <li>Pin a specific operator version in a rule via <code class="language-plaintext highlighter-rouge">operators[].version</code>; omit to use latest</li>
+  <li>Query OperatorResults filtered by <code class="language-plaintext highlighter-rouge">intelligenceConfigurationId</code>, <code class="language-plaintext highlighter-rouge">conversationId</code>, or <code class="language-plaintext highlighter-rouge">operatorId</code></li>
+  <li>Query operator versions and fetch specific version details</li>
+  <li>Delete Intelligence Configurations, custom Operators, and individual OperatorResults via REST API</li>
+  <li>Use ETag/If-Match headers for optimistic locking on <strong>Operator</strong> updates (returns 412 on mismatch) — ETag is not supported on Configuration updates</li>
+  <li>Filter Conversations by <code class="language-plaintext highlighter-rouge">status</code>, <code class="language-plaintext highlighter-rouge">channels</code>, <code class="language-plaintext highlighter-rouge">createdAtBefore</code>/<code class="language-plaintext highlighter-rouge">createdAtAfter</code>, <code class="language-plaintext highlighter-rouge">channelId</code>, <code class="language-plaintext highlighter-rouge">intelligenceConfigurationIds</code>, <code class="language-plaintext highlighter-rouge">operatorIds</code></li>
+  <li>Authenticate with both Account SID/Auth Token and API Key/Secret</li>
+  <li>Define rules without a trigger (trigger is optional per spec; runs on all events if omitted)</li>
+</ul>
+
+<h3 id="cannot">CANNOT</h3>
+
+<ul>
+  <li><strong>JSON-only API</strong> — All v3 endpoints require <code class="language-plaintext highlighter-rouge">Content-Type: application/json</code>. Form-encoded bodies return HTTP 415 with error 20422.</li>
+  <li><strong>No standalone operation</strong> — v3 requires Conversation Orchestrator (Conversations v2) for conversation capture. You cannot feed raw messages or recordings into v3 directly.</li>
+  <li><strong>No per-message sentiment</strong> — Sentiment is conversation-level, accumulating across all messages. A conversation with one positive and one negative message returns “mixed”, not separate results per message.</li>
+  <li><strong>No deleting Twilio-authored operators</strong> — DELETE returns 404 “Operator not found” for Twilio-authored operators, not 403. They are not treated as “yours” to delete.</li>
+  <li><strong>No editing Twilio-authored operator prompts</strong> — Twilio-authored operators have <code class="language-plaintext highlighter-rouge">prompt: null</code> when retrieved via GET. The prompt is hidden and not configurable.</li>
+  <li><strong>No more than 2 actions per rule</strong> — The API enforces <code class="language-plaintext highlighter-rouge">size must be between 0 and 2</code> for actions.</li>
+  <li><strong>No more than 5 rules per configuration</strong> — API enforces <code class="language-plaintext highlighter-rouge">size must be between 0 and 5</code>.</li>
+  <li><strong>No PCI or HIPAA compliance</strong> — Conversation Intelligence v3 is not PCI compliant or HIPAA Eligible. Do not use for payment data or protected health information.</li>
+  <li><strong>No GET/PUT/DELETE on v3 Conversations</strong> — The Conversations endpoint is read-only (GET list, GET by ID). Conversation lifecycle is controlled by Conversation Orchestrator, not by the Intelligence API.</li>
+  <li><strong>No unsupported JSON schema features</strong> — The following are rejected in <code class="language-plaintext highlighter-rouge">outputSchema</code>: <code class="language-plaintext highlighter-rouge">minLength</code>/<code class="language-plaintext highlighter-rouge">maxLength</code> (strings), <code class="language-plaintext highlighter-rouge">patternProperties</code> (objects), <code class="language-plaintext highlighter-rouge">uniqueItems</code> (arrays). Use basic types only.</li>
+  <li><strong>Cannot use PUT to update a live configuration</strong> — PUT creates an inactive version with no activation API. Operators silently stop returning results. Workaround: DELETE the configuration and POST to recreate it.</li>
+  <li><strong>Silent Memory Store linkage failures</strong> — If <code class="language-plaintext highlighter-rouge">memoryStoreId</code> points to a deleted or invalid store, capture still works but identity resolution and extraction silently fail with no error. Implement periodic health checks to verify Memory Store linkage is functioning.</li>
+</ul>
+
+<h2 id="quick-decision">Quick Decision</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Need</th>
+      <th>Use</th>
+      <th>Why</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Real-time agent assist during live calls/chats</td>
+      <td>v3 + COMMUNICATION trigger + Next Best Response operator</td>
+      <td>Real-time webhook delivery per utterance</td>
+    </tr>
+    <tr>
+      <td>Post-call QA scoring</td>
+      <td>v3 + CONVERSATION_END trigger + Script Adherence operator</td>
+      <td>Runs once at conversation close, returns detailed score</td>
+    </tr>
+    <tr>
+      <td>Conversation sentiment tracking</td>
+      <td>v3 + Sentiment operator (Twilio-authored)</td>
+      <td>Conversation-level classification: positive/negative/neutral/mixed</td>
+    </tr>
+    <tr>
+      <td>Post-call recording transcription + analysis</td>
+      <td>v2 Voice Intelligence (existing)</td>
+      <td>v3 does not ingest recordings directly — v2 pipeline handles recording→transcript→operators</td>
+    </tr>
+    <tr>
+      <td>Custom domain-specific analysis</td>
+      <td>v3 + Custom operator with JSON output</td>
+      <td>Define prompt, parameters, structured output schema</td>
+    </tr>
+    <tr>
+      <td>Cross-channel conversation history</td>
+      <td>Conversations v2 (Conversation Orchestrator) alone</td>
+      <td>v3 adds analysis on top; Conversation Orchestrator handles capture and history</td>
+    </tr>
+    <tr>
+      <td>Simple keyword extraction</td>
+      <td>v3 + Custom operator (EXTRACTION format)</td>
+      <td>Structured extraction with custom prompt</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="decision-frameworks">Decision Frameworks</h2>
+
+<h3 id="v2-voice-intelligence-vs-v3-conversation-intelligence">v2 (Voice Intelligence) vs v3 (Conversation Intelligence)</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dimension</th>
+      <th>v2 (Voice Intelligence)</th>
+      <th>v3 (Conversation Intelligence)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Input source</td>
+      <td>Recording SIDs (audio)</td>
+      <td>Conversation Orchestrator conversations (text/transcriptions)</td>
+    </tr>
+    <tr>
+      <td>Channels</td>
+      <td>Voice only</td>
+      <td>SMS, Voice, RCS, WhatsApp, Chat, Email</td>
+    </tr>
+    <tr>
+      <td>Operator management</td>
+      <td>Console only (attach to Intelligence Service)</td>
+      <td>REST API (full CRUD on custom operators)</td>
+    </tr>
+    <tr>
+      <td>Trigger model</td>
+      <td>Post-transcription (async)</td>
+      <td>Real-time (per-message) or post-conversation</td>
+    </tr>
+    <tr>
+      <td>Result delivery</td>
+      <td>Webhook (<code class="language-plaintext highlighter-rouge">voice_intelligence_transcript_available</code>)</td>
+      <td>Webhook (per-rule action) + REST query</td>
+    </tr>
+    <tr>
+      <td>SDK support</td>
+      <td><code class="language-plaintext highlighter-rouge">client.intelligence.v2.transcripts</code></td>
+      <td>Twilio Node.js SDK supported</td>
+    </tr>
+    <tr>
+      <td>SID prefix</td>
+      <td><code class="language-plaintext highlighter-rouge">GA</code> (service), <code class="language-plaintext highlighter-rouge">GT</code> (transcript), <code class="language-plaintext highlighter-rouge">LY</code> (operator)</td>
+      <td><code class="language-plaintext highlighter-rouge">intelligence_configuration_*</code>, <code class="language-plaintext highlighter-rouge">intelligence_operator_*</code></td>
+    </tr>
+    <tr>
+      <td>Status</td>
+      <td>GA</td>
+      <td>GA</td>
+    </tr>
+    <tr>
+      <td>Coexistence</td>
+      <td>Works alongside v3</td>
+      <td>Works alongside v2</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Use v2 when: You need post-call transcription from recordings, or need GA stability.
+Use v3 when: You need real-time analysis, cross-channel support, or API-managed custom operators.</p>
+
+<h3 id="real-time-vs-post-conversation">Real-Time vs Post-Conversation</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Factor</th>
+      <th>COMMUNICATION trigger</th>
+      <th>CONVERSATION_END trigger</th>
+      <th>CONVERSATION_INACTIVE trigger</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>When it fires</td>
+      <td>On each new message/utterance</td>
+      <td>When conversation closes</td>
+      <td>When conversation goes idle</td>
+    </tr>
+    <tr>
+      <td>Latency</td>
+      <td>Near real-time</td>
+      <td>Seconds after close</td>
+      <td>After inactive timeout</td>
+    </tr>
+    <tr>
+      <td>Use cases</td>
+      <td>Agent assist, escalation detection, live compliance</td>
+      <td>QA scoring, summaries, CRM updates</td>
+      <td>Idle conversation follow-up</td>
+    </tr>
+    <tr>
+      <td>Operator context</td>
+      <td>Accumulating — sees all messages so far</td>
+      <td>Complete conversation</td>
+      <td>Messages up to inactivity point</td>
+    </tr>
+    <tr>
+      <td>Throttling</td>
+      <td><code class="language-plaintext highlighter-rouge">count</code> parameter (every N messages)</td>
+      <td>N/A</td>
+      <td>N/A</td>
+    </tr>
+    <tr>
+      <td>Cost implication</td>
+      <td>Runs per message (more executions)</td>
+      <td>Runs once per conversation</td>
+      <td>Runs once per inactivity event</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="operator-version-lifecycle">Operator Version Lifecycle</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Status</th>
+      <th>Behavior</th>
+      <th>When</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">PREVIEW</code></td>
+      <td>Normal execution, restricted visibility</td>
+      <td>Internal/testing versions</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ACTIVE</code></td>
+      <td>Normal execution, full availability</td>
+      <td>Production-ready versions</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">DEPRECATED</code></td>
+      <td>Executes with Warn event via Watch</td>
+      <td>Migration window — update to newer version</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">RETIRED</code></td>
+      <td>Hard failure, Error logged in Watch</td>
+      <td>Must update Intelligence Configuration manually</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="custom-operator-output-formats">Custom Operator Output Formats</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Format</th>
+      <th>Use When</th>
+      <th>Result Shape</th>
+      <th>Schema Support</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TEXT</td>
+      <td>Free-form analysis, summaries, translations</td>
+      <td><code class="language-plaintext highlighter-rouge">{"text": "..."}</code></td>
+      <td>Auto-generated (not customizable)</td>
+    </tr>
+    <tr>
+      <td>JSON</td>
+      <td>Structured extraction with custom fields</td>
+      <td>User-defined via <code class="language-plaintext highlighter-rouge">outputSchema</code></td>
+      <td>Full JSON Schema (max 100 props, 10 nesting levels, 1000 enum values max)</td>
+    </tr>
+    <tr>
+      <td>CLASSIFICATION</td>
+      <td>Category labeling (sentiment, intent, topic)</td>
+      <td><code class="language-plaintext highlighter-rouge">{"label": "..."}</code></td>
+      <td>Auto-generated</td>
+    </tr>
+    <tr>
+      <td>EXTRACTION</td>
+      <td>Returned by some Twilio-authored operators only — cannot be set on custom operators</td>
+      <td><code class="language-plaintext highlighter-rouge">{"entities": [{"text": "...", "label": "..."}]}</code></td>
+      <td>N/A (read-only)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="twilio-authored-operator-reference">Twilio-Authored Operator Reference</h3>
+
+<p>Ready-to-use operators maintained by Twilio. Use these IDs directly in rules — no custom prompt required.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operator</th>
+      <th>ID</th>
+      <th>Best Trigger</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Sentiment</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">intelligence_operator_01kcrvw16kfa88qvgrfmr7y151</code></td>
+      <td>COMMUNICATION</td>
+      <td>Real-time sentiment tracking (positive/negative/neutral/mixed)</td>
+    </tr>
+    <tr>
+      <td><strong>Summary</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">intelligence_operator_01kcv35pnkeysaf6z6cqtbpegn</code></td>
+      <td>CONVERSATION_END</td>
+      <td>Post-call conversation summary</td>
+    </tr>
+    <tr>
+      <td><strong>Next Best Response</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">intelligence_operator_01kea27sy7ffsafmtsfp17nzx4</code></td>
+      <td>COMMUNICATION</td>
+      <td>Real-time agent assist with suggested responses</td>
+    </tr>
+    <tr>
+      <td><strong>Script Adherence</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">intelligence_operator_01kf34tcyefpyb1t4m0nbd8rxg</code></td>
+      <td>CONVERSATION_END</td>
+      <td>QA scoring for script compliance</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Note</strong>: Twilio-authored operators have <code class="language-plaintext highlighter-rouge">author: "TWILIO"</code> and <code class="language-plaintext highlighter-rouge">prompt: null</code> when retrieved via GET. Prompts are hidden and not configurable. Use custom operators if you need control over the prompt.</p>
+
+<h2 id="integration-patterns">Integration Patterns</h2>
+
+<p>Code samples use raw <code class="language-plaintext highlighter-rouge">fetch()</code> for clarity, but the Twilio Node.js SDK is also supported for v3.</p>
+
+<h3 id="authentication-helper">Authentication Helper</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">INTELLIGENCE_V3_BASE</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://intelligence.twilio.com/v3</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">getAuthHeaders</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">credentials</span> <span class="o">=</span> <span class="nx">Buffer</span><span class="p">.</span><span class="k">from</span><span class="p">(</span>
+    <span class="s2">`</span><span class="p">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TWILIO_ACCOUNT_SID</span><span class="p">}</span><span class="s2">:</span><span class="p">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TWILIO_AUTH_TOKEN</span><span class="p">}</span><span class="s2">`</span>
+  <span class="p">).</span><span class="nf">toString</span><span class="p">(</span><span class="dl">'</span><span class="s1">base64</span><span class="dl">'</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="dl">'</span><span class="s1">Authorization</span><span class="dl">'</span><span class="p">:</span> <span class="s2">`Basic </span><span class="p">${</span><span class="nx">credentials</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+    <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">};</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="create-intelligence-configuration-with-rules">Create Intelligence Configuration with Rules</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Step 1: Create configuration (empty rules initially)</span>
+<span class="kd">const</span> <span class="nx">configResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+  <span class="s2">`</span><span class="p">${</span><span class="nx">INTELLIGENCE_V3_BASE</span><span class="p">}</span><span class="s2">/ControlPlane/Configurations`</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">(),</span>
+    <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span>
+      <span class="na">displayName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Customer Support Analytics</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">description</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Real-time sentiment + post-call summary</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">rules</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">}),</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+<span class="kd">const</span> <span class="nx">config</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">configResponse</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+<span class="c1">// config.id = "intelligence_configuration_..."</span>
+
+<span class="c1">// Step 2: Add rules via PUT (replaces all rules)</span>
+<span class="kd">const</span> <span class="nx">updateResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+  <span class="s2">`</span><span class="p">${</span><span class="nx">INTELLIGENCE_V3_BASE</span><span class="p">}</span><span class="s2">/ControlPlane/Configurations/</span><span class="p">${</span><span class="nx">config</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">PUT</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">(),</span>
+    <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span>
+      <span class="na">displayName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Customer Support Analytics</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">operators</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">intelligence_operator_01kcrvw16kfa88qvgrfmr7y151</span><span class="dl">'</span> <span class="p">},</span> <span class="c1">// Sentiment</span>
+          <span class="p">],</span>
+          <span class="na">triggers</span><span class="p">:</span> <span class="p">[{</span> <span class="na">on</span><span class="p">:</span> <span class="dl">'</span><span class="s1">COMMUNICATION</span><span class="dl">'</span> <span class="p">}],</span>
+          <span class="na">actions</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">WEBHOOK</span><span class="dl">'</span><span class="p">,</span> <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span> <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://your-app.com/realtime-results</span><span class="dl">'</span> <span class="p">},</span>
+          <span class="p">],</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">operators</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">intelligence_operator_01kcv35pnkeysaf6z6cqtbpegn</span><span class="dl">'</span> <span class="p">},</span> <span class="c1">// Summary</span>
+          <span class="p">],</span>
+          <span class="na">triggers</span><span class="p">:</span> <span class="p">[{</span> <span class="na">on</span><span class="p">:</span> <span class="dl">'</span><span class="s1">CONVERSATION_END</span><span class="dl">'</span> <span class="p">}],</span>
+          <span class="na">actions</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">WEBHOOK</span><span class="dl">'</span><span class="p">,</span> <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span> <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://your-app.com/post-call-results</span><span class="dl">'</span> <span class="p">},</span>
+          <span class="p">],</span>
+        <span class="p">},</span>
+      <span class="p">],</span>
+    <span class="p">}),</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+<span class="kd">const</span> <span class="nx">updatedConfig</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">updateResponse</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+<span class="c1">// updatedConfig.version = 2 (auto-incremented)</span>
+</code></pre></div></div>
+
+<h3 id="link-to-conversation-orchestrator-conversation-configuration">Link to Conversation Orchestrator Conversation Configuration</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Intelligence config must be linked to a Conversation Orchestrator conversation config</span>
+<span class="c1">// See conversation-orchestrator skill for full Conversation Orchestrator setup</span>
+<span class="kd">const</span> <span class="nx">convConfigResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+  <span class="dl">'</span><span class="s1">https://conversations.twilio.com/v2/ControlPlane/Configurations</span><span class="dl">'</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">(),</span>
+    <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span>
+      <span class="na">displayName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Support Config</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">memoryStoreId</span><span class="p">:</span> <span class="dl">'</span><span class="s1">mem_store_...</span><span class="dl">'</span><span class="p">,</span>  <span class="c1">// Required — create via Memory API first</span>
+      <span class="na">conversationGroupingType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">GROUP_BY_PARTICIPANT_ADDRESSES</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">intelligenceConfigurationIds</span><span class="p">:</span> <span class="p">[</span><span class="nx">config</span><span class="p">.</span><span class="nx">id</span><span class="p">],</span>
+      <span class="na">channelSettings</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">SMS</span><span class="p">:</span> <span class="p">{</span>
+          <span class="na">statusTimeouts</span><span class="p">:</span> <span class="p">{</span> <span class="na">inactive</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="na">closed</span><span class="p">:</span> <span class="mi">10</span> <span class="p">},</span>
+          <span class="na">captureRules</span><span class="p">:</span> <span class="p">[{</span> <span class="na">from</span><span class="p">:</span> <span class="dl">'</span><span class="s1">*</span><span class="dl">'</span><span class="p">,</span> <span class="na">to</span><span class="p">:</span> <span class="dl">'</span><span class="s1">+1XXXXXXXXXX</span><span class="dl">'</span><span class="p">,</span> <span class="na">metadata</span><span class="p">:</span> <span class="p">{}</span> <span class="p">}],</span>
+        <span class="p">},</span>
+      <span class="p">},</span>
+    <span class="p">}),</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="consume-operator-results">Consume Operator Results</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Query all results for an intelligence configuration</span>
+<span class="kd">const</span> <span class="nx">resultsResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+  <span class="s2">`</span><span class="p">${</span><span class="nx">INTELLIGENCE_V3_BASE</span><span class="p">}</span><span class="s2">/OperatorResults?intelligenceConfigurationId=</span><span class="p">${</span><span class="nx">config</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+  <span class="p">{</span> <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">()</span> <span class="p">}</span>
+<span class="p">);</span>
+<span class="kd">const</span> <span class="nx">results</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">resultsResponse</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+
+<span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">operatorResult</span> <span class="k">of</span> <span class="nx">results</span><span class="p">.</span><span class="nx">items</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Operator: </span><span class="p">${</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">operator</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Format: </span><span class="p">${</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">outputFormat</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Payload: </span><span class="p">${</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">result</span><span class="p">)}</span><span class="s2">`</span><span class="p">);</span> <span class="c1">// e.g. { text: "..." } or { label: "..." }</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Conversation: </span><span class="p">${</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">conversationId</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Trigger: </span><span class="p">${</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">executionDetails</span><span class="p">.</span><span class="nx">trigger</span><span class="p">.</span><span class="nx">on</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="c1">// Context that was actually used at runtime (single source of truth):</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Memory profile: </span><span class="p">${</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">executionDetails</span><span class="p">.</span><span class="nx">resolvedContext</span><span class="p">?.</span><span class="nx">memory</span><span class="p">?.</span><span class="nx">profileId</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Knowledge sources: </span><span class="p">${</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">executionDetails</span><span class="p">.</span><span class="nx">resolvedContext</span><span class="p">?.</span><span class="nx">knowledge</span><span class="p">?.</span><span class="nx">sources</span><span class="p">)}</span><span class="s2">`</span><span class="p">);</span>
+  <span class="c1">// Cost/perf metadata:</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`Model: </span><span class="p">${</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">metadata</span><span class="p">.</span><span class="nx">system</span><span class="p">.</span><span class="nx">resolvedModel</span><span class="p">}</span><span class="s2">, latencyMs: </span><span class="p">${</span><span class="nx">operatorResult</span><span class="p">.</span><span class="nx">metadata</span><span class="p">.</span><span class="nx">system</span><span class="p">.</span><span class="nx">latencyMs</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="paginate-through-results">Paginate Through Results</h3>
+
+<p>All list endpoints (<code class="language-plaintext highlighter-rouge">/OperatorResults</code>, <code class="language-plaintext highlighter-rouge">/Conversations</code>, <code class="language-plaintext highlighter-rouge">/Operators</code>, <code class="language-plaintext highlighter-rouge">/Configurations</code>) use cursor-based pagination. Default page size is 50; maximum is 1000.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="kd">function</span><span class="o">*</span> <span class="nf">getAllOperatorResults</span><span class="p">(</span><span class="nx">configId</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">pageToken</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+  <span class="k">do</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">URL</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">INTELLIGENCE_V3_BASE</span><span class="p">}</span><span class="s2">/OperatorResults`</span><span class="p">);</span>
+    <span class="nx">url</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">intelligenceConfigurationId</span><span class="dl">'</span><span class="p">,</span> <span class="nx">configId</span><span class="p">);</span>
+    <span class="nx">url</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">pageSize</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">1000</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">pageToken</span><span class="p">)</span> <span class="nx">url</span><span class="p">.</span><span class="nx">searchParams</span><span class="p">.</span><span class="nf">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">pageToken</span><span class="dl">'</span><span class="p">,</span> <span class="nx">pageToken</span><span class="p">);</span>
+
+    <span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="p">{</span> <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">()</span> <span class="p">});</span>
+    <span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+
+    <span class="k">yield</span><span class="o">*</span> <span class="nx">data</span><span class="p">.</span><span class="nx">items</span><span class="p">;</span>
+    <span class="nx">pageToken</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">meta</span><span class="p">?.</span><span class="nx">nextToken</span><span class="p">;</span> <span class="c1">// null/undefined when no more pages</span>
+  <span class="p">}</span> <span class="k">while </span><span class="p">(</span><span class="nx">pageToken</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// Usage:</span>
+<span class="k">for</span> <span class="k">await </span><span class="p">(</span><span class="kd">const</span> <span class="nx">result</span> <span class="k">of</span> <span class="nf">getAllOperatorResults</span><span class="p">(</span><span class="nx">config</span><span class="p">.</span><span class="nx">id</span><span class="p">))</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">operator</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="enable-customer-memory-and-enterprise-knowledge-on-a-rule">Enable Customer Memory and Enterprise Knowledge on a Rule</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Context is configured at the rule level (not the operator level)</span>
+<span class="nx">rules</span><span class="p">:</span> <span class="p">[</span>
+  <span class="p">{</span>
+    <span class="na">operators</span><span class="p">:</span> <span class="p">[{</span> <span class="na">id</span><span class="p">:</span> <span class="dl">'</span><span class="s1">intelligence_operator_01kea27sy7ffsafmtsfp17nzx4</span><span class="dl">'</span> <span class="p">}],</span> <span class="c1">// NBR</span>
+    <span class="na">triggers</span><span class="p">:</span> <span class="p">[{</span> <span class="na">on</span><span class="p">:</span> <span class="dl">'</span><span class="s1">COMMUNICATION</span><span class="dl">'</span> <span class="p">}],</span>
+    <span class="na">actions</span><span class="p">:</span> <span class="p">[{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">WEBHOOK</span><span class="dl">'</span><span class="p">,</span> <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span> <span class="na">url</span><span class="p">:</span> <span class="dl">'</span><span class="s1">https://your-app.com/nbr</span><span class="dl">'</span> <span class="p">}],</span>
+    <span class="na">context</span><span class="p">:</span> <span class="p">{</span>
+      <span class="na">memory</span><span class="p">:</span> <span class="p">{</span> <span class="na">enabled</span><span class="p">:</span> <span class="kc">true</span> <span class="p">},</span>          <span class="c1">// inject customer profile from Memory Store</span>
+      <span class="na">knowledge</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">bases</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">knowledge_base_id_here</span><span class="dl">'</span><span class="p">],</span> <span class="c1">// inject enterprise KB articles</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="create-a-custom-operator-with-training-examples-and-parameters">Create a Custom Operator with Training Examples and Parameters</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">operatorResponse</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+  <span class="s2">`</span><span class="p">${</span><span class="nx">INTELLIGENCE_V3_BASE</span><span class="p">}</span><span class="s2">/ControlPlane/Operators`</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">(),</span>
+    <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span>
+      <span class="na">displayName</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Escalation Risk Detector</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">prompt</span><span class="p">:</span> <span class="s2">`Analyze this conversation between a customer and agent.
+Product context: {{parameters.productName}}
+Classify escalation risk as LOW, MEDIUM, or HIGH based on customer frustration signals.`</span><span class="p">,</span>
+      <span class="na">outputFormat</span><span class="p">:</span> <span class="dl">'</span><span class="s1">CLASSIFICATION</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">parameters</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">productName</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">STRING</span><span class="dl">'</span><span class="p">,</span> <span class="na">required</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="na">description</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Product line being discussed</span><span class="dl">'</span> <span class="p">},</span>
+        <span class="c1">// KNOWLEDGE_BASE_AND_SOURCE_IDS parameters are passed as "kb_id:source_id" at rule time</span>
+        <span class="na">knowledgeContext</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">KNOWLEDGE_BASE_AND_SOURCE_IDS</span><span class="dl">'</span><span class="p">,</span> <span class="na">required</span><span class="p">:</span> <span class="kc">false</span> <span class="p">},</span>
+      <span class="p">},</span>
+      <span class="na">trainingExamples</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="na">input</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Customer: This is the third time I have called about this issue</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">output</span><span class="p">:</span> <span class="dl">'</span><span class="s1">HIGH</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="p">{</span>
+          <span class="na">input</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Customer: Thanks, I think that might work</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">output</span><span class="p">:</span> <span class="dl">'</span><span class="s1">LOW</span><span class="dl">'</span><span class="p">,</span>
+        <span class="p">},</span>
+      <span class="p">],</span>
+    <span class="p">}),</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+<span class="kd">const</span> <span class="nx">operator</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">operatorResponse</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+<span class="c1">// Pin this operator to a specific version in your rule:</span>
+<span class="c1">// operators: [{ id: operator.id, version: operator.version }]</span>
+</code></pre></div></div>
+
+<h2 id="gotchas">Gotchas</h2>
+
+<h3 id="setup">Setup</h3>
+
+<ol>
+  <li>
+    <p><strong>Memory Store is required for Conversation Orchestrator</strong>: You cannot create a Conversations v2 Configuration without a <code class="language-plaintext highlighter-rouge">memoryStoreId</code>. The Memory API returns <code class="language-plaintext highlighter-rouge">"memoryStoreId: must not be null"</code> (error 20001). Create the Memory Store first via <code class="language-plaintext highlighter-rouge">POST memory.twilio.com/v1/ControlPlane/Stores</code>.</p>
+  </li>
+  <li>
+    <p><strong>JSON-only API</strong>: All v3 endpoints require <code class="language-plaintext highlighter-rouge">Content-Type: application/json</code>. Form-encoded bodies return HTTP 415 with error 20422 (“does not support this payload format”). This matches Conversation Orchestrator but differs from most Twilio APIs.</p>
+  </li>
+  <li>
+    <p><strong>v2 and v3 coexist independently</strong>: Creating v3 configurations does not affect v2 Intelligence Services (<code class="language-plaintext highlighter-rouge">GA*</code> SIDs). Both are accessible on the same account simultaneously. They share the <code class="language-plaintext highlighter-rouge">intelligence.twilio.com</code> host but use different URL paths (<code class="language-plaintext highlighter-rouge">/v2/Services</code> vs <code class="language-plaintext highlighter-rouge">/v3/ControlPlane/Configurations</code>).</p>
+  </li>
+</ol>
+
+<h3 id="configuration">Configuration</h3>
+
+<ol>
+  <li>
+    <p><strong>PUT creates an inactive version — operators stop returning results</strong>: When you PUT to update an Intelligence Configuration, the new version is created in an <strong>inactive state</strong>. There is no activation API to make it live. Your operators will silently stop producing results. <strong>Workaround: DELETE the configuration and POST to recreate it</strong> with the updated rules/operators. This is the only reliable way to update a live configuration.</p>
+  </li>
+  <li>
+    <p><strong>PUT replaces all rules</strong>: Updating a configuration replaces the entire <code class="language-plaintext highlighter-rouge">rules</code> array. There is no PATCH or per-rule update. Always include all rules in the PUT body, not just the changed one.</p>
+  </li>
+  <li>
+    <p><strong>Config version auto-increments</strong>: Each PUT bumps the <code class="language-plaintext highlighter-rouge">version</code> field. Conversation Orchestrator conversation configs use <code class="language-plaintext highlighter-rouge">version</code> for optimistic locking, but Intelligence configs accept PUT without version checks.</p>
+  </li>
+  <li>
+    <p><strong>Rules get their own IDs</strong>: When rules are created via PUT, each gets an auto-generated ID (<code class="language-plaintext highlighter-rouge">intelligence_configurationrule_*</code>). These IDs appear in OperatorResult references but are not user-settable.</p>
+  </li>
+  <li>
+    <p><strong>Trigger count parameter throttles execution</strong>: Setting <code class="language-plaintext highlighter-rouge">{"on":"COMMUNICATION","parameters":{"count":3}}</code> runs the operator every 3 messages instead of every message.</p>
+  </li>
+</ol>
+
+<h3 id="runtime">Runtime</h3>
+
+<ol>
+  <li>
+    <p><strong>Dual capture rules cause duplicate processing</strong>: If both inbound (<code class="language-plaintext highlighter-rouge">from: *, to: +1XXX</code>) and outbound (<code class="language-plaintext highlighter-rouge">from: +1XXX, to: *</code>) capture rules match the same SMS, Conversation Orchestrator creates two Communications for one message, and Intelligence produces two OperatorResults. Use unidirectional capture rules unless you specifically want both.</p>
+  </li>
+  <li>
+    <p><strong>Twilio number is auto-typed HUMAN_AGENT</strong>: In Conversation Orchestrator conversations, the Twilio number is automatically assigned <code class="language-plaintext highlighter-rouge">type: "HUMAN_AGENT"</code> and the external number gets <code class="language-plaintext highlighter-rouge">type: "CUSTOMER"</code> with automatic memory profile resolution (<code class="language-plaintext highlighter-rouge">mem_profile_*</code>).</p>
+  </li>
+  <li>
+    <p><strong>Sentiment accumulates across messages</strong>: The Sentiment operator analyzes the full conversation context, not individual messages. After a positive message, sentiment was “positive”. After adding a negative message to the same conversation, it became “mixed”.</p>
+  </li>
+  <li>
+    <p><strong>Near real-time delivery for COMMUNICATION trigger</strong>: Results are delivered via webhook shortly after each utterance — the full pipeline is Conversation Orchestrator capture → Intelligence trigger → Operator execution → webhook delivery.</p>
+  </li>
+  <li>
+    <p><strong>Custom operator TEXT output auto-wraps</strong>: Custom operators with <code class="language-plaintext highlighter-rouge">outputFormat: "TEXT"</code> always return <code class="language-plaintext highlighter-rouge">{"text": "..."}</code> regardless of the prompt. The outputSchema is auto-generated and not customizable for TEXT format.</p>
+  </li>
+</ol>
+
+<h3 id="observability">Observability</h3>
+
+<ol>
+  <li>
+    <p><strong>conversationConfigurationId returns “unused”</strong>: The v3 Conversations endpoint returns <code class="language-plaintext highlighter-rouge">"conversationConfigurationId": "unused"</code> instead of the actual Conversation Orchestrator config ID. Use <code class="language-plaintext highlighter-rouge">intelligenceConfigurationIds</code> array instead for linking.</p>
+  </li>
+  <li>
+    <p><strong>No isTwilioAuthored field</strong>: Twilio-authored operators are distinguished by <code class="language-plaintext highlighter-rouge">author: "TWILIO"</code>, custom operators by <code class="language-plaintext highlighter-rouge">author: "SELF"</code>. There is no boolean <code class="language-plaintext highlighter-rouge">isTwilioAuthored</code> field.</p>
+  </li>
+  <li>
+    <p><strong>Twilio-authored operator prompts are hidden</strong>: GET on a Twilio-authored operator returns <code class="language-plaintext highlighter-rouge">prompt: null</code>. You cannot inspect or modify the system prompt. Custom operators return the full prompt.</p>
+  </li>
+  <li>
+    <p><strong>Two separate metadata sections</strong>: OperatorResults carry both <code class="language-plaintext highlighter-rouge">metadata.system</code> and <code class="language-plaintext highlighter-rouge">executionDetails.resolvedContext</code> — they serve different purposes:</p>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">metadata.system</code>: cost and performance — <code class="language-plaintext highlighter-rouge">resolvedModel</code> (LLM used), <code class="language-plaintext highlighter-rouge">latencyMs</code>, <code class="language-plaintext highlighter-rouge">inputCharacters</code>/<code class="language-plaintext highlighter-rouge">outputCharacters</code> (billing units), <code class="language-plaintext highlighter-rouge">inputTruncated</code></li>
+      <li><code class="language-plaintext highlighter-rouge">executionDetails.resolvedContext</code>: what context was actually injected at runtime — <code class="language-plaintext highlighter-rouge">memory</code> (<code class="language-plaintext highlighter-rouge">profileId</code>, <code class="language-plaintext highlighter-rouge">memoryStoreId</code>) and <code class="language-plaintext highlighter-rouge">knowledge</code> (<code class="language-plaintext highlighter-rouge">sources</code>: array of <code class="language-plaintext highlighter-rouge">{baseId, sourceId}</code>). This is the single source of truth for context resolution.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="error-handling">Error Handling</h3>
+
+<ol>
+  <li>
+    <p><strong>Error codes are consistent</strong>: v3 uses Twilio standard error codes: <code class="language-plaintext highlighter-rouge">20001</code> (bad request/validation), <code class="language-plaintext highlighter-rouge">20404</code> (not found), <code class="language-plaintext highlighter-rouge">20422</code> (unsupported format), <code class="language-plaintext highlighter-rouge">70001</code> (operator validation). All include <code class="language-plaintext highlighter-rouge">userError: true</code> and descriptive messages.</p>
+  </li>
+  <li>
+    <p><strong>Invalid operator ID gives specific error</strong>: Using a non-existent operator ID in a rule returns 400 with code <code class="language-plaintext highlighter-rouge">70001</code> and message identifying the exact invalid operator.</p>
+  </li>
+</ol>
+
+<h3 id="json-schema">JSON Schema</h3>
+
+<ol>
+  <li>
+    <p><strong>All JSON schema fields are required by default — and Twilio auto-sets this</strong>: Twilio automatically sets <code class="language-plaintext highlighter-rouge">additionalProperties: false</code> and marks all provided fields as required in <code class="language-plaintext highlighter-rouge">outputSchema</code>. Do not add <code class="language-plaintext highlighter-rouge">required</code> or <code class="language-plaintext highlighter-rouge">additionalProperties</code> yourself — Twilio overwrites any values you provide. The practical consequence: if the LLM cannot populate a field, the operator execution fails. Use union types for nullable fields: <code class="language-plaintext highlighter-rouge">"type": ["string", "null"]</code>.</p>
+  </li>
+  <li><strong>Nullable field pattern</strong>: To make a field optional/nullable in JSON output, use array type union:
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"outputSchema"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"requiredField"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w"> </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"optionalField"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="s2">"null"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>    </div>
+    <p>This allows the operator to return <code class="language-plaintext highlighter-rouge">null</code> for fields where the LLM has insufficient context.</p>
+  </li>
+  <li><strong>Unsupported JSON schema features cause silent or hard failures</strong>: The following JSON Schema features are NOT supported in <code class="language-plaintext highlighter-rouge">outputSchema</code> and will be rejected. Stick to <code class="language-plaintext highlighter-rouge">type</code>, <code class="language-plaintext highlighter-rouge">enum</code>, <code class="language-plaintext highlighter-rouge">properties</code>, <code class="language-plaintext highlighter-rouge">items</code>, <code class="language-plaintext highlighter-rouge">anyOf</code>, <code class="language-plaintext highlighter-rouge">$defs</code>/<code class="language-plaintext highlighter-rouge">$ref</code>.
+    <ul>
+      <li>Strings: <code class="language-plaintext highlighter-rouge">minLength</code>, <code class="language-plaintext highlighter-rouge">maxLength</code></li>
+      <li>Objects: <code class="language-plaintext highlighter-rouge">patternProperties</code>, <code class="language-plaintext highlighter-rouge">unevaluatedProperties</code>, <code class="language-plaintext highlighter-rouge">propertyNames</code>, <code class="language-plaintext highlighter-rouge">minProperties</code>, <code class="language-plaintext highlighter-rouge">maxProperties</code></li>
+      <li>Arrays: <code class="language-plaintext highlighter-rouge">unevaluatedItems</code>, <code class="language-plaintext highlighter-rouge">contains</code>, <code class="language-plaintext highlighter-rouge">minContains</code>, <code class="language-plaintext highlighter-rouge">maxContains</code>, <code class="language-plaintext highlighter-rouge">uniqueItems</code></li>
+    </ul>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">executionDetails.context</code> was removed</strong>: Older docs and some live responses may show <code class="language-plaintext highlighter-rouge">executionDetails.context</code>. This field was removed in a breaking change. Use <code class="language-plaintext highlighter-rouge">executionDetails.resolvedContext</code> — it contains <code class="language-plaintext highlighter-rouge">memory</code> (profileId, memoryStoreId) and <code class="language-plaintext highlighter-rouge">knowledge</code> (array of baseId/sourceId pairs).</p>
+  </li>
+  <li>
+    <p><strong>Operator result query param is <code class="language-plaintext highlighter-rouge">intelligenceConfigurationId</code></strong> (not <code class="language-plaintext highlighter-rouge">intelligenceConfiguration</code>): The REST API filter parameter for listing OperatorResults by config is <code class="language-plaintext highlighter-rouge">intelligenceConfigurationId</code>. Using the shorter form returns unfiltered results.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">KNOWLEDGE_BASE_AND_SOURCE_IDS</code> parameter values must use colon-separated format</strong>: When passing a knowledge base parameter to an operator at rule time, the value must be formatted as <code class="language-plaintext highlighter-rouge">"knowledge_base_id:knowledge_source_id"</code>. Passing just the KB ID or using any other separator returns a validation error. Only plaintext KB sources are supported.</p>
+  </li>
+  <li>
+    <p><strong><code class="language-plaintext highlighter-rouge">KNOWLEDGE_BASE_AND_SOURCE_IDS</code> parameters do not support <code class="language-plaintext highlighter-rouge">default</code></strong>: Unlike <code class="language-plaintext highlighter-rouge">STRING</code>, <code class="language-plaintext highlighter-rouge">INTEGER</code>, <code class="language-plaintext highlighter-rouge">NUMBER</code>, and <code class="language-plaintext highlighter-rouge">BOOLEAN</code> parameter types which all allow a <code class="language-plaintext highlighter-rouge">default</code> value, <code class="language-plaintext highlighter-rouge">KNOWLEDGE_BASE_AND_SOURCE_IDS</code> does not. Defining a <code class="language-plaintext highlighter-rouge">default</code> on a KB parameter will be ignored or rejected.</p>
+  </li>
+  <li>
+    <p><strong>Each rule requires at least 1 operator</strong>: The <code class="language-plaintext highlighter-rouge">operators</code> array on a rule has <code class="language-plaintext highlighter-rouge">minItems: 1</code>. Submitting a rule with an empty operators array on create or update returns a 400 validation error.</p>
+  </li>
+  <li><strong>List endpoints are paginated — don’t assume you got all results</strong>: All list endpoints (<code class="language-plaintext highlighter-rouge">/OperatorResults</code>, <code class="language-plaintext highlighter-rouge">/Conversations</code>, <code class="language-plaintext highlighter-rouge">/Operators</code>, <code class="language-plaintext highlighter-rouge">/Configurations</code>) return a max of 50 items by default (max 1000 with <code class="language-plaintext highlighter-rouge">pageSize</code>). The response <code class="language-plaintext highlighter-rouge">meta.nextToken</code> is non-null when more pages exist. Always paginate when querying production data sets.</li>
+</ol>
+
+<h2 id="conversational-insights-cross-conversation-analytics">Conversational Insights (Cross-Conversation Analytics)</h2>
+
+<p>Where the Intelligence API gives you per-conversation OperatorResults, the <strong>Insights API v3</strong> is the query layer for aggregating across thousands of conversations — grouping, filtering, and counting by dimensions like sentiment, channel, language, and operator output.</p>
+
+<p>Base URL: <code class="language-plaintext highlighter-rouge">https://insights.twilio.com</code></p>
+
+<blockquote>
+  <p><strong>Public Beta</strong> — Insights v3 is currently in public beta. The query schema is subject to change.</p>
+</blockquote>
+
+<h3 id="when-to-use-insights-vs-intelligence-rest-api">When to Use Insights vs Intelligence REST API</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Goal</th>
+      <th>Use</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Get the result for a specific conversation</td>
+      <td>Intelligence API: <code class="language-plaintext highlighter-rouge">GET /v3/OperatorResults?conversationId=...</code></td>
+    </tr>
+    <tr>
+      <td>Count conversations by sentiment over time</td>
+      <td>Insights API: query with <code class="language-plaintext highlighter-rouge">OperatorResult.Value</code> dimension</td>
+    </tr>
+    <tr>
+      <td>Find all conversations where agent went off-script</td>
+      <td>Insights API: filter on <code class="language-plaintext highlighter-rouge">OperatorResult.Value</code></td>
+    </tr>
+    <tr>
+      <td>Build a sentiment trend dashboard</td>
+      <td>Insights API: group by <code class="language-plaintext highlighter-rouge">DateCreated</code> + <code class="language-plaintext highlighter-rouge">OperatorResults</code></td>
+    </tr>
+    <tr>
+      <td>Discover available metrics and dimensions</td>
+      <td>Insights API: <code class="language-plaintext highlighter-rouge">GET /v3/InsightsDomains/Conversations/Metadata</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="endpoints">Endpoints</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Path</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">POST</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/v3/InsightsDomains/Conversations/Query</code></td>
+      <td>Execute a semantic query, returns first page</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GET</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/v3/InsightsDomains/Conversations/Query?pageToken=...</code></td>
+      <td>Fetch subsequent pages</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">GET</code></td>
+      <td><code class="language-plaintext highlighter-rouge">/v3/InsightsDomains/Conversations/Metadata</code></td>
+      <td>Discover available cubes, measures, dimensions</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Same Basic Auth as Intelligence API. JSON-only (<code class="language-plaintext highlighter-rouge">Content-Type: application/json</code>).</p>
+
+<h3 id="query-a-sentiment-distribution">Query a Sentiment Distribution</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">INSIGHTS_BASE</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://insights.twilio.com</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">response</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+  <span class="s2">`</span><span class="p">${</span><span class="nx">INSIGHTS_BASE</span><span class="p">}</span><span class="s2">/v3/InsightsDomains/Conversations/Query`</span><span class="p">,</span>
+  <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">(),</span> <span class="c1">// same helper as Intelligence API</span>
+    <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">({</span>
+      <span class="na">domain</span><span class="p">:</span> <span class="dl">'</span><span class="s1">Conversations</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">query</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">measures</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">Conversation.Count</span><span class="dl">'</span><span class="p">],</span>
+        <span class="na">dimensions</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">OperatorResults</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Channels</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">DateCreated</span><span class="dl">'</span><span class="p">],</span>
+        <span class="na">filters</span><span class="p">:</span> <span class="p">[{</span>
+          <span class="na">op</span><span class="p">:</span> <span class="dl">'</span><span class="s1">AND</span><span class="dl">'</span><span class="p">,</span>
+          <span class="na">expressions</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span> <span class="na">op</span><span class="p">:</span> <span class="dl">'</span><span class="s1">IN</span><span class="dl">'</span><span class="p">,</span> <span class="na">field</span><span class="p">:</span> <span class="dl">'</span><span class="s1">OperatorResult.Value</span><span class="dl">'</span><span class="p">,</span> <span class="na">values</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">positive</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">negative</span><span class="dl">'</span><span class="p">]</span> <span class="p">},</span>
+          <span class="p">],</span>
+        <span class="p">}],</span>
+        <span class="na">orderBy</span><span class="p">:</span> <span class="p">[{</span> <span class="na">field</span><span class="p">:</span> <span class="dl">'</span><span class="s1">OperatorResults.CreatedDate</span><span class="dl">'</span><span class="p">,</span> <span class="na">direction</span><span class="p">:</span> <span class="dl">'</span><span class="s1">DESC</span><span class="dl">'</span> <span class="p">}],</span>
+      <span class="p">},</span>
+    <span class="p">}),</span>
+  <span class="p">}</span>
+<span class="p">);</span>
+<span class="kd">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">response</span><span class="p">.</span><span class="nf">json</span><span class="p">();</span>
+<span class="c1">// data.items = [{ Id: 'conv1', OperatorResults: 'positive', Channels: ['voice'], ... }]</span>
+<span class="c1">// data.meta.nextToken — use for next page (null if last page)</span>
+</code></pre></div></div>
+
+<p><strong>Query fields:</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">query.measures</code></td>
+      <td>What to aggregate — e.g. <code class="language-plaintext highlighter-rouge">"Conversation.Count"</code>, <code class="language-plaintext highlighter-rouge">"OperatorResult.Count"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">query.dimensions</code></td>
+      <td>What to group by — e.g. <code class="language-plaintext highlighter-rouge">"OperatorResults"</code>, <code class="language-plaintext highlighter-rouge">"Channels"</code>, <code class="language-plaintext highlighter-rouge">"Languages"</code>, <code class="language-plaintext highlighter-rouge">"DateCreated"</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">query.filters</code></td>
+      <td>Nested filter tree with <code class="language-plaintext highlighter-rouge">op</code> + <code class="language-plaintext highlighter-rouge">expressions</code>. Filter ops: <code class="language-plaintext highlighter-rouge">AND</code>, <code class="language-plaintext highlighter-rouge">OR</code>, <code class="language-plaintext highlighter-rouge">EQ</code>, <code class="language-plaintext highlighter-rouge">NE</code>, <code class="language-plaintext highlighter-rouge">GT</code>, <code class="language-plaintext highlighter-rouge">LT</code>, <code class="language-plaintext highlighter-rouge">IN</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">query.orderBy</code></td>
+      <td>Sort by field + <code class="language-plaintext highlighter-rouge">ASC</code>/<code class="language-plaintext highlighter-rouge">DESC</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="pagination">Pagination</h3>
+
+<p>POST returns the first page. Subsequent pages use GET with <code class="language-plaintext highlighter-rouge">pageToken</code>. Stop when <code class="language-plaintext highlighter-rouge">meta.nextToken</code> is null.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="kd">function</span><span class="o">*</span> <span class="nf">queryAll</span><span class="p">(</span><span class="nx">queryBody</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">first</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span><span class="s2">`</span><span class="p">${</span><span class="nx">INSIGHTS_BASE</span><span class="p">}</span><span class="s2">/v3/InsightsDomains/Conversations/Query`</span><span class="p">,</span>
+    <span class="p">{</span> <span class="na">method</span><span class="p">:</span> <span class="dl">'</span><span class="s1">POST</span><span class="dl">'</span><span class="p">,</span> <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">(),</span> <span class="na">body</span><span class="p">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">queryBody</span><span class="p">)</span> <span class="p">}</span>
+  <span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">r</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nf">json</span><span class="p">());</span>
+  <span class="k">yield</span><span class="o">*</span> <span class="nx">first</span><span class="p">.</span><span class="nx">items</span><span class="p">;</span>
+
+  <span class="kd">let</span> <span class="nx">nextToken</span> <span class="o">=</span> <span class="nx">first</span><span class="p">.</span><span class="nx">meta</span><span class="p">?.</span><span class="nx">nextToken</span><span class="p">;</span>
+  <span class="k">while </span><span class="p">(</span><span class="nx">nextToken</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">page</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+      <span class="s2">`</span><span class="p">${</span><span class="nx">INSIGHTS_BASE</span><span class="p">}</span><span class="s2">/v3/InsightsDomains/Conversations/Query?pageToken=</span><span class="p">${</span><span class="nx">nextToken</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+      <span class="p">{</span> <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">()</span> <span class="p">}</span>
+    <span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">r</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nf">json</span><span class="p">());</span>
+    <span class="k">yield</span><span class="o">*</span> <span class="nx">page</span><span class="p">.</span><span class="nx">items</span><span class="p">;</span>
+    <span class="nx">nextToken</span> <span class="o">=</span> <span class="nx">page</span><span class="p">.</span><span class="nx">meta</span><span class="p">?.</span><span class="nx">nextToken</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="discover-available-dimensions-and-measures">Discover Available Dimensions and Measures</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">meta</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">fetch</span><span class="p">(</span>
+  <span class="s2">`</span><span class="p">${</span><span class="nx">INSIGHTS_BASE</span><span class="p">}</span><span class="s2">/v3/InsightsDomains/Conversations/Metadata`</span><span class="p">,</span>
+  <span class="p">{</span> <span class="na">headers</span><span class="p">:</span> <span class="nf">getAuthHeaders</span><span class="p">()</span> <span class="p">}</span>
+<span class="p">).</span><span class="nf">then</span><span class="p">(</span><span class="nx">r</span> <span class="o">=&gt;</span> <span class="nx">r</span><span class="p">.</span><span class="nf">json</span><span class="p">());</span>
+
+<span class="k">for </span><span class="p">(</span><span class="kd">const</span> <span class="nx">cube</span> <span class="k">of</span> <span class="nx">meta</span><span class="p">.</span><span class="nx">cubes</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Measures:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">cube</span><span class="p">.</span><span class="nx">measures</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">m</span> <span class="o">=&gt;</span> <span class="nx">m</span><span class="p">.</span><span class="nx">name</span><span class="p">));</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Dimensions:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">cube</span><span class="p">.</span><span class="nx">dimensions</span><span class="p">.</span><span class="nf">map</span><span class="p">(</span><span class="nx">d</span> <span class="o">=&gt;</span> <span class="nx">d</span><span class="p">.</span><span class="nx">name</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Known dimensions: <code class="language-plaintext highlighter-rouge">DateCreated</code>, <code class="language-plaintext highlighter-rouge">OperatorResults</code>, <code class="language-plaintext highlighter-rouge">OperatorResult.Value</code>, <code class="language-plaintext highlighter-rouge">Channels</code>, <code class="language-plaintext highlighter-rouge">Languages</code>, <code class="language-plaintext highlighter-rouge">Conversation.AccountSid</code></p>
+
+<p>Known measures: <code class="language-plaintext highlighter-rouge">Conversation.Count</code>, <code class="language-plaintext highlighter-rouge">OperatorResult.Count</code></p>
+
+<h3 id="insights-cannot">Insights CANNOT</h3>
+<ul>
+  <li>Return raw OperatorResult payloads — use Intelligence <code class="language-plaintext highlighter-rouge">GET /v3/OperatorResults</code> for that</li>
+  <li>Write anything — read-only</li>
+  <li>Query in real-time — data mart has indexing lag vs. the live Intelligence API</li>
+  <li>Query domains other than <code class="language-plaintext highlighter-rouge">Conversations</code></li>
+</ul>
+
+<h2 id="related-resources">Related Resources</h2>
+
+<ul>
+  <li><a href="../twilio-conversation-orchestrator/SKILL.md">Conversation Orchestrator Skill</a> — Conversation Orchestrator setup: Memory Store, Conversation Configuration, capture rules, participant types</li>
+  <li><a href="../twilio-customer-memory/SKILL.md">Customer Memory Skill</a> — Memory Store, profiles, traits, observations, Recall</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

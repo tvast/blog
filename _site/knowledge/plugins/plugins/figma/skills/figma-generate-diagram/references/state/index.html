@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>State · A developer journey</title>
+<meta name="description" content="State Diagrams">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/figma/skills/figma-generate-diagram/references/state/">
+
+<meta property="og:title" content="State · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/figma/skills/figma-generate-diagram/references/state/">
+<meta property="og:description" content="State Diagrams">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>State</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="state-diagrams">State Diagrams</h1>
+
+<p>Use this reference for <strong>state diagrams</strong> — the states of a single entity or system and the transitions between them. Think: an order moving from Pending → Paid → Shipped → Delivered, a user account through Active / Suspended / Deleted, a TCP connection, a deploy pipeline, a state machine of any kind.</p>
+
+<p>If the subject is <strong>interactions between multiple parties over time</strong>, use a sequence diagram instead. If it’s a <strong>decision tree with branches but no real state concept</strong>, use a flowchart.</p>
+
+<h2 id="contents">Contents</h2>
+
+<ol>
+  <li><a href="#1-when-to-use-a-state-diagram">When to use a state diagram</a></li>
+  <li><a href="#2-required-skeleton">Required skeleton</a></li>
+  <li><a href="#3-states">States</a></li>
+  <li><a href="#4-start-and-end-">Start and end: <code class="language-plaintext highlighter-rouge">[*]</code></a></li>
+  <li><a href="#5-transitions">Transitions</a></li>
+  <li><a href="#6-composite-nested-states">Composite (nested) states</a></li>
+  <li><a href="#7-special-states-choice-fork-join">Special states: choice, fork, join</a></li>
+  <li><a href="#8-whats-not-supported">What’s NOT supported</a></li>
+  <li><a href="#9-layout-same-elk-as-flowcharts">Layout (same ELK as flowcharts)</a></li>
+  <li><a href="#10-hybrid-workflow-generate_diagram-first-then-use_figma">Hybrid workflow: <code class="language-plaintext highlighter-rouge">generate_diagram</code> first, then <code class="language-plaintext highlighter-rouge">use_figma</code></a></li>
+  <li><a href="#11-best-practices">Best practices</a></li>
+  <li><a href="#12-validation-checklist">Validation checklist</a></li>
+  <li><a href="#13-complete-example">Complete example</a></li>
+  <li><a href="#14-calling-generate_diagram">Calling generate_diagram</a></li>
+</ol>
+
+<hr />
+
+<h2 id="1-when-to-use-a-state-diagram">1. When to use a state diagram</h2>
+
+<p>Good fits:</p>
+
+<ul>
+  <li><strong>Entity lifecycles</strong> — orders, accounts, subscriptions, tickets, documents</li>
+  <li><strong>State machines</strong> — protocol states (TCP, auth), workflow states, process states</li>
+  <li><strong>Feature flags / rollout states</strong> — experimental / on / off / archived</li>
+  <li><strong>Review / approval flows</strong> — draft / submitted / approved / published</li>
+  <li><strong>Session lifecycles</strong> — idle / active / expired / revoked</li>
+</ul>
+
+<p>Bad fits (route to a different diagram type):</p>
+
+<ul>
+  <li>Interactions between parties over time → sequence diagram</li>
+  <li>Decision tree / pipeline without stateful entities → flowchart</li>
+  <li>Services + datastores → architecture flowchart</li>
+  <li>Timeline with dates → gantt chart</li>
+  <li>Data model → ER diagram</li>
+</ul>
+
+<h2 id="2-required-skeleton">2. Required skeleton</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stateDiagram-v2
+    direction LR
+    [*] --&gt; Draft
+    Draft --&gt; Review: submit
+    Review --&gt; Approved: approve
+    Review --&gt; Draft: reject
+    Approved --&gt; Published: publish
+    Published --&gt; [*]
+</code></pre></div></div>
+
+<p>Every chart needs: the <code class="language-plaintext highlighter-rouge">stateDiagram-v2</code> keyword on line 1 and at least one transition. <code class="language-plaintext highlighter-rouge">direction</code> is optional — <code class="language-plaintext highlighter-rouge">LR</code> (left-to-right) is the usual choice; <code class="language-plaintext highlighter-rouge">TB</code> (top-to-bottom) suits deeper hierarchies. Prefer <code class="language-plaintext highlighter-rouge">stateDiagram-v2</code> over the legacy <code class="language-plaintext highlighter-rouge">stateDiagram</code> for consistency.</p>
+
+<h2 id="3-states">3. States</h2>
+
+<p>Three declaration forms, all supported:</p>
+
+<h3 id="simple-id">Simple ID</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Draft --&gt; Review
+</code></pre></div></div>
+
+<p>The state ID is used as both the handle and the display text. Fine for short names that read well (<code class="language-plaintext highlighter-rouge">Draft</code>, <code class="language-plaintext highlighter-rouge">Active</code>, <code class="language-plaintext highlighter-rouge">Failed</code>).</p>
+
+<h3 id="id--description-colon-syntax">ID + description (colon syntax)</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Draft: Draft (editable)
+Draft --&gt; Review
+</code></pre></div></div>
+
+<p>The ID (<code class="language-plaintext highlighter-rouge">Draft</code>) is what you reference in transitions; the description (<code class="language-plaintext highlighter-rouge">Draft (editable)</code>) is what renders. Use this when the display text includes spaces, punctuation, or detail that you don’t want in every transition line.</p>
+
+<h3 id="state-description-as-id"><code class="language-plaintext highlighter-rouge">state "description" as id</code></h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>state "Waiting for approval" as Pending
+Pending --&gt; Approved
+</code></pre></div></div>
+
+<p>Functionally equivalent to the colon form — pick one style per diagram and stick with it.</p>
+
+<h3 id="display-name-normalization">Display-name normalization</h3>
+
+<p>Our preprocessor strips quotes and normalizes state IDs internally. <strong>The description is always what renders</strong>. For simple-ID states, the ID is the description; for colon or <code class="language-plaintext highlighter-rouge">as</code> forms, the description you provide is the display name. Don’t chase special quoting — just write plain descriptions.</p>
+
+<h3 id="spaces-in-state-names">Spaces in state names</h3>
+
+<p>Simple-ID form can’t have spaces (<code class="language-plaintext highlighter-rouge">Under Review</code> would break). Use the colon or <code class="language-plaintext highlighter-rouge">as</code> form:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Pending: Under Review
+Pending --&gt; Approved
+</code></pre></div></div>
+
+<h2 id="4-start-and-end-">4. Start and end: <code class="language-plaintext highlighter-rouge">[*]</code></h2>
+
+<p><code class="language-plaintext highlighter-rouge">[*]</code> is both start and end, distinguished by arrow direction:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[*] --&gt; Draft          // start transition
+Published --&gt; [*]      // end transition
+</code></pre></div></div>
+
+<p>Multiple entries and exits are allowed. You can mix them freely — <code class="language-plaintext highlighter-rouge">[*] --&gt; Draft</code> and <code class="language-plaintext highlighter-rouge">[*] --&gt; Recovered</code> both point to start-adjacent states.</p>
+
+<p>Inside a composite state, <code class="language-plaintext highlighter-rouge">[*]</code> denotes the entry and exit points of that composite. See §6.</p>
+
+<h2 id="5-transitions">5. Transitions</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>From --&gt; To
+From --&gt; To: label
+</code></pre></div></div>
+
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">--&gt;</code> (double dash, not <code class="language-plaintext highlighter-rouge">-&gt;</code>).</li>
+  <li>Add a label with <code class="language-plaintext highlighter-rouge">:</code> — usually the event or action that triggers the transition (<code class="language-plaintext highlighter-rouge">submit</code>, <code class="language-plaintext highlighter-rouge">approve</code>, <code class="language-plaintext highlighter-rouge">timeout</code>, <code class="language-plaintext highlighter-rouge">retry</code>).</li>
+  <li>Keep labels short (1–3 words). Unlabeled transitions are fine when the target name tells the whole story (<code class="language-plaintext highlighter-rouge">Draft --&gt; Review</code>).</li>
+</ul>
+
+<p><strong>Self-transitions</strong> work:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Active --&gt; Active: heartbeat
+</code></pre></div></div>
+
+<p><strong>Cycles</strong> are legitimate in state diagrams (a ticket can reopen, an account can be suspended and reactivated). The ELK layout handles cycles reasonably, especially in small-to-medium diagrams — see §9 for layout notes. Don’t avoid cycles if they represent the real state machine.</p>
+
+<h2 id="6-composite-nested-states">6. Composite (nested) states</h2>
+
+<p>Group related substates inside a parent state with <code class="language-plaintext highlighter-rouge">{ ... }</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stateDiagram-v2
+    [*] --&gt; Active
+    Active --&gt; [*]
+
+    state Active {
+        [*] --&gt; Idle
+        Idle --&gt; Working: task arrives
+        Working --&gt; Idle: task done
+        Working --&gt; [*]
+    }
+</code></pre></div></div>
+
+<p>The composite renders as a <strong>subgraph</strong> (box) containing its children. The inner <code class="language-plaintext highlighter-rouge">[*]</code> markers are scoped to the composite — they represent entry/exit of the <code class="language-plaintext highlighter-rouge">Active</code> state, not of the whole diagram.</p>
+
+<h3 id="nesting">Nesting</h3>
+
+<p>Nested composites work. Keep nesting to <strong>2 levels max</strong> — deeper nesting crowds the ELK layout.</p>
+
+<h3 id="concurrent-regions-inside-a-composite--the----separator">Concurrent regions inside a composite — the <code class="language-plaintext highlighter-rouge">--</code> separator</h3>
+
+<p>Splitting a composite into concurrent regions with <code class="language-plaintext highlighter-rouge">--</code> is supported; each region renders as its own nested subgraph inside the parent composite:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>state Running {
+    state "Reads" as ReadPath
+    [*] --&gt; ReadPath
+    ReadPath --&gt; [*]
+    --
+    state "Writes" as WritePath
+    [*] --&gt; WritePath
+    WritePath --&gt; [*]
+}
+</code></pre></div></div>
+
+<p>Each region has its own <code class="language-plaintext highlighter-rouge">[*]</code> entry and exit scoped to that region. Use this when two independent sub-flows run simultaneously inside a single outer state.</p>
+
+<h3 id="cross-composite-transitions--stay-simple">Cross-composite transitions — stay simple</h3>
+
+<p>Mermaid forbids transitions directly between nested states in <em>different</em> composites. Transition to or from the outer composite instead:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// WORKS — outer composite to/from
+Active --&gt; Suspended
+Suspended --&gt; Active
+
+// DOESN'T WORK — reaching into another composite's internals
+Active.Working --&gt; Suspended.Held
+</code></pre></div></div>
+
+<h2 id="7-special-states-choice-fork-join">7. Special states: choice, fork, join</h2>
+
+<h3 id="choice--conditional-branching">Choice — conditional branching</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>state DecideRoute &lt;&lt;choice&gt;&gt;
+Received --&gt; DecideRoute
+DecideRoute --&gt; Fast: priority=high
+DecideRoute --&gt; Normal: priority=low
+</code></pre></div></div>
+
+<p>Renders as a diamond. Use for a branch-by-condition that happens at a single point.</p>
+
+<h3 id="fork--join--parallel-paths">Fork / join — parallel paths</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>state StartParallel &lt;&lt;fork&gt;&gt;
+state EndParallel &lt;&lt;join&gt;&gt;
+
+[*] --&gt; StartParallel
+StartParallel --&gt; PathA
+StartParallel --&gt; PathB
+PathA --&gt; EndParallel
+PathB --&gt; EndParallel
+EndParallel --&gt; [*]
+</code></pre></div></div>
+
+<p>Fork splits into parallel paths; join merges them back. Renders as distinct bar shapes. Use sparingly — they’re specialized and can confuse readers unfamiliar with UML state-machine notation.</p>
+
+<h2 id="8-whats-not-supported">8. What’s NOT supported</h2>
+
+<ul>
+  <li><strong>Notes</strong> — <code class="language-plaintext highlighter-rouge">note left of X</code>, <code class="language-plaintext highlighter-rouge">note right of X</code>, <code class="language-plaintext highlighter-rouge">note above/below</code>. <strong>Avoid strictly.</strong> These interact badly with our preprocessor: the <code class="language-plaintext highlighter-rouge">X: text</code> inside a note is recognized as a state definition, producing phantom duplicate states. The resulting diagram is actively wrong, not just missing the note. If the user wants notes, generate the diagram without them and add real sticky notes or text blocks via <code class="language-plaintext highlighter-rouge">use_figma</code> (§10).</li>
+  <li><strong>Styling</strong> — <code class="language-plaintext highlighter-rouge">classDef</code>, <code class="language-plaintext highlighter-rouge">class Foo styleName</code>, <code class="language-plaintext highlighter-rouge">:::styleName</code> inline, and <code class="language-plaintext highlighter-rouge">style StateId fill:#hex,stroke:#hex</code>. <strong>Avoid strictly.</strong> These are not applied, AND the state names referenced in these statements get registered as standalone states, creating phantom orphan boxes above or beside the real diagram. The failure mode is the same shape as notes: not just missing, actively wrong. Color-code states via <code class="language-plaintext highlighter-rouge">use_figma</code> post-generation instead (§10).</li>
+  <li><strong>Transitions reaching into another composite’s children</strong> — forbidden by Mermaid itself; transition to/from the outer composite.</li>
+</ul>
+
+<p>If the user wants notes or color-coded states, see §10 for the hybrid workflow.</p>
+
+<h2 id="9-layout-same-elk-as-flowcharts">9. Layout (same ELK as flowcharts)</h2>
+
+<p>State diagrams render via the <strong>same ELK layered layout</strong> as flowcharts. The layout principles from <a href="./flowchart.md#5-elk-survival-guide">flowchart.md §5 (ELK survival guide)</a> apply directly:</p>
+
+<ul>
+  <li><strong>Simple cycles render fine</strong> — retry loops, reopen transitions, reactivation paths. Don’t contort the state machine to avoid them.</li>
+  <li><strong>Subgraphs cluster cleanly</strong> — composite states use this automatically.</li>
+  <li><strong>Fan-in gets messy past ~5 inbound edges</strong> — if many states converge to one <code class="language-plaintext highlighter-rouge">Failed</code> or <code class="language-plaintext highlighter-rouge">Terminated</code> state, consider splitting or duplicating (but be careful: state semantics usually preclude duplicating a state).</li>
+  <li><strong>Pain scales with size</strong> — 20+ states in one diagram starts to crowd. Split into phases/subsystems or introduce more composite grouping.</li>
+</ul>
+
+<p>Additionally, for state diagrams specifically:</p>
+<ul>
+  <li><strong>Style composites so they stand out.</strong> Like subgraphs in flowcharts, composites show only a thin outline by default and can blend into the canvas. The flowchart guidance on subgraph styling applies (use light tints from the FigJam palette). Note: our preprocessor doesn’t extract <code class="language-plaintext highlighter-rouge">classDef</code>/<code class="language-plaintext highlighter-rouge">class</code>/<code class="language-plaintext highlighter-rouge">style</code> statements, so this styling must be applied via the hybrid workflow (§10).</li>
+  <li><strong>Self-transitions render with tight spacing.</strong> A self-loop (<code class="language-plaintext highlighter-rouge">Working --&gt; Working: heartbeat</code>) will render, but the loop arc and its label can end up crowded against the state. Don’t avoid self-transitions — they represent real state-machine behavior — but tell the user that if the spacing looks tight, they can drag the loop or label manually in Figma.</li>
+</ul>
+
+<h2 id="10-hybrid-workflow-generate_diagram-first-then-use_figma">10. Hybrid workflow: <code class="language-plaintext highlighter-rouge">generate_diagram</code> first, then <code class="language-plaintext highlighter-rouge">use_figma</code></h2>
+
+<p>State diagrams generated via <code class="language-plaintext highlighter-rouge">generate_diagram</code> produce a clean, laid-out state machine — the hard part. Most of what our renderer doesn’t support (notes, colored states, step annotations, phase highlighting) can be added on top with <code class="language-plaintext highlighter-rouge">use_figma</code>.</p>
+
+<p><strong>Default workflow when the request needs more than bare states and transitions:</strong></p>
+
+<ol>
+  <li><strong>Scaffold with <code class="language-plaintext highlighter-rouge">generate_diagram</code></strong> — states, transitions, composites, concurrent regions (<code class="language-plaintext highlighter-rouge">--</code>), special states (choice/fork/join), start/end. Skip the features that get dropped (notes, classDef).</li>
+  <li><strong>Extend with <code class="language-plaintext highlighter-rouge">use_figma</code></strong> — open the same file (via <code class="language-plaintext highlighter-rouge">fileKey</code>) and add:
+    <ul>
+      <li>Sticky notes or text blocks for <strong>annotations</strong> anchored to specific states or transitions</li>
+      <li>Background rectangles behind groups of states for <strong>phase highlighting</strong></li>
+      <li>Tinted fills on composites/subgraphs so boundaries stand out</li>
+      <li><strong>Color-coding</strong> states by category (terminal / active / error)</li>
+      <li><strong>Sequence numbers</strong> on transitions for step-by-step walkthroughs</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Loading <a href="../../figma-use/SKILL.md">figma-use</a> and <a href="../../figma-use-figjam/SKILL.md">figma-use-figjam</a> covers how to make those edits.</p>
+
+<h3 id="signals-the-request-needs-the-hybrid-workflow">Signals the request needs the hybrid workflow</h3>
+
+<ul>
+  <li>The user uses words like “note”, “annotate”, “highlight”, “color the error states”, “shade the happy path”, “number the transitions”.</li>
+  <li>The user wants to combine the state diagram with surrounding narrative or another diagram on the same board.</li>
+</ul>
+
+<h3 id="when-to-skip-generate_diagram-entirely">When to skip <code class="language-plaintext highlighter-rouge">generate_diagram</code> entirely</h3>
+
+<p>Only if the baseline layout isn’t useful — e.g. the user wants a non-standard layout (circular state wheel, hand-drawn sketch, a heavily-stylized enterprise template). In those cases, go straight to <code class="language-plaintext highlighter-rouge">use_figma</code>.</p>
+
+<h3 id="be-pragmatic-not-performative">Be pragmatic, not performative</h3>
+
+<p>Scaffold first, extend directly if the user’s request is specific; otherwise scaffold and ask one follow-up: “I’ve set up the base state machine — want me to add notes / color-code the states / highlight the error paths?”</p>
+
+<h2 id="11-best-practices">11. Best practices</h2>
+
+<ol>
+  <li><strong>Use <code class="language-plaintext highlighter-rouge">stateDiagram-v2</code></strong>, not the legacy <code class="language-plaintext highlighter-rouge">stateDiagram</code>.</li>
+  <li><strong>State names are nouns</strong> (<code class="language-plaintext highlighter-rouge">Draft</code>, <code class="language-plaintext highlighter-rouge">Active</code>, <code class="language-plaintext highlighter-rouge">Archived</code>) — not actions. Actions are transition labels.</li>
+  <li><strong>Transition labels are events or triggers</strong> (<code class="language-plaintext highlighter-rouge">submit</code>, <code class="language-plaintext highlighter-rouge">approve</code>, <code class="language-plaintext highlighter-rouge">timeout</code>) — short, 1–3 words.</li>
+  <li><strong>Start every diagram with <code class="language-plaintext highlighter-rouge">[*] --&gt;</code></strong> — explicit entry is clearer than implicit.</li>
+  <li><strong>Terminate paths with <code class="language-plaintext highlighter-rouge">--&gt; [*]</code></strong> when a state is genuinely terminal. Not every diagram needs an end marker; some state machines are perpetual.</li>
+  <li><strong>Group with composites</strong> when 3+ substates share a shared lifecycle (e.g. <code class="language-plaintext highlighter-rouge">Active { Idle, Working }</code> vs. <code class="language-plaintext highlighter-rouge">Suspended</code>). Don’t composite a pair.</li>
+  <li><strong>Cap at ~15–20 states.</strong> Past that, split by phase or by entity, or push detail into composites.</li>
+  <li><strong>One state machine per diagram.</strong> If you have a coarse overview and a zoomed-in view of one composite, draw two diagrams, not one with deeply nested internals.</li>
+</ol>
+
+<h2 id="12-validation-checklist">12. Validation checklist</h2>
+
+<p>Before calling <code class="language-plaintext highlighter-rouge">generate_diagram</code>:</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">stateDiagram-v2</code> on line 1 (not just <code class="language-plaintext highlighter-rouge">stateDiagram</code>).</li>
+  <li>All transitions use <code class="language-plaintext highlighter-rouge">--&gt;</code> (double dash).</li>
+  <li>Every <code class="language-plaintext highlighter-rouge">[*]</code> marker is on one side of a transition — never on its own.</li>
+  <li>State IDs are simple words (no spaces); descriptions via <code class="language-plaintext highlighter-rouge">:</code> or <code class="language-plaintext highlighter-rouge">as</code> when longer text is needed.</li>
+  <li>No <code class="language-plaintext highlighter-rouge">note left of</code>, <code class="language-plaintext highlighter-rouge">note right of</code>, etc. — they corrupt the diagram by creating phantom states (§8). Add real notes via <code class="language-plaintext highlighter-rouge">use_figma</code> later.</li>
+  <li>No <code class="language-plaintext highlighter-rouge">classDef</code>, <code class="language-plaintext highlighter-rouge">class</code>, <code class="language-plaintext highlighter-rouge">:::</code>, or <code class="language-plaintext highlighter-rouge">style</code> styling lines — they don’t color anything AND create phantom orphan states (§8). Apply colors via <code class="language-plaintext highlighter-rouge">use_figma</code> later.</li>
+  <li>No transitions reaching into another composite’s children.</li>
+  <li>Composite nesting is ≤ 2 levels.</li>
+  <li>Under ~20 states, or the diagram is split.</li>
+</ol>
+
+<h2 id="13-complete-example">13. Complete example</h2>
+
+<p>A publishing workflow — draft → review → approved/rejected → published, with a composite for the review sub-states:</p>
+
+<pre><code class="language-mermaid">stateDiagram-v2
+    direction LR
+
+    [*] --&gt; Draft
+    Draft --&gt; Review: submit
+
+    state Review {
+        [*] --&gt; PendingReview
+        PendingReview --&gt; InReview: assigned
+        InReview --&gt; ChangesRequested: request changes
+        ChangesRequested --&gt; InReview: resubmit
+        InReview --&gt; [*]
+    }
+
+    Review --&gt; Approved: approve
+    Review --&gt; Draft: reject
+    Approved --&gt; Published: publish
+    Published --&gt; Archived: archive
+    Published --&gt; [*]
+    Archived --&gt; [*]
+</code></pre>
+
+<h2 id="14-calling-generate_diagram">14. Calling generate_diagram</h2>
+
+<p>Pass:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">name</code> — a descriptive diagram name</li>
+  <li><code class="language-plaintext highlighter-rouge">mermaidSyntax</code> — your state-diagram source</li>
+  <li><code class="language-plaintext highlighter-rouge">userIntent</code> (optional) — what the user is trying to accomplish</li>
+</ul>
+
+<p>Do <strong>not</strong> pass <code class="language-plaintext highlighter-rouge">useArchitectureLayoutCode</code> — that’s architecture-diagram only.</p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Tabs · A developer journey</title>
+<meta name="description" content="Native Tabs">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/expo/skills/building-native-ui/references/tabs/">
+
+<meta property="og:title" content="Tabs · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/expo/skills/building-native-ui/references/tabs/">
+<meta property="og:description" content="Native Tabs">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Tabs</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="native-tabs">Native Tabs</h1>
+
+<p>Always prefer NativeTabs from ‘expo-router/unstable-native-tabs’ for the best iOS experience.</p>
+
+<p><strong>SDK 54+. SDK 55 recommended.</strong></p>
+
+<h2 id="sdk-compatibility">SDK Compatibility</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>SDK 54</th>
+      <th>SDK 55+</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Import</td>
+      <td><code class="language-plaintext highlighter-rouge">import { NativeTabs, Icon, Label, Badge, VectorIcon }</code></td>
+      <td><code class="language-plaintext highlighter-rouge">import { NativeTabs }</code> only</td>
+    </tr>
+    <tr>
+      <td>Icon</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;Icon sf="house.fill" /&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;NativeTabs.Trigger.Icon sf="house.fill" /&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Label</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;Label&gt;Home&lt;/Label&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;NativeTabs.Trigger.Label&gt;Home&lt;/NativeTabs.Trigger.Label&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Badge</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;Badge&gt;9+&lt;/Badge&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;NativeTabs.Trigger.Badge&gt;9+&lt;/NativeTabs.Trigger.Badge&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Android icons</td>
+      <td><code class="language-plaintext highlighter-rouge">drawable</code> prop</td>
+      <td><code class="language-plaintext highlighter-rouge">md</code> prop (Material Symbols)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>All examples below use SDK 55 syntax. For SDK 54, replace <code class="language-plaintext highlighter-rouge">NativeTabs.Trigger.Icon/Label/Badge</code> with standalone <code class="language-plaintext highlighter-rouge">Icon</code>, <code class="language-plaintext highlighter-rouge">Label</code>, <code class="language-plaintext highlighter-rouge">Badge</code> imports.</p>
+
+<h2 id="basic-usage">Basic Usage</h2>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NativeTabs</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router/unstable-native-tabs</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">TabLayout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">NativeTabs</span> <span class="na">minimizeBehavior</span><span class="p">=</span><span class="s">"onScrollDown"</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"index"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">sf</span><span class="p">=</span><span class="s">"house.fill"</span> <span class="na">md</span><span class="p">=</span><span class="s">"home"</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Badge</span><span class="p">&gt;</span>9+<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Badge</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"settings"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">sf</span><span class="p">=</span><span class="s">"gear"</span> <span class="na">md</span><span class="p">=</span><span class="s">"settings"</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Settings<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"(search)"</span> <span class="na">role</span><span class="p">=</span><span class="s">"search"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Search<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="rules">Rules</h2>
+
+<ul>
+  <li>You must include a trigger for each tab</li>
+  <li>The <code class="language-plaintext highlighter-rouge">NativeTabs.Trigger</code> ‘name’ must match the route name, including parentheses (e.g. <code class="language-plaintext highlighter-rouge">&lt;NativeTabs.Trigger name="(search)"&gt;</code>)</li>
+  <li>Prefer search tab to be last in the list so it can combine with the search bar</li>
+  <li>Use the ‘role’ prop for common tab types</li>
+  <li>Tabs must be static — no dynamic addition/removal at runtime (remounts navigator, loses state)</li>
+</ul>
+
+<h2 id="platform-features">Platform Features</h2>
+
+<p>Native Tabs use platform-specific tab bar implementations:</p>
+
+<ul>
+  <li><strong>iOS 26+</strong>: Liquid glass effects with system-native appearance</li>
+  <li><strong>Android</strong>: Material 3 bottom navigation</li>
+  <li>Better performance and native feel</li>
+</ul>
+
+<h2 id="icon-component">Icon Component</h2>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SF Symbol (iOS) + Material Symbol (Android)</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">sf</span><span class="p">=</span><span class="s">"house.fill"</span> <span class="na">md</span><span class="p">=</span><span class="s">"home"</span> <span class="p">/&gt;</span>
+
+<span class="c1">// State variants</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">sf</span><span class="p">=</span><span class="si">{</span><span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="dl">"</span><span class="s2">house</span><span class="dl">"</span><span class="p">,</span> <span class="na">selected</span><span class="p">:</span> <span class="dl">"</span><span class="s2">house.fill</span><span class="dl">"</span> <span class="p">}</span><span class="si">}</span> <span class="na">md</span><span class="p">=</span><span class="s">"home"</span> <span class="p">/&gt;</span>
+
+<span class="c1">// Custom image</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">src</span><span class="p">=</span><span class="si">{</span><span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./icon.png</span><span class="dl">'</span><span class="p">)</span><span class="si">}</span> <span class="p">/&gt;</span>
+
+<span class="c1">// Xcode asset catalog — iOS only (SDK 55+)</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">xcasset</span><span class="p">=</span><span class="s">"home-icon"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">xcasset</span><span class="p">=</span><span class="si">{</span><span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="dl">"</span><span class="s2">home-outline</span><span class="dl">"</span><span class="p">,</span> <span class="na">selected</span><span class="p">:</span> <span class="dl">"</span><span class="s2">home-filled</span><span class="dl">"</span> <span class="p">}</span><span class="si">}</span> <span class="p">/&gt;</span>
+
+<span class="c1">// Rendering mode — iOS only (SDK 55+)</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">src</span><span class="p">=</span><span class="si">{</span><span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./icon.png</span><span class="dl">'</span><span class="p">)</span><span class="si">}</span> <span class="na">renderingMode</span><span class="p">=</span><span class="s">"template"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">src</span><span class="p">=</span><span class="si">{</span><span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">./gradient.png</span><span class="dl">'</span><span class="p">)</span><span class="si">}</span> <span class="na">renderingMode</span><span class="p">=</span><span class="s">"original"</span> <span class="p">/&gt;</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">renderingMode</code>: <code class="language-plaintext highlighter-rouge">"template"</code> applies tint color (single-color icons), <code class="language-plaintext highlighter-rouge">"original"</code> preserves source colors (gradients). Android always uses original.</p>
+
+<h2 id="label--badge">Label &amp; Badge</h2>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Label</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span> <span class="na">hidden</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>  <span class="p">{</span><span class="cm">/* icon-only tab */</span><span class="p">}</span>
+
+<span class="c1">// Badge</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Badge</span><span class="p">&gt;</span>9+<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Badge</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Badge</span> <span class="p">/&gt;</span>  <span class="p">{</span><span class="cm">/* dot indicator */</span><span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="ios-26-features">iOS 26 Features</h2>
+
+<h3 id="liquid-glass-tab-bar">Liquid Glass Tab Bar</h3>
+
+<p>The tab bar automatically adopts liquid glass appearance on iOS 26+.</p>
+
+<h3 id="minimize-on-scroll">Minimize on Scroll</h3>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">NativeTabs</span> <span class="na">minimizeBehavior</span><span class="p">=</span><span class="s">"onScrollDown"</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<h3 id="search-tab">Search Tab</h3>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"(search)"</span> <span class="na">role</span><span class="p">=</span><span class="s">"search"</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Search<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Note</strong>: Place search tab last for best UX.</p>
+
+<h3 id="role-prop">Role Prop</h3>
+
+<p>Use semantic roles for special tab types:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"search"</span> <span class="na">role</span><span class="p">=</span><span class="s">"search"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"favorites"</span> <span class="na">role</span><span class="p">=</span><span class="s">"favorites"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"more"</span> <span class="na">role</span><span class="p">=</span><span class="s">"more"</span> <span class="p">/&gt;</span>
+</code></pre></div></div>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Available roles: <code class="language-plaintext highlighter-rouge">search</code></td>
+      <td><code class="language-plaintext highlighter-rouge">more</code></td>
+      <td><code class="language-plaintext highlighter-rouge">favorites</code></td>
+      <td><code class="language-plaintext highlighter-rouge">bookmarks</code></td>
+      <td><code class="language-plaintext highlighter-rouge">contacts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">downloads</code></td>
+      <td><code class="language-plaintext highlighter-rouge">featured</code></td>
+      <td><code class="language-plaintext highlighter-rouge">history</code></td>
+      <td><code class="language-plaintext highlighter-rouge">mostRecent</code></td>
+      <td><code class="language-plaintext highlighter-rouge">mostViewed</code></td>
+      <td><code class="language-plaintext highlighter-rouge">recents</code></td>
+      <td><code class="language-plaintext highlighter-rouge">topRated</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="customization">Customization</h2>
+
+<h3 id="tint-color">Tint Color</h3>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">NativeTabs</span> <span class="na">tintColor</span><span class="p">=</span><span class="s">"#007AFF"</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<h3 id="dynamic-colors-ios">Dynamic Colors (iOS)</h3>
+
+<p>Use DynamicColorIOS for colors that adapt to liquid glass:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">DynamicColorIOS</span><span class="p">,</span> <span class="nx">Platform</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">react-native</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="kd">const</span> <span class="nx">adaptiveBlue</span> <span class="o">=</span> <span class="nx">Platform</span><span class="p">.</span><span class="nf">select</span><span class="p">({</span>
+  <span class="na">ios</span><span class="p">:</span> <span class="nc">DynamicColorIOS</span><span class="p">({</span> <span class="na">light</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#007AFF</span><span class="dl">'</span><span class="p">,</span> <span class="na">dark</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#0A84FF</span><span class="dl">'</span> <span class="p">}),</span>
+  <span class="na">default</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#007AFF</span><span class="dl">'</span><span class="p">,</span>
+<span class="p">});</span>
+
+<span class="p">&lt;</span><span class="nc">NativeTabs</span> <span class="na">tintColor</span><span class="p">=</span><span class="si">{</span><span class="nx">adaptiveBlue</span><span class="si">}</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="conditional-tabs">Conditional Tabs</h2>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"admin"</span> <span class="na">hidden</span><span class="p">=</span><span class="si">{</span><span class="o">!</span><span class="nx">isAdmin</span><span class="si">}</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Admin<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">sf</span><span class="p">=</span><span class="s">"shield.fill"</span> <span class="na">md</span><span class="p">=</span><span class="s">"shield"</span> <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Don’t hide the tabs when they are visible - toggling visibility remounts the navigator; Do it only during the initial render.</strong></p>
+
+<p><strong>Note</strong>: Hidden tabs cannot be navigated to!</p>
+
+<h2 id="behavior-options">Behavior Options</h2>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span>
+  <span class="na">name</span><span class="p">=</span><span class="s">"home"</span>
+  <span class="na">disablePopToTop</span>           <span class="c1">// Don't pop stack when tapping active tab</span>
+  <span class="na">disableScrollToTop</span>        <span class="c1">// Don't scroll to top when tapping active tab</span>
+  <span class="na">disableAutomaticContentInsets</span>  <span class="c1">// Opt out of automatic safe area insets (SDK 55+)</span>
+<span class="p">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="hidden-tab-bar-sdk-55">Hidden Tab Bar (SDK 55+)</h2>
+
+<p>Use <code class="language-plaintext highlighter-rouge">hidden</code> prop on <code class="language-plaintext highlighter-rouge">NativeTabs</code> to hide the entire tab bar dynamically:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">NativeTabs</span> <span class="na">hidden</span><span class="p">=</span><span class="si">{</span><span class="nx">isTabBarHidden</span><span class="si">}</span><span class="p">&gt;</span><span class="si">{</span><span class="cm">/* triggers */</span><span class="si">}</span><span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="bottom-accessory-sdk-55">Bottom Accessory (SDK 55+)</h2>
+
+<p><code class="language-plaintext highlighter-rouge">NativeTabs.BottomAccessory</code> renders content above the tab bar (iOS 26+). Uses <code class="language-plaintext highlighter-rouge">usePlacement()</code> to adapt between <code class="language-plaintext highlighter-rouge">'regular'</code> and <code class="language-plaintext highlighter-rouge">'inline'</code> layouts.</p>
+
+<p><strong>Important</strong>: Two instances render simultaneously — store state outside the component (props, context, or external store).</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NativeTabs</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router/unstable-native-tabs</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Pressable</span><span class="p">,</span> <span class="nx">Text</span><span class="p">,</span> <span class="nx">View</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react-native</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nf">MiniPlayer</span><span class="p">({</span>
+  <span class="nx">isPlaying</span><span class="p">,</span>
+  <span class="nx">onToggle</span><span class="p">,</span>
+<span class="p">}:</span> <span class="p">{</span>
+  <span class="nl">isPlaying</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">;</span>
+  <span class="nl">onToggle</span><span class="p">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+<span class="p">})</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">placement</span> <span class="o">=</span> <span class="nx">NativeTabs</span><span class="p">.</span><span class="nx">BottomAccessory</span><span class="p">.</span><span class="nf">usePlacement</span><span class="p">();</span>
+  <span class="k">if </span><span class="p">(</span><span class="nx">placement</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">inline</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return </span><span class="p">(</span>
+      <span class="p">&lt;</span><span class="nc">Pressable</span> <span class="na">onPress</span><span class="p">=</span><span class="si">{</span><span class="nx">onToggle</span><span class="si">}</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">SymbolView</span> <span class="na">name</span><span class="p">=</span><span class="si">{</span><span class="nx">isPlaying</span> <span class="p">?</span> <span class="dl">"</span><span class="s2">pause.fill</span><span class="dl">"</span> <span class="p">:</span> <span class="dl">"</span><span class="s2">play.fill</span><span class="dl">"</span><span class="si">}</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nc">Pressable</span><span class="p">&gt;</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nc">View</span><span class="p">&gt;</span><span class="si">{</span><span class="cm">/* full player UI */</span><span class="si">}</span><span class="p">&lt;/</span><span class="nc">View</span><span class="p">&gt;;</span>
+<span class="p">}</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">TabLayout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="p">[</span><span class="nx">isPlaying</span><span class="p">,</span> <span class="nx">setIsPlaying</span><span class="p">]</span> <span class="o">=</span> <span class="nf">useState</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">BottomAccessory</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">MiniPlayer</span>
+          <span class="na">isPlaying</span><span class="p">=</span><span class="si">{</span><span class="nx">isPlaying</span><span class="si">}</span>
+          <span class="na">onToggle</span><span class="p">=</span><span class="si">{</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nf">setIsPlaying</span><span class="p">(</span><span class="o">!</span><span class="nx">isPlaying</span><span class="p">)</span><span class="si">}</span>
+        <span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">BottomAccessory</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"index"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">sf</span><span class="p">=</span><span class="s">"house.fill"</span> <span class="na">md</span><span class="p">=</span><span class="s">"home"</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+      <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="safe-area-handling-sdk-55">Safe Area Handling (SDK 55+)</h2>
+
+<p>SDK 55 handles safe areas automatically:</p>
+
+<ul>
+  <li><strong>Android</strong>: Content wrapped in SafeAreaView (bottom inset)</li>
+  <li><strong>iOS</strong>: First ScrollView gets automatic <code class="language-plaintext highlighter-rouge">contentInsetAdjustmentBehavior</code></li>
+</ul>
+
+<p>To opt out per-tab, use <code class="language-plaintext highlighter-rouge">disableAutomaticContentInsets</code> and manage manually:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"index"</span> <span class="na">disableAutomaticContentInsets</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// In the screen</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">SafeAreaView</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react-native-screens/experimental</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">HomeScreen</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">SafeAreaView</span> <span class="na">edges</span><span class="p">=</span><span class="si">{</span><span class="p">{</span> <span class="na">bottom</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span><span class="si">}</span> <span class="na">style</span><span class="p">=</span><span class="si">{</span><span class="p">{</span> <span class="na">flex</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="si">{</span><span class="cm">/* content */</span><span class="si">}</span>
+    <span class="p">&lt;/</span><span class="nc">SafeAreaView</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="using-vector-icons">Using Vector Icons</h2>
+
+<p>If you must use @expo/vector-icons instead of SF Symbols:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NativeTabs</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router/unstable-native-tabs</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Ionicons</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@expo/vector-icons/Ionicons</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"home"</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">VectorIcon</span> <span class="na">vector</span><span class="p">=</span><span class="si">{</span><span class="nx">Ionicons</span><span class="si">}</span> <span class="na">name</span><span class="p">=</span><span class="s">"home"</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Prefer SF Symbols + <code class="language-plaintext highlighter-rouge">md</code> prop over vector icons for native feel.</strong></p>
+
+<p>If you are using SDK 55 and later <strong>use the md prop to specify Material Symbols used on Android</strong>.</p>
+
+<h2 id="structure-with-stacks">Structure with Stacks</h2>
+
+<p>Native tabs don’t render headers. Nest Stacks inside each tab for navigation headers:</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// app/(tabs)/_layout.tsx</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">NativeTabs</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router/unstable-native-tabs</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">TabLayout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"(home)"</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">sf</span><span class="p">=</span><span class="s">"house.fill"</span> <span class="na">md</span><span class="p">=</span><span class="s">"home"</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// app/(tabs)/(home)/_layout.tsx</span>
+<span class="k">import</span> <span class="nx">Stack</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router/stack</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">HomeStack</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">Stack</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Stack</span><span class="p">.</span><span class="nc">Screen</span>
+        <span class="na">name</span><span class="p">=</span><span class="s">"index"</span>
+        <span class="na">options</span><span class="p">=</span><span class="si">{</span><span class="p">{</span> <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Home</span><span class="dl">"</span><span class="p">,</span> <span class="na">headerLargeTitle</span><span class="p">:</span> <span class="kc">true</span> <span class="p">}</span><span class="si">}</span>
+      <span class="p">/&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Stack</span><span class="p">.</span><span class="nc">Screen</span> <span class="na">name</span><span class="p">=</span><span class="s">"details"</span> <span class="na">options</span><span class="p">=</span><span class="si">{</span><span class="p">{</span> <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Details</span><span class="dl">"</span> <span class="p">}</span><span class="si">}</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">Stack</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="custom-web-layout">Custom Web Layout</h2>
+
+<p>Use platform-specific files for separate native and web tab layouts:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app/
+  _layout.tsx          # NativeTabs for iOS/Android
+  _layout.web.tsx      # Headless tabs for web (expo-router/ui)
+</code></pre></div></div>
+
+<p>Or extract to a component: <code class="language-plaintext highlighter-rouge">components/app-tabs.tsx</code> + <code class="language-plaintext highlighter-rouge">components/app-tabs.web.tsx</code>.</p>
+
+<h2 id="migration-from-js-tabs">Migration from JS Tabs</h2>
+
+<h3 id="before-js-tabs">Before (JS Tabs)</h3>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Tabs</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="p">&lt;</span><span class="nc">Tabs</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">Tabs</span><span class="p">.</span><span class="nc">Screen</span>
+    <span class="na">name</span><span class="p">=</span><span class="s">"index"</span>
+    <span class="na">options</span><span class="p">=</span><span class="si">{</span><span class="p">{</span>
+      <span class="na">title</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Home</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">tabBarIcon</span><span class="p">:</span> <span class="p">({</span> <span class="nx">color</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nc">IconSymbol</span> <span class="na">name</span><span class="p">=</span><span class="s">"house.fill"</span> <span class="na">color</span><span class="p">=</span><span class="si">{</span><span class="nx">color</span><span class="si">}</span> <span class="p">/&gt;,</span>
+      <span class="na">tabBarBadge</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="p">}</span><span class="si">}</span>
+  <span class="p">/&gt;</span>
+<span class="p">&lt;/</span><span class="nc">Tabs</span><span class="p">&gt;;</span>
+</code></pre></div></div>
+
+<h3 id="after-native-tabs">After (Native Tabs)</h3>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">NativeTabs</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router/unstable-native-tabs</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span> <span class="na">name</span><span class="p">=</span><span class="s">"index"</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>Home<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Label</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Icon</span> <span class="na">sf</span><span class="p">=</span><span class="s">"house.fill"</span> <span class="na">md</span><span class="p">=</span><span class="s">"home"</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Badge</span><span class="p">&gt;</span>3<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">.</span><span class="nc">Badge</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">.</span><span class="nc">Trigger</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nc">NativeTabs</span><span class="p">&gt;;</span>
+</code></pre></div></div>
+
+<h3 id="key-differences">Key Differences</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>JS Tabs</th>
+      <th>Native Tabs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;Tabs.Screen&gt;</code></td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;NativeTabs.Trigger&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">options={{ title }}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;NativeTabs.Trigger.Label&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">options={{ tabBarIcon }}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;NativeTabs.Trigger.Icon&gt;</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">tabBarBadge</code> option</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;NativeTabs.Trigger.Badge&gt;</code></td>
+    </tr>
+    <tr>
+      <td>Props-based API</td>
+      <td>Component-based API</td>
+    </tr>
+    <tr>
+      <td>Headers built-in</td>
+      <td>Nest <code class="language-plaintext highlighter-rouge">&lt;Stack&gt;</code> for headers</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+  <li><strong>Android</strong>: Maximum 5 tabs (Material Design constraint)</li>
+  <li><strong>Nesting</strong>: Native tabs cannot nest inside other native tabs</li>
+  <li><strong>Tab bar height</strong>: Cannot be measured programmatically</li>
+  <li><strong>FlatList transparency</strong>: Use <code class="language-plaintext highlighter-rouge">disableTransparentOnScrollEdge</code> to fix issues</li>
+  <li><strong>Dynamic tabs</strong>: Tabs must be static; changes remount navigator and lose state</li>
+</ul>
+
+<h2 id="keyboard-handling-android">Keyboard Handling (Android)</h2>
+
+<p>Configure in app.json:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"expo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"android"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"softwareKeyboardLayoutMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"resize"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="common-issues">Common Issues</h2>
+
+<ol>
+  <li><strong>Icons not showing on Android</strong>: Add <code class="language-plaintext highlighter-rouge">md</code> prop (SDK 55) or use VectorIcon</li>
+  <li><strong>Headers missing</strong>: Nest a Stack inside each tab group</li>
+  <li><strong>Trigger name mismatch</strong>: <code class="language-plaintext highlighter-rouge">name</code> must match exact route name including parentheses</li>
+  <li><strong>Badge not visible</strong>: Badge must be a child of Trigger, not a prop</li>
+  <li><strong>Tab bar transparent on iOS 18 and earlier</strong>: If the screen uses a <code class="language-plaintext highlighter-rouge">ScrollView</code> or <code class="language-plaintext highlighter-rouge">FlatList</code>, make sure it is the first opaque child of the screen component. If it needs to be wrapped in another <code class="language-plaintext highlighter-rouge">View</code>, ensure the wrapper uses <code class="language-plaintext highlighter-rouge">collapsable={false}</code>. If the screen does not use a <code class="language-plaintext highlighter-rouge">ScrollView</code> or <code class="language-plaintext highlighter-rouge">FlatList</code>, set <code class="language-plaintext highlighter-rouge">disableTransparentOnScrollEdge</code> to <code class="language-plaintext highlighter-rouge">true</code> in the <code class="language-plaintext highlighter-rouge">NativeTabs.Trigger</code> options, to make the tab bar opaque.</li>
+  <li><strong>Scroll to top not working</strong>: Ensure <code class="language-plaintext highlighter-rouge">disableScrollToTop</code> is not set on the active tab’s Trigger and <code class="language-plaintext highlighter-rouge">ScrollView</code> is the first child of the screen component.</li>
+  <li><strong>Header buttons flicker when navigating between tabs</strong>: Make sure the app is wrapped in a <code class="language-plaintext highlighter-rouge">ThemeProvider</code></li>
+</ol>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span>
+  <span class="nx">ThemeProvider</span><span class="p">,</span>
+  <span class="nx">DarkTheme</span><span class="p">,</span>
+  <span class="nx">DefaultTheme</span><span class="p">,</span>
+<span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@react-navigation/native</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">useColorScheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">react-native</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Stack</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">Layout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">colorScheme</span> <span class="o">=</span> <span class="nf">useColorScheme</span><span class="p">();</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">ThemeProvider</span> <span class="na">theme</span><span class="p">=</span><span class="si">{</span><span class="nx">colorScheme</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">dark</span><span class="dl">"</span> <span class="p">?</span> <span class="nx">DarkTheme</span> <span class="p">:</span> <span class="nx">DefaultTheme</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Stack</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">ThemeProvider</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>If the app only uses a light or dark theme, you can directly pass <code class="language-plaintext highlighter-rouge">DarkTheme</code> or <code class="language-plaintext highlighter-rouge">DefaultTheme</code> to <code class="language-plaintext highlighter-rouge">ThemeProvider</code> without checking the color scheme.</p>
+
+<div class="language-tsx highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">ThemeProvider</span><span class="p">,</span> <span class="nx">DarkTheme</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@react-navigation/native</span><span class="dl">"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Stack</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">expo-router</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nf">Layout</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return </span><span class="p">(</span>
+    <span class="p">&lt;</span><span class="nc">ThemeProvider</span> <span class="na">theme</span><span class="p">=</span><span class="si">{</span><span class="nx">DarkTheme</span><span class="si">}</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nc">Stack</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nc">ThemeProvider</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

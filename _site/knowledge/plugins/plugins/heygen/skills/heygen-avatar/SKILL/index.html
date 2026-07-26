@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Create a persistent HeyGen avatar — a reusable face + voice identity for the agent, the user, or any named character — powered by HeyGen Avatar V technology....">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/heygen/skills/heygen-avatar/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/heygen/skills/heygen-avatar/SKILL/">
+<meta property="og:description" content="Create a persistent HeyGen avatar — a reusable face + voice identity for the agent, the user, or any named character — powered by HeyGen Avatar V technology....">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Create a persistent HeyGen avatar — a reusable face + voice identity for the agent,
+the user, or any named character — powered by HeyGen Avatar V technology.
+Prompt-based creation by default (description → HeyGen builds it); photo upload is
+optional for real-person digital twins.
+Use when: (1) giving the agent a face + voice so it can present videos
+("bring yourself to life", "create your avatar", "give yourself an avatar",
+"design a presenter", "set up an avatar", "let's make an avatar"),
+(2) the user wants to appear in videos as themselves ("create my avatar",
+"I want my face in a video", "digital twin of me", "build me an avatar"),
+(3) building a named character presenter ("create an avatar called Cleo",
+"design a character named X"), (4) establishing HeyGen identity before making videos —
+the correct FIRST step when no avatar exists yet.
+Chain signal: when the user says both an identity/avatar action AND a video action in the same
+request ("create an avatar AND make a video", "set up identity THEN create a video",
+"design a presenter AND immediately record"), run heygen-avatar first, then heygen-video.
+Returns avatar_id + voice_id — pass directly to heygen-video to create HeyGen videos.
+NOT for: generating videos (use heygen-video), translating videos, or TTS-only tasks.
+</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="heygen-avatar-designer">HeyGen Avatar Designer</h1>
+
+<p>Create and manage HeyGen avatars for anyone: the agent, the user, or named characters. Handles identity extraction, avatar generation, voice selection, and saves everything to <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code> for consistent reuse.</p>
+
+<h2 id="files--paths">Files &amp; Paths</h2>
+
+<p>This skill reads and writes the following. No other files are accessed without explicit user instruction.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Path</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Read</td>
+      <td><code class="language-plaintext highlighter-rouge">SOUL.md</code>, <code class="language-plaintext highlighter-rouge">IDENTITY.md</code></td>
+      <td>Extract identity details when creating an avatar for the agent</td>
+    </tr>
+    <tr>
+      <td>Read</td>
+      <td><code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code></td>
+      <td>Load existing avatar identity (for variant looks, voice updates)</td>
+    </tr>
+    <tr>
+      <td>Write</td>
+      <td><code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code></td>
+      <td>Save new avatar identity after creation</td>
+    </tr>
+    <tr>
+      <td>Write</td>
+      <td><code class="language-plaintext highlighter-rouge">AVATAR-AGENT.md</code>, <code class="language-plaintext highlighter-rouge">AVATAR-USER.md</code> (symlinks)</td>
+      <td>Role aliases, see Phase 5</td>
+    </tr>
+    <tr>
+      <td>Temp write</td>
+      <td><code class="language-plaintext highlighter-rouge">/tmp/heygen/uploads/</code></td>
+      <td>Voice preview audio (downloaded for user playback, deleted after session)</td>
+    </tr>
+    <tr>
+      <td>Remote upload</td>
+      <td>HeyGen (via CLI/API asset upload)</td>
+      <td>Local photos/videos uploaded to HeyGen before avatar creation</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Assets are only uploaded to HeyGen when the user explicitly provides them.</p>
+
+<h2 id="language-awareness">Language Awareness</h2>
+
+<p><strong>Detect the user’s language from their first message.</strong> Store as <code class="language-plaintext highlighter-rouge">user_language</code> (e.g., <code class="language-plaintext highlighter-rouge">en</code>, <code class="language-plaintext highlighter-rouge">ja</code>, <code class="language-plaintext highlighter-rouge">es</code>, <code class="language-plaintext highlighter-rouge">ko</code>, <code class="language-plaintext highlighter-rouge">zh</code>, <code class="language-plaintext highlighter-rouge">fr</code>, <code class="language-plaintext highlighter-rouge">de</code>, <code class="language-plaintext highlighter-rouge">pt</code>).</p>
+
+<ol>
+  <li><strong>Communicate with the user in their language.</strong> All questions, status updates, confirmations, and error messages should be in <code class="language-plaintext highlighter-rouge">user_language</code>.</li>
+  <li><strong>Voice design prompts and selection respect <code class="language-plaintext highlighter-rouge">user_language</code>.</strong> When designing or selecting a voice, specify the target language so the voice library returns matches that speak it.</li>
+  <li><strong>Technical directives stay in English</strong> — enum values (<code class="language-plaintext highlighter-rouge">Young Adult</code>, <code class="language-plaintext highlighter-rouge">Realistic</code>, <code class="language-plaintext highlighter-rouge">landscape</code>, etc.) are API-level and not translated.</li>
+</ol>
+
+<h2 id="ux-rules">UX Rules</h2>
+
+<ol>
+  <li><strong>Be concise.</strong> No avatar IDs, group IDs, or raw API payloads in chat. Report the result (avatar created, ready to use) not the plumbing.</li>
+  <li><strong>No internal jargon.</strong> Never mention internal phase names (“Phase 0”, “Phase 5 Symlink Maintenance”) to the user. The user sees natural conversation: “Setting up your avatar\u2026” not “Running Phase 2 avatar creation.”</li>
+  <li><strong>One or two questions per phase.</strong> Don’t batch-ask. Walk phases in order, ask the smallest set of questions needed to proceed.</li>
+  <li><strong>Read workspace files before asking.</strong> <code class="language-plaintext highlighter-rouge">SOUL.md</code>, <code class="language-plaintext highlighter-rouge">IDENTITY.md</code>, <code class="language-plaintext highlighter-rouge">AVATAR-*.md</code> at the workspace root contain identity. Check them first. Only ask the user for what’s genuinely missing.</li>
+  <li><strong>Don’t narrate skill internals.</strong> Never say “let me read the workflow,” “checking the reference files,” “loading the avatar discovery guide.” Read silently. The user sees questions and results, not internal navigation.</li>
+  <li><strong>Don’t announce what you’re about to do.</strong> Skip meta-commentary like “Creating the avatar now.” Just do the work. If a step takes time, the next thing the user hears should be the result (or a checkpoint question).</li>
+  <li><strong>Never narrate transport choice.</strong> App vs CLI is internal. Pick the transport silently and never mention it. If both are unavailable, ask the user to configure one without explaining why.</li>
+</ol>
+
+<h2 id="start-here-critical">Start Here (Critical)</h2>
+
+<p><strong>Default target = the agent.</strong> The primary use of this skill is giving the agent a face + voice so it can present videos. Route to “user” only on explicit “my avatar” / “me” / “my photo” language. When in doubt, make the agent’s avatar.</p>
+
+<p><strong>Do NOT batch-ask questions.</strong> No “give me a photo, voice preference, duration, target platform, tone, key message” all at once. Walk phases in order. Each phase asks at most one or two things at a time.</p>
+
+<p><strong>For agent avatars: read SOUL.md and IDENTITY.md first, then go straight to prompt-based creation.</strong> Do NOT ask the user for a photo or appearance details first. The agent’s identity lives in those workspace files. Only ask the user for traits that are genuinely missing.</p>
+
+<p><strong>Prompt-based is the default creation path.</strong> Photo is opt-in, only relevant when the user explicitly wants a real-person digital twin of themselves. Agents and named characters almost always use prompt-based creation.</p>
+
+<h2 id="before-you-start-environment-detection">Before You Start (environment detection)</h2>
+
+<p>Try to read <code class="language-plaintext highlighter-rouge">SOUL.md</code> from the workspace root.</p>
+
+<ul>
+  <li><strong>Found</strong> → Workspace-native identity files are available. Skip this entire section and go straight to Phase 0. <code class="language-plaintext highlighter-rouge">SOUL.md</code> and <code class="language-plaintext highlighter-rouge">IDENTITY.md</code> will drive agent onboarding.</li>
+  <li><strong>Not found</strong> → No workspace identity files are available. Still go to Phase 0 next — do NOT skip ahead to listing user avatars or asking the user for a photo.</li>
+</ul>
+
+<p><strong>⚠️ AVATAR file caveat:</strong> Ignore any AVATAR-<em>.md files found in the workspace that belong to a *different</em> person or agent (e.g., <code class="language-plaintext highlighter-rouge">AVATAR-Eve.md</code> when creating an avatar for a different subject). Only use an AVATAR file if its name matches the subject you’re creating for right now.</p>
+
+<p><strong>⚠️ Do NOT fetch HeyGen avatars yet.</strong> That’s a Phase 0 sub-step (only after target detection). Fetching before Phase 0 causes the agent to frame the conversation around “your existing avatars” when the default should be creating one for the agent itself.</p>
+
+<h2 id="api-mode-detection">API Mode Detection</h2>
+
+<p><strong>Mode selection is silent.</strong> Detect once at the start of the session, pick a mode, move on. Never narrate transport choice (“CLI is broken”, “switching to the app”) — the user doesn’t care how calls are made.</p>
+
+<p><strong>HeyGen app (preferred):</strong> If the HeyGen app is available through the installed app integration, use it. The app authenticates via OAuth and runs against the user’s existing HeyGen plan credits.</p>
+
+<p><strong>Auth triage (run immediately):</strong> run <code class="language-plaintext highlighter-rouge">command -v heygen</code> and <code class="language-plaintext highlighter-rouge">heygen auth status</code>. If app/MCP auth fails but CLI auth is valid, continue in CLI mode for this run.</p>
+
+<p><strong>Local media limitation:</strong> The current HeyGen app connector does NOT upload local files. Its photo/video/avatar tools accept only hosted HTTPS URLs or existing HeyGen <code class="language-plaintext highlighter-rouge">asset_id</code> values. Never pass <code class="language-plaintext highlighter-rouge">file://</code>, absolute local paths, or Codex attachment paths directly to app tools. For local photos/videos, first upload with <code class="language-plaintext highlighter-rouge">heygen asset create --file &lt;path&gt;</code> or <code class="language-plaintext highlighter-rouge">POST https://api.heygen.com/v3/assets</code> using <code class="language-plaintext highlighter-rouge">multipart/form-data</code>; then pass <code class="language-plaintext highlighter-rouge">{ "type": "asset_id", "asset_id": "..." }</code> to the app or CLI creation call. If no CLI/API upload path is available, ask the user for an HTTPS image URL or permission to continue with prompt-only creation.</p>
+
+<p><strong>CLI fallback:</strong> If the app is not available AND the <code class="language-plaintext highlighter-rouge">heygen</code> binary runs cleanly (<code class="language-plaintext highlighter-rouge">heygen --version</code> exits 0), use it. Auth: <code class="language-plaintext highlighter-rouge">HEYGEN_API_KEY</code> env OR <code class="language-plaintext highlighter-rouge">heygen auth login</code> (persists to <code class="language-plaintext highlighter-rouge">~/.heygen/credentials</code>). If the CLI is missing, errors on <code class="language-plaintext highlighter-rouge">--version</code>, or auth is not set, silently skip it.</p>
+
+<p>In Codex desktop/sandboxed runs, CLI network calls may fail with DNS/network errors until network approval/escalation is granted. Retry with escalation when needed.</p>
+
+<p><strong>Neither available:</strong> Only if the app is unavailable AND the CLI doesn’t work, tell the user once: “To use this skill, connect the HeyGen app or install the HeyGen CLI: <code class="language-plaintext highlighter-rouge">curl -fsSL https://static.heygen.ai/cli/install.sh | bash</code> then <code class="language-plaintext highlighter-rouge">heygen auth login</code>.” If the only missing capability is local media upload, say that local photos need an HTTPS URL or a CLI/API asset upload first.</p>
+
+<p><strong>API:</strong> v3 only. Never call v1 or v2 endpoints.</p>
+
+<p><strong>Docs-first rule:</strong> Before calling any endpoint you’re unsure about:</p>
+<ul>
+  <li><strong>Index:</strong> <code class="language-plaintext highlighter-rouge">GET https://developers.heygen.com/llms.txt</code> — full sitemap</li>
+  <li><strong>Any page:</strong> Append <code class="language-plaintext highlighter-rouge">.md</code> to the URL for clean markdown</li>
+  <li>Or run <code class="language-plaintext highlighter-rouge">heygen &lt;noun&gt; &lt;verb&gt; --help</code></li>
+  <li>Read the spec, THEN build your request. Never guess field names.</li>
+</ul>
+
+<h2 id="avatar-file-convention">Avatar File Convention</h2>
+
+<p>Every avatar gets one file: <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code> at the workspace root.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AVATAR-EVE.md      ← agent      (named, canonical)
+AVATAR-KEN.md      ← user       (named, canonical)
+AVATAR-CLEO.md     ← character  (named, canonical)
+</code></pre></div></div>
+
+<p>The skill also maintains two <strong>role-based symlinks</strong> alongside the named
+files, for generic lookups by consumer skills (e.g., heygen-video) when the
+request doesn’t carry a specific name (“make a video of yourself” → read
+the agent alias; “make a video of me” → read the user alias):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AVATAR-AGENT.md → AVATAR-&lt;CURRENT-AGENT-NAME&gt;.md   (symlink)
+AVATAR-USER.md  → AVATAR-&lt;CURRENT-USER-NAME&gt;.md    (symlink)
+</code></pre></div></div>
+
+<p>Named files are the single source of truth; aliases are pointers and never
+drift. Phase 5 of the workflow maintains them. Named characters get NO
+role alias — they are referenced by name only.</p>
+
+<p>Format:</p>
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gh"># Avatar: &lt;Name&gt;</span>
+
+<span class="gu">## Appearance</span>
+<span class="p">-</span> Age: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Gender: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Ethnicity: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Hair: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Build: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Features: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Style: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Reference: <span class="nt">&lt;optional</span> <span class="na">workspace-relative</span> <span class="na">path</span> <span class="na">or</span> <span class="na">URL</span><span class="nt">&gt;</span>
+
+<span class="gu">## Voice</span>
+<span class="p">-</span> Tone: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Accent: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Energy: <span class="nt">&lt;natural</span> <span class="na">language</span><span class="nt">&gt;</span>
+<span class="p">-</span> Think: <span class="nt">&lt;one-line</span> <span class="na">analogy</span><span class="nt">&gt;</span>
+
+<span class="gu">## HeyGen</span>
+<span class="p">-</span> Group ID: <span class="nt">&lt;character</span> <span class="na">identity</span> <span class="na">anchor</span> <span class="err">—</span> <span class="na">THE</span> <span class="na">stable</span> <span class="na">reference</span><span class="err">,</span> <span class="na">never</span> <span class="na">changes</span><span class="nt">&gt;</span>
+<span class="p">-</span> Voice ID: <span class="nt">&lt;matched</span> <span class="na">or</span> <span class="na">designed</span> <span class="na">voice</span><span class="nt">&gt;</span>
+<span class="p">-</span> Voice Name: <span class="nt">&lt;human-readable&gt;</span>
+<span class="p">-</span> Voice Designed: <span class="nt">&lt;true</span> <span class="na">if</span> <span class="na">custom-designed</span><span class="err">,</span> <span class="na">false</span> <span class="na">if</span> <span class="na">picked</span> <span class="na">from</span> <span class="na">catalog</span><span class="nt">&gt;</span>
+<span class="p">-</span> Voice Seed: <span class="nt">&lt;seed</span> <span class="na">value</span> <span class="na">used</span><span class="err">,</span> <span class="na">if</span> <span class="na">designed</span><span class="nt">&gt;</span>
+<span class="p">-</span> Looks: landscape=<span class="nt">&lt;look_id&gt;</span>, portrait=<span class="nt">&lt;look_id&gt;</span>, square=<span class="nt">&lt;look_id&gt;</span>
+<span class="p">-</span> Last Synced: <span class="nt">&lt;ISO</span> <span class="na">timestamp</span><span class="nt">&gt;</span>
+
+⚠️ look_ids are ephemeral — always resolve fresh from group_id at runtime via <span class="sb">`heygen avatar looks list --group-id &lt;id&gt;`</span> (or the corresponding HeyGen app tool). Never hardcode look_id as the primary avatar reference.
+</code></pre></div></div>
+
+<p><strong>Top sections</strong> (Appearance, Voice) are portable natural language. Any platform can use them.
+<strong>HeyGen section</strong> is runtime config with API IDs. Skills read this to make API calls.</p>
+
+<h2 id="skill-announcement">Skill Announcement</h2>
+
+<p>Start every invocation with:</p>
+
+<blockquote>
+  <p>🎭 <strong>Using: heygen-avatar</strong> — creating an avatar for [name]</p>
+</blockquote>
+
+<h2 id="workflow">Workflow</h2>
+
+<p><strong>DO NOT batch-ask questions upfront.</strong> Walk phases in order. Each phase asks at most one thing at a time, and only if needed.</p>
+
+<h3 id="phase-0--who-are-we-creating">Phase 0 — Who Are We Creating?</h3>
+
+<p>See the Start Here block above for the default-to-agent rule. Only route to “user” or “named character” when the phrasing is unambiguous.</p>
+
+<p>Routing signals (in priority order):</p>
+
+<ol>
+  <li><strong>User</strong> (explicit only) — “create <strong>my</strong> avatar”, “make <strong>me</strong> an avatar”, “I want my face in a video”, “a digital twin of <strong>me</strong>”, “based on <strong>my</strong> photo”. Requires a possessive pronoun referring to the user OR explicit mention of their photo. Ask for their name if not obvious.</li>
+  <li><strong>Named character</strong> (explicit only) — “create an avatar called Cleo”, “design a character named X”, “build a presenter named Y” → use the given name.</li>
+  <li><strong>Agent</strong> (default) — everything else: “create your avatar”, “bring yourself to life”, “set up an avatar”, “let’s make an avatar”, “create an avatar”, “design a presenter”, “I want you to appear in videos”, or any ambiguous phrasing. Read <code class="language-plaintext highlighter-rouge">IDENTITY.md</code> for name.</li>
+</ol>
+
+<p><strong>When unsure, default to agent.</strong> Do NOT ask the user for their name, appearance, or voice on an ambiguous request — that’s the wrong first move. If after reading IDENTITY.md + SOUL.md the intent still feels ambiguous, ask one short clarifying question to disambiguate (phrase it naturally — something like “quick check: this avatar is for you, or for me?”).</p>
+
+<p>Then check <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code> at the workspace root:</p>
+
+<ul>
+  <li><strong>AVATAR file exists + HeyGen section filled in</strong> → “You already have an avatar set up. Want to add a new look, update it, or start fresh?” Wait for answer.</li>
+  <li><strong>AVATAR file exists but HeyGen section empty</strong> → skip to Phase 2.</li>
+  <li><strong>No AVATAR file</strong> → proceed to Phase 1.</li>
+</ul>
+
+<p><strong>Role alias staleness check.</strong> Before proceeding, also check whether the
+role alias for this target is already pointing at the right named file:</p>
+
+<ul>
+  <li>For <strong>agent target</strong>: read <code class="language-plaintext highlighter-rouge">AVATAR-AGENT.md</code> (follow symlink) and
+compare to <code class="language-plaintext highlighter-rouge">AVATAR-&lt;CURRENT-AGENT-NAME&gt;.md</code>. If they differ (e.g.,
+<code class="language-plaintext highlighter-rouge">AVATAR-AGENT.md</code> → <code class="language-plaintext highlighter-rouge">AVATAR-OLD-NAME.md</code> because the agent identity
+changed since the last run), re-link in Phase 5 even if no other
+changes are made. The named file is canonical, but the alias must
+match the <em>current</em> identity, not the historical one.</li>
+  <li>For <strong>user target</strong>: same check on <code class="language-plaintext highlighter-rouge">AVATAR-USER.md</code>.</li>
+  <li>For <strong>named character</strong>: no alias to check.</li>
+</ul>
+
+<p><strong>Optional existing-avatar check</strong> (only useful on the user path when the user might already have avatars in their HeyGen account). If Phase 0 target = <strong>user</strong> AND no <code class="language-plaintext highlighter-rouge">AVATAR-&lt;USER&gt;.md</code> exists, list their HeyGen avatars first:</p>
+
+<p><strong>App:</strong> use the HeyGen app to list private avatar groups
+<strong>CLI:</strong> <code class="language-plaintext highlighter-rouge">heygen avatar list --ownership private</code></p>
+
+<p>If the list is non-empty, present the options and ask which to use or whether to create new. If empty, proceed to Phase 1. Skip this check entirely for agent and named-character targets — those live in AVATAR-*.md, not the HeyGen catalog.</p>
+
+<h3 id="phase-1--identity-extraction">Phase 1 — Identity Extraction</h3>
+
+<p><strong>Order matters. Files first, questions second. Prompt-based creation is the default path — photo is an opt-in upgrade.</strong></p>
+
+<p><strong>For the agent</strong> (Phase 0 target = agent):</p>
+<ol>
+  <li>Read <code class="language-plaintext highlighter-rouge">SOUL.md</code>, <code class="language-plaintext highlighter-rouge">IDENTITY.md</code>, and any existing <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code> from the workspace root.</li>
+  <li>If SOUL.md or IDENTITY.md is found → extract appearance and voice traits silently. Do NOT ask the user “describe your appearance” — the agent IS the subject, and its identity lives in those files. <strong>If the files describe only personality / values with no physical description, do NOT hallucinate traits.</strong> Ask the user conversationally for the missing appearance traits only (one or two at a time).</li>
+  <li>If neither file is found (for example, in a workspace with no identity files) → ask the user to describe the agent’s appearance and voice conversationally.</li>
+  <li>Proceed directly to <strong>Type A (prompt) creation</strong> in Phase 2 by default. Do NOT ask for a photo unless the user volunteers one or explicitly asks for photo realism — agents almost always use prompt-based creation.</li>
+</ol>
+
+<p><strong>For users/named characters</strong> (Phase 0 target = user or named):</p>
+<ul>
+  <li>Conversational onboarding. Ask naturally about appearance and voice — one or two questions at a time, not a form. Communicate in <code class="language-plaintext highlighter-rouge">user_language</code>.</li>
+  <li><strong>User path only:</strong> after the onboarding Q&amp;A, run the Reference Photo Nudge below.</li>
+  <li><strong>Named character path:</strong> skip the nudge, go straight to Type A (prompt) creation.</li>
+</ul>
+
+<p>Write <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code> with the Appearance and Voice sections filled in. Leave the HeyGen section empty until Phase 2 succeeds.</p>
+
+<h3 id="reference-photo-nudge-user-path-only">Reference Photo Nudge (user path only)</h3>
+
+<p>Only run this step when Phase 0 target = <strong>user</strong> (real-person digital twin) OR when the user explicitly asks for photo realism.</p>
+
+<ul>
+  <li>Check AVATAR file’s Appearance → Reference field first. If a photo is already on file, skip asking and use it.</li>
+  <li>Otherwise, ask one sentence: <em>“Got a headshot? It gives better face consistency for videos of you. I can also generate from your description — just say ‘skip.’”</em></li>
+</ul>
+
+<p>Branch:</p>
+<ul>
+  <li><strong>Photo provided as local file/path</strong> → upload via <code class="language-plaintext highlighter-rouge">heygen asset create --file &lt;path&gt;</code> or <code class="language-plaintext highlighter-rouge">POST https://api.heygen.com/v3/assets</code>, then Type B (photo) creation with the returned <code class="language-plaintext highlighter-rouge">asset_id</code>.</li>
+  <li><strong>Photo provided as HTTPS URL or asset_id</strong> → Type B (photo) creation in Phase 2.</li>
+  <li><strong>Local photo but no upload path available</strong> → ask for an HTTPS image URL or offer prompt-only creation. Do not pass the local path into the app connector.</li>
+  <li><strong>Skip</strong> → Type A (prompt) creation in Phase 2.</li>
+</ul>
+
+<p>For agents and named characters, skip this entire step — go straight to Type A (prompt) creation.</p>
+
+<h3 id="phase-2--avatar-creation">Phase 2 — Avatar Creation</h3>
+
+<p>📖 <strong>Full creation API surface (photo / prompt / digital twin), file input formats, identity field → enum mapping, response shape → <a href="references/avatar-creation.md">references/avatar-creation.md</a></strong></p>
+
+<p>Two modes:</p>
+
+<p><strong>Mode 1 — New character</strong> (omit <code class="language-plaintext highlighter-rouge">avatar_group_id</code>):
+Creates a brand new character with its own group.</p>
+
+<p><strong>Mode 2 — New look</strong> (include <code class="language-plaintext highlighter-rouge">avatar_group_id</code>):
+Adds a variation to an existing character. Read the Group ID from the AVATAR file.</p>
+
+<p>Two creation types:</p>
+
+<p><strong>Type A — From prompt (AI-generated appearance):</strong></p>
+
+<p><strong>App:</strong> use the HeyGen app flow for prompt-based avatar creation.
+<strong>CLI:</strong> <code class="language-plaintext highlighter-rouge">heygen avatar create -d '{"type":"prompt","name":"...","prompt":"...","avatar_group_id":"..."}'</code> (accepts inline JSON, a file path, or <code class="language-plaintext highlighter-rouge">-</code> for stdin)</p>
+
+<p>Prompt limit is 1000 characters. Be descriptive — include style, features, expression, lighting. The API spec says 200 but the actual enforced limit is 1000.</p>
+
+<p><strong>Type B — From reference image:</strong></p>
+
+<p><strong>App:</strong> use the HeyGen app flow for photo avatar creation only with an HTTPS URL or pre-uploaded <code class="language-plaintext highlighter-rouge">asset_id</code>.
+<strong>CLI:</strong> <code class="language-plaintext highlighter-rouge">heygen avatar create -d '{"type":"photo","name":"...","file":{"type":"asset_id","asset_id":"..."},"avatar_group_id":"..."}'</code></p>
+
+<p>File options for Type B:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">{ "type": "url", "url": "https://..." }</code> — public image URL</li>
+  <li><code class="language-plaintext highlighter-rouge">{ "type": "asset_id", "asset_id": "&lt;id&gt;" }</code> — from <code class="language-plaintext highlighter-rouge">heygen asset create --file &lt;path&gt;</code></li>
+</ul>
+
+<p>Do not pass local paths or <code class="language-plaintext highlighter-rouge">file://</code> URLs to the app connector. Upload local files to an <code class="language-plaintext highlighter-rouge">asset_id</code> first.</p>
+
+<p>Raw API upload example:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ASSET_ID</span><span class="o">=</span><span class="si">$(</span>curl <span class="nt">-s</span> <span class="nt">-X</span> POST <span class="s2">"https://api.heygen.com/v3/assets"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"X-Api-Key: </span><span class="nv">$HEYGEN_API_KEY</span><span class="s2">"</span> <span class="se">\</span>
+  <span class="nt">-F</span> <span class="s2">"file=@/path/to/headshot.jpg"</span> | jq <span class="nt">-r</span> <span class="s1">'.data.asset_id'</span><span class="si">)</span>
+</code></pre></div></div>
+
+<p>The v3 upload endpoint accepts <code class="language-plaintext highlighter-rouge">multipart/form-data</code>, auto-detects MIME type from file bytes, and returns <code class="language-plaintext highlighter-rouge">data.asset_id</code>.</p>
+
+<p>📖 <strong>When to use each (URL vs asset_id), upload routing, and edge cases → <a href="references/asset-routing.md">references/asset-routing.md</a></strong></p>
+
+<p><strong>Response:</strong> Returns <code class="language-plaintext highlighter-rouge">avatar_item.id</code> (look ID) and <code class="language-plaintext highlighter-rouge">avatar_item.group_id</code> (character identity).</p>
+
+<p>Map identity fields to HeyGen enums for the prompt:</p>
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>age</strong>: Young Adult</td>
+          <td>Early Middle Age</td>
+          <td>Late Middle Age</td>
+          <td>Senior</td>
+          <td>Unspecified</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>gender</strong>: Man</td>
+          <td>Woman</td>
+          <td>Unspecified</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>ethnicity</strong>: White</td>
+          <td>Black</td>
+          <td>Asian American</td>
+          <td>East Asian</td>
+          <td>South East Asian</td>
+          <td>South Asian</td>
+          <td>Middle Eastern</td>
+          <td>Pacific</td>
+          <td>Hispanic</td>
+          <td>Unspecified</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>style</strong>: Realistic</td>
+          <td>Pixar</td>
+          <td>Cinematic</td>
+          <td>Vintage</td>
+          <td>Noir</td>
+          <td>Cyberpunk</td>
+          <td>Unspecified</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>orientation</strong>: square</td>
+          <td>horizontal</td>
+          <td>vertical</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td><strong>pose</strong>: half_body</td>
+          <td>close_up</td>
+          <td>full_body</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<p>Show the prompt to the user before creating:</p>
+<blockquote>
+  <p><strong>Appearance:</strong> “[prompt]”
+<strong>Settings:</strong> Young Adult | Woman | East Asian | Realistic
+Look good? (yes / adjust / completely different)</p>
+</blockquote>
+
+<p>⛔ <strong>STOP. Wait for the user to approve or adjust. Do NOT call the avatar creation API until the user confirms.</strong></p>
+
+<h3 id="phase-3--voice">Phase 3 — Voice</h3>
+
+<p>Two paths: <strong>Design</strong> (describe what you want, get matched voices) or <strong>Browse</strong> (filter the catalog manually).</p>
+
+<p>Ask whether they want voice design (describe what they want) or catalog browsing. Communicate in <code class="language-plaintext highlighter-rouge">user_language</code>.</p>
+
+<p>Default to <strong>Design</strong> if the AVATAR file has a Voice section with personality traits.</p>
+
+<h4 id="path-a--voice-design-preferred">Path A — Voice Design (preferred)</h4>
+
+<p>Find matching voices via semantic search using the Voice section from the AVATAR file. This searches HeyGen’s full voice library. No new voices are generated and no quota is consumed.</p>
+
+<p><strong>Language matching:</strong> The voice design prompt should specify the target language from <code class="language-plaintext highlighter-rouge">user_language</code>. Example for Japanese: <code class="language-plaintext highlighter-rouge">"A calm, warm female voice. Professional but approachable. Japanese speaker."</code> This ensures semantic search returns voices in the correct language.</p>
+
+<p><strong>App:</strong> use the HeyGen app flow for voice selection or design.
+<strong>CLI:</strong> <code class="language-plaintext highlighter-rouge">heygen voice create --prompt "..." --seed 0</code> (also accepts <code class="language-plaintext highlighter-rouge">--gender</code>, <code class="language-plaintext highlighter-rouge">--locale</code>)</p>
+
+<p>Returns 3 voice options per seed. Present all 3 with inline audio previews:</p>
+<ul>
+  <li>Download each <code class="language-plaintext highlighter-rouge">preview_audio_url</code> to a temp path (any standard download method works — no HeyGen auth needed, these are public S3 URLs)</li>
+  <li>Send as audio attachment: <code class="language-plaintext highlighter-rouge">message(action:send, media:"&lt;path&gt;", caption:"Option &lt;n&gt;: &lt;voice_name&gt; — &lt;gender&gt;, &lt;language&gt;")</code> so it plays inline in Telegram/Discord</li>
+  <li>After all previews sent, present selection buttons</li>
+</ul>
+
+<p>⛔ <strong>STOP. Wait for the user to pick a voice via buttons or text. Do NOT select a voice yourself or proceed to Phase 4 until the user explicitly chooses.</strong></p>
+
+<p>If none match:</p>
+<blockquote>
+  <p>“None of these hitting right? I can try a different set (same description, different variations) or you can tweak the description.”</p>
+</blockquote>
+
+<p>Increment <code class="language-plaintext highlighter-rouge">seed</code> and call again. Different seeds give completely different voice options from the same prompt.</p>
+
+<ul>
+  <li>Clean up /tmp files after user picks</li>
+</ul>
+
+<h4 id="path-b--voice-browse-fallback">Path B — Voice Browse (fallback)</h4>
+
+<p>Browse HeyGen’s existing voice library:</p>
+
+<p><strong>App:</strong> browse available voices in the HeyGen app, filtered to the target language and voice characteristics when possible.
+<strong>CLI:</strong> <code class="language-plaintext highlighter-rouge">heygen voice list --type private</code> / <code class="language-plaintext highlighter-rouge">heygen voice list --type public --language &lt;lang&gt; --gender &lt;gender&gt;</code></p>
+
+<ol>
+  <li>Read the Voice section from the AVATAR file</li>
+  <li>Filter by gender and language</li>
+  <li>Pick top 3 candidates based on personality match</li>
+  <li>Present with inline audio previews (same download + send pattern as Path A)</li>
+  <li>⛔ <strong>STOP. Wait for the user to pick. Do NOT auto-select.</strong></li>
+</ol>
+
+<h3 id="phase-4--save-to-avatar-file">Phase 4 — Save to AVATAR File</h3>
+
+<p>Update the HeyGen section of <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code> to match the canonical format:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## HeyGen</span>
+<span class="p">-</span> Group ID: <span class="nt">&lt;avatar_item.group_id</span> <span class="err">—</span> <span class="na">THE</span> <span class="na">stable</span> <span class="na">reference</span><span class="err">,</span> <span class="na">never</span> <span class="na">changes</span><span class="nt">&gt;</span>
+<span class="p">-</span> Voice ID: <span class="nt">&lt;chosen</span> <span class="na">voice_id</span><span class="nt">&gt;</span>
+<span class="p">-</span> Voice Name: <span class="nt">&lt;voice</span> <span class="na">name</span><span class="nt">&gt;</span>
+<span class="p">-</span> Voice Designed: <span class="nt">&lt;true</span> <span class="na">if</span> <span class="na">custom-designed</span><span class="err">,</span> <span class="na">false</span> <span class="na">if</span> <span class="na">picked</span> <span class="na">from</span> <span class="na">catalog</span><span class="nt">&gt;</span>
+<span class="p">-</span> Voice Seed: <span class="nt">&lt;seed</span> <span class="na">value</span> <span class="na">used</span><span class="err">,</span> <span class="na">if</span> <span class="na">designed</span><span class="nt">&gt;</span>
+<span class="p">-</span> Looks: <span class="nt">&lt;orientation&gt;</span>=<span class="nt">&lt;avatar_item.id&gt;</span> (e.g., landscape=<span class="nt">&lt;look_id&gt;</span>, portrait=<span class="nt">&lt;look_id&gt;</span>)
+<span class="p">-</span> Last Synced: <span class="nt">&lt;ISO</span> <span class="na">timestamp</span><span class="nt">&gt;</span>
+
+⚠️ look_ids are ephemeral — always resolve fresh from group_id at runtime via <span class="sb">`heygen avatar looks list --group-id &lt;id&gt;`</span> (or the corresponding look picker in the HeyGen app). Never hardcode look_id as the primary avatar reference.
+</code></pre></div></div>
+
+<p>Confirm the avatar is saved and that other skills (like heygen-video) will pick it up automatically. Communicate in <code class="language-plaintext highlighter-rouge">user_language</code>.</p>
+
+<h3 id="phase-5--maintain-role-alias">Phase 5 — Maintain Role Alias</h3>
+
+<p>After writing the named <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code>, create or update a role-based
+symlink alongside it so other skills can do generic lookups without
+resolving the agent / user name first.</p>
+
+<p>Based on the Phase 0 target:</p>
+
+<ul>
+  <li><strong>Agent target</strong> → symlink <code class="language-plaintext highlighter-rouge">AVATAR-AGENT.md</code> → <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code></li>
+  <li><strong>User target</strong> → symlink <code class="language-plaintext highlighter-rouge">AVATAR-USER.md</code> → <code class="language-plaintext highlighter-rouge">AVATAR-&lt;NAME&gt;.md</code></li>
+  <li><strong>Named character</strong> → no role alias. Named characters are referenced by
+name only (e.g., <code class="language-plaintext highlighter-rouge">AVATAR-CLEO.md</code>); they are not the agent or the user.</li>
+</ul>
+
+<p><strong>Implementation (run from the workspace root, with fs-fallback):</strong></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">cd</code> to workspace root is mandatory — bare relative paths in <code class="language-plaintext highlighter-rouge">ln -s</code>
+resolve from the agent’s current working directory, not where SOUL.md
+lives. The <code class="language-plaintext highlighter-rouge">|| echo</code> clause handles filesystems that reject symlinks
+(Windows without dev mode, some cloud-mounted storage) without aborting
+Phase 5.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Agent</span>
+<span class="nb">cd</span> <span class="s2">"</span><span class="nv">$WORKSPACE_ROOT</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> <span class="nb">ln</span> <span class="nt">-sf</span> AVATAR-&lt;NAME&gt;.md AVATAR-AGENT.md <span class="se">\</span>
+  <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"role alias skipped: fs doesn't support symlinks"</span>
+
+<span class="c"># User</span>
+<span class="nb">cd</span> <span class="s2">"</span><span class="nv">$WORKSPACE_ROOT</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> <span class="nb">ln</span> <span class="nt">-sf</span> AVATAR-&lt;NAME&gt;.md AVATAR-USER.md <span class="se">\</span>
+  <span class="o">||</span> <span class="nb">echo</span> <span class="s2">"role alias skipped: fs doesn't support symlinks"</span>
+</code></pre></div></div>
+
+<p>Use a relative link target (just the filename, no path prefix) so the
+alias survives if the workspace is moved or copied.</p>
+
+<p><code class="language-plaintext highlighter-rouge">ln -sf</code> is unlink-then-symlink under the hood, not strictly atomic.
+Fine for single-user workspaces; if concurrent agents ever write the
+same alias, expect interleaving and add explicit locking then.</p>
+
+<p><strong>Why symlink, not copy:</strong> removes the duplicate-file drift class
+(content can never diverge between named file and alias). It does NOT
+remove staleness drift — if <code class="language-plaintext highlighter-rouge">IDENTITY.md</code> changes the agent name without
+re-running heygen-avatar, <code class="language-plaintext highlighter-rouge">AVATAR-AGENT.md</code> keeps pointing at the <em>old</em>
+named file. Phase 0 mismatch-and-re-alias handles this on the next
+invocation; until then, the alias is stale-but-pointing-somewhere-valid,
+not broken.</p>
+
+<p><strong>Multi-agent workspace caveat:</strong> one role alias per workspace is
+last-writer-wins. If two agents ever share a workspace and both run
+heygen-avatar, only the most recent run’s identity is reachable via
+<code class="language-plaintext highlighter-rouge">AVATAR-AGENT.md</code>. Named files for both still exist. We accept this
+limit — multi-agent shared workspaces are out of scope for v1.</p>
+
+<h3 id="phase-6--test-optional">Phase 6 — Test (Optional)</h3>
+
+<p>If the user wants to see their avatar in action:</p>
+
+<p><strong>App:</strong> use the HeyGen app’s video-generation flow with the selected avatar and voice.
+<strong>CLI:</strong> <code class="language-plaintext highlighter-rouge">heygen video-agent create --avatar-id &lt;id&gt; --voice-id &lt;id&gt; --prompt "..." --wait</code></p>
+
+<p>Generate a natural greeting in the video language (from <code class="language-plaintext highlighter-rouge">user_language</code>). Examples: English “Hi, I’m [name]. Nice to meet you!”, Japanese “[name]です。はじめまして！”, Spanish “Hola, soy [name]. ¡Mucho gusto!”, Korean “안녕하세요, [name]입니다. 만나서 반갑습니다!”</p>
+
+<h2 id="iteration-flow">Iteration Flow</h2>
+
+<p>When the user wants to refine:</p>
+
+<ul>
+  <li><strong>“Adjust the prompt”</strong> → Mode 2 with existing group_id (keeps the character, adds a new look). Only Mode 1 if they say “start completely over.”</li>
+  <li><strong>“Add a new look”</strong> / <strong>“different outfit”</strong> → Mode 2 with existing group_id. Add to Looks in AVATAR file.</li>
+  <li><strong>“Try a different voice”</strong> → back to Phase 3</li>
+  <li><strong>“Start completely over”</strong> → Mode 1, new character. Overwrite HeyGen section.</li>
+</ul>
+
+<p><strong>Default to Mode 2 (new look under same group).</strong> Only create a new group when the user explicitly wants a different character identity. This keeps the account clean and makes looks reusable across skills.</p>
+
+<p>Each iteration updates the AVATAR file. The file is always the source of truth.</p>
+
+<h2 id="ux-rules-1">UX Rules</h2>
+
+<p><strong>Be interactive at checkpoints, silent everywhere else.</strong> Stop and wait at avatar approval and voice selection. Between checkpoints, work silently — don’t narrate reasoning or explain next steps. After voice pick: save + confirm in one message.</p>
+
+<h2 id="video-producer-integration">Video Producer Integration</h2>
+
+<p><code class="language-plaintext highlighter-rouge">heygen-video</code> reads AVATAR files for group_id and voice_id. Resolution
+order:</p>
+
+<ol>
+  <li><strong>Named request</strong> (“Make a video with Eve”) → read <code class="language-plaintext highlighter-rouge">AVATAR-EVE.md</code>.</li>
+  <li><strong>Agent self-reference</strong> (“make a video of yourself”, “give us a video
+update”) → read <code class="language-plaintext highlighter-rouge">AVATAR-AGENT.md</code> (symlink to current agent’s named file).</li>
+  <li><strong>User self-reference</strong> (“make a video of me”, “my video update”) → read
+<code class="language-plaintext highlighter-rouge">AVATAR-USER.md</code> (symlink to current user’s named file).</li>
+  <li><strong>No AVATAR file or symlink</strong> → fall back to stock avatars or ask user.</li>
+</ol>
+
+<p>The alias targets are resolved by the OS at read time, so consumer skills
+simply <code class="language-plaintext highlighter-rouge">cat AVATAR-AGENT.md</code> and get whatever the current agent’s avatar is.</p>
+
+<h2 id="error-handling">Error Handling</h2>
+
+<ul>
+  <li>Missing SOUL.md/IDENTITY.md → conversational onboarding, write AVATAR file from answers</li>
+  <li>API fails → retry once, then ask user to check API key</li>
+  <li>Voice match poor → show all available voices, let user browse</li>
+  <li>Asset upload unavailable or fails → ask for an HTTPS URL or skip reference image and try prompt-only creation</li>
+  <li>Existing avatar file with stale HeyGen IDs → offer to regenerate or keep</li>
+</ul>
+
+<p>📖 <strong>Known issues, retry patterns, broken voice previews, error → action mapping → <a href="references/troubleshooting.md">references/troubleshooting.md</a></strong></p>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

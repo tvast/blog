@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Bot Authentication · A developer journey</title>
+<meta name="description" content="Bot Authentication - JWT, ZAK, and OBF Tokens">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/zoom/skills/meeting-sdk/references/bot-authentication/">
+
+<meta property="og:title" content="Bot Authentication · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/zoom/skills/meeting-sdk/references/bot-authentication/">
+<meta property="og:description" content="Bot Authentication - JWT, ZAK, and OBF Tokens">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Bot Authentication</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="bot-authentication---jwt-zak-and-obf-tokens">Bot Authentication - JWT, ZAK, and OBF Tokens</h1>
+
+<p>Understanding the different token types for Meeting SDK authentication, especially for bots joining meetings.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>Meeting SDK authentication involves multiple token types that serve different purposes. This guide clarifies the confusion between JWT signatures, ZAK tokens, and OBF tokens.</p>
+
+<h2 id="token-types-summary">Token Types Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Purpose</th>
+      <th>Always Required?</th>
+      <th>Deprecated?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>JWT Signature</strong></td>
+      <td>Initialize/authenticate Meeting SDK</td>
+      <td><strong>Yes</strong></td>
+      <td><strong>No</strong></td>
+    </tr>
+    <tr>
+      <td><strong>ZAK Token</strong></td>
+      <td>Authenticate as a Zoom user</td>
+      <td>No (situational)</td>
+      <td><strong>No</strong></td>
+    </tr>
+    <tr>
+      <td><strong>OBF Token</strong></td>
+      <td>Join external meetings with user attribution</td>
+      <td>No (required Feb 2026)</td>
+      <td><strong>No</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="common-confusion">Common Confusion</h2>
+
+<h3 id="jwt-app-type-vs-jwt-signature">JWT App Type vs JWT Signature</h3>
+
+<p><strong>This is the #1 source of confusion.</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>What It Is</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>JWT App Type</strong></td>
+      <td>A Zoom app type for REST API authentication</td>
+      <td><strong>Deprecated</strong> (migrated to Server-to-Server OAuth)</td>
+    </tr>
+    <tr>
+      <td><strong>JWT Signature</strong></td>
+      <td>A token generated using SDK credentials to authenticate Meeting SDK</td>
+      <td><strong>Still required and NOT deprecated</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Key Point:</strong> The deprecation of JWT App Type does NOT affect Meeting SDK. You still need JWT signatures for SDK authentication.</p>
+
+<hr />
+
+<h2 id="1-jwt-signature-always-required">1. JWT Signature (Always Required)</h2>
+
+<h3 id="what-is-it">What Is It?</h3>
+
+<p>A JWT (JSON Web Token) signature authenticates your application to use the Meeting SDK. Generated server-side using your SDK Client ID and Client Secret.</p>
+
+<h3 id="when-to-use">When to Use</h3>
+
+<p><strong>Always.</strong> Every Meeting SDK join requires a JWT signature.</p>
+
+<h3 id="how-to-generate">How to Generate</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Server-side (Node.js)</span>
+<span class="kd">const</span> <span class="nx">KJUR</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">jsrsasign</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="kd">function</span> <span class="nf">generateSignature</span><span class="p">(</span><span class="nx">sdkKey</span><span class="p">,</span> <span class="nx">sdkSecret</span><span class="p">,</span> <span class="nx">meetingNumber</span><span class="p">,</span> <span class="nx">role</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">iat</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">round</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-</span> <span class="mi">30</span><span class="p">;</span>  <span class="c1">// 30 seconds ago</span>
+  <span class="kd">const</span> <span class="nx">exp</span> <span class="o">=</span> <span class="nx">iat</span> <span class="o">+</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>                    <span class="c1">// 2 hours from iat</span>
+
+  <span class="kd">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">sdkKey</span><span class="p">:</span> <span class="nx">sdkKey</span><span class="p">,</span>        <span class="c1">// Your SDK Client ID</span>
+    <span class="na">mn</span><span class="p">:</span> <span class="nx">meetingNumber</span><span class="p">,</span>     <span class="c1">// Meeting number to join</span>
+    <span class="na">role</span><span class="p">:</span> <span class="nx">role</span><span class="p">,</span>            <span class="c1">// 0 = participant, 1 = host</span>
+    <span class="na">iat</span><span class="p">:</span> <span class="nx">iat</span><span class="p">,</span>
+    <span class="na">exp</span><span class="p">:</span> <span class="nx">exp</span><span class="p">,</span>
+    <span class="na">tokenExp</span><span class="p">:</span> <span class="nx">exp</span>
+  <span class="p">};</span>
+
+  <span class="kd">const</span> <span class="nx">header</span> <span class="o">=</span> <span class="p">{</span> <span class="na">alg</span><span class="p">:</span> <span class="dl">'</span><span class="s1">HS256</span><span class="dl">'</span><span class="p">,</span> <span class="na">typ</span><span class="p">:</span> <span class="dl">'</span><span class="s1">JWT</span><span class="dl">'</span> <span class="p">};</span>
+
+  <span class="k">return</span> <span class="nx">KJUR</span><span class="p">.</span><span class="nx">jws</span><span class="p">.</span><span class="nx">JWS</span><span class="p">.</span><span class="nf">sign</span><span class="p">(</span><span class="dl">'</span><span class="s1">HS256</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">header</span><span class="p">),</span>
+    <span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">payload</span><span class="p">),</span>
+    <span class="nx">sdkSecret</span>              <span class="c1">// Your SDK Client Secret</span>
+  <span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="best-practice-short-lived-tokens">Best Practice: Short-Lived Tokens</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Generate token just before joining</span>
+<span class="kd">const</span> <span class="nx">iat</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">floor</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-</span> <span class="mi">7200</span><span class="p">;</span>  <span class="c1">// 2 hours in past</span>
+<span class="kd">const</span> <span class="nx">exp</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nf">floor</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nf">now</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">10</span><span class="p">;</span>    <span class="c1">// 10 seconds from now</span>
+
+<span class="c1">// Why this works:</span>
+<span class="c1">// - exp is short-lived (security)</span>
+<span class="c1">// - exp - iat &gt;= 2 hours (Zoom requirement)</span>
+<span class="c1">// - Token generated right before use</span>
+</code></pre></div></div>
+
+<h3 id="role-values">Role Values</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Role</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Participant</td>
+      <td>0</td>
+      <td>Join as attendee</td>
+    </tr>
+    <tr>
+      <td>Host</td>
+      <td>1</td>
+      <td>Join as host (requires being meeting owner or having host key)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="2-zak-token-zoom-access-key">2. ZAK Token (Zoom Access Key)</h2>
+
+<h3 id="what-is-it-1">What Is It?</h3>
+
+<p>A short-lived credential that proves your bot/app is authenticated as a specific Zoom user. Generated via the Zoom REST API.</p>
+
+<h3 id="when-to-use-1">When to Use</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>ZAK Required?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Meeting has “Only Authenticated Users Can Join” enabled</td>
+      <td><strong>Yes</strong></td>
+    </tr>
+    <tr>
+      <td>Starting a meeting as the host (when host not present)</td>
+      <td><strong>Yes</strong> (host’s ZAK)</td>
+    </tr>
+    <tr>
+      <td>Changing bot’s profile picture to match a user</td>
+      <td><strong>Yes</strong></td>
+    </tr>
+    <tr>
+      <td>Regular meeting join</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="how-to-get-zak-token">How to Get ZAK Token</h3>
+
+<p><strong>Step 1: Get OAuth Access Token</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> POST <span class="s2">"https://zoom.us/oauth/token"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Basic {BASE64(client_id:client_secret)}"</span> <span class="se">\</span>
+  <span class="nt">-d</span> <span class="s2">"grant_type=authorization_code&amp;code={auth_code}&amp;redirect_uri={redirect_uri}"</span>
+</code></pre></div></div>
+
+<p><strong>Step 2: Generate ZAK Token</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://api.zoom.us/v2/users/me/token?type=zak&amp;ttl=7200"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Bearer {access_token}"</span>
+</code></pre></div></div>
+
+<p><strong>Response:</strong></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="required-oauth-scope">Required OAuth Scope</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user:read:zak
+</code></pre></div></div>
+
+<h3 id="using-zak-in-sdk-join">Using ZAK in SDK Join</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Web SDK</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+  <span class="na">signature</span><span class="p">:</span> <span class="nx">signature</span><span class="p">,</span>      <span class="c1">// JWT signature (always required)</span>
+  <span class="na">sdkKey</span><span class="p">:</span> <span class="nx">clientId</span><span class="p">,</span>
+  <span class="na">meetingNumber</span><span class="p">:</span> <span class="nx">meetingNumber</span><span class="p">,</span>
+  <span class="na">passWord</span><span class="p">:</span> <span class="nx">password</span><span class="p">,</span>
+  <span class="na">userName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Meeting Bot</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">zak</span><span class="p">:</span> <span class="nx">zakToken</span><span class="p">,</span>             <span class="c1">// ZAK token for authenticated join</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Joined</span><span class="dl">'</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="key-properties">Key Properties</h3>
+
+<ul>
+  <li><strong>Short-lived</strong>: Configurable TTL (typically 1-2 hours)</li>
+  <li><strong>Any ZAK works</strong>: Doesn’t need to be from a meeting participant</li>
+  <li><strong>No concurrency limit</strong>: One service account can generate unlimited tokens</li>
+  <li><strong>Expiry checked at join</strong>: If already in meeting, bot stays connected even if ZAK expires</li>
+</ul>
+
+<h3 id="common-mistake">Common Mistake</h3>
+
+<p><strong>Wrong:</strong> Thinking ZAK must be from a meeting participant.</p>
+
+<p><strong>Right:</strong> Any Zoom account’s ZAK satisfies “Only Authenticated Users” requirement. Create one service account (e.g., <code class="language-plaintext highlighter-rouge">meeting-bot@company.com</code>) for all your bots.</p>
+
+<hr />
+
+<h2 id="3-obf-token-on-behalf-of-token">3. OBF Token (On-Behalf-Of Token)</h2>
+
+<h3 id="what-is-it-2">What Is It?</h3>
+
+<p>A new credential that ties your bot to a specific user who is present in the meeting. Required for external meetings starting <strong>February 23, 2026</strong>.</p>
+
+<h3 id="why-introduced">Why Introduced?</h3>
+
+<p>Zoom introduced OBF tokens for accountability and transparency. It makes clear that an SDK app belongs to a specific person in the meeting.</p>
+
+<h3 id="when-to-use-2">When to Use</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>External Meeting Requirement</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Before Feb 23, 2026</td>
+      <td>ZAK or OBF (optional)</td>
+    </tr>
+    <tr>
+      <td><strong>After Feb 23, 2026</strong></td>
+      <td><strong>ZAK or OBF required</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="critical-difference-obf-vs-zak">Critical Difference: OBF vs ZAK</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Aspect</th>
+      <th>ZAK Token</th>
+      <th>OBF Token</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>User presence required</td>
+      <td>No</td>
+      <td><strong>Yes</strong> - user MUST be in meeting</td>
+    </tr>
+    <tr>
+      <td>Bot disconnection</td>
+      <td>Stays if token owner leaves</td>
+      <td><strong>Immediately disconnected</strong> if user leaves</td>
+    </tr>
+    <tr>
+      <td>Meeting scope</td>
+      <td>Any meeting</td>
+      <td>Specific meeting ID only</td>
+    </tr>
+    <tr>
+      <td>Attribution</td>
+      <td>Generic authentication</td>
+      <td>Tied to specific attending user</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="how-to-get-obf-token">How to Get OBF Token</h3>
+
+<p><strong>Step 1: Get OAuth Access Token</strong> (same as ZAK)</p>
+
+<p><strong>Step 2: Generate OBF Token</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-X</span> GET <span class="s2">"https://api.zoom.us/v2/users/me/token?type=onbehalf&amp;meeting_id={meeting_id}"</span> <span class="se">\</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Bearer {access_token}"</span>
+</code></pre></div></div>
+
+<p><strong>Response:</strong></p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"token"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="required-oauth-scope-1">Required OAuth Scope</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>user:read:token
+</code></pre></div></div>
+
+<h3 id="using-obf-in-sdk-join">Using OBF in SDK Join</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Web SDK</span>
+<span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+  <span class="na">signature</span><span class="p">:</span> <span class="nx">signature</span><span class="p">,</span>      <span class="c1">// JWT signature (always required)</span>
+  <span class="na">sdkKey</span><span class="p">:</span> <span class="nx">clientId</span><span class="p">,</span>
+  <span class="na">meetingNumber</span><span class="p">:</span> <span class="nx">meetingNumber</span><span class="p">,</span>
+  <span class="na">passWord</span><span class="p">:</span> <span class="nx">password</span><span class="p">,</span>
+  <span class="na">userName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Meeting Bot</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">obfToken</span><span class="p">:</span> <span class="nx">obfToken</span><span class="p">,</span>        <span class="c1">// OBF token (NOT zak)</span>
+  <span class="na">success</span><span class="p">:</span> <span class="p">(</span><span class="nx">success</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Joined</span><span class="dl">'</span><span class="p">),</span>
+  <span class="na">error</span><span class="p">:</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">error</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>Important:</strong> <code class="language-plaintext highlighter-rouge">zak</code> and <code class="language-plaintext highlighter-rouge">obfToken</code> are <strong>mutually exclusive</strong>. Use only one.</p>
+
+<h3 id="handling-join-failures">Handling Join Failures</h3>
+
+<p>If bot joins before authorizing user is in meeting:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SDK v6.6.10+ returns specific error code</span>
+<span class="c1">// MEETING_FAIL_AUTHORIZED_USER_NOT_INMEETING</span>
+
+<span class="k">async</span> <span class="kd">function</span> <span class="nf">joinWithRetry</span><span class="p">(</span><span class="nx">joinOptions</span><span class="p">,</span> <span class="nx">maxRetries</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for </span><span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">maxRetries</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="k">await</span> <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nx">joinOptions</span><span class="p">);</span>
+      <span class="k">return</span><span class="p">;</span> <span class="c1">// Success</span>
+    <span class="p">}</span> <span class="k">catch </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">code</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">MEETING_FAIL_AUTHORIZED_USER_NOT_INMEETING</span><span class="dl">'</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="s2">`User not in meeting yet. Retry </span><span class="p">${</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span><span class="s2">/</span><span class="p">${</span><span class="nx">maxRetries</span><span class="p">}</span><span class="s2">`</span><span class="p">);</span>
+        <span class="k">await</span> <span class="nf">sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span> <span class="c1">// Wait 3 seconds</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="nx">error</span><span class="p">;</span> <span class="c1">// Different error, don't retry</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Max retries exceeded - user never joined meeting</span><span class="dl">'</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="obf-token-mapping">OBF Token Mapping</h3>
+
+<p>You must map users to their meetings:</p>
+
+<ol>
+  <li><strong>Zoom Meetings API</strong>: <code class="language-plaintext highlighter-rouge">GET /users/{userId}/meetings</code></li>
+  <li><strong>Calendar integration</strong>: Parse meeting invites from Google Calendar/Outlook</li>
+</ol>
+
+<hr />
+
+<h2 id="complete-bot-join-flow">Complete Bot Join Flow</h2>
+
+<h3 id="current-pre-feb-2026">Current (Pre-Feb 2026)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. Generate JWT signature (always required)</span>
+<span class="kd">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">generateSignature</span><span class="p">(</span><span class="nx">sdkKey</span><span class="p">,</span> <span class="nx">sdkSecret</span><span class="p">,</span> <span class="nx">meetingNumber</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 2. Optionally get ZAK for authenticated-only meetings</span>
+<span class="kd">let</span> <span class="nx">zakToken</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="k">if </span><span class="p">(</span><span class="nx">meetingRequiresAuth</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">zakToken</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getZAKToken</span><span class="p">(</span><span class="nx">accessToken</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// 3. Join meeting</span>
+<span class="k">await</span> <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+  <span class="na">signature</span><span class="p">:</span> <span class="nx">signature</span><span class="p">,</span>
+  <span class="na">sdkKey</span><span class="p">:</span> <span class="nx">sdkKey</span><span class="p">,</span>
+  <span class="na">meetingNumber</span><span class="p">:</span> <span class="nx">meetingNumber</span><span class="p">,</span>
+  <span class="na">passWord</span><span class="p">:</span> <span class="nx">password</span><span class="p">,</span>
+  <span class="na">userName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Meeting Bot</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">zak</span><span class="p">:</span> <span class="nx">zakToken</span><span class="p">,</span>  <span class="c1">// Optional</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<h3 id="post-feb-2026-external-meetings">Post-Feb 2026 (External Meetings)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. Generate JWT signature (always required)</span>
+<span class="kd">const</span> <span class="nx">signature</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">generateSignature</span><span class="p">(</span><span class="nx">sdkKey</span><span class="p">,</span> <span class="nx">sdkSecret</span><span class="p">,</span> <span class="nx">meetingNumber</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 2. For external meetings, get OBF token</span>
+<span class="kd">const</span> <span class="nx">obfToken</span> <span class="o">=</span> <span class="k">await</span> <span class="nf">getOBFToken</span><span class="p">(</span><span class="nx">accessToken</span><span class="p">,</span> <span class="nx">meetingNumber</span><span class="p">);</span>
+
+<span class="c1">// 3. Wait for authorizing user to join (if using OBF)</span>
+<span class="c1">// ... implement retry logic ...</span>
+
+<span class="c1">// 4. Join meeting</span>
+<span class="k">await</span> <span class="nx">ZoomMtg</span><span class="p">.</span><span class="nf">join</span><span class="p">({</span>
+  <span class="na">signature</span><span class="p">:</span> <span class="nx">signature</span><span class="p">,</span>
+  <span class="na">sdkKey</span><span class="p">:</span> <span class="nx">sdkKey</span><span class="p">,</span>
+  <span class="na">meetingNumber</span><span class="p">:</span> <span class="nx">meetingNumber</span><span class="p">,</span>
+  <span class="na">passWord</span><span class="p">:</span> <span class="nx">password</span><span class="p">,</span>
+  <span class="na">userName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Meeting Bot</span><span class="dl">"</span><span class="p">,</span>
+  <span class="na">obfToken</span><span class="p">:</span> <span class="nx">obfToken</span><span class="p">,</span>  <span class="c1">// For external meetings</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="linux-bot-implementation">Linux Bot Implementation</h2>
+
+<p>For headless Linux bots, use the official sample:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Clone sample repository</span>
+git clone git@github.com:zoom/meetingsdk-headless-linux-sample.git
+
+<span class="c"># Configure (sample.config.toml)</span>
+<span class="o">[</span>credentials]
+client_id <span class="o">=</span> <span class="s2">"YOUR_CLIENT_ID"</span>
+client_secret <span class="o">=</span> <span class="s2">"YOUR_CLIENT_SECRET"</span>
+
+<span class="o">[</span>meeting]
+join_url <span class="o">=</span> <span class="s2">"https://zoom.us/j/123456789?pwd=xxx"</span>
+<span class="c"># OR</span>
+meeting_id <span class="o">=</span> 123456789
+password <span class="o">=</span> <span class="s2">"abc123"</span>
+
+<span class="c"># Optional tokens</span>
+zak_token <span class="o">=</span> <span class="s2">"..."</span>   <span class="c"># For authenticated joins</span>
+obf_token <span class="o">=</span> <span class="s2">"..."</span>   <span class="c"># For external meetings</span>
+
+<span class="c"># Run with Docker</span>
+docker compose up
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="common-mistakes">Common Mistakes</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mistake</th>
+      <th>Reality</th>
+      <th>Fix</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>JWT signatures are deprecated</td>
+      <td>Only JWT App Type is deprecated</td>
+      <td>Continue using JWT signatures for SDK</td>
+    </tr>
+    <tr>
+      <td>ZAK must be from meeting participant</td>
+      <td>Any Zoom account’s ZAK works</td>
+      <td>Use single service account</td>
+    </tr>
+    <tr>
+      <td>Using both ZAK and OBF together</td>
+      <td>They’re mutually exclusive</td>
+      <td>Use only one</td>
+    </tr>
+    <tr>
+      <td>Generating OBF before user in meeting</td>
+      <td>OBF requires user presence</td>
+      <td>Implement retry logic</td>
+    </tr>
+    <tr>
+      <td>Development credentials for external meetings</td>
+      <td>Dev credentials only work for your account</td>
+      <td>Get production credentials (4-6 week review)</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="timeline">Timeline</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Change</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Now</strong></td>
+      <td>JWT signatures required; ZAK optional</td>
+    </tr>
+    <tr>
+      <td><strong>Nov 2025</strong></td>
+      <td>SDK v6.6.10 with OBF-specific error codes</td>
+    </tr>
+    <tr>
+      <td><strong>Feb 23, 2026</strong></td>
+      <td><strong>OBF or ZAK required for external meetings</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="oauth-scopes-summary">OAuth Scopes Summary</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Required Scope</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ZAK Token</td>
+      <td><code class="language-plaintext highlighter-rouge">user:read:zak</code></td>
+    </tr>
+    <tr>
+      <td>OBF Token</td>
+      <td><code class="language-plaintext highlighter-rouge">user:read:token</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="resources">Resources</h2>
+
+<ul>
+  <li><strong>Meeting SDK Auth</strong>: https://developers.zoom.us/docs/meeting-sdk/auth/</li>
+  <li><strong>OBF Token Announcement</strong>: https://developers.zoom.us/blog/transition-to-obf-token-meetingsdk-apps/</li>
+  <li><strong>Linux SDK Sample</strong>: https://github.com/zoom/meetingsdk-headless-linux-sample</li>
+  <li><strong>Developer Forum</strong>: https://devforum.zoom.us/</li>
+</ul>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

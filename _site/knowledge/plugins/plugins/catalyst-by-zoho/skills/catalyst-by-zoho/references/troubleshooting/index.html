@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Troubleshooting · A developer journey</title>
+<meta name="description" content="Catalyst Troubleshooting Guide">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/catalyst-by-zoho/skills/catalyst-by-zoho/references/troubleshooting/">
+
+<meta property="og:title" content="Troubleshooting · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/catalyst-by-zoho/skills/catalyst-by-zoho/references/troubleshooting/">
+<meta property="og:description" content="Catalyst Troubleshooting Guide">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>Troubleshooting</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="catalyst-troubleshooting-guide">Catalyst Troubleshooting Guide</h1>
+
+<h2 id="when-to-use-this-file">When to use this file</h2>
+<p>Load this file when the user reports something is broken, asks “why is X failing”, or needs
+diagnostic help with: deployments, function errors, ZCQL/Data Store issues, MCP tool errors,
+AppSail crashes, Circuits failures, cron problems, or API Gateway errors.</p>
+
+<hr />
+
+<h2 id="deployment-failures">Deployment Failures</h2>
+
+<h3 id="function-deployment-fails">Function deployment fails</h3>
+<ul>
+  <li><strong>Missing <code class="language-plaintext highlighter-rouge">.class</code> files (Java)</strong> — If uploaded via console, the <code class="language-plaintext highlighter-rouge">.class</code> files must be included.
+When deploying via CLI, <code class="language-plaintext highlighter-rouge">catalyst deploy</code> auto-compiles and creates missing dependency files.
+Fix: use <code class="language-plaintext highlighter-rouge">catalyst deploy</code> instead of manual console upload.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">catalyst.json</code> missing or malformed</strong> — Must exist at project root. Never create manually;
+it is auto-generated by <code class="language-plaintext highlighter-rouge">catalyst init</code>. If missing, re-run <code class="language-plaintext highlighter-rouge">catalyst init</code>.</li>
+  <li><strong>Wrong directory structure</strong> — Functions must be under <code class="language-plaintext highlighter-rouge">functions/</code>, web client under <code class="language-plaintext highlighter-rouge">client/</code>.
+Deviating from this structure causes deployment to fail silently or partially.</li>
+  <li><strong>Deploy specific components only:</strong>
+    <ul>
+      <li>Functions: <code class="language-plaintext highlighter-rouge">catalyst deploy --only functions</code></li>
+      <li>AppSail: <code class="language-plaintext highlighter-rouge">catalyst deploy appsail</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="is_deployed-false-in-api-responses-does-not-indicate-a-problem"><code class="language-plaintext highlighter-rouge">is_deployed: false</code> in API responses does not indicate a problem</h3>
+<p><code class="language-plaintext highlighter-rouge">List_All_Functions</code> and related API/MCP responses return <code class="language-plaintext highlighter-rouge">"is_deployed": false</code> for all
+functions — including functions that are actively deployed and handling requests. This field
+does not reflect actual deployment status and should be ignored. Verify function status from
+the Catalyst console (Functions list) or by invoking the function endpoint directly.</p>
+
+<h3 id="appsail-deployment-fails-or-app-not-responding-after-deploy">AppSail deployment fails or app not responding after deploy</h3>
+<ul>
+  <li><strong>Port mismatch</strong> — The <code class="language-plaintext highlighter-rouge">port</code> field in <code class="language-plaintext highlighter-rouge">catalyst-config.json</code> must exactly match the port
+the app listens on. Using a different port causes requests to fail.</li>
+  <li><strong>Cold start timeout</strong> — When the first request hits an inactive AppSail app, a new instance
+is spawned. The app <strong>must start listening on the port within 10 seconds</strong> or the instance is
+killed and the next request triggers a new cold start cycle.
+Fix: minimize initialization logic; start listening as early as possible.</li>
+  <li><strong>Missing env variable</strong> — Always use <code class="language-plaintext highlighter-rouge">process.env.X_ZOHO_CATALYST_LISTEN_PORT || 9000</code>
+(Node.js) for the port. Hard-coding a port can work locally but breaks in Catalyst’s environment.</li>
+  <li><strong>Docker image build failure (custom runtime)</strong> — Check the Dockerfile and ensure the image
+builds successfully locally before pushing to Catalyst’s container registry.</li>
+</ul>
+
+<h3 id="slate-deployment-fails">Slate deployment fails</h3>
+<ul>
+  <li><strong>Repository not in standard Catalyst project structure</strong> — The <code class="language-plaintext highlighter-rouge">catalyst.json</code> file MUST be
+present in the GitHub repository’s default branch. Without it, deployment fails.</li>
+  <li><strong>Default branch has wrong structure</strong> — Functions and Web Client Hosting won’t be updated if
+the structure is incorrect; no changes are reflected.</li>
+  <li><strong>Build command fails</strong> — Check Slate build logs in the console for the specific error.</li>
+  <li><strong>Recovery — Sync Now</strong> — If a deployment fails, use the “Sync Now” feature in the Catalyst
+console to merge the latest Git commit to the current deployment. You can also rollback to a
+previous successful deployment from the console.
+CLI: <code class="language-plaintext highlighter-rouge">catalyst deploy slate</code> (all apps) or <code class="language-plaintext highlighter-rouge">catalyst deploy --only slate:appname</code> (specific app)</li>
+</ul>
+
+<h3 id="github-based-deployment-fails">GitHub-based deployment fails</h3>
+<ul>
+  <li>Repository must contain resources in standard Catalyst project directory format.</li>
+  <li><code class="language-plaintext highlighter-rouge">catalyst.json</code> MUST be in the repository for deployment to succeed.</li>
+  <li>If deployment is unsuccessful, no changes are reflected in Functions or Web Client Hosting.</li>
+  <li>Fix: verify directory structure, add/fix <code class="language-plaintext highlighter-rouge">catalyst.json</code>, and redeploy.</li>
+</ul>
+
+<hr />
+
+<h2 id="function-execution-errors">Function Execution Errors</h2>
+
+<h3 id="timeout-errors">Timeout errors</h3>
+<p>Execution time limits by function type:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Function Type</th>
+      <th>Timeout</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Basic I/O</td>
+      <td>30 seconds</td>
+    </tr>
+    <tr>
+      <td>Advanced I/O</td>
+      <td>30 seconds</td>
+    </tr>
+    <tr>
+      <td>Event</td>
+      <td>15 minutes</td>
+    </tr>
+    <tr>
+      <td>Cron</td>
+      <td>15 minutes</td>
+    </tr>
+    <tr>
+      <td>Integration</td>
+      <td>30 seconds</td>
+    </tr>
+    <tr>
+      <td>Job</td>
+      <td>15 minutes</td>
+    </tr>
+    <tr>
+      <td>Browser Logic</td>
+      <td>30 seconds</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">context.getRemainingExecutionTimeMs()</code> inside the function to check remaining time.</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">context.getMaxExecutionTimeMs()</code> to get the configured maximum (constant value).</li>
+  <li>For operations exceeding 30 seconds, switch to Event, Job, or Cron function types (15-min limit).</li>
+  <li>For operations exceeding 15 minutes, migrate to AppSail (no function-level timeout).</li>
+  <li>For large batch processing, use Circuits batch state — it runs multiple function instances
+in parallel, avoiding timeout on a single long-running execution.</li>
+</ul>
+
+<h3 id="concurrency-limit-reached-429-error">Concurrency limit reached (429 error)</h3>
+<p>Error message: <code class="language-plaintext highlighter-rouge">"CONCURRENCY_LIMIT_REACHED FOR THE FEATURE FUNCTIONS"</code></p>
+<ul>
+  <li><strong>Production limit</strong>: 1500 concurrent executions (for a function that runs in 10ms)</li>
+  <li><strong>Development limit</strong>: 1000 concurrent executions (for a function that runs in 10ms)</li>
+  <li>Fix: implement retry with exponential backoff in the caller, or route heavy processing
+through Job Scheduling for async execution instead of direct function invocation.</li>
+</ul>
+
+<h3 id="memory-issues">Memory issues</h3>
+<ul>
+  <li>Default function memory: 128 MB</li>
+  <li>Default AppSail memory: 512 MB</li>
+  <li>Configurable range: 128–1024 MB (functions), 256–2048 MB (AppSail)</li>
+  <li>Use DevOps → APM to identify memory-intensive operations and compare response times
+across memory settings. Start at the lowest setting and increase as needed.</li>
+</ul>
+
+<h3 id="basic-io-limitations-causing-unexpected-errors">Basic I/O limitations causing unexpected errors</h3>
+<ul>
+  <li>Basic I/O returns <strong>STRING only</strong> — if you need JSON, use Advanced I/O.</li>
+  <li><code class="language-plaintext highlighter-rouge">basicIO.write()</code> can only be called <strong>once per execution</strong>. Calling it multiple times
+causes unexpected behavior.</li>
+  <li>Basic I/O does <strong>not support HTTP request/response headers</strong>. Use Advanced I/O for
+custom status codes, headers, or content types.</li>
+</ul>
+
+<h3 id="advanced-io--nodejs-res-object-issues">Advanced I/O — Node.js <code class="language-plaintext highlighter-rouge">res</code> object issues</h3>
+<p>In <code class="language-plaintext highlighter-rouge">node20</code>, the response object is a raw <code class="language-plaintext highlighter-rouge">http.ServerResponse</code>, <strong>not</strong> an Express response.</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">res.status()</code>, <code class="language-plaintext highlighter-rouge">res.json()</code>, <code class="language-plaintext highlighter-rouge">res.send()</code> do NOT exist.</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">res.writeHead(statusCode, headers)</code> and <code class="language-plaintext highlighter-rouge">res.end(JSON.stringify(data))</code>.</li>
+  <li>Helper pattern to use in all Advanced I/O functions:
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nf">sendJson</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="nx">statusCode</span><span class="p">,</span> <span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">writeHead</span><span class="p">(</span><span class="nx">statusCode</span><span class="p">,</span> <span class="p">{</span> <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="nx">res</span><span class="p">.</span><span class="nf">end</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nf">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="data-store--zcql-errors">Data Store / ZCQL Errors</h2>
+
+<h3 id="zcql-query-errors">ZCQL query errors</h3>
+<ul>
+  <li><strong>“Empty query” error</strong> — Wrong body key. Use <code class="language-plaintext highlighter-rouge">{ "zcql": "SELECT ..." }</code> not <code class="language-plaintext highlighter-rouge">{ "query": "..." }</code>.</li>
+  <li><strong>Max rows</strong> — ZCQL returns a maximum of 300 rows per query. Paginate with
+<code class="language-plaintext highlighter-rouge">LIMIT offset, count</code> (e.g., <code class="language-plaintext highlighter-rouge">LIMIT 0, 300</code>, then <code class="language-plaintext highlighter-rouge">LIMIT 300, 300</code>).</li>
+  <li><strong>Max columns per SELECT</strong> — ZCQL limits <code class="language-plaintext highlighter-rouge">SELECT</code> to 20 columns per query. Use explicit column
+names instead of <code class="language-plaintext highlighter-rouge">SELECT *</code> on tables with more than 20 columns.</li>
+  <li><strong>Case sensitivity</strong> — Table names and column names are case-sensitive; must match the
+console exactly.</li>
+  <li><strong>String quoting</strong> — String values in ZCQL must be in <strong>single quotes</strong>: <code class="language-plaintext highlighter-rouge">WHERE name = 'Alice'</code>.</li>
+  <li><strong>Row ID field</strong> — Use <code class="language-plaintext highlighter-rouge">ROWID</code> (uppercase), not <code class="language-plaintext highlighter-rouge">id</code>. The system primary key is always <code class="language-plaintext highlighter-rouge">ROWID</code>.</li>
+  <li><strong>Result unwrapping</strong> — <code class="language-plaintext highlighter-rouge">executeZCQLQuery</code> returns <code class="language-plaintext highlighter-rouge">[{ TableName: { ROWID: ..., col: ... } }]</code>.
+Always unwrap: <code class="language-plaintext highlighter-rouge">result.map(r =&gt; r.TableName)</code>. The key matches the table name as defined in
+the console (case-sensitive).</li>
+</ul>
+
+<h3 id="column-creation-errors">Column creation errors</h3>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">INVALID_INPUT: max_length cannot be null</code></strong> — <code class="language-plaintext highlighter-rouge">varchar</code> columns MUST specify <code class="language-plaintext highlighter-rouge">max_length</code>
+(e.g., <code class="language-plaintext highlighter-rouge">"max_length": 255</code>). Omitting this field always causes this error.</li>
+  <li><strong>System columns already exist</strong> — Do NOT create <code class="language-plaintext highlighter-rouge">ROWID</code>, <code class="language-plaintext highlighter-rouge">CREATORID</code>, <code class="language-plaintext highlighter-rouge">CREATEDTIME</code>, or
+<code class="language-plaintext highlighter-rouge">MODIFIEDTIME</code> columns. Catalyst adds these automatically to every table.</li>
+  <li><strong>Boolean fields as strings</strong> — All boolean column properties (<code class="language-plaintext highlighter-rouge">is_mandatory</code>, <code class="language-plaintext highlighter-rouge">is_unique</code>,
+<code class="language-plaintext highlighter-rouge">search_index_enabled</code>, <code class="language-plaintext highlighter-rouge">audit_consent</code>) must be passed as <strong>string values</strong>: <code class="language-plaintext highlighter-rouge">"true"</code> or
+<code class="language-plaintext highlighter-rouge">"false"</code>, not JSON booleans (<code class="language-plaintext highlighter-rouge">true</code> / <code class="language-plaintext highlighter-rouge">false</code>).</li>
+  <li><strong>Batch column creation</strong> — If one column definition in a batch <code class="language-plaintext highlighter-rouge">Create_Column</code> call is invalid,
+the entire batch fails. Validate all column types before sending.</li>
+</ul>
+
+<h3 id="data-store-permissions-error">Data Store permissions error</h3>
+<p>Error: <code class="language-plaintext highlighter-rouge">"No privileges to perform this action"</code></p>
+<ul>
+  <li>DataStore table permissions default to <strong>Read-only for App Users</strong>.</li>
+  <li>Insert, Update, and Delete must be explicitly enabled per table in the console:
+Data Store → [table] → Permissions → App User role.</li>
+  <li>Alternative: use admin-scoped SDK for DataStore operations:
+<code class="language-plaintext highlighter-rouge">catalyst.initialize(req, { scope: 'admin' })</code></li>
+</ul>
+
+<h3 id="createdtime-timezone-issues">CREATEDTIME timezone issues</h3>
+<ul>
+  <li>Catalyst stores <code class="language-plaintext highlighter-rouge">CREATEDTIME</code> in the project’s configured timezone (e.g. IST) WITHOUT an
+offset marker. Passing the raw string to <code class="language-plaintext highlighter-rouge">new Date()</code> treats it as UTC, producing timestamps
+that are hours off.</li>
+  <li>Fix: always append the project timezone offset before parsing the date string.</li>
+</ul>
+
+<h3 id="datastore-sdk-methods-hang-silently-in-job-functions-python-sdk">DataStore SDK methods hang silently in Job functions (Python SDK)</h3>
+<p>All <code class="language-plaintext highlighter-rouge">zcatalyst_sdk</code> DataStore <code class="language-plaintext highlighter-rouge">Table</code> methods (<code class="language-plaintext highlighter-rouge">get_paged_rows</code>, <code class="language-plaintext highlighter-rouge">delete_rows</code>, <code class="language-plaintext highlighter-rouge">insert_rows</code>,
+etc.) hardcode <code class="language-plaintext highlighter-rouge">CredentialUser.USER</code> internally. Job functions run under admin credentials only —
+<code class="language-plaintext highlighter-rouge">CredentialUser.USER</code> has no token, so every DataStore SDK call makes a request with no auth,
+waits indefinitely, and fails silently. No exception is raised; the function eventually hits the
+15-minute hard timeout.</p>
+<ul>
+  <li>Fix: call the underlying requester directly with <code class="language-plaintext highlighter-rouge">CredentialUser.ADMIN</code>:
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">zcatalyst_sdk.credential</span> <span class="kn">import</span> <span class="n">CredentialUser</span>
+
+<span class="n">rows</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">_requester</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span>
+    <span class="n">method</span><span class="o">=</span><span class="sh">"</span><span class="s">GET</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="sh">"</span><span class="s">/datastore/table/</span><span class="si">{</span><span class="n">table_identifier</span><span class="si">}</span><span class="s">/tablerow</span><span class="sh">"</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="n">CredentialUser</span><span class="p">.</span><span class="n">ADMIN</span><span class="p">,</span>
+    <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>Warning:</strong> <code class="language-plaintext highlighter-rouge">_requester</code> is a private API and may change between SDK versions. Check
+compatibility after SDK upgrades.</li>
+  <li>Cache SDK methods are NOT affected — they already use <code class="language-plaintext highlighter-rouge">CredentialUser.ADMIN</code> by default.</li>
+</ul>
+
+<h3 id="emoji--4-byte-utf-8-silently-corrupted">Emoji / 4-byte UTF-8 silently corrupted</h3>
+<ul>
+  <li>Data Store does NOT support emoji or 4-byte UTF-8 characters (many CJK extensions).</li>
+  <li>These are silently stored as <code class="language-plaintext highlighter-rouge">?</code>.</li>
+  <li>Workaround: store a string key (e.g., <code class="language-plaintext highlighter-rouge">"happy"</code>) and map to emoji in application code.</li>
+</ul>
+
+<hr />
+
+<h2 id="cache-errors">Cache Errors</h2>
+
+<h3 id="segmentdelete--delete_cache_item-does-not-remove-the-key"><code class="language-plaintext highlighter-rouge">segment.delete()</code> / <code class="language-plaintext highlighter-rouge">Delete_Cache_Item</code> does not remove the key</h3>
+<p><code class="language-plaintext highlighter-rouge">segment.delete(key)</code> (SDK) and the <code class="language-plaintext highlighter-rouge">Delete_Cache_Item</code> MCP tool both set <code class="language-plaintext highlighter-rouge">cache_value = null</code>
+and clear the TTL, but the key continues to exist indefinitely. A subsequent <code class="language-plaintext highlighter-rouge">segment.getValue(key)</code>
+does NOT raise a “key not found” error — it returns HTTP 200 with <code class="language-plaintext highlighter-rouge">cache_value: null</code>. Code that
+checks for key absence by catching an exception will incorrectly treat the null-value key as
+present.</p>
+<ul>
+  <li>Fix: check the value itself, not the exception:
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lock_val</span> <span class="o">=</span> <span class="n">segment</span><span class="p">.</span><span class="nf">get_value</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>  <span class="c1"># does not raise even if deleted
+</span><span class="k">if</span> <span class="n">lock_val</span><span class="p">:</span>  <span class="c1"># truthy check — null/empty means absent
+</span>    <span class="c1"># key is live
+</span></code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="segmentupdate-without-expiry-preserves-the-original-ttl-not-the-documented-48-hour-default"><code class="language-plaintext highlighter-rouge">segment.update()</code> without expiry preserves the original TTL (not the documented 48-hour default)</h3>
+<p><code class="language-plaintext highlighter-rouge">segment.update(key, value)</code> called without an expiry argument does <strong>not</strong> reset TTL to 48 hours
+as the documentation states. Instead, it <strong>preserves the original TTL</strong> from the initial <code class="language-plaintext highlighter-rouge">put()</code>.
+The expiry clock keeps counting down from its original wall-clock time. This means:</p>
+<ul>
+  <li>If you <code class="language-plaintext highlighter-rouge">put(key, value, 1)</code> (1 hour) then <code class="language-plaintext highlighter-rouge">update(key, newValue)</code> 30 minutes later, the key
+still expires 30 minutes after the update — not 48 hours later.</li>
+  <li>Fix: always pass the same TTL used at creation time to be explicit:
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">segment</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># 1-hour TTL, matching segment.put(key, value, 1)
+</span></code></pre></div>    </div>
+  </li>
+  <li>This applies to lock tokens, session state, and any key originally created with a TTL.</li>
+</ul>
+
+<hr />
+
+<h2 id="zoho-mcp-tool-errors">Zoho MCP Tool Errors</h2>
+
+<h3 id="permission_needed"><code class="language-plaintext highlighter-rouge">PERMISSION_NEEDED</code></h3>
+<p>Causes (check in this order):</p>
+<ol>
+  <li><strong>Wrong <code class="language-plaintext highlighter-rouge">projectId</code></strong> — The <code class="language-plaintext highlighter-rouge">id</code> returned by <code class="language-plaintext highlighter-rouge">List_All_Projects</code> is not always the correct
+project ID for tool calls. Get the correct ID from the Catalyst console URL:
+<code class="language-plaintext highlighter-rouge">https://console.catalyst.zoho.com/baas/&lt;org_id&gt;/project/&lt;project_id&gt;/...</code></li>
+  <li><strong>“On Demand” auth not enabled</strong> — Go to mcp.zoho.com → Connections → Edit →
+select “On Demand” → Update. Verify <code class="language-plaintext highlighter-rouge">Catalyst by Zoho</code> shows Status: Connected.</li>
+  <li><strong>Accessing Production</strong> — Production requires separate authorization. Default to
+<code class="language-plaintext highlighter-rouge">"Development"</code> environment; only access production when explicitly requested.</li>
+</ol>
+
+<h3 id="invalid_org"><code class="language-plaintext highlighter-rouge">INVALID_ORG</code></h3>
+<ul>
+  <li>Wrong <code class="language-plaintext highlighter-rouge">Catalyst-org</code> header value.</li>
+  <li>Fix: re-run <code class="language-plaintext highlighter-rouge">List_All_Organizations</code> (no parameters needed) to get the correct org ID.</li>
+</ul>
+
+<h3 id="tool-not-available--not-found">Tool not available / not found</h3>
+<ul>
+  <li>The tool has not been added to the MCP server.</li>
+  <li>Fix: go to mcp.zoho.com → Config Tools → search for the tool → Add Now.</li>
+</ul>
+
+<h3 id="mcp-connection-not-authorized">MCP connection not authorized</h3>
+<ul>
+  <li>Fix: in the MCP console → Connections → enable “On Demand” authorization.</li>
+</ul>
+
+<hr />
+
+<h2 id="appsail-specific-errors">AppSail Specific Errors</h2>
+
+<h3 id="cold-start-behavior">Cold start behavior</h3>
+<ul>
+  <li>The first request to an inactive app triggers a cold start (new server instance spawned).</li>
+  <li>The app must start listening on the configured port <strong>within 10 seconds</strong> of instance creation.</li>
+  <li>If no process is found listening on the port within 10 seconds, the user instance is killed
+and the next request triggers a new cold start.</li>
+  <li>Mitigation: keep startup/initialization code minimal; move heavy setup to after <code class="language-plaintext highlighter-rouge">listen()</code>.</li>
+</ul>
+
+<h3 id="appsail-cross-origin-issues-with-slate-frontend">AppSail cross-origin issues with Slate frontend</h3>
+<ul>
+  <li>Slate-hosted frontends calling AppSail APIs may get blocked by Catalyst’s auth layer
+(manifests as “Unable to Fetch” or “Failed to fetch”).</li>
+  <li>Fix: serve the frontend from AppSail itself using <code class="language-plaintext highlighter-rouge">express.static()</code> so all calls are
+same-origin. This eliminates CORS and auth-layer issues entirely.</li>
+  <li><strong>Note:</strong> This issue is specific to AppSail. For Serverless Functions, cross-domain
+from Slate DOES work — see the “Duplicate Access-Control-Allow-Origin” entry under Auth Errors.</li>
+</ul>
+
+<hr />
+
+<h2 id="auth-errors">Auth Errors</h2>
+
+<h3 id="server-side-usermanagementgetcurrentuser-throws-401-even-when-user-is-logged-in">Server-side <code class="language-plaintext highlighter-rouge">userManagement().getCurrentUser()</code> throws 401 even when user is logged in</h3>
+<ul>
+  <li>Web client fetch calls to Catalyst functions must include <code class="language-plaintext highlighter-rouge">credentials: 'include'</code>.
+Without it, auth cookies are not forwarded.</li>
+  <li>Fix: always add <code class="language-plaintext highlighter-rouge">credentials: 'include'</code> to fetch options:
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">fetch</span><span class="p">(</span><span class="dl">'</span><span class="s1">/server/my_function/execute</span><span class="dl">'</span><span class="p">,</span> <span class="p">{</span>
+  <span class="na">credentials</span><span class="p">:</span> <span class="dl">'</span><span class="s1">include</span><span class="dl">'</span><span class="p">,</span>
+  <span class="c1">// ...</span>
+<span class="p">});</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="catalystauthgetcurrentuser-is-not-a-function-in-the-web-sdk"><code class="language-plaintext highlighter-rouge">catalyst.auth.getCurrentUser is not a function</code> in the Web SDK</h3>
+<ul>
+  <li>This method does not exist in the Web SDK.</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">catalyst.auth.isUserAuthenticated()</code> instead — it resolves with the full user object
+(<code class="language-plaintext highlighter-rouge">result.content.email_id</code>, <code class="language-plaintext highlighter-rouge">result.content.first_name</code>, etc.) on success, and rejects
+with 401 on failure (platform auto-redirects to login).</li>
+</ul>
+
+<h3 id="signout-crashes-with-cannot-read-properties-of-undefined"><code class="language-plaintext highlighter-rouge">signOut()</code> crashes with <code class="language-plaintext highlighter-rouge">Cannot read properties of undefined</code></h3>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">catalyst.auth.signOut()</code> requires a redirect URL argument.</li>
+  <li>Calling it without an argument crashes because the SDK calls <code class="language-plaintext highlighter-rouge">.startsWith("/")</code> on <code class="language-plaintext highlighter-rouge">undefined</code>.</li>
+  <li>Fix: <code class="language-plaintext highlighter-rouge">catalyst.auth.signOut(window.location.origin);</code> (Slate apps) or <code class="language-plaintext highlighter-rouge">catalyst.auth.signOut(window.location.origin + '/app/index.html');</code> (legacy Web Client)</li>
+  <li>Note: <code class="language-plaintext highlighter-rouge">constructSignOutUrl()</code> does not exist — do not use a two-step pattern.</li>
+</ul>
+
+<h3 id="authorization-bearer-header-intercepted-before-the-function-handler-runs"><code class="language-plaintext highlighter-rouge">Authorization: Bearer</code> header intercepted before the function handler runs</h3>
+<p>Catalyst validates any <code class="language-plaintext highlighter-rouge">Authorization: Bearer &lt;token&gt;</code> header as a Zoho OAuth token <strong>before</strong>
+passing the request to the function handler — even when the endpoint’s Security Rule has
+<code class="language-plaintext highlighter-rouge">authentication: optional</code>. If your function uses its own Bearer token for server-to-server
+auth (e.g. a shared secret), Catalyst returns <code class="language-plaintext highlighter-rouge">INVALID_TOKEN</code> before your code runs.</p>
+<ul>
+  <li>Fix: use a non-standard header for application-level secrets:
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Not intercepted — use this for custom auth
+X-My-App-Token: &lt;secret&gt;
+
+# Intercepted by Catalyst's auth layer — avoid for custom secrets
+Authorization: Bearer &lt;secret&gt;
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h3 id="zaid-mismatch-between-environments">ZAID mismatch between environments</h3>
+<ul>
+  <li>ZAID (Zoho Application ID) differs between Development and Production environments.</li>
+  <li>This is the #1 source of auth issues when promoting to production.</li>
+  <li>Fix: always retrieve ZAID from the correct environment’s console and update accordingly.</li>
+</ul>
+
+<h3 id="duplicate-access-control-allow-origin-header-slate--serverless-functions">Duplicate <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code> header (Slate + Serverless Functions)</h3>
+
+<p>Error in browser console:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The 'Access-Control-Allow-Origin' header contains multiple values
+'https://myapp.onslate.com, https://myapp.onslate.com', but only one is allowed.
+</code></pre></div></div>
+
+<p><strong>Cause:</strong> The Catalyst gateway injects <code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code> when the Slate domain is
+in Authorized Domains (Console → Authentication → Whitelisting). If your Express code ALSO sets
+this header (via <code class="language-plaintext highlighter-rouge">cors()</code> middleware or manual <code class="language-plaintext highlighter-rouge">res.setHeader</code>), the browser receives two values
+in one header and rejects the response.</p>
+
+<p><strong>Fix:</strong> Remove ALL Express/function-level CORS headers for production origins. Only set CORS
+headers for <code class="language-plaintext highlighter-rouge">localhost</code> (local dev, where no gateway is present):</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">app</span><span class="p">.</span><span class="nf">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">origin</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">origin</span> <span class="o">||</span> <span class="dl">''</span><span class="p">;</span>
+  <span class="k">if </span><span class="p">(</span><span class="sr">/^http:</span><span class="se">\/\/</span><span class="sr">localhost</span><span class="se">(</span><span class="sr">:</span><span class="se">\d</span><span class="sr">+</span><span class="se">)?</span><span class="sr">$/</span><span class="p">.</span><span class="nf">test</span><span class="p">(</span><span class="nx">origin</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Access-Control-Allow-Origin</span><span class="dl">'</span><span class="p">,</span> <span class="nx">origin</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Access-Control-Allow-Credentials</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">true</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Access-Control-Allow-Methods</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">GET, POST, PUT, DELETE, OPTIONS</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nf">setHeader</span><span class="p">(</span><span class="dl">'</span><span class="s1">Access-Control-Allow-Headers</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">Content-Type, Authorization</span><span class="dl">'</span><span class="p">);</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">method</span> <span class="o">===</span> <span class="dl">'</span><span class="s1">OPTIONS</span><span class="dl">'</span><span class="p">)</span> <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nf">status</span><span class="p">(</span><span class="mi">204</span><span class="p">).</span><span class="nf">end</span><span class="p">();</span>
+  <span class="p">}</span>
+  <span class="nf">next</span><span class="p">();</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>Key rule:</strong> The gateway owns CORS headers for deployed origins. Express must not touch them.</p>
+
+<h3 id="getcurrentuser-returns-null--collaborator-vs-app-user"><code class="language-plaintext highlighter-rouge">getCurrentUser()</code> returns <code class="language-plaintext highlighter-rouge">null</code> — collaborator vs app user</h3>
+
+<p><code class="language-plaintext highlighter-rouge">userManagement().getCurrentUser()</code> calls the internal <code class="language-plaintext highlighter-rouge">/project-user/current</code> endpoint using the
+user token. This only returns data for <strong>registered app users</strong> — users who signed up through
+Catalyst’s auth flow (signUp/signIn).</p>
+
+<p><strong>Collaborators and project admins</strong> (people added via the Catalyst console) are NOT registered
+app users. <code class="language-plaintext highlighter-rouge">getCurrentUser()</code> returns <code class="language-plaintext highlighter-rouge">null</code> for them, causing <code class="language-plaintext highlighter-rouge">Cannot read properties of null</code>
+errors if your code doesn’t check for it.</p>
+
+<p><strong>Fix — add a null check with admin-scope fallback:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">userApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>            <span class="c1">// user-scope</span>
+<span class="kd">const</span> <span class="nx">userData</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">userApp</span><span class="p">.</span><span class="nf">userManagement</span><span class="p">().</span><span class="nf">getCurrentUser</span><span class="p">();</span>
+
+<span class="k">if </span><span class="p">(</span><span class="o">!</span><span class="nx">userData</span> <span class="o">||</span> <span class="o">!</span><span class="nx">userData</span><span class="p">.</span><span class="nx">user_id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Collaborator/admin — not in the project-user table.</span>
+  <span class="c1">// Fall back to admin-scope user list, or use a default identity.</span>
+  <span class="kd">const</span> <span class="nx">adminApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="p">{</span> <span class="na">scope</span><span class="p">:</span> <span class="dl">'</span><span class="s1">admin</span><span class="dl">'</span> <span class="p">});</span>
+  <span class="kd">const</span> <span class="nx">allUsers</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">adminApp</span><span class="p">.</span><span class="nf">userManagement</span><span class="p">().</span><span class="nf">getAllUsers</span><span class="p">();</span>
+  <span class="c1">// Match by email or use a system identity</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="user-scope-vs-admin-scope-when-to-use-each">User-scope vs admin-scope: when to use each</h3>
+
+<p>The SDK supports two initialization scopes. Using the wrong one causes auth failures:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scope</th>
+      <th>Init call</th>
+      <th>Use for</th>
+      <th>What it CAN’T do</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>User</strong> (default)</td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(req)</code></td>
+      <td><code class="language-plaintext highlighter-rouge">getCurrentUser()</code>, user-identity operations</td>
+      <td>DataStore writes (if App User perms not enabled)</td>
+    </tr>
+    <tr>
+      <td><strong>Admin</strong></td>
+      <td><code class="language-plaintext highlighter-rouge">catalyst.initialize(req, { scope: 'admin' })</code></td>
+      <td>DataStore CRUD, Stratus, ZCQL, Cache, all data operations</td>
+      <td><code class="language-plaintext highlighter-rouge">getCurrentUser()</code> — throws “no user credentials present”</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Pattern for apps that need both auth and data ops:</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// User-scope for identity</span>
+<span class="kd">const</span> <span class="nx">userApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">currentUser</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">userApp</span><span class="p">.</span><span class="nf">userManagement</span><span class="p">().</span><span class="nf">getCurrentUser</span><span class="p">();</span>
+
+<span class="c1">// Admin-scope for data operations</span>
+<span class="kd">const</span> <span class="nx">adminApp</span> <span class="o">=</span> <span class="nx">catalyst</span><span class="p">.</span><span class="nf">initialize</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="p">{</span> <span class="na">scope</span><span class="p">:</span> <span class="dl">'</span><span class="s1">admin</span><span class="dl">'</span> <span class="p">});</span>
+<span class="kd">const</span> <span class="nx">dataStore</span> <span class="o">=</span> <span class="nx">adminApp</span><span class="p">.</span><span class="nf">datastore</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">table</span> <span class="o">=</span> <span class="nx">dataStore</span><span class="p">.</span><span class="nf">table</span><span class="p">(</span><span class="dl">'</span><span class="s1">MyTable</span><span class="dl">'</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="authorization-header-is-undefined-inside-the-function"><code class="language-plaintext highlighter-rouge">Authorization</code> header is <code class="language-plaintext highlighter-rouge">undefined</code> inside the function</h3>
+
+<p>The Catalyst gateway <strong>strips</strong> the <code class="language-plaintext highlighter-rouge">Authorization</code> header after validating the token. It then
+injects internal <code class="language-plaintext highlighter-rouge">x-zc-*</code> headers that the SDK reads directly. Do not try to read
+<code class="language-plaintext highlighter-rouge">req.headers['authorization']</code> — it will be <code class="language-plaintext highlighter-rouge">undefined</code>. The SDK handles this internally via
+<code class="language-plaintext highlighter-rouge">catalyst.initialize(req)</code>.</p>
+
+<hr />
+
+<h2 id="slate-deployment-errors">Slate Deployment Errors</h2>
+
+<h3 id="slate-configtoml-wiped-by-build-commands"><code class="language-plaintext highlighter-rouge">slate-config.toml</code> wiped by build commands</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">.catalyst/slate-config.toml</code> file lives inside the build output directory (e.g., <code class="language-plaintext highlighter-rouge">dist/</code>).
+Build commands that clean the output directory (Vite <code class="language-plaintext highlighter-rouge">--clean</code>, Expo <code class="language-plaintext highlighter-rouge">--clear</code>, <code class="language-plaintext highlighter-rouge">rm -rf dist/</code>)
+delete this file. Without it, <code class="language-plaintext highlighter-rouge">catalyst deploy slate</code> fails.</p>
+
+<p><strong>Fix — recreate after every clean build:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Example for a React/Vite app</span>
+npm run build <span class="o">&amp;&amp;</span> <span class="nb">mkdir</span> <span class="nt">-p</span> dist/.catalyst <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  <span class="nb">echo</span> <span class="nt">-e</span> <span class="s1">'framework = "static"\ndeployment_name = "default"'</span> <span class="o">&gt;</span> dist/.catalyst/slate-config.toml <span class="o">&amp;&amp;</span> <span class="se">\</span>
+  catalyst deploy slate
+</code></pre></div></div>
+
+<h3 id="assets-returning-404-on-slate-framework-baseurl-issue">Assets returning 404 on Slate (framework <code class="language-plaintext highlighter-rouge">baseUrl</code> issue)</h3>
+
+<p>If your build tool has a <code class="language-plaintext highlighter-rouge">baseUrl</code> or <code class="language-plaintext highlighter-rouge">basePath</code> configured for a non-root path (e.g.,
+<code class="language-plaintext highlighter-rouge">/server/my_function</code>), all JS/CSS asset URLs will be prefixed with that path on Slate — but
+Slate serves from root <code class="language-plaintext highlighter-rouge">/</code>. This causes all assets to 404.</p>
+
+<p><strong>Fix:</strong> Remove <code class="language-plaintext highlighter-rouge">baseUrl</code>/<code class="language-plaintext highlighter-rouge">basePath</code> from your build config before building for Slate deployment.
+Only set it when serving the frontend from inside a function or AppSail sub-path.</p>
+
+<hr />
+
+<h2 id="circuits-errors">Circuits Errors</h2>
+
+<h3 id="state-execution-failures">State execution failures</h3>
+<ul>
+  <li>Function state supports three default error handlers: <strong>On TimeOut</strong>, <strong>On Authorization Failure</strong>,
+<strong>On Execution Failure</strong>.</li>
+  <li>For each, configure <strong>Retry</strong> (max attempts + delay) and <strong>Fallback</strong> (alternative state to
+go to when all retries fail).</li>
+  <li>Custom error handlers match by Error Code or Error Message from the function response.</li>
+  <li>HTTP status codes outside 200–299 trigger the error handler check for Basic I/O functions.</li>
+</ul>
+
+<h3 id="batch-state-issues">Batch state issues</h3>
+<ul>
+  <li>Nested parallel states are <strong>not supported</strong> — success and failure states are end states and
+Catalyst does not support nested parallel states within a parallel state.</li>
+  <li>Batch and circuit states only support <strong>Retry</strong> action on error — there is no Fallback for these
+(unlike function states, which support both Retry and Fallback).</li>
+</ul>
+
+<hr />
+
+<h2 id="cron--job-scheduling-errors">Cron / Job Scheduling Errors</h2>
+
+<h3 id="cron-auto-disabled-after-repeated-failures">Cron auto-disabled after repeated failures</h3>
+<ul>
+  <li>Third-party URL crons are automatically disabled after <strong>50 consecutive failures</strong>.</li>
+  <li>Cron functions (not URL-based) are <strong>NOT auto-disabled</strong> regardless of repeated failures.</li>
+  <li>Fix: configure Application Alerts on the cron job to be notified immediately on failure,
+check execution history from the console, fix the underlying bug, and re-enable the cron.</li>
+</ul>
+
+<hr />
+
+<h2 id="api-gateway-errors">API Gateway Errors</h2>
+
+<h3 id="429-too-many-requests">429 Too Many Requests</h3>
+<ul>
+  <li>Throttling rate limit exceeded.</li>
+  <li>Catalyst uses a <strong>sliding window rate limiting algorithm</strong>: checks request count in the window
+preceding the current second (not a fixed window).</li>
+  <li>Two throttle types:
+    <ul>
+      <li><strong>General throttling</strong>: max hits per time unit for all users combined.</li>
+      <li><strong>IP-based throttling</strong>: max hits per IP per time unit.</li>
+    </ul>
+  </li>
+  <li>Fix: review and adjust rate limit settings in API Gateway console; implement client-side
+retry with exponential backoff.</li>
+</ul>
+
+<hr />
+
+<h2 id="event-listener-errors">Event Listener Errors</h2>
+
+<h3 id="configuration-needed-error-on-rules">“Configuration Needed” error on rules</h3>
+<ul>
+  <li><strong>Integration account deleted</strong> — All rules associated with the deleted account show
+“Configuration Needed”. Fix: re-associate rules with a different account, or re-integrate
+the deleted account.</li>
+  <li><strong>Service deleted</strong> — All accounts in the service are removed, and all associated rules show
+the error. Fix: create a new service and re-integrate accounts.</li>
+</ul>
+
+<hr />
+
+<h2 id="devops--where-to-find-logs">DevOps — Where to find logs</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>What you need</th>
+      <th>Where to look in the console</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Function execution logs</td>
+      <td>DevOps → Logs (filters auto-applied when accessed from function page)</td>
+    </tr>
+    <tr>
+      <td>AppSail instance logs</td>
+      <td>AppSail → Instances → click Logs icon → redirects to Catalyst Logs</td>
+    </tr>
+    <tr>
+      <td>Circuit execution details</td>
+      <td>Circuits → Execution History → click execution → View Logs</td>
+    </tr>
+    <tr>
+      <td>Cron execution history</td>
+      <td>Cron → Details → Execution History</td>
+    </tr>
+    <tr>
+      <td>Performance reports</td>
+      <td>DevOps → APM (Application Performance Monitoring)</td>
+    </tr>
+    <tr>
+      <td>Audit trail (console + app)</td>
+      <td>Settings → Audit Logs</td>
+    </tr>
+    <tr>
+      <td>Automated failure alerts</td>
+      <td>DevOps → Application Alerts</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="quick-diagnostic-checklist">Quick diagnostic checklist</h2>
+
+<p>When an agent reports “something is broken”, work through this in order:</p>
+
+<ol>
+  <li><strong>What component?</strong> Function / AppSail / Slate / Circuits / Cron / Data Store / MCP tool</li>
+  <li><strong>What error message?</strong> Look at the exact error text first.</li>
+  <li><strong>Is it a deployment issue or a runtime issue?</strong>
+    <ul>
+      <li>Deployment: check <code class="language-plaintext highlighter-rouge">catalyst.json</code>, directory structure, Java <code class="language-plaintext highlighter-rouge">.class</code> files, port config</li>
+      <li>Runtime: check DevOps → Logs, look at execution history</li>
+    </ul>
+  </li>
+  <li><strong>Is it an auth/permission issue?</strong> Check ZAID environment, DataStore permissions, API Gateway rules</li>
+  <li><strong>Is it a data issue?</strong> Check ZCQL syntax, 300-row limit, case sensitivity, column types</li>
+</ol>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

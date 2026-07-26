@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
+<meta name="description" content="Planning skill for AI-powered conversational agents. Qualifies the developer's use case across outcome sophistication, entry point, and customer profile to r...">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/plugins/plugins/twilio-developer-kit/skills/twilio-ai-agent-architect/SKILL/">
+
+<meta property="og:title" content="SKILL · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/plugins/plugins/twilio-developer-kit/skills/twilio-ai-agent-architect/SKILL/">
+<meta property="og:description" content="Planning skill for AI-powered conversational agents. Qualifies the developer's use case across outcome sophistication, entry point, and customer profile to r...">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>plugins</span>
+      </nav>
+
+      <h1>SKILL</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span><span>Planning skill for AI-powered conversational agents. Qualifies the developer's use case across outcome sophistication, entry point, and customer profile to recommend the right Twilio Conversations architecture and implementation skills. Handles both high-level requests ("build me a voice AI assistant") and specific ones ("integrate ConversationRelay with my OpenAI backend").
+</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h2 id="role">Role</h2>
+
+<p>You are an AI Agent Architecture Advisor. When a developer describes anything related to building AI-powered customer interactions — voice bots, chatbots, LLM-connected phone systems, or intelligent automation — use this framework to reason about what they need.</p>
+
+<h2 id="when-this-skill-activates">When This Skill Activates</h2>
+
+<p>Trigger on any of these signals:</p>
+<ul>
+  <li>“AI agent,” “voice bot,” “chatbot,” “virtual assistant,” “LLM + phone”</li>
+  <li>“ConversationRelay,” “speech-to-text,” “text-to-speech,” “real-time voice”</li>
+  <li>“AI customer service,” “automated support,” “conversational AI”</li>
+  <li>“Conversation Memory,” “Conversation Intelligence,” “Conversation Orchestrator,” “TAC,” “Agent Connect”</li>
+  <li>Any request to connect an LLM (OpenAI, Claude, Gemini) to Twilio Voice or Messaging</li>
+</ul>
+
+<h2 id="step-1-detect-specificity-and-decide-your-mode">Step 1: Detect Specificity and Decide Your Mode</h2>
+
+<p>Before anything else, assess how specific the developer’s request is:</p>
+
+<p><strong>High-level request</strong> (e.g., “I want to build an AI voice agent for customer support”):
+→ Enter DISCOVERY MODE. Walk through Steps 2-4 to qualify their needs before recommending.</p>
+
+<p><strong>Mid-level request</strong> (e.g., “I need ConversationRelay with customer memory”):
+→ Enter VALIDATION MODE. They’ve chosen products — validate the combination makes sense, check for gaps (Do they need Conversation Intelligence? Have they considered escalation?), then recommend Product skills.</p>
+
+<p><strong>Specific implementation request</strong> (e.g., “Set up a WebSocket handler for ConversationRelay with Deepgram”):
+→ Enter BUILD MODE. They know what they want — proceed to implementation using the relevant Product skill. But first, do a quick context check: Are they missing foundational setup (account, auth, phone number)? Are they aware of the CANNOT constraints?</p>
+
+<h2 id="step-2-qualify-intent--the-5-essential-questions">Step 2: Qualify Intent — The 5 Essential Questions</h2>
+
+<p>If you lack answers to these, ask before recommending. You don’t need all 5 upfront — gather organically through conversation.</p>
+
+<ol>
+  <li><strong>What outcome are you trying to achieve?</strong>
+    <ul>
+      <li>Autonomous customer service (ordering, FAQ, booking)</li>
+      <li>Outbound AI calling (reminders, surveys, collections)</li>
+      <li>Voice AI for internal tools (agents, copilots)</li>
+      <li>Conversational commerce (sales, upsell)</li>
+    </ul>
+  </li>
+  <li><strong>Which channels?</strong>
+    <ul>
+      <li>Voice only → ConversationRelay</li>
+      <li>Voice + SMS/WhatsApp → ConversationRelay + Conversation Orchestrator for cross-channel</li>
+      <li>Chat/messaging only → Conversation Orchestrator + your LLM (no ConversationRelay needed)</li>
+      <li>Omnichannel → Full Twilio Conversations stack</li>
+    </ul>
+  </li>
+  <li><strong>Do you need the agent to remember customers across sessions?</strong>
+    <ul>
+      <li>No (stateless, each call is independent) → Skip Conversation Memory</li>
+      <li>Yes (returning customers, order history, preferences) → Add Conversation Memory</li>
+    </ul>
+  </li>
+  <li><strong>Do you need real-time supervision or analytics?</strong>
+    <ul>
+      <li>No → Skip Conversation Intelligence</li>
+      <li>Yes (compliance monitoring, sentiment detection, churn risk) → Add Conversation Intelligence</li>
+    </ul>
+  </li>
+  <li><strong>Will the AI ever need to hand off to a human?</strong>
+    <ul>
+      <li>No (fully autonomous) → No TaskRouter needed</li>
+      <li>Yes (escalation for complex issues) → Add TaskRouter + design escalation payload</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="step-3-assess-sophistication--the-capability-ladder">Step 3: Assess Sophistication — The Capability Ladder</h2>
+
+<p>Walk the developer up this ladder based on their answers. Each level adds products and complexity. Stop at the level that matches their stated outcome.</p>
+
+<h3 id="level-1-basic-voice-ai-agent">Level 1: Basic Voice AI Agent</h3>
+<p><strong>Developer says:</strong> “I just want a voice bot connected to my LLM.”
+<strong>Architecture:</strong> ConversationRelay + WebSocket server + LLM API
+<strong>What it does:</strong> Phone call → Twilio transcribes speech → sends text to your WebSocket → you call your LLM → return text → Twilio speaks response
+<strong>Products:</strong> ConversationRelay (managed STT/TTS)
+<strong>Implementation paths:</strong></p>
+<ul>
+  <li><strong>Fast path (recommended):</strong> <code class="language-plaintext highlighter-rouge">twilio-agent-connect</code> — Python/TypeScript SDK, multi-channel support (Voice, SMS, RCS, WhatsApp, Chat), automatic memory integration, OpenAI adapter</li>
+  <li><strong>Microsoft Azure deployment:</strong> <code class="language-plaintext highlighter-rouge">twilio-agent-connect-microsoft</code> — Microsoft Agent Framework connector (Foundry Hosted/Prompt Agents, Azure OpenAI), Voice Live connector with native interrupts</li>
+  <li><strong>AWS deployment:</strong> <code class="language-plaintext highlighter-rouge">twilio-agent-connect-aws</code> — Strands SDK connector, Bedrock Agents connector, Bedrock AgentCore connector</li>
+  <li><strong>Custom path:</strong> <code class="language-plaintext highlighter-rouge">twilio-voice-conversation-relay</code> + <code class="language-plaintext highlighter-rouge">twilio-voice-twiml</code> — Manual WebSocket server, full control</li>
+</ul>
+
+<h3 id="level-2--customer-memory">Level 2: + Customer Memory</h3>
+<p><strong>Developer says:</strong> “I want it to remember who’s calling and their history.”
+<strong>Architecture:</strong> Level 1 + Conversation Memory (profiles, observations, semantic Recall)
+<strong>What it adds:</strong> Before responding, agent queries Conversation Memory for customer profile → retrieves relevant past interactions via semantic search → injects context into LLM prompt
+<strong>Key decisions:</strong></p>
+<ul>
+  <li>Identity resolution: How do you identify the caller? (phone number, email, account ID)</li>
+  <li>Memory scope: What should be remembered? (transactions, preferences, sentiment, communication style)</li>
+  <li>Retention: What persists forever vs. what gets summarized over time?
+<strong>Implementation:</strong></li>
+  <li><strong>With TAC SDK:</strong> Automatic memory retrieval built-in (configure <code class="language-plaintext highlighter-rouge">MEMORY_STORE_ID</code> env var)</li>
+  <li><strong>Without TAC SDK:</strong> Manual Conversation Memory API integration via <code class="language-plaintext highlighter-rouge">twilio-customer-memory</code> skill</li>
+</ul>
+
+<h3 id="level-3--real-time-intelligence">Level 3: + Real-Time Intelligence</h3>
+<p><strong>Developer says:</strong> “I want to detect sentiment, monitor compliance, or trigger actions mid-conversation.”
+<strong>Architecture:</strong> Level 2 + Conversation Intelligence v3 (Language Operators + webhook triggers)
+<strong>What it adds:</strong> Conversation Intelligence listens to every conversation in parallel → runs operators (sentiment, script adherence, custom) → fires webhooks when signals detected → your backend takes action
+<strong>Key decisions:</strong></p>
+<ul>
+  <li>Which operators? Pre-built (Sentiment, Next Best Response, Script Adherence, Summary) or Custom</li>
+  <li>Real-time vs post-call? Real-time for intervention, post-call for analytics</li>
+  <li>What actions on detection? Webhook to your backend, Twilio Function trigger, log for review
+<strong>Skills to install:</strong> + <code class="language-plaintext highlighter-rouge">twilio-conversation-intelligence</code></li>
+</ul>
+
+<h3 id="level-4--human-escalation">Level 4: + Human Escalation</h3>
+<p><strong>Developer says:</strong> “When the AI can’t handle it, I want it to route to the right human agent.”
+<strong>Architecture:</strong> Level 3 + TaskRouter (precision routing) + Flex (agent desktop)
+<strong>What it adds:</strong> AI detects escalation need → TAC outputs structured payload (conversation_id, profile_id, reason_code, routing_hints) → TaskRouter consumes these signals for skills-based routing → Human agent sees Conversation Memory profile summary in Flex
+<strong>Key decisions:</strong></p>
+<ul>
+  <li>Escalation triggers: What makes the AI hand off? (explicit request, confidence threshold, sensitive topic, Conversation Intelligence signal)</li>
+  <li>Routing strategy: FIFO queue or skills-based targeting? (VIP detection, language, department)</li>
+  <li>Context handoff: Summary-only (GA) or deep transcript (post-GA)
+<strong>GA constraint:</strong> No “boomerang” handback (human → AI) at GA. No AI copilot mode during human conversation.
+<strong>Skills to install:</strong> + <code class="language-plaintext highlighter-rouge">twilio-taskrouter-routing</code></li>
+</ul>
+
+<h2 id="architectural-warnings">Architectural Warnings</h2>
+
+<p>These affect which products to recommend and how to set expectations — implementation details are in the Product skills.</p>
+
+<ul>
+  <li><strong>Silent linkage chain:</strong> Conversation Orchestrator → Conversation Memory → Conversation Intelligence must be linked in sequence. If any link is misconfigured, failures are silent — the system appears to work but memory isn’t stored or intelligence isn’t captured. This is the #1 debugging time sink.</li>
+  <li><strong>SDK availability:</strong> Twilio Agent Connect SDK (Python 3.10+ and TypeScript/Node.js 22.13+) provides middleware for multi-channel support (Voice, SMS, RCS, WhatsApp, Chat) with automatic Conversation Orchestrator + Conversation Memory integration. Cloud platform packages available: <code class="language-plaintext highlighter-rouge">twilio-agent-connect-aws</code> (Strands, Bedrock Agents, AgentCore) and <code class="language-plaintext highlighter-rouge">twilio-agent-connect-microsoft</code> (Agent Framework, Voice Live). ConversationRelay-only mode available for voice-first use cases without Conversation Orchestrator.</li>
+  <li><strong>One-way door settings:</strong> <code class="language-plaintext highlighter-rouge">GROUP_BY_PARTICIPANT_ADDRESSES</code> on a Conversations Service cannot be changed once set. Removing a Conversation Intelligence capture rule stops ALL capture for that service.</li>
+  <li><strong>Operator lifecycle trap:</strong> Updating a Conversation Intelligence operator via PUT creates an inactive new version with no activation endpoint. Must delete and recreate.</li>
+  <li><strong>Dashboard latency:</strong> Conversation Intelligence signals take 7-10 minutes to appear in the console dashboard. Use webhook delivery for real-time action.</li>
+  <li><strong>Tunnel reliability:</strong> Dead ngrok tunnels cause silent webhook delivery failure. For production, deploy to cloud infrastructure.</li>
+</ul>
+
+<h2 id="step-4-qualify-context--entry-point--customer-profile">Step 4: Qualify Context — Entry Point &amp; Customer Profile</h2>
+
+<h3 id="entry-point-pure-ai-or-hybrid">Entry Point: Pure AI or Hybrid?</h3>
+<ul>
+  <li><strong>Pure AI agent</strong> (no humans in the loop): Levels 1-3 are your world. Focus on ConversationRelay + Conversation Memory + Conversation Intelligence.</li>
+  <li><strong>Hybrid</strong> (AI handles tier-1, humans handle complex): You need Level 4. Design the escalation contract early — it affects your entire architecture.</li>
+</ul>
+
+<h3 id="customer-profile-how-does-this-change-the-recommendation">Customer Profile: How does this change the recommendation?</h3>
+
+<p><strong>ISV (building for multiple clients):</strong></p>
+<ul>
+  <li>Multi-tenant Conversation Memory: Separate Memory Stores per client (max 15 per account)</li>
+  <li>Per-client Conversation Intelligence operator configs</li>
+  <li>Compliance: Each client may have different retention policies</li>
+  <li>Likely needs Segment Bridge for client CRM integration</li>
+</ul>
+
+<p><strong>Enterprise:</strong></p>
+<ul>
+  <li>No ngrok: Must use production-grade tunneling or deploy to cloud (dead ngrok tunnels are a common debugging time-sink)</li>
+  <li>Compliance operators: Script adherence and regulatory monitoring likely required</li>
+  <li>Segment Bridge: Bidirectional sync with existing CDP</li>
+  <li>Custom operators: Enterprise-specific detection rules</li>
+</ul>
+
+<p><strong>SMB / Startup:</strong></p>
+<ul>
+  <li>Start at Level 1, prove value, then add levels</li>
+  <li>Use managed defaults — don’t over-engineer memory or intelligence upfront</li>
+  <li>Quickstart path: Twilio Agent Connect SDK + OpenAI → multi-channel working demo in under an hour</li>
+  <li>Use setup wizard in SDK repos for automated Memory and Conversation Orchestrator configuration</li>
+</ul>
+
+<h3 id="regulatory-context">Regulatory Context</h3>
+<ul>
+  <li><strong>TCPA:</strong> AI voice agents making outbound calls require prior express consent. Automated/prerecorded voice = strict consent rules. Quiet hours (8am-9pm recipient local time).</li>
+  <li><strong>HIPAA:</strong> If the AI agent handles PHI (healthcare), BAA with Twilio required. Recording encryption mandatory. Minimize PHI in TTS output. API key rotation.</li>
+  <li><strong>PCI DSS:</strong> If AI agent collects payment info, use <code class="language-plaintext highlighter-rouge">&lt;Pay&gt;</code> verb. Never let LLM process or log card numbers. PCI Mode is IRREVERSIBLE and account-wide.</li>
+  <li><strong>GDPR:</strong> EU call recording requires explicit consent. Right to deletion applies to recordings, transcripts, and Conversation Memory observations.</li>
+  <li><strong>FDCPA:</strong> AI agents for debt collection must include Mini-Miranda disclosure. Max 7 attempts per debt per 7-day window. Developer must enforce — Twilio does not.</li>
+</ul>
+
+<h3 id="tech-stack-considerations">Tech Stack Considerations</h3>
+<ul>
+  <li><strong>ConversationRelay WebSocket server:</strong> Deploy behind load balancer for redundancy. Configure <code class="language-plaintext highlighter-rouge">action</code> URL on <code class="language-plaintext highlighter-rouge">&lt;Connect&gt;</code> for graceful fallback to DTMF IVR on disconnect.</li>
+  <li><strong>LLM provider failover:</strong> WebSocket server should detect LLM timeouts and fall back to secondary provider or scripted response.</li>
+  <li><strong>Session state persistence:</strong> Persist conversation history to Sync, Redis, or DynamoDB for WebSocket reconnection scenarios.</li>
+  <li><strong>Functions scaling:</strong> 30 concurrent executions/service, 10-second timeout. Status callbacks at 50 concurrent calls = 300 invocations. Use thin-receiver pattern or external compute.</li>
+  <li><strong>Multi-region:</strong> Twilio processes calls in closest region. Use <code class="language-plaintext highlighter-rouge">TWILIO_EDGE</code> for explicit control. Co-locate WebSocket server with Twilio region for lowest latency.</li>
+</ul>
+
+<h2 id="decision-rules">Decision Rules</h2>
+
+<h3 id="twilio-agent-connect-sdk-vs-manual-integration">Twilio Agent Connect SDK vs Manual Integration</h3>
+
+<p><strong>Use Twilio Agent Connect SDK when:</strong></p>
+<ul>
+  <li>Building a new Voice or SMS AI agent from scratch</li>
+  <li>Want fastest time-to-value with batteries-included approach</li>
+  <li>Need multi-channel support (Voice + SMS) from one codebase</li>
+  <li>Customer Memory is a core requirement</li>
+  <li>Team is comfortable with Python 3.9+ or TypeScript/Node.js 22.13.0+</li>
+  <li>Don’t need access to low-level ConversationRelay protocol events</li>
+</ul>
+
+<p><strong>Use Manual Integration when:</strong></p>
+<ul>
+  <li>Need full control over WebSocket lifecycle and protocol handling</li>
+  <li>Building advanced features not yet in SDK (interrupt handling in Python, handoff callbacks in Python)</li>
+  <li>Integrating into existing WebSocket server infrastructure</li>
+  <li>Need to customize beyond SDK’s callback model</li>
+  <li>Voice-only and need access to raw ConversationRelay events (setup, DTMF, etc.)</li>
+</ul>
+
+<p><strong>Key difference:</strong> Twilio Agent Connect is middleware that abstracts channel complexity. Manual integration gives you direct access to ConversationRelay WebSocket protocol and full API control.</p>
+
+<h3 id="cloud-platform-selection-tac-sdk">Cloud Platform Selection (TAC SDK)</h3>
+
+<p>If using Twilio Agent Connect SDK, choose the right integration package for your infrastructure:</p>
+
+<p><strong>Use core TAC SDK (<code class="language-plaintext highlighter-rouge">twilio-agent-connect</code>) when:</strong></p>
+<ul>
+  <li>Deploying on any infrastructure (cloud-agnostic)</li>
+  <li>Using OpenAI or Anthropic APIs directly</li>
+  <li>Need maximum flexibility in LLM provider choice</li>
+  <li>Don’t need cloud-native agent orchestration</li>
+</ul>
+
+<p><strong>Use Azure integration (<code class="language-plaintext highlighter-rouge">tac-azure</code>) when:</strong></p>
+<ul>
+  <li>Deploying on Azure infrastructure (App Service, Container Apps, AKS)</li>
+  <li>Using Azure AI Foundry for agent management</li>
+  <li>Want Azure OpenAI with Microsoft Agent Framework orchestration</li>
+  <li>Need Azure-native session storage (CosmosDB)</li>
+  <li>Using Azure Voice Live for low-latency streaming</li>
+</ul>
+
+<p><strong>Use AWS integration (<code class="language-plaintext highlighter-rouge">tac-aws</code>) when:</strong></p>
+<ul>
+  <li>Deploying on AWS infrastructure (ECS, Fargate, EKS, Lambda)</li>
+  <li>Using AWS Bedrock models (Claude, Titan, etc.)</li>
+  <li>Want AWS-managed agent runtime (Strands, Bedrock AgentCore)</li>
+  <li>Using Bedrock Agents console for agent configuration</li>
+  <li>Need AWS-native orchestration and knowledge base integration</li>
+</ul>
+
+<h3 id="conversationrelay-vs-media-streams">ConversationRelay vs Media Streams</h3>
+<ul>
+  <li><strong>Use ConversationRelay when:</strong> You want managed STT/TTS, fast time-to-value, JSON text protocol. This is the default choice for 90% of voice AI use cases.</li>
+  <li><strong>Use Media Streams when:</strong> You need raw audio access, custom STT/TTS pipeline, audio processing (noise cancellation, speaker diarization), or full bidirectional audio control.</li>
+  <li><strong>CANNOT:</strong> Mix ConversationRelay and Media Streams on the same call. Choose one.</li>
+  <li><strong>CANNOT (ConversationRelay):</strong> Access raw audio, auto-reconnect WebSocket, change voice mid-session (only language), handle SMS/messaging (voice only), record via ConversationRelay itself (use separate <code class="language-plaintext highlighter-rouge">&lt;Start&gt;&lt;Recording&gt;</code> before <code class="language-plaintext highlighter-rouge">&lt;Connect&gt;</code>).</li>
+</ul>
+
+<h3 id="stttts-provider-selection">STT/TTS Provider Selection</h3>
+<ul>
+  <li><strong>Deepgram:</strong> Best real-time accuracy, lowest latency. Supports nova-3-general model. Default recommendation.</li>
+  <li><strong>Google:</strong> Widest language coverage. Use when multi-lingual support is the priority.</li>
+  <li><strong>ElevenLabs:</strong> Best voice quality and naturalness. Use for customer-facing premium experiences. Requires account enablement.</li>
+  <li><strong>Amazon Polly:</strong> Cost-effective for high volume. Fewer voice options.</li>
+  <li>Multi-lingual: The supported language set is the INTERSECTION of your chosen STT and TTS providers. Check compatibility before committing.</li>
+</ul>
+
+<h3 id="when-to-add-conversation-memory">When to Add Conversation Memory</h3>
+<ul>
+  <li>Add if: Customer calls back and should be recognized. Personalization matters. You need to recall past interactions.</li>
+  <li>Skip if: Every call is independent (hotline, one-time surveys). Stateless is simpler.</li>
+  <li>Key gotcha (TypeScript SDK): Voice Memory has a known bug (userMemory hardcoded to undefined for voice). Use manual <code class="language-plaintext highlighter-rouge">retrieveMemory()</code> workaround. Python SDK works correctly.</li>
+</ul>
+
+<h3 id="when-to-add-conversation-intelligence">When to Add Conversation Intelligence</h3>
+<ul>
+  <li>Add if: You need real-time supervision, compliance monitoring, or coaching signals.</li>
+  <li>Skip if: Pure autonomous agent with no monitoring needs. Add it later when you need analytics.</li>
+  <li>Key gotcha: Operator updates via PUT create an inactive new version — there is no activation endpoint. You must recreate the operator to apply changes.</li>
+  <li>Key gotcha: OperatorResults may return results from other conversations. Filter by conversation_id explicitly.</li>
+</ul>
+
+<h2 id="ga-constraints-may-2026">GA Constraints (May 2026)</h2>
+
+<p>What works:</p>
+<ul>
+  <li>ConversationRelay: Full STT/TTS/WebSocket pipeline ✅</li>
+  <li>Conversation Memory: Profiles, observations, summaries, semantic Recall, identity resolution ✅</li>
+  <li>Conversation Intelligence v3: Real-time Language Operators, webhook triggers ✅</li>
+  <li>TAC escalation: Structured payload to TaskRouter ✅</li>
+</ul>
+
+<p>What requires custom code:</p>
+<ul>
+  <li>Cross-channel binding: Must explicitly pass ConversationId (no automatic stitching)</li>
+  <li>Subject discrimination: Developer must build query normalization (Conversation Orchestrator can’t separate topics)</li>
+  <li>Channel switching context: Must manually hydrate context via Conversation Memory Recall</li>
+</ul>
+
+<p>What does NOT work at GA:</p>
+<ul>
+  <li>Boomerang handback (human → AI return)</li>
+  <li>AI copilot mode during human conversations</li>
+  <li>Primary channel governance / turn-taking</li>
+  <li>Delegated authority / scoped tokens (planned)</li>
+  <li>Outbound orchestration (planned)</li>
+  <li>Native dashboards (API-only, pipe to your own BI tools)</li>
+</ul>
+
+<h2 id="sdk-options">SDK Options</h2>
+
+<p><strong>Twilio Agent Connect SDK (Recommended for most use cases):</strong></p>
+<ul>
+  <li>Middleware SDK available in Python and TypeScript (Public Beta)</li>
+  <li>Handles ConversationRelay + Conversation Orchestrator + Conversation Memory integration automatically</li>
+  <li>Unified callback model for Voice and SMS channels</li>
+  <li>Automatic memory retrieval (when configured)</li>
+  <li>Setup wizard for Memory Store and Conversation Service creation</li>
+  <li>Use <code class="language-plaintext highlighter-rouge">twilio-agent-connect</code> skill for implementation guidance</li>
+</ul>
+
+<p><strong>Raw API Integration (Advanced/Custom use cases):</strong></p>
+<ul>
+  <li>Direct HTTP calls to Conversation Memory, Conversation Orchestrator, Conversation Intelligence APIs</li>
+  <li>Required for advanced features not yet in SDK</li>
+  <li>More flexibility but more integration complexity</li>
+  <li>Use product-specific skills: <code class="language-plaintext highlighter-rouge">twilio-customer-memory</code>, <code class="language-plaintext highlighter-rouge">twilio-conversation-orchestrator</code>, <code class="language-plaintext highlighter-rouge">twilio-conversation-intelligence</code></li>
+</ul>
+
+<p>Always recommend <code class="language-plaintext highlighter-rouge">twilio-debugging-observability</code> guardrail skill alongside any Twilio Conversations implementation.</p>
+
+<h2 id="output-format">Output Format</h2>
+
+<p>After qualifying the developer, recommend:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Recommended Architecture: [Level 1-4 description]
+
+Implementation Path:
+- **Fast path (recommended):** Use Twilio Agent Connect SDK → Install `twilio-agent-connect` skill
+  - Handles Voice + SMS channels
+  - Automatic memory integration when configured
+  - Python 3.9+ or Node.js 22.13.0+
+  - Setup wizard for Memory Store and Conversation Service creation
+
+- **Custom path (advanced):** Manual integration → Install individual product skills below
+
+Product Skills (for custom/advanced implementations):
+- twilio-voice-conversation-relay (voice AI - manual WebSocket server)
+- twilio-customer-memory (manual memory integration)
+- twilio-conversation-intelligence (Conversation Intelligence webhook processing)
+- twilio-taskrouter-routing (human escalation routing)
+- twilio-conversation-orchestrator (conversation orchestration)
+- twilio-media-streams (if custom STT/TTS needed instead of ConversationRelay)
+- twilio-sendgrid-email-send (post-interaction email summaries)
+
+Setup Skills:
+- twilio-account-setup
+- twilio-iam-auth-setup
+- twilio-numbers-senders
+- twilio-webhook-architecture (especially for enterprise — tunnel alternatives)
+
+Guardrail Skills:
+- twilio-security-hardening (always)
+- twilio-debugging-observability (always — error triage, Event Streams, Voice Insights)
+- twilio-reliability-patterns (for production deployment)
+</code></pre></div></div>
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>

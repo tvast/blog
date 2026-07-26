@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>Javascript General Web Frontend Security · A developer journey</title>
+<meta name="description" content="Frontend JavaScript/TypeScript Web Security Spec (Vanilla Browser JS/TS, Modern Browsers)">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/skills/skills/.curated/security-best-practices/references/javascript-general-web-frontend-security/">
+
+<meta property="og:title" content="Javascript General Web Frontend Security · A developer journey">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/skills/skills/.curated/security-best-practices/references/javascript-general-web-frontend-security/">
+<meta property="og:description" content="Frontend JavaScript/TypeScript Web Security Spec (Vanilla Browser JS/TS, Modern Browsers)">
+<meta name="twitter:card" content="summary">
+
+<!-- Matches the dark base so the first paint doesn't flash white. -->
+<meta name="theme-color" content="#282a36" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#fffbeb" media="(prefers-color-scheme: light)">
+
+<link rel="stylesheet" href="/blog/assets/css/style.css">
+
+<!--
+  Applied before first paint so a user who chose light mode never sees a dark
+  flash. Deliberately inline and render-blocking; it is three lines.
+-->
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("dk-theme");
+      if (saved === "light" || saved === "dark") {
+        document.documentElement.setAttribute("data-theme", saved);
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<script>
+  window.DK_CONFIG = {
+    indexUrl: "/blog/assets/search-index.json",
+    baseUrl: "/blog",
+    total: 0
+  };
+</script>
+</head>
+<body>
+  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+  <div class="dk-sidebar__head">
+    <h2 class="dk-sidebar__title">
+      Knowledge
+    </h2>
+
+    <div class="dk-filter">
+      <svg class="dk-filter__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" />
+        <path d="M20 20l-3.5-3.5" />
+      </svg>
+      <label class="dk-visually-hidden" for="dk-filter-input">Filter knowledge base</label>
+      <input
+        type="search"
+        id="dk-filter-input"
+        class="dk-filter__input"
+        placeholder="Filter…"
+        autocomplete="off"
+        spellcheck="false"
+        data-dk-filter>
+    </div>
+  </div>
+
+  <nav class="dk-tree" data-dk-tree aria-label="Knowledge base">
+    <ul>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium</span>
+              <span class="dk-tree__badge">23</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium">
+                  Browse Ai Premium →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ai-premium.studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ai Premium.studio</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ai-premium-studio">
+                  Browse Ai Premium.studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="ascii-studio"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Ascii Studio</span>
+              <span class="dk-tree__badge">24</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#ascii-studio">
+                  Browse Ascii Studio →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="bufferline.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Bufferline.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#bufferline-nvim">
+                  Browse Bufferline.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-buffer"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Buffer</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-buffer">
+                  Browse Cmp Buffer →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-nvim-lsp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Nvim Lsp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-nvim-lsp">
+                  Browse Cmp Nvim Lsp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp-path"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Path</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-path">
+                  Browse Cmp Path →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cmp_luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cmp Luasnip</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cmp-luasnip">
+                  Browse Cmp Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="copilot.vim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Copilot.vim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#copilot-vim">
+                  Browse Copilot.vim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3">
+                  Browse Cr1bl3 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="cr1bl3-next"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Cr1bl3 Next</span>
+              <span class="dk-tree__badge">65</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#cr1bl3-next">
+                  Browse Cr1bl3 Next →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="desktop"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Desktop</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#desktop">
+                  Browse Desktop →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="documents"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Documents</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#documents">
+                  Browse Documents →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="downloads"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Downloads</span>
+              <span class="dk-tree__badge">9</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#downloads">
+                  Browse Downloads →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="dracula.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Dracula.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#dracula-nvim">
+                  Browse Dracula.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escort-monsieur"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escort Monsieur</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escort-monsieur">
+                  Browse Escort Monsieur →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="escortme"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Escortme</span>
+              <span class="dk-tree__badge">29</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#escortme">
+                  Browse Escortme →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="extracted_files"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Extracted Files</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#extracted-files">
+                  Browse Extracted Files →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="galax0und"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Galax0und</span>
+              <span class="dk-tree__badge">10</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#galax0und">
+                  Browse Galax0und →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="gitsigns.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Gitsigns.nvim</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#gitsigns-nvim">
+                  Browse Gitsigns.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="jh4ck-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Jh4ck Front</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#jh4ck-front">
+                  Browse Jh4ck Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="k0sm0s"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">K0sm0s</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#k0sm0s">
+                  Browse K0sm0s →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazy.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazy.nvim</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazy-nvim">
+                  Browse Lazy.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lazygit.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lazygit.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lazygit-nvim">
+                  Browse Lazygit.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="lualine.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Lualine.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#lualine-nvim">
+                  Browse Lualine.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="luasnip"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Luasnip</span>
+              <span class="dk-tree__badge">6</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#luasnip">
+                  Browse Luasnip →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-backend"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Backend</span>
+              <span class="dk-tree__badge">21</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-backend">
+                  Browse M00vies Backend →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="m00vies-front"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">M00vies Front</span>
+              <span class="dk-tree__badge">27</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#m00vies-front">
+                  Browse M00vies Front →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason-lspconfig.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason Lspconfig.nvim</span>
+              <span class="dk-tree__badge">2</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-lspconfig-nvim">
+                  Browse Mason Lspconfig.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="mason.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Mason.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#mason-nvim">
+                  Browse Mason.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-cmp"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Cmp</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-cmp">
+                  Browse Nvim Cmp →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-lspconfig"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Lspconfig</span>
+              <span class="dk-tree__badge">8</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-lspconfig">
+                  Browse Nvim Lspconfig →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-tree.lua"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Tree.lua</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-tree-lua">
+                  Browse Nvim Tree.lua →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-treesitter"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Treesitter</span>
+              <span class="dk-tree__badge">7</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-treesitter">
+                  Browse Nvim Treesitter →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="nvim-web-devicons"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Nvim Web Devicons</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#nvim-web-devicons">
+                  Browse Nvim Web Devicons →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="p0rtf0li0"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">P0rtf0li0</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#p0rtf0li0">
+                  Browse P0rtf0li0 →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pinject"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pinject</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pinject">
+                  Browse Pinject →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="pl4n3t"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Pl4n3t</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#pl4n3t">
+                  Browse Pl4n3t →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plenary.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plenary.nvim</span>
+              <span class="dk-tree__badge">3</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plenary-nvim">
+                  Browse Plenary.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="plugins"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Plugins</span>
+              <span class="dk-tree__badge">3191</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#plugins">
+                  Browse Plugins →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="public-domain-lists"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Public Domain Lists</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#public-domain-lists">
+                  Browse Public Domain Lists →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="recovery"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Recovery</span>
+              <span class="dk-tree__badge">15</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#recovery">
+                  Browse Recovery →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="saddam"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Saddam</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#saddam">
+                  Browse Saddam →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="safari"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Safari</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#safari">
+                  Browse Safari →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="server_twitch"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Server Twitch</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#server-twitch">
+                  Browse Server Twitch →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="skills"
+            open>
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Skills</span>
+              <span class="dk-tree__badge">514</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#skills">
+                  Browse Skills →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="telescope.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Telescope.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#telescope-nvim">
+                  Browse Telescope.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="terminal-app"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Terminal App</span>
+              <span class="dk-tree__badge">4</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#terminal-app">
+                  Browse Terminal App →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="trouble.nvim"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Trouble.nvim</span>
+              <span class="dk-tree__badge">5</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#trouble-nvim">
+                  Browse Trouble.nvim →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="v1zu4l1z3r"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">V1zu4l1z3r</span>
+              <span class="dk-tree__badge">1</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#v1zu4l1z3r">
+                  Browse V1zu4l1z3r →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li class="dk-tree__group-wrap">
+          <details
+            class="dk-tree__group"
+            data-dk-section="velo-doctor"
+            >
+            <summary class="dk-tree__summary">
+              <svg class="dk-tree__caret" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              <span class="dk-tree__label">Velo Doctor</span>
+              <span class="dk-tree__badge">17</span>
+            </summary>
+            <ul data-dk-section-body>
+              <li class="dk-tree__fallback">
+                <a class="dk-tree__link" style="--dk-depth: 1" href="/blog/blog/knowledge/#velo-doctor">
+                  Browse Velo Doctor →
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+    </ul>
+
+    <p class="dk-tree__empty">No matches.</p>
+  </nav>
+</aside>
+
+<div class="dk-scrim" data-dk-scrim hidden></div>
+<div><header class="dk-header">
+  <button
+    type="button"
+    class="dk-iconbtn dk-sidebar-toggle"
+    data-dk-sidebar-toggle
+    aria-label="Toggle navigation"
+    aria-expanded="false"
+    aria-controls="dk-sidebar">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+
+  <a class="dk-header__brand" href="/blog/">
+    A developer journey
+  </a>
+
+  <div class="dk-header__spacer"></div>
+
+  <button type="button" class="dk-searchbtn" data-dk-search-open>
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="M20 20l-3.5-3.5" />
+    </svg>
+    <span>Search…</span>
+    <kbd data-dk-kbd>⌘K</kbd>
+  </button>
+
+  <nav class="dk-header__nav" aria-label="Main">
+      <a href="/blog/"
+         >Home</a>
+      <a href="/blog/knowledge/"
+         >Knowledge</a>
+  </nav>
+
+  <button
+    type="button"
+    class="dk-iconbtn"
+    data-dk-theme-toggle
+    aria-label="Switch colour theme">
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-dark>
+      <path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z" />
+    </svg>
+    <svg viewBox="0 0 24 24" aria-hidden="true" data-dk-icon-light hidden>
+      <circle cx="12" cy="12" r="4.5" />
+      <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+    </svg>
+  </button>
+</header>
+<main class="dk-main" id="dk-main">
+        <div class="dk-with-toc">
+  <article>
+    <header class="dk-pagehead"><nav class="dk-breadcrumb" aria-label="Breadcrumb">
+        <a href="/blog/">Home</a>
+        <span aria-hidden="true">/</span>
+        <a href="/blog/knowledge/">Knowledge</a>
+          <span aria-hidden="true">/</span>
+          <span>skills</span>
+      </nav>
+
+      <h1>Javascript General Web Frontend Security</h1>
+
+      <div class="dk-meta"><span>Jul 26, 2026</span>
+      </div>
+    </header>
+
+    <div class="dk-prose" data-dk-prose>
+      <h1 id="frontend-javascripttypescript-web-security-spec-vanilla-browser-jsts-modern-browsers">Frontend JavaScript/TypeScript Web Security Spec (Vanilla Browser JS/TS, Modern Browsers)</h1>
+
+<p>This document is designed as a <strong>security spec</strong> that supports:</p>
+
+<ol>
+  <li><strong>Secure-by-default code generation</strong> for new frontend JavaScript/TypeScript (no specific framework assumed).</li>
+  <li><strong>Security review / vulnerability hunting</strong> in existing frontend code (passive “notice issues while working” and active “scan the repo and report findings”).</li>
+</ol>
+
+<p>It is intentionally written as a set of <strong>normative requirements</strong> (“MUST/SHOULD/MAY”) plus <strong>audit rules</strong> (what bad patterns look like, how to detect them, and how to fix/mitigate them).</p>
+
+<hr />
+
+<h2 id="0-safety-boundaries-and-anti-abuse-constraints-must-follow">0) Safety, boundaries, and anti-abuse constraints (MUST FOLLOW)</h2>
+
+<ul>
+  <li>
+    <p>MUST NOT request, output, log, hard-code, or commit secrets (API keys intended to be secret, private keys, passwords, OAuth refresh tokens, session tokens, cookies).
+Notes:</p>
+
+    <ul>
+      <li>Frontend code is inherently observable by end users. If a value must remain secret, it must not be in browser-delivered code.</li>
+      <li>If the project uses “public” keys (e.g., publishable analytics keys), they MUST be treated as non-secret and scoped accordingly.</li>
+    </ul>
+  </li>
+  <li>
+    <p>MUST NOT “fix” security by disabling protections (e.g., weakening CSP with <code class="language-plaintext highlighter-rouge">unsafe-inline</code>/<code class="language-plaintext highlighter-rouge">unsafe-eval</code> without justification, removing origin checks for <code class="language-plaintext highlighter-rouge">postMessage</code>, switching to <code class="language-plaintext highlighter-rouge">innerHTML</code> for convenience, accepting arbitrary redirects/URLs, or turning off sanitization).</p>
+  </li>
+  <li>
+    <p>MUST provide <strong>evidence-based findings</strong> during audits: cite file paths, code snippets, and relevant HTML/CSP/config values that justify the claim.</p>
+  </li>
+  <li>
+    <p>MUST treat uncertainty honestly:</p>
+
+    <ul>
+      <li>Security headers (CSP, frame-ancestors, etc.) might be set by server/edge/CDN rather than in repo code. If not visible, report as “not visible here; verify at runtime/edge config.” (Also note that <code class="language-plaintext highlighter-rouge">&lt;meta http-equiv=...&gt;</code> only simulates a subset of headers; don’t assume other security headers exist just because a meta tag exists.) (<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv" title="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="1-operating-modes">1) Operating modes</h2>
+
+<h3 id="11-generation-mode-default">1.1 Generation mode (default)</h3>
+
+<p>When asked to write new frontend JS/TS code or modify existing code:</p>
+
+<ul>
+  <li>MUST follow every <strong>MUST</strong> requirement in this spec.</li>
+  <li>SHOULD follow every <strong>SHOULD</strong> requirement unless the user explicitly says otherwise.</li>
+  <li>MUST prefer safe-by-default browser APIs and proven libraries over custom security code (especially for HTML sanitization).</li>
+  <li>MUST avoid introducing new risky sinks (DOM XSS injection sinks like <code class="language-plaintext highlighter-rouge">innerHTML</code>, navigation to <code class="language-plaintext highlighter-rouge">javascript:</code> URLs, dynamic code execution via <code class="language-plaintext highlighter-rouge">eval</code>/<code class="language-plaintext highlighter-rouge">Function</code>, unsafe <code class="language-plaintext highlighter-rouge">postMessage</code>, unsafe third-party script loading, etc.). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<h3 id="12-passive-review-mode-always-on-while-editing">1.2 Passive review mode (always on while editing)</h3>
+
+<p>While working anywhere in a frontend repo (even if the user did not ask for a security scan):</p>
+
+<ul>
+  <li>MUST “notice” violations of this spec in touched/nearby code.</li>
+  <li>SHOULD mention issues as they come up, with a brief explanation + safe fix.</li>
+</ul>
+
+<h3 id="13-active-audit-mode-explicit-scan-request">1.3 Active audit mode (explicit scan request)</h3>
+
+<p>When the user asks to “scan”, “audit”, or “hunt for vulns”:</p>
+
+<ul>
+  <li>MUST systematically search the codebase for violations of this spec.</li>
+  <li>MUST output findings in a structured format (see §2.3).</li>
+</ul>
+
+<p>Recommended audit order:</p>
+
+<ol>
+  <li>HTML entrypoints (<code class="language-plaintext highlighter-rouge">index.html</code>, server-rendered templates), script/style includes, and any CSP delivery (header vs meta). (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+  <li>DOM XSS sinks (<code class="language-plaintext highlighter-rouge">innerHTML</code>, <code class="language-plaintext highlighter-rouge">document.write</code>, <code class="language-plaintext highlighter-rouge">insertAdjacentHTML</code>, event-handler attributes) and their data sources (URL params/hash, storage, postMessage, API responses). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>Navigation/redirect handling (<code class="language-plaintext highlighter-rouge">window.location*</code>, link targets, URL allowlists) including <code class="language-plaintext highlighter-rouge">javascript:</code> URL hazards. (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+  <li>Cross-origin communication (<code class="language-plaintext highlighter-rouge">postMessage</code>, iframe embed patterns, sandboxing). (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" title="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN Web Docs</a>)</li>
+  <li>Storage of sensitive data (localStorage/sessionStorage) and assumptions about trust. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>Third-party scripts / tag managers / CDNs, and integrity controls (SRI) and policy controls (CSP). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>DOM clobbering gadgets and unsafe reliance on <code class="language-plaintext highlighter-rouge">window</code>/<code class="language-plaintext highlighter-rouge">document</code> named properties. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ol>
+
+<hr />
+
+<h2 id="2-definitions-and-review-guidance">2) Definitions and review guidance</h2>
+
+<h3 id="21-untrusted-input-treat-as-attacker-controlled-unless-proven-otherwise">2.1 Untrusted input (treat as attacker-controlled unless proven otherwise)</h3>
+
+<p>Examples include:</p>
+
+<ul>
+  <li>URL-derived data: <code class="language-plaintext highlighter-rouge">location.href</code>, <code class="language-plaintext highlighter-rouge">location.search</code>, <code class="language-plaintext highlighter-rouge">location.hash</code>, <code class="language-plaintext highlighter-rouge">document.baseURI</code>, <code class="language-plaintext highlighter-rouge">new URLSearchParams(location.search)</code>, routing fragments. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>DOM content that may include user-controlled markup (comments, profiles, CMS content, markdown-to-HTML output, etc.), especially if inserted dynamically. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li><code class="language-plaintext highlighter-rouge">postMessage</code> event data (<code class="language-plaintext highlighter-rouge">event.data</code>) and metadata (<code class="language-plaintext highlighter-rouge">event.origin</code>) from other windows/frames. (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" title="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN Web Docs</a>)</li>
+  <li>Browser storage: <code class="language-plaintext highlighter-rouge">localStorage</code>, <code class="language-plaintext highlighter-rouge">sessionStorage</code>, IndexedDB (contents can be attacker-influenced via XSS or local machine access; never treat as “trusted”). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>Any data returned from network calls (even if from “your API”), because it may contain stored attacker content that becomes dangerous only when inserted into the DOM. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<h3 id="22-dangerous-sink-dom-xss--code-execution-sink">2.2 Dangerous sink (DOM XSS / code execution sink)</h3>
+
+<p>A sink is any API/operation that can execute script or interpret attacker-controlled strings as HTML/JS/URL in a security-sensitive way. High-signal sinks include:</p>
+
+<ul>
+  <li>HTML parsing / insertion: <code class="language-plaintext highlighter-rouge">innerHTML</code>, <code class="language-plaintext highlighter-rouge">outerHTML</code>, <code class="language-plaintext highlighter-rouge">insertAdjacentHTML</code>, <code class="language-plaintext highlighter-rouge">document.write</code>, <code class="language-plaintext highlighter-rouge">document.writeln</code>. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>Dynamic code execution: <code class="language-plaintext highlighter-rouge">eval</code>, <code class="language-plaintext highlighter-rouge">new Function</code>, <code class="language-plaintext highlighter-rouge">setTimeout("...")</code>, <code class="language-plaintext highlighter-rouge">setInterval("...")</code>. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>Navigation to script-bearing URLs (e.g., <code class="language-plaintext highlighter-rouge">javascript:</code>) via setters like <code class="language-plaintext highlighter-rouge">Location.href</code>/<code class="language-plaintext highlighter-rouge">window.location</code> (and via link <code class="language-plaintext highlighter-rouge">href</code> if attacker-controlled). (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+  <li>Setting event handler attributes from strings, e.g. <code class="language-plaintext highlighter-rouge">setAttribute("onclick", "...")</code>. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<h3 id="23-required-audit-finding-format">2.3 Required audit finding format</h3>
+
+<p>For each issue found, output:</p>
+
+<ul>
+  <li>Rule ID:</li>
+  <li>Severity: Critical / High / Medium / Low</li>
+  <li>Location: file path + function/class/module + line(s)</li>
+  <li>Evidence: the exact code/config snippet</li>
+  <li>Impact: what could go wrong, who can exploit it</li>
+  <li>Fix: safe change (prefer minimal diff)</li>
+  <li>Mitigation: defense-in-depth if immediate fix is hard</li>
+  <li>False positive notes: what to verify if uncertain</li>
+</ul>
+
+<hr />
+
+<h2 id="3-secure-baseline-minimum-production-configuration-must-in-production">3) Secure baseline: minimum production configuration (MUST in production)</h2>
+
+<p>This is the smallest baseline that prevents common frontend JS/TS security misconfigurations. Some items are “in repo” (HTML/JS) and some may live at the server/edge.</p>
+
+<h3 id="31-content-security-policy-csp-baseline-should-must-for-high-risk-apps">3.1 Content Security Policy (CSP) baseline (SHOULD; MUST for high-risk apps)</h3>
+
+<ul>
+  <li>SHOULD deliver CSP via HTTP response headers when possible.</li>
+  <li>MAY deliver CSP via an HTML <code class="language-plaintext highlighter-rouge">&lt;meta http-equiv="Content-Security-Policy" ...&gt;</code> tag when you cannot set headers (e.g., purely static hosting constraints). (<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv" title="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv">MDN Web Docs</a>)</li>
+  <li>
+    <p>If using CSP via <code class="language-plaintext highlighter-rouge">&lt;meta http-equiv&gt;</code>, MUST understand the limitations:</p>
+
+    <ul>
+      <li>The policy only applies to content that follows the meta element (so it must appear very early, before any scripts/resources you want governed). (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+      <li>The following directives are <strong>not supported</strong> in a meta-delivered policy and will be ignored: <code class="language-plaintext highlighter-rouge">report-uri</code>, <code class="language-plaintext highlighter-rouge">frame-ancestors</code>, and <code class="language-plaintext highlighter-rouge">sandbox</code>. (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+      <li>“Report-only” CSP cannot be set via a meta element. (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Practical baseline goals:</p>
+
+<ul>
+  <li>Avoid script sources <code class="language-plaintext highlighter-rouge">unsafe-inline</code> and <code class="language-plaintext highlighter-rouge">unsafe-eval</code> (they significantly weaken CSP’s value against XSS). (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>Prefer nonce- or hash-based script policies if you need inline scripts. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>Consider enabling Trusted Types enforcement where feasible. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for">MDN Web Docs</a>)</li>
+</ul>
+
+<h3 id="32-third-party-scripts-baseline-should">3.2 Third-party scripts baseline (SHOULD)</h3>
+
+<ul>
+  <li>SHOULD minimize third-party script execution and treat it as equivalent privilege to first-party JS (it runs with your origin’s privileges). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>SHOULD use Subresource Integrity (SRI) for third-party scripts/styles loaded from CDNs. (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity" title="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity">MDN Web Docs</a>)</li>
+</ul>
+
+<h3 id="33-cross-window-communication-baseline-should">3.3 Cross-window communication baseline (SHOULD)</h3>
+
+<ul>
+  <li>SHOULD restrict <code class="language-plaintext highlighter-rouge">postMessage</code> communications to explicit origins, and validate both origin and message shape. (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" title="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN Web Docs</a>)</li>
+</ul>
+
+<hr />
+
+<h2 id="4-rules-generation--audit">4) Rules (generation + audit)</h2>
+
+<p>Each rule contains: required practice, insecure patterns, detection hints, and remediation.</p>
+
+<h3 id="js-xss-001-do-not-inject-untrusted-html-into-the-dom-avoid-innerhtml-and-friends">JS-XSS-001: Do not inject untrusted HTML into the DOM (avoid <code class="language-plaintext highlighter-rouge">innerHTML</code> and friends)</h3>
+
+<p>Severity: Critical if you can prove attacker-controlled input can reach these APIs; otherwise Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST treat <code class="language-plaintext highlighter-rouge">innerHTML</code>, <code class="language-plaintext highlighter-rouge">outerHTML</code>, and <code class="language-plaintext highlighter-rouge">insertAdjacentHTML</code> as dangerous sinks when their input can contain untrusted data. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>
+    <p>MUST prefer safe DOM APIs that do not parse HTML:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">textContent</code> for text. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+      <li><code class="language-plaintext highlighter-rouge">document.createElement</code>, <code class="language-plaintext highlighter-rouge">appendChild</code>, <code class="language-plaintext highlighter-rouge">setAttribute</code> for non-event-handler attributes. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+  <li>If HTML insertion is truly required, SHOULD sanitize with a well-reviewed HTML sanitizer and strongly consider enforcing Trusted Types to confine usage to audited code paths. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">el.innerHTML = userInput</code></li>
+  <li><code class="language-plaintext highlighter-rouge">el.insertAdjacentHTML('beforeend', userInput)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">el.outerHTML = userInput</code></li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for: <code class="language-plaintext highlighter-rouge">.innerHTML</code>, <code class="language-plaintext highlighter-rouge">.outerHTML</code>, <code class="language-plaintext highlighter-rouge">insertAdjacentHTML(</code>.</li>
+  <li>Trace the origin of inserted string: URL params/hash, postMessage, storage, API responses, DOM attributes. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Replace with <code class="language-plaintext highlighter-rouge">textContent</code> for plain text. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>For structured UI, build DOM nodes explicitly.</li>
+  <li>
+    <p>For “rich text” requirements:</p>
+
+    <ul>
+      <li>Sanitize using an allowlist-based sanitizer.</li>
+      <li>Prefer returning safe “components” instead of arbitrary HTML strings.</li>
+      <li>Use Trusted Types enforcement to ensure only <code class="language-plaintext highlighter-rouge">TrustedHTML</code> reaches sinks where supported. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Mitigation:</p>
+
+<ul>
+  <li>Deploy a strict CSP and consider Trusted Types enforcement (<code class="language-plaintext highlighter-rouge">require-trusted-types-for 'script'</code>). (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<p>False positive notes:</p>
+
+<ul>
+  <li>If the string is provably constant or fully generated from trusted constants, it may be safe. Still prefer safer APIs.</li>
+</ul>
+
+<hr />
+
+<h3 id="js-xss-002-avoid-documentwrite--documentwriteln-xss--document-clobbering-hazards">JS-XSS-002: Avoid <code class="language-plaintext highlighter-rouge">document.write</code> / <code class="language-plaintext highlighter-rouge">document.writeln</code> (XSS + document clobbering hazards)</h3>
+
+<p>Severity: Critical if you can prove attacker-controlled input can reach these APIs; otherwise Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST avoid <code class="language-plaintext highlighter-rouge">document.write()</code> and <code class="language-plaintext highlighter-rouge">document.writeln()</code> in production code (they are XSS vectors and can be abused with crafted HTML even if some browsers block injected <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> in certain situations). (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/write" title="https://developer.mozilla.org/en-US/docs/Web/API/Document/write">MDN Web Docs</a>)</li>
+  <li>If legacy use is unavoidable, MUST ensure no untrusted input reaches these APIs and SHOULD enforce Trusted Types (<code class="language-plaintext highlighter-rouge">TrustedHTML</code>) where supported. (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/writeln" title="https://developer.mozilla.org/en-US/docs/Web/API/Document/writeln">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">document.write(userInput)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">document.writeln(getParam('q'))</code></li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">document.write(</code>, <code class="language-plaintext highlighter-rouge">document.writeln(</code>. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Replace with DOM manipulation (<code class="language-plaintext highlighter-rouge">createElement</code>, <code class="language-plaintext highlighter-rouge">appendChild</code>) or safe text insertion (<code class="language-plaintext highlighter-rouge">textContent</code>). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Mitigation:</p>
+
+<ul>
+  <li>Strict CSP + Trusted Types enforcement reduces blast radius if a sink remains. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="js-xss-003-do-not-use-string-to-code-execution-eval-new-function-string-timeouts">JS-XSS-003: Do not use string-to-code execution (<code class="language-plaintext highlighter-rouge">eval</code>, <code class="language-plaintext highlighter-rouge">new Function</code>, string timeouts)</h3>
+
+<p>Severity: Critical if you can prove attacker-controlled input can reach these APIs; otherwise Medium</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>MUST NOT pass untrusted data to:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">eval()</code></li>
+      <li><code class="language-plaintext highlighter-rouge">new Function(...)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">setTimeout("...")</code> / <code class="language-plaintext highlighter-rouge">setInterval("...")</code> with string arguments (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+  <li>SHOULD avoid these APIs entirely in modern frontend code; refactor to non-eval logic. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>MUST NOT “fix CSP breakage” by adding <code class="language-plaintext highlighter-rouge">unsafe-eval</code> unless there is a documented, reviewed justification and compensating controls. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">eval(userInput)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">new Function("return " + userInput)()</code></li>
+  <li><code class="language-plaintext highlighter-rouge">setTimeout(userInput, 0)</code> where userInput is a string</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">eval(</code>, <code class="language-plaintext highlighter-rouge">new Function</code>, <code class="language-plaintext highlighter-rouge">setTimeout("</code>, <code class="language-plaintext highlighter-rouge">setInterval("</code>.</li>
+  <li>Also search for construction of code strings used later.</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>
+    <p>Replace dynamic code with:</p>
+
+    <ul>
+      <li>structured data + explicit branching/handlers,</li>
+      <li>JSON parsing (<code class="language-plaintext highlighter-rouge">JSON.parse</code>) instead of <code class="language-plaintext highlighter-rouge">eval</code> for JSON. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Mitigation:</p>
+
+<ul>
+  <li>CSP that blocks <code class="language-plaintext highlighter-rouge">eval()</code>-like APIs by default, and avoid <code class="language-plaintext highlighter-rouge">unsafe-eval</code>. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>Consider Trusted Types for controlled cases, but treat it as a hardening layer, not a license to keep eval patterns. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="js-xss-004-do-not-set-event-handler-attributes-from-strings-eg-setattributeonclick-">JS-XSS-004: Do not set event handler attributes from strings (e.g., <code class="language-plaintext highlighter-rouge">setAttribute("onclick", "...")</code>)</h3>
+
+<p>Severity: High</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST NOT use <code class="language-plaintext highlighter-rouge">setAttribute("on…", string)</code> or similar patterns with untrusted data; this coerces strings into executable code in the event-handler context. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>SHOULD prefer <code class="language-plaintext highlighter-rouge">addEventListener</code> with function references.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">el.setAttribute("onclick", userInput)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">el.onclick = userControlledString</code> (string assignment)</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">.setAttribute("on</code>, <code class="language-plaintext highlighter-rouge">.onclick =</code>, <code class="language-plaintext highlighter-rouge">.onmouseover =</code>, etc.</li>
+  <li>Trace whether RHS can be influenced by URL/hash/storage/postMessage. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Replace with <code class="language-plaintext highlighter-rouge">addEventListener("click", () =&gt; { ... })</code>.</li>
+  <li>If dynamic dispatch is needed, use an allowlisted mapping from identifiers to functions (no string eval). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="js-url-001-sanitize-and-allowlist-urls-before-navigation-especially-windowlocation--locationreplace">JS-URL-001: Sanitize and allowlist URLs before navigation (especially <code class="language-plaintext highlighter-rouge">window.location</code> / <code class="language-plaintext highlighter-rouge">location.replace</code>)</h3>
+
+<p>Severity: Low (High if you can prove an attacker can fully control the URL)</p>
+
+<p>IMPORTANT: This can cause a lot of false positives. Please perform extra analysis to determine if the url is fully attacker controlled. If not fully attacker controlled, then this is informational at best.</p>
+
+<p>NOTE: It may be important functionality to be able to redirect to any given url. If that is the goal of the feature, then at a minimum, ensure it checks the schema even if the origin is allowed to be anything.</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>MUST treat any assignment to navigation targets as security-sensitive:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">window.location = ...</code></li>
+      <li><code class="language-plaintext highlighter-rouge">location.href = ...</code></li>
+      <li><code class="language-plaintext highlighter-rouge">location.assign(...)</code></li>
+      <li><code class="language-plaintext highlighter-rouge">location.replace(...)</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+  <li>MUST prevent navigation to <code class="language-plaintext highlighter-rouge">javascript:</code> URLs (and generally other script-bearing/active schemes), especially when input is derived from URL params, storage, or messages. (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>). Only allow <code class="language-plaintext highlighter-rouge">http:</code> and <code class="language-plaintext highlighter-rouge">https:</code>.</li>
+  <li>
+    <p>SHOULD validate/allowlist the destination. A safe baseline is:</p>
+
+    <ul>
+      <li>Allow only same-origin relative paths, OR</li>
+      <li>Allow only a strict allowlist of origins and protocols (typically <code class="language-plaintext highlighter-rouge">https:</code> and optionally <code class="language-plaintext highlighter-rouge">http:</code> for localhost dev). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">location.replace(getParam("next"))</code></li>
+  <li><code class="language-plaintext highlighter-rouge">window.location = userSuppliedUrl</code></li>
+  <li><code class="language-plaintext highlighter-rouge">location.assign(window.redirectTo || "/")</code> where <code class="language-plaintext highlighter-rouge">redirectTo</code> can be clobbered or attacker-set (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">window.location</code>, <code class="language-plaintext highlighter-rouge">location.href</code>, <code class="language-plaintext highlighter-rouge">location.assign</code>, <code class="language-plaintext highlighter-rouge">location.replace</code>.</li>
+  <li>Search for common redirect parameters: <code class="language-plaintext highlighter-rouge">next</code>, <code class="language-plaintext highlighter-rouge">returnTo</code>, <code class="language-plaintext highlighter-rouge">redirect</code>, <code class="language-plaintext highlighter-rouge">url</code>, <code class="language-plaintext highlighter-rouge">continue</code>.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">javascript:</code> literal usage. (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>
+    <p>Parse and validate with <code class="language-plaintext highlighter-rouge">new URL(value, location.origin)</code> and then enforce:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">url.protocol</code> in <code class="language-plaintext highlighter-rouge">{ "https:" }</code> (and only include <code class="language-plaintext highlighter-rouge">http:</code> in explicit dev-only code paths),</li>
+      <li><code class="language-plaintext highlighter-rouge">url.origin</code> equals <code class="language-plaintext highlighter-rouge">location.origin</code> for internal redirects, or in a strict allowlist for external redirects,</li>
+      <li>optionally allow only specific path prefixes. (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>If validation fails, navigate to a safe default (home/dashboard).</p>
+  </li>
+</ul>
+
+<p>Mitigation:</p>
+
+<ul>
+  <li>Deploy strict CSP and Trusted Types enforcement to reduce the impact of DOM XSS sinks, but note that Trusted Types do not prevent every possible unsafe navigation scenario on their own. (<a href="https://www.w3.org/TR/trusted-types/" title="https://www.w3.org/TR/trusted-types/">W3C</a>)</li>
+</ul>
+
+<p>False positive notes:</p>
+
+<p>IMPORTANT: This can cause a lot of false positives. Please perform extra analysis to determine if the url is fully attacker controlled. If not fully attacker controlled, then this is informational at best.</p>
+
+<ul>
+  <li>Some apps intentionally support external redirects (SSO, payment flows). Those MUST be allowlisted and documented.</li>
+</ul>
+
+<hr />
+
+<h3 id="js-url-002-sanitize-urls-before-inserting-into-dom-url-contexts-href-src-etc">JS-URL-002: Sanitize URLs before inserting into DOM URL contexts (<code class="language-plaintext highlighter-rouge">href</code>, <code class="language-plaintext highlighter-rouge">src</code>, etc.)</h3>
+
+<p>Severity: Low (High if you can prove an attacker can fully control the URL)</p>
+
+<p>IMPORTANT: This can cause a lot of false positives. Please perform extra analysis to determine if the url is fully attacker controlled. If not fully attacker controlled, then this is informational at best.</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>MUST treat setting URL-bearing DOM attributes/properties as security-sensitive, especially:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">a.href</code>, <code class="language-plaintext highlighter-rouge">img.src</code>, <code class="language-plaintext highlighter-rouge">script.src</code>, <code class="language-plaintext highlighter-rouge">iframe.src</code>, <code class="language-plaintext highlighter-rouge">form.action</code>, <code class="language-plaintext highlighter-rouge">link.href</code>.</li>
+    </ul>
+  </li>
+  <li>MUST prevent script-bearing schemes (<code class="language-plaintext highlighter-rouge">javascript:</code> and other active schemes) when values can be attacker-influenced. (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+  <li>SHOULD prefer setting properties (e.g., <code class="language-plaintext highlighter-rouge">a.href = url.toString()</code>) after parsing and validation, rather than string concatenation.</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">link.href = getParam("u")</code></li>
+  <li><code class="language-plaintext highlighter-rouge">el.setAttribute("href", userInput)</code> without validation</li>
+  <li>constructing URLs via concatenation with untrusted pieces</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">.href =</code>, <code class="language-plaintext highlighter-rouge">.src =</code>, <code class="language-plaintext highlighter-rouge">.action =</code>, <code class="language-plaintext highlighter-rouge">setAttribute("href"</code>, <code class="language-plaintext highlighter-rouge">setAttribute("src"</code>.</li>
+  <li>Search for <code class="language-plaintext highlighter-rouge">javascript:</code> / <code class="language-plaintext highlighter-rouge">data:</code> usage in URLs. (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+</ul>
+
+<p>IMPORTANT: This can cause a lot of false positives. Please perform extra analysis to determine if the url is fully attacker controlled. If not fully attacker controlled, then this is informational at best.</p>
+
+<p>Fix:</p>
+
+<ul>
+  <li>
+    <p>Use <code class="language-plaintext highlighter-rouge">new URL(...)</code> and validate:</p>
+
+    <ul>
+      <li>protocol allowlist</li>
+      <li>avoid passing user-provided values into <code class="language-plaintext highlighter-rouge">&lt;script src&gt;</code> at all (treat as code execution). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="js-csp-001-use-csp-meta-delivery-is-allowed">JS-CSP-001: Use CSP; meta delivery is allowed</h3>
+
+<p>Severity: Medium to High (depends on threat model; High when handling untrusted content)</p>
+
+<p>NOTE: It is most important to set the CSP’s script-src. All other directives are not as important and can generally be excluded for the ease of development.</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>SHOULD deploy a CSP as a major defense-in-depth against XSS. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>MAY provide CSP via <code class="language-plaintext highlighter-rouge">&lt;meta http-equiv="Content-Security-Policy" ...&gt;</code> when headers are not available. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv" title="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv">MDN Web Docs</a>)</li>
+  <li>
+    <p>If CSP is delivered via meta, MUST:</p>
+
+    <ul>
+      <li>place it early (before scripts/resources you want governed), and</li>
+      <li>not rely on unsupported directives in meta policies (<code class="language-plaintext highlighter-rouge">report-uri</code>, <code class="language-plaintext highlighter-rouge">frame-ancestors</code>, <code class="language-plaintext highlighter-rouge">sandbox</code>). (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+    </ul>
+  </li>
+  <li>MUST avoid adding <code class="language-plaintext highlighter-rouge">unsafe-inline</code> as a “quick fix” for CSP issues unless explicitly required and reviewed (it defeats much of CSP’s purpose). (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>MUST avoid adding <code class="language-plaintext highlighter-rouge">unsafe-eval</code> unless explicitly required and reviewed (it allows eval-like APIs that are commonly abused). (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>No CSP present anywhere (repo HTML or server/edge) for an app that renders untrusted content.</li>
+  <li>CSP includes <code class="language-plaintext highlighter-rouge">script-src 'unsafe-inline'</code> and/or <code class="language-plaintext highlighter-rouge">script-src 'unsafe-eval'</code> without strong justification. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>CSP delivered via meta but includes <code class="language-plaintext highlighter-rouge">frame-ancestors</code> (it will be ignored in meta). (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search HTML for <code class="language-plaintext highlighter-rouge">&lt;meta http-equiv="Content-Security-Policy"</code>.</li>
+  <li>Search server/edge configs for <code class="language-plaintext highlighter-rouge">Content-Security-Policy</code> header.</li>
+  <li>If CSP is only in meta, check it appears before any <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> tags you want governed. (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Prefer header-delivered CSP at the server/edge.</li>
+  <li>If constrained to meta, keep a strong allowlist CSP and document the limitations; implement clickjacking protections (e.g., <code class="language-plaintext highlighter-rouge">frame-ancestors</code>) at the server/edge, not in meta. (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="js-csp-002-prefer-strict-csp-nonceshashes-avoid-inlineeval-patterns-in-code">JS-CSP-002: Prefer strict CSP (nonces/hashes); avoid inline/eval patterns in code</h3>
+
+<p>Severity: Medium</p>
+
+<p>NOTE: It is most important to set the CSP’s script-src. All other directives are not as important and can generally be excluded for the ease of development.</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>
+    <p>SHOULD design frontend code to work under a strict CSP:</p>
+
+    <ul>
+      <li>avoid inline scripts and inline event handlers,</li>
+      <li>avoid eval-like APIs (see JS-XSS-003),</li>
+      <li>allow scripts via nonce or hash when needed. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Large amounts of inline script blocks and inline <code class="language-plaintext highlighter-rouge">onclick="..."</code> handlers.</li>
+  <li>Libraries that require <code class="language-plaintext highlighter-rouge">unsafe-eval</code>.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">&lt;script&gt;</code> blocks with inline code, <code class="language-plaintext highlighter-rouge">onclick="</code>, <code class="language-plaintext highlighter-rouge">onload="</code>, etc.</li>
+  <li>Search for CSP directives containing <code class="language-plaintext highlighter-rouge">unsafe-inline</code> or <code class="language-plaintext highlighter-rouge">unsafe-eval</code>. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Move inline scripts into external JS files (same-origin).</li>
+  <li>Use nonces/hashes for any unavoidable inline blocks. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="js-tt-001-use-trusted-types-to-reduce-dom-xss-attack-surface-where-supported">JS-TT-001: Use Trusted Types to reduce DOM XSS attack surface (where supported)</h3>
+
+<p>Severity: Low</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>SHOULD consider enabling Trusted Types enforcement with CSP <code class="language-plaintext highlighter-rouge">require-trusted-types-for 'script'</code> to make many DOM XSS sinks reject raw strings. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for">MDN Web Docs</a>)</li>
+  <li>If using Trusted Types, SHOULD also use the CSP <code class="language-plaintext highlighter-rouge">trusted-types</code> directive to restrict which policies can be created (reduces policy sprawl and improves auditability). (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/trusted-types" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/trusted-types">MDN Web Docs</a>)</li>
+  <li>MUST keep Trusted Types policy code small, heavily reviewed, and used as the only path to produce trusted values for sinks. (<a href="https://www.w3.org/TR/trusted-types/" title="https://www.w3.org/TR/trusted-types/">W3C</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>“Trusted Types enabled” but policy simply returns input unchanged (no sanitization/validation).</li>
+  <li>Many ad-hoc policies created across the codebase without restriction.</li>
+  <li>Belief that Trusted Types alone prevents all unsafe navigations or all XSS classes. (It targets DOM injection sinks; it is not a universal sandbox.) (<a href="https://www.w3.org/TR/trusted-types/" title="https://www.w3.org/TR/trusted-types/">W3C</a>)</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for CSP directives: <code class="language-plaintext highlighter-rouge">require-trusted-types-for</code> and <code class="language-plaintext highlighter-rouge">trusted-types</code>.</li>
+  <li>Search code for <code class="language-plaintext highlighter-rouge">trustedTypes.createPolicy(</code> and inspect policy implementations. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Add a small set of well-reviewed policies (e.g., <code class="language-plaintext highlighter-rouge">createHTML</code> that sanitizes).</li>
+  <li>Restrict allowed policies via <code class="language-plaintext highlighter-rouge">trusted-types &lt;policyName...&gt;</code>.</li>
+  <li>Migrate sinks to require <code class="language-plaintext highlighter-rouge">TrustedHTML</code> / <code class="language-plaintext highlighter-rouge">TrustedScriptURL</code> as appropriate. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for">MDN Web Docs</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="js-msg-001-postmessage-must-use-strict-origin-validation-and-explicit-targetorigin">JS-MSG-001: <code class="language-plaintext highlighter-rouge">postMessage</code> must use strict origin validation and explicit targetOrigin</h3>
+
+<p>Severity: Medium (High if dangerous behavior can be triggered via postMessage)</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>When sending messages, MUST set an explicit <code class="language-plaintext highlighter-rouge">targetOrigin</code> (not <code class="language-plaintext highlighter-rouge">*</code>) to avoid sending data to an unexpected origin after redirects or window origin changes. (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" title="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN Web Docs</a>)</li>
+  <li>
+    <p>When receiving messages, MUST:</p>
+
+    <ul>
+      <li>Validate <code class="language-plaintext highlighter-rouge">event.origin</code> exactly against an allowlist of expected origins (no substring matching). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+      <li>Consider validating <code class="language-plaintext highlighter-rouge">event.source</code> (expected window reference) when applicable. (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" title="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN Web Docs</a>)</li>
+      <li>Validate <code class="language-plaintext highlighter-rouge">event.data</code> structure (schema/shape) and treat it purely as data (never evaluate it as code and never insert into DOM with <code class="language-plaintext highlighter-rouge">innerHTML</code>). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">otherWindow.postMessage(payload, "*")</code></li>
+  <li><code class="language-plaintext highlighter-rouge">window.addEventListener("message", (e) =&gt; { doSomething(e.data) })</code> with no <code class="language-plaintext highlighter-rouge">origin</code> check</li>
+  <li><code class="language-plaintext highlighter-rouge">if (e.origin.includes("trusted.com"))</code> (substring checks)</li>
+  <li><code class="language-plaintext highlighter-rouge">el.innerHTML = e.data</code> (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">postMessage(</code>, <code class="language-plaintext highlighter-rouge">addEventListener("message"</code>, <code class="language-plaintext highlighter-rouge">onmessage =</code>.</li>
+  <li>Audit all handlers for explicit allowlist checks on <code class="language-plaintext highlighter-rouge">event.origin</code>. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>
+    <p>Define an allowlist:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">const ALLOWED = new Set(["https://app.example.com", "https://accounts.example.com"]);</code>
+NOTE: For ease of development, you can use the current page’s origin <code class="language-plaintext highlighter-rouge">window.location.origin</code> as a safe default origin.</li>
+    </ul>
+  </li>
+  <li>
+    <p>On receive:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">if (!ALLOWED.has(event.origin)) return;</code></li>
+      <li>Validate <code class="language-plaintext highlighter-rouge">event.data</code> with a strict schema and reject unknown/extra fields.</li>
+    </ul>
+  </li>
+  <li>
+    <p>On send:</p>
+
+    <ul>
+      <li>use the exact expected origin string as <code class="language-plaintext highlighter-rouge">targetOrigin</code>. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Mitigation:</p>
+
+<ul>
+  <li>Combine with a strict CSP and avoid DOM sinks in message paths. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="js-storage-001-web-storage-is-not-a-safe-place-for-secrets-and-is-attacker-influencable">JS-STORAGE-001: Web Storage is not a safe place for secrets (and is attacker-influencable)</h3>
+
+<p>Severity: Low</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST NOT store sensitive secrets or session identifiers in <code class="language-plaintext highlighter-rouge">localStorage</code> (or <code class="language-plaintext highlighter-rouge">sessionStorage</code>) if compromise would matter; a single XSS can exfiltrate everything in storage. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>MUST treat values read from storage as untrusted input (attackers can load malicious values into storage via XSS). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>SHOULD prefer server-set cookies with <code class="language-plaintext highlighter-rouge">HttpOnly</code> for session identifiers (JS cannot set <code class="language-plaintext highlighter-rouge">HttpOnly</code>, so avoid storing session IDs in JS-accessible storage). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>SHOULD avoid hosting multiple unrelated apps on the same origin if they rely on storage separation (storage is origin-wide). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">localStorage.setItem("access_token", token)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">localStorage.setItem("session", sessionId)</code></li>
+  <li>Assuming <code class="language-plaintext highlighter-rouge">localStorage</code> is “trusted because same-origin.”</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">localStorage.getItem</code>, <code class="language-plaintext highlighter-rouge">localStorage.setItem</code>, <code class="language-plaintext highlighter-rouge">sessionStorage.*</code>.</li>
+  <li>Flag storage keys named <code class="language-plaintext highlighter-rouge">token</code>, <code class="language-plaintext highlighter-rouge">jwt</code>, <code class="language-plaintext highlighter-rouge">session</code>, <code class="language-plaintext highlighter-rouge">auth</code>, <code class="language-plaintext highlighter-rouge">refresh</code>. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Use server-managed sessions or short-lived tokens delivered and rotated securely, with careful XSS defenses (CSP/Trusted Types) and minimal JS exposure.</li>
+  <li>If storage must be used for non-sensitive state, keep it non-auth and validate/escape before use.</li>
+</ul>
+
+<hr />
+
+<h3 id="js-supply-001-third-party-javascript-is-a-major-supply-chain-risk-minimize-and-control-it">JS-SUPPLY-001: Third-party JavaScript is a major supply-chain risk; minimize and control it</h3>
+
+<p>Severity: Low</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST treat third-party JS as equivalent to first-party JS in privilege (it can execute arbitrary code in your origin and access DOM data). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>
+    <p>SHOULD minimize third-party scripts and prefer:</p>
+
+    <ul>
+      <li>self-hosting / script mirroring,</li>
+      <li>strict CSP allowlists,</li>
+      <li>SRI for any CDN-hosted scripts,</li>
+      <li>ongoing monitoring for unexpected changes. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li>Loading arbitrary remote scripts from many vendors without review.</li>
+  <li>Using tag managers that can dynamically inject scripts with no integrity controls.</li>
+  <li>Allowing scripts from broad wildcards in CSP (e.g., <code class="language-plaintext highlighter-rouge">script-src *</code>). (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search HTML for <code class="language-plaintext highlighter-rouge">&lt;script src="https://..."&gt;</code> and <code class="language-plaintext highlighter-rouge">tag manager</code> snippets.</li>
+  <li>Search CSP <code class="language-plaintext highlighter-rouge">script-src</code> sources for wildcards or overly broad domains.</li>
+  <li>Search for dynamic script injection: <code class="language-plaintext highlighter-rouge">document.createElement("script")</code>, <code class="language-plaintext highlighter-rouge">script.src = ...</code>, <code class="language-plaintext highlighter-rouge">appendChild(script)</code>. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Remove unnecessary third-party tags.</li>
+  <li>Self-host or mirror scripts where possible.</li>
+  <li>Lock down CSP <code class="language-plaintext highlighter-rouge">script-src</code> to the smallest set of trusted sources.</li>
+  <li>Add SRI for CDN scripts/styles. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<hr />
+
+<h3 id="js-sri-001-use-subresource-integrity-sri-for-third-party-scriptsstyles">JS-SRI-001: Use Subresource Integrity (SRI) for third-party scripts/styles</h3>
+
+<p>Severity: Low</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>SHOULD use SRI to ensure browsers only load third-party resources if they match an expected cryptographic hash. (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity" title="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity">MDN Web Docs</a>)</li>
+  <li>MUST update SRI hashes whenever the underlying resource changes (pin versions; avoid “latest” URLs).</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">&lt;script src="https://cdn.example.com/lib.js"&gt;&lt;/script&gt;</code> with no <code class="language-plaintext highlighter-rouge">integrity</code>.</li>
+  <li>Loading <code class="language-plaintext highlighter-rouge">latest</code> or unpinned third-party resources.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">&lt;script src="https://</code> and <code class="language-plaintext highlighter-rouge">&lt;link rel="stylesheet" href="https://</code> without <code class="language-plaintext highlighter-rouge">integrity=</code>.</li>
+  <li>Check whether <code class="language-plaintext highlighter-rouge">integrity</code> is present and uses strong hashes (sha256/384/512 are typical). (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity" title="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Add <code class="language-plaintext highlighter-rouge">integrity="sha384-..."</code> (or appropriate) and ensure proper CORS mode where needed.</li>
+  <li>Prefer self-hosting critical libraries.</li>
+</ul>
+
+<hr />
+
+<h3 id="fs-domc-001-prevent-dom-clobbering-avoid-relying-on-windowdocument-named-properties">FS-DOMC-001: Prevent DOM clobbering (avoid relying on <code class="language-plaintext highlighter-rouge">window</code>/<code class="language-plaintext highlighter-rouge">document</code> named properties)</h3>
+
+<p>Severity: Medium to High (can become Critical if it enables script loading or <code class="language-plaintext highlighter-rouge">javascript:</code> navigation)</p>
+
+<p>Required:</p>
+
+<ul>
+  <li>MUST NOT rely on implicit global variables or <code class="language-plaintext highlighter-rouge">window.someName</code> / <code class="language-plaintext highlighter-rouge">document.someName</code> lookups that can be clobbered by injected HTML elements with matching <code class="language-plaintext highlighter-rouge">id</code>/<code class="language-plaintext highlighter-rouge">name</code>. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>MUST avoid patterns like <code class="language-plaintext highlighter-rouge">let x = window.redirectTo || "/safe"; location.assign(x);</code> where <code class="language-plaintext highlighter-rouge">redirectTo</code> could be clobbered to an <code class="language-plaintext highlighter-rouge">&lt;a&gt;</code> element whose <code class="language-plaintext highlighter-rouge">href</code> is attacker-controlled (including <code class="language-plaintext highlighter-rouge">javascript:</code>). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>SHOULD use explicit variable declarations, local scope, and explicit DOM queries (<code class="language-plaintext highlighter-rouge">getElementById</code>) rather than named property access. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>If the app inserts user-controlled markup (even sanitized), SHOULD ensure sanitization strategies consider <code class="language-plaintext highlighter-rouge">id</code>/<code class="language-plaintext highlighter-rouge">name</code> collisions. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Insecure patterns:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">const cfg = window.config || {};</code> used for security-sensitive URLs.</li>
+  <li><code class="language-plaintext highlighter-rouge">const redirect = window.redirectTo || "/"; location.assign(redirect);</code> (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>Loading scripts from <code class="language-plaintext highlighter-rouge">window.*</code> config values without strict validation.</li>
+</ul>
+
+<p>Detection hints:</p>
+
+<ul>
+  <li>Search for <code class="language-plaintext highlighter-rouge">window.</code> and <code class="language-plaintext highlighter-rouge">document.</code> used as config stores (especially <code class="language-plaintext highlighter-rouge">||</code> fallback patterns).</li>
+  <li>Search for usage of <code class="language-plaintext highlighter-rouge">location.assign/replace</code> with variables that come from <code class="language-plaintext highlighter-rouge">window</code>/<code class="language-plaintext highlighter-rouge">document</code> properties.</li>
+  <li>Search for dynamic script creation (<code class="language-plaintext highlighter-rouge">createElement('script')</code>) where <code class="language-plaintext highlighter-rouge">.src</code> comes from a non-local variable. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Fix:</p>
+
+<ul>
+  <li>Store config in module-scoped constants (not on <code class="language-plaintext highlighter-rouge">window</code>/<code class="language-plaintext highlighter-rouge">document</code>) and pass it explicitly.</li>
+  <li>Validate any URL-like config with protocol/origin allowlists (see FEJS-URL-001). (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>Consider hardening: sanitization, CSP, and (in limited cases) freezing sensitive objects, but treat these as defense-in-depth, not a substitute for safe coding patterns. (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<hr />
+
+<h2 id="5-practical-scanning-heuristics-how-to-hunt">5) Practical scanning heuristics (how to “hunt”)</h2>
+
+<p>When actively scanning, use these high-signal patterns:</p>
+
+<ul>
+  <li>
+    <p>DOM XSS sinks:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">.innerHTML</code>, <code class="language-plaintext highlighter-rouge">.outerHTML</code>, <code class="language-plaintext highlighter-rouge">insertAdjacentHTML(</code></li>
+      <li><code class="language-plaintext highlighter-rouge">document.write(</code>, <code class="language-plaintext highlighter-rouge">document.writeln(</code> (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Dangerous navigation / URL sinks:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">window.location</code>, <code class="language-plaintext highlighter-rouge">location.href</code>, <code class="language-plaintext highlighter-rouge">location.assign</code>, <code class="language-plaintext highlighter-rouge">location.replace</code></li>
+      <li><code class="language-plaintext highlighter-rouge">javascript:</code> literals (and other suspicious schemes like <code class="language-plaintext highlighter-rouge">data:text/html</code>) (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>String-to-code execution:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">eval(</code>, <code class="language-plaintext highlighter-rouge">new Function</code>, <code class="language-plaintext highlighter-rouge">setTimeout("</code>, <code class="language-plaintext highlighter-rouge">setInterval("</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Event-handler string injection:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">.setAttribute("on</code>, <code class="language-plaintext highlighter-rouge">.onclick =</code>, <code class="language-plaintext highlighter-rouge">.onload =</code> with strings (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">postMessage</code>:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">postMessage(</code> with <code class="language-plaintext highlighter-rouge">"*"</code> as targetOrigin</li>
+      <li><code class="language-plaintext highlighter-rouge">addEventListener("message"</code> without strict <code class="language-plaintext highlighter-rouge">event.origin</code> allowlist checks (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" title="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Storage:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">localStorage.setItem(</code> / <code class="language-plaintext highlighter-rouge">getItem(</code>, <code class="language-plaintext highlighter-rouge">sessionStorage.*</code></li>
+      <li>keys containing <code class="language-plaintext highlighter-rouge">token</code>, <code class="language-plaintext highlighter-rouge">jwt</code>, <code class="language-plaintext highlighter-rouge">session</code>, <code class="language-plaintext highlighter-rouge">auth</code>, <code class="language-plaintext highlighter-rouge">refresh</code> (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>CSP and related:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">Content-Security-Policy</code> header config (server/edge)</li>
+      <li><code class="language-plaintext highlighter-rouge">&lt;meta http-equiv="Content-Security-Policy" ...&gt;</code></li>
+      <li>CSP containing <code class="language-plaintext highlighter-rouge">unsafe-inline</code> or <code class="language-plaintext highlighter-rouge">unsafe-eval</code></li>
+      <li><code class="language-plaintext highlighter-rouge">require-trusted-types-for</code> / <code class="language-plaintext highlighter-rouge">trusted-types</code> directives (<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv" title="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>Third-party scripts:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">&lt;script src="https://..."&gt;</code> without <code class="language-plaintext highlighter-rouge">integrity=</code></li>
+      <li>Tag manager snippets and dynamic script injection code paths (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity" title="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity">MDN Web Docs</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <p>DOM clobbering gadgets:</p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">window.&lt;name&gt; || ...</code> and <code class="language-plaintext highlighter-rouge">document.&lt;name&gt; || ...</code> patterns</li>
+      <li>security-sensitive usage of <code class="language-plaintext highlighter-rouge">window</code>/<code class="language-plaintext highlighter-rouge">document</code> properties as config sources (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Always try to confirm:</p>
+
+<ul>
+  <li>data origin (untrusted vs trusted),</li>
+  <li>sink type (HTML parse, navigation, code execution, message handling, storage),</li>
+  <li>protective controls present (CSP, Trusted Types, sanitizers, strict allowlists, schema validation).</li>
+</ul>
+
+<hr />
+
+<h2 id="6-sources-accessed-2026-01-27">6) Sources (accessed 2026-01-27)</h2>
+
+<p>Primary standards / platform docs:</p>
+
+<ul>
+  <li>W3C Content Security Policy Level 2 (HTML <code class="language-plaintext highlighter-rouge">&lt;meta&gt;</code> delivery restrictions; unsupported directives in meta CSP): <code class="language-plaintext highlighter-rouge">https://www.w3.org/TR/CSP2/</code> (<a href="https://www.w3.org/TR/CSP2/" title="Content Security Policy Level 2">W3C</a>)</li>
+  <li>MDN: CSP Guide (strict CSP, nonces/hashes, <code class="language-plaintext highlighter-rouge">unsafe-inline</code>/<code class="language-plaintext highlighter-rouge">unsafe-eval</code>, eval blocking): <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP">MDN Web Docs</a>)</li>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">&lt;meta http-equiv&gt;</code> (CSP via meta and warning about meta-based security headers): <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv" title="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/http-equiv">MDN Web Docs</a>)</li>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">frame-ancestors</code> (and note it’s not supported in <code class="language-plaintext highlighter-rouge">&lt;meta&gt;</code>): <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors">MDN Web Docs</a>)</li>
+</ul>
+
+<p>DOM XSS and dangerous sinks:</p>
+
+<ul>
+  <li>OWASP: DOM Based XSS Prevention Cheat Sheet (dangerous sinks + safe patterns like <code class="language-plaintext highlighter-rouge">textContent</code>): <code class="language-plaintext highlighter-rouge">https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html</code> (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">innerHTML</code> (security considerations): <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML" title="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML">MDN Web Docs</a>)</li>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">insertAdjacentHTML</code> (security considerations): <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML" title="https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML">MDN Web Docs</a>)</li>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">document.write()</code> / <code class="language-plaintext highlighter-rouge">document.writeln()</code> (security considerations): <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/API/Document/write</code> and <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/API/Document/writeln</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/write" title="https://developer.mozilla.org/en-US/docs/Web/API/Document/write">MDN Web Docs</a>)</li>
+</ul>
+
+<p>URL scheme hazards:</p>
+
+<ul>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">javascript:</code> URLs (execution on navigation; discouraged; references <code class="language-plaintext highlighter-rouge">window.location</code>): <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Schemes/javascript" title="javascript: URLs - URIs | MDN">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Trusted Types:</p>
+
+<ul>
+  <li>W3C: Trusted Types spec (DOM XSS sinks include <code class="language-plaintext highlighter-rouge">Element.innerHTML</code> and <code class="language-plaintext highlighter-rouge">Location.href</code> setters; goals and limitations): <code class="language-plaintext highlighter-rouge">https://www.w3.org/TR/trusted-types/</code> (<a href="https://www.w3.org/TR/trusted-types/" title="https://www.w3.org/TR/trusted-types/">W3C</a>)</li>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">require-trusted-types-for</code> directive: <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/require-trusted-types-for">MDN Web Docs</a>)</li>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">trusted-types</code> directive: <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/trusted-types</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/trusted-types" title="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/trusted-types">MDN Web Docs</a>)</li>
+</ul>
+
+<p>Cross-window messaging:</p>
+
+<ul>
+  <li>MDN: <code class="language-plaintext highlighter-rouge">window.postMessage</code> (security guidance: specify targetOrigin; validate origin): <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage" title="https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage">MDN Web Docs</a>)</li>
+  <li>OWASP: HTML5 Security Cheat Sheet (Web Messaging guidance: explicit origin, strict checks, no <code class="language-plaintext highlighter-rouge">innerHTML</code>): <code class="language-plaintext highlighter-rouge">https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html</code> (<a href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+<p>Third-party scripts and integrity:</p>
+
+<ul>
+  <li>OWASP: Third Party JavaScript Management Cheat Sheet (risks and mitigations including SRI/mirroring): <code class="language-plaintext highlighter-rouge">https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html</code> (<a href="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/Third_Party_Javascript_Management_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+  <li>MDN: Subresource Integrity overview: <code class="language-plaintext highlighter-rouge">https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity" title="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity">MDN Web Docs</a>)</li>
+  <li>W3C: Subresource Integrity spec: <code class="language-plaintext highlighter-rouge">https://www.w3.org/TR/sri-2/</code> (<a href="https://www.w3.org/TR/sri-2/" title="https://www.w3.org/TR/sri-2/">W3C</a>)</li>
+</ul>
+
+<p>DOM clobbering:</p>
+
+<ul>
+  <li>OWASP: DOM Clobbering Prevention Cheat Sheet (named property access risk; example attacks involving <code class="language-plaintext highlighter-rouge">location.assign</code> and <code class="language-plaintext highlighter-rouge">javascript:</code>): <code class="language-plaintext highlighter-rouge">https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html</code> (<a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html" title="https://cheatsheetseries.owasp.org/cheatsheets/DOM_Clobbering_Prevention_Cheat_Sheet.html">OWASP Cheat Sheet Series</a>)</li>
+</ul>
+
+
+    </div>
+  </article><nav class="dk-toc" data-dk-toc aria-label="On this page" hidden>
+  <p class="dk-toc__title">On this page</p>
+  <ul data-dk-toc-list></ul>
+</nav>
+</div>
+
+      </main><footer class="dk-footer">
+    <p class="dk-social">
+        <a href="https://twitter.com/theophile_vast" rel="me noopener">twitter</a>
+        <a href="https://github.com/tvast" rel="me noopener">github</a>
+    </p>
+
+  <p>
+    © 2026 Theophile Vast
+    · Built with Jekyll ·
+    <a href="https://draculatheme.com/">Dracula</a>
+  </p>
+</footer>
+</div>
+  </div><div class="dk-palette" data-dk-palette hidden>
+  <div
+    class="dk-palette__box"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Search the knowledge base">
+    <label class="dk-visually-hidden" for="dk-palette-input">Search</label>
+    <input
+      type="search"
+      id="dk-palette-input"
+      class="dk-palette__input"
+      placeholder="Search the knowledge base…"
+      autocomplete="off"
+      spellcheck="false"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="dk-palette-results"
+      aria-autocomplete="list"
+      data-dk-palette-input>
+
+    <ul class="dk-palette__results" id="dk-palette-results" role="listbox" data-dk-palette-results></ul>
+    <p class="dk-palette__empty" data-dk-palette-empty hidden>No matches.</p>
+
+    <div class="dk-palette__hint">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> open</span>
+      <span><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+</div>
+<script src="/blog/assets/js/theme.js" defer></script>
+  <script src="/blog/assets/js/knowledge.js" defer></script>
+</body>
+</html>
