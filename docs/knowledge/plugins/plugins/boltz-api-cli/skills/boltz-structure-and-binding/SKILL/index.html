@@ -40,8 +40,75 @@
   };
 </script>
 </head>
-<body>
-  <a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
+<body><div id="dk-password-gate" class="dk-password-gate" hidden>
+  <div class="dk-password-box">
+    <h1>🔐 Knowledge Base</h1>
+    <p>This knowledge base is password protected.</p>
+    <form id="dk-password-form" onsubmit="handlePasswordSubmit(event)">
+      <input
+        type="password"
+        id="dk-password-input"
+        placeholder="Enter password"
+        autocomplete="off"
+        autofocus
+      />
+      <button type="submit">Access</button>
+    </form>
+    <p id="dk-password-error" class="dk-password-error" hidden>
+      Incorrect password. Try again.
+    </p>
+  </div>
+</div>
+
+<script>
+  (function () {
+    // Configure password here
+    var KNOWLEDGE_PASSWORD = "knowledge123";
+
+    if (!KNOWLEDGE_PASSWORD) return; // No password set, skip protection
+
+    var gate = document.getElementById("dk-password-gate");
+    var form = document.getElementById("dk-password-form");
+    var input = document.getElementById("dk-password-input");
+    var errorMsg = document.getElementById("dk-password-error");
+
+    function checkAuth() {
+      try {
+        var stored = sessionStorage.getItem("dk-auth");
+        return stored === KNOWLEDGE_PASSWORD;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function grantAccess() {
+      try {
+        sessionStorage.setItem("dk-auth", KNOWLEDGE_PASSWORD);
+      } catch (e) {}
+      gate.hidden = true;
+    }
+
+    // Show gate if not authenticated
+    if (!checkAuth()) {
+      gate.hidden = false;
+      document.body.style.overflow = "hidden";
+    }
+
+    window.handlePasswordSubmit = function (e) {
+      e.preventDefault();
+      if (input.value === KNOWLEDGE_PASSWORD) {
+        errorMsg.hidden = true;
+        grantAccess();
+        document.body.style.overflow = "auto";
+      } else {
+        errorMsg.hidden = false;
+        input.value = "";
+        input.focus();
+      }
+    };
+  })();
+</script>
+<a class="dk-skip-link" href="#dk-main">Skip to content</a><div class="dk-shell"><aside class="dk-sidebar" id="dk-sidebar" data-dk-sidebar>
   <div class="dk-sidebar__head">
     <h2 class="dk-sidebar__title">
       Knowledge
