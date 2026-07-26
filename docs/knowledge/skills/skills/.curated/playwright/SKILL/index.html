@@ -3,11 +3,11 @@
 <head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>SKILL · A developer journey</title>
 <meta name="description" content="Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screenshots, data extraction, UI-flow debugging)...">
-<link rel="canonical" href="https://tvast.github.io/blog/knowledge/skills/skills/.curated/playwright/SKILL/">
+<link rel="canonical" href="http://localhost:4000/blog/knowledge/skills/skills/.curated/playwright/SKILL/">
 
 <meta property="og:title" content="SKILL · A developer journey">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://tvast.github.io/blog/knowledge/skills/skills/.curated/playwright/SKILL/">
+<meta property="og:url" content="http://localhost:4000/blog/knowledge/skills/skills/.curated/playwright/SKILL/">
 <meta property="og:description" content="Use when the task requires automating a real browser from the terminal (navigation, form filling, snapshots, screenshots, data extraction, UI-flow debugging)...">
 <meta name="twitter:card" content="summary">
 
@@ -40,7 +40,7 @@
   };
 </script>
 </head>
-<body><div id="dk-password-gate" class="dk-password-gate" hidden>
+<body><div id="dk-password-gate" class="dk-password-gate" style="display: none;">
   <div class="dk-password-box">
     <h1>🔐 Knowledge Base</h1>
     <p>This knowledge base is password protected.</p>
@@ -62,24 +62,21 @@
 
 <script>
   (function () {
-    // Configure password here
     var KNOWLEDGE_PASSWORD = "pwa5T3$";
 
-    if (!KNOWLEDGE_PASSWORD) return; // No password set, skip protection
+    if (!KNOWLEDGE_PASSWORD) return;
 
-    // Only protect /knowledge/* routes, allow home page public access
-    var isKnowledgePage = window.location.pathname.includes("/knowledge/");
-
-    if (!isKnowledgePage) return; // Not a knowledge page, no gate needed
+    // Only run on /knowledge/* routes
+    if (!window.location.pathname.includes("/knowledge/")) return;
 
     var gate = document.getElementById("dk-password-gate");
-    var form = document.getElementById("dk-password-form");
+    if (!gate) return;
+
     var input = document.getElementById("dk-password-input");
     var errorMsg = document.getElementById("dk-password-error");
 
     function checkAuth() {
       try {
-        // Check both localStorage (persistent) and sessionStorage (session-only)
         var stored = localStorage.getItem("dk-auth") || sessionStorage.getItem("dk-auth");
         return stored === KNOWLEDGE_PASSWORD;
       } catch (e) {
@@ -87,30 +84,38 @@
       }
     }
 
-    function grantAccess() {
-      try {
-        // Store in localStorage for persistent access across browser sessions
-        localStorage.setItem("dk-auth", KNOWLEDGE_PASSWORD);
-        // Also store in sessionStorage as fallback
-        sessionStorage.setItem("dk-auth", KNOWLEDGE_PASSWORD);
-      } catch (e) {}
-      gate.hidden = true;
+    function showGate() {
+      gate.style.display = "flex";
+      document.body.style.overflow = "hidden";
     }
 
-    // Show gate only if not authenticated AND on knowledge page
-    if (!checkAuth()) {
-      gate.hidden = false;
-      document.body.style.overflow = "hidden";
+    function hideGate() {
+      gate.style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+
+    function grantAccess() {
+      try {
+        localStorage.setItem("dk-auth", KNOWLEDGE_PASSWORD);
+        sessionStorage.setItem("dk-auth", KNOWLEDGE_PASSWORD);
+      } catch (e) {}
+      hideGate();
+    }
+
+    // Check auth on load
+    if (checkAuth()) {
+      hideGate();
+    } else {
+      showGate();
     }
 
     window.handlePasswordSubmit = function (e) {
       e.preventDefault();
       if (input.value === KNOWLEDGE_PASSWORD) {
-        errorMsg.hidden = true;
+        errorMsg.style.display = "none";
         grantAccess();
-        document.body.style.overflow = "auto";
       } else {
-        errorMsg.hidden = false;
+        errorMsg.style.display = "block";
         input.value = "";
         input.focus();
       }
