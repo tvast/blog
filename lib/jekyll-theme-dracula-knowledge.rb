@@ -62,7 +62,7 @@ module DraculaKnowledge
       docs = collection.docs.reject { |d| d.data["hidden"] }
       prefix = "_#{cfg.collection}/"
 
-      entries = docs.map { |doc| entry_for(doc, prefix, cfg) }
+      entries = docs.map { |doc| entry_for(doc, prefix, cfg, site) }
       entries.sort_by! { |e| [e["s"].downcase, e["p"].downcase] }
 
       docs.each { |doc| doc.content = TableSpacing.apply(doc.content) }
@@ -122,7 +122,7 @@ module DraculaKnowledge
       !slug.nil? && title == Jekyll::Utils.titleize_slug(slug)
     end
 
-    def entry_for(doc, prefix, cfg)
+    def entry_for(doc, prefix, cfg, site)
       rel = doc.relative_path.sub(/\A#{Regexp.escape(prefix)}/, "")
       segments = rel.split("/")
       # A file sitting at the collection root has no directory to group under.
@@ -136,9 +136,13 @@ module DraculaKnowledge
       doc.data["title"] = DraculaKnowledge.humanize(File.basename(rel)) if derived_title?(doc)
       doc.data["dk_section"] = section
 
+      # Include baseurl so routes work in subdirectories (e.g., github.io/blog/).
+      baseurl = (site.config["baseurl"] || "").to_s
+      url = baseurl + doc.url
+
       entry = {
         "t" => doc.data["title"].to_s,
-        "u" => doc.url,
+        "u" => url,
         "s" => section,
         "p" => subpath,
       }
