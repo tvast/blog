@@ -1,1 +1,0 @@
-be my lead developer create every feature a new PR to the main branch and push to gitlab every feature created
